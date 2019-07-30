@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+#
+# -*- coding: utf-8 -*-
+#
+# jomiel-examples
+#
+# Copyright
+#  2019 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+$:.push File.expand_path(File.dirname(__FILE__) + '/../lib/')
+
+require "docopt"
+require "logger"
+
+require "Jomiel"
+
+usage = <<HELP
+Usage:
+    demo [-hDqj] [-r <addr>] [-t <time>] [URI ...]
+
+Options:
+    -h --help                       Print this help and exit
+    -D --print-config               Print configuration values and exit
+    -r --router-endpoint <addr>     Specify the router endpoint address
+                                     [default: tcp://localhost:5570]
+    -t --connect-timeout <time>     Specify maximum time in seconds for
+                                     the connection allowed to take
+                                     [default: 30]
+    -q --be-terse                   Be brief and to the point; dump
+                                     interesting details only
+    -j --output-json                Print dumped messages in JSON
+HELP
+
+begin
+    opts = Docopt::docopt(usage)
+
+    if opts["--print-config"]
+        opts.each do |key, value|
+            puts "#{key.sub('--', '')}: #{value}"
+        end
+        Kernel.exit(0)
+    end
+
+    if opts["URI"].empty?
+        Kernel.abort("error: no input URI given")
+    end
+
+    lg = Logger.new(STDERR,
+        formatter: proc {|severity, datetime, progname, msg|
+            "#{severity}: #{msg}\n"
+    })
+
+    jomiel = Jomiel::Demo.new(opts, lg)
+    jomiel.connect()
+
+    opts["URI"].each do |uri|
+        jomiel.inquire(uri)
+    end
+
+rescue Docopt::Exit => e
+    puts e.message
+end
+
+# vim: set ts=4 sw=4 tw=72 expandtab:
