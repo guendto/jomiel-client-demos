@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+/* -*- coding: utf-8 -*-
+ *
+ * jomiel-examples
+ *
+ * Copyright
+ *  2019 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/../lib/Options.php";
+require_once __DIR__ . "/../lib/Jomiel.php";
+require_once __DIR__ . "/../lib/Logger.php";
+
+$opts = opts_init($argv);
+$args = $opts->getArguments();
+
+if (empty($args)) {
+    echo "error: no input URI given\n";
+    die(1);
+}
+
+$lg = log_init();
+$jomiel = new Jomiel($lg, $opts);
+$jomiel->connect();
+
+foreach ($args as $arg) {
+    $jomiel->inquire($arg);
+}
+?>
