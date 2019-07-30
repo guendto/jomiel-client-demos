@@ -1,0 +1,75 @@
+#!/usr/bin/env lua
+--
+-- -*- coding: utf-8 -*-
+--
+-- jomiel-examples
+--
+-- Copyright
+--  2019 Toni Gündoğdu
+--
+--
+-- SPDX-License-Identifier: Apache-2.0
+--
+
+-- Add a new directory to the path.
+package.path = package.path .. ';./lib/?.lua'
+
+local log4l = require 'log4l.console'
+local argp = require 'argparse'
+
+local jml = require 'demo.jomiel'
+
+function main()
+    local lg = log4l('%level %message\n')
+
+    local parser = argp('demo')
+
+    parser:flag('-D --print-config',
+        'Print confuguration values and exit')
+
+    parser:flag('-V --version-zmq', 'Display ZeroMQ version and exit')
+
+    parser:option('-r --router-endpoint',
+        'Specify the outer endpoint address',
+        'tcp://localhost:5570')
+
+    parser:option('-t --connect-timeout',
+        'Specify maximum time in seconds for the connection allowed to take',
+        30)
+
+    parser:flag('-s --print-serialized',
+        'Print serialized messages')
+
+    parser:flag('-q --be-terse',
+        'Be brief and to the point; dump interesting details only')
+
+    parser:argument('URI'):args('*')
+
+    local opts = parser:parse()
+
+    if opts['version_zmq'] then
+        local zmq = require 'lzmq'
+        print('ZeroMQ version ' .. table.concat(zmq.version(), '.'))
+        os.exit(0)
+    elseif opts['print_config'] then
+        local s = require 'serpent'
+        print(s.block(opts))
+        os.exit(0)
+    end
+
+    if next(opts['URI']) == nil then
+        print('error: no input URI given')
+        os.exit(1)
+    end
+
+    local jomiel = jml.Jomiel.new(lg, opts)
+    jomiel:connect()
+
+    for _, uri in pairs(opts['URI']) do
+        jomiel:inquire(uri)
+    end
+end
+
+main()
+
+-- vim: set ts=4 sw=4 tw=72 expandtab:
