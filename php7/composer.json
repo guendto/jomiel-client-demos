@@ -1,0 +1,12 @@
+{
+    "require": {
+        "google/protobuf": "^3.8.0",
+        "corneltek/getoptionkit": "^2.6",
+        "monolog/monolog": "^1.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "lib/proto/"
+        }
+    }
+}
