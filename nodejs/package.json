@@ -1,0 +1,11 @@
+{
+  "name": "jomiel-examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^2.20.0",
+    "protobufjs": "^6.8.8",
+    "zeromq": "^5.1.0"
+  }
+}
