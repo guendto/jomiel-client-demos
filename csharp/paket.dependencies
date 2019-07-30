@@ -1,0 +1,5 @@
+source https://www.nuget.org/api/v2
+nuget Docopt.net
+nuget Google.Protobuf
+nuget log4net
+nuget ZeroMQ
