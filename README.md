@@ -2,8 +2,12 @@
 
 `jomiel-examples` is a selection of examples written in a number of
 _different modern programming languages_. These examples show how the
-[jomiel][1] inquiries are made. Note that the examples are not
-necessarily identical to one another.
+[jomiel][1] inquiries are made and responses are handled in different
+languages.
+
+**Notes**
+
+- The examples are not necessarily identical to one another
 
 ## License
 
