@@ -1,0 +1,93 @@
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-proto
+ *
+ * Copyright
+ *  2019 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+syntax = "proto3";
+
+option go_package = "proto";
+
+package jomiel.status;
+
+/*
+ * NOTE: See also "Examples" at the bottom of this file
+ */
+
+enum StatusCode {
+    Undefined               = 0;
+    OK                      = 200;
+    // The client seems to have erred
+    BadRequest              = 400;
+    Unauthorized            = 401;
+    Forbidden               = 403;
+    NotFound                = 404;
+    // The service failed to fulfill an apparently valid request
+    InternalServer          = 500;
+    NotImplemented          = 501;
+}
+
+enum ErrorCode {
+    NoError                 = 0;
+    NoParserError           = 500;
+    ParseError              = 501;
+    InvalidInputError       = 502;
+    HttpError               = 505;
+    UnknownSeeMessageError  = 550;
+}
+
+message ResponseStatus {
+
+    message Http {
+        sfixed32 code = 1 /* [default = 200] */;
+    }
+
+    StatusCode  code        = 1; /* [default = OK] */
+    ErrorCode   error       = 2; /* [default = NoError] */
+    Http        http        = 3;
+    string      message     = 4; /* [default = "Not an error"] */
+}
+
+/*
+ * Examples
+ * --------
+ *
+ * Case: No error occurred
+ *  status code: OK
+ *   error code: NoError
+ *    http code: 200 (OK)
+ *
+ * Case: No matching media parser for the given URI
+ *  status code: NotImplemented
+ *   error code: NoParserError
+ *    http code: 200 (OK)
+ *
+ * Case: Parsing failed for the contents of the given URI
+ *  status code: InternalServer
+ *   error code: ParseError
+ *    http code: 200 (OK)
+ *
+ * Case: Invalid input URI given
+ *  status code: BadRequest
+ *   error code: InvalidInputError
+ *    http code: 200 (OK)
+ *
+ * Case: HTTP connection failure
+ *  status code: InternalServer
+ *   error code: HttpError
+ *    http code: 404 (Not found)
+ *
+ * Case: Unspecified or otherwise unknown error occurred
+ *  status code: InternalServer
+ *   error code: UnknownError
+ *    http code: 200 (OK)
+ *
+ */
+
+// vim: set ts=4 sw=4 tw=72 expandtab:
