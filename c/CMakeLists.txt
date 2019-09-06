@@ -35,10 +35,6 @@ set(SRC_DEMO
     src/demo/main.c
 )
 
-# Build local copies of external dependencies.
-#
-include(ExternalProject)
-
 # Find local libraries using pkg-config(1).
 #
 find_package(PkgConfig)
