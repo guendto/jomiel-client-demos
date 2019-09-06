@@ -51,6 +51,7 @@ include_directories(src)
 # Find pkg modules.
 #
 pkg_check_modules(PROTOBUFC REQUIRED libprotobuf-c)
+pkg_check_modules(ZEROMQ REQUIRED libzmq)
 pkg_check_modules(CZMQ REQUIRED libczmq)
 
 # Target.
@@ -59,15 +60,19 @@ add_executable(demo ${SRC_DEMO})
 
 target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
+    ${ZEROMQ_INCLUDE_DIRS}
     ${CZMQ_INCLUDE_DIRS}
 )
+
 target_link_directories(demo PUBLIC
     ${PROTOBUFC_LIBRARY_DIRS}
+    ${ZEROMQ_LIBRARY_DIRS}
     ${CZMQ_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo
     ${PROTOBUFC_LIBRARIES}
+    ${ZEROMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
 )
 
