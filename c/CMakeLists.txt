@@ -35,14 +35,14 @@ set(SRC_DEMO
     src/demo/main.c
 )
 
-# Find local libraries using pkg-config(1).
-#
-find_package(PkgConfig)
-
 # Include dirs.
 #
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
+
+# Find local libraries using pkg-config(1).
+#
+find_package(PkgConfig)
 
 # Find pkg modules.
 #
