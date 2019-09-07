@@ -113,10 +113,10 @@ target_link_directories(demo PUBLIC
 )
 
 target_link_libraries(demo
+    ${Protobuf_LITE_LIBRARIES}
     ${Protobuf_LIBRARIES}
-    ${ZeroMQ_LIBRARY}
+    ${ZeroMQ_LIBRARIES}
     libdocopt
-    zmq
 )
 
 # vim: set ts=4 sw=4 tw=72 expandtab:
