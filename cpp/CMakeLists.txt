@@ -56,7 +56,7 @@ set(DOCOPT_LIBRARIES ${DOCOPT_ROOT}/lib/libdocopt.a)
 set(DOCOPT_INSTALL_DIR "${DOCOPT_ROOT}")
 set(DOCOPT_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${DOCOPT_INSTALL_DIR})
 
-ExternalProject_Add(docopt
+externalproject_add(docopt
     PREFIX ${DOCOPT_ROOT}
     # ---
     GIT_REPOSITORY https://github.com/docopt/docopt.cpp
