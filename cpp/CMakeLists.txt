@@ -100,7 +100,7 @@ protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO} ${docopt_LIBRARY})
+add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO})
 
 target_include_directories(demo PUBLIC
     ${Protobuf_INCLUDE_DIRS}
