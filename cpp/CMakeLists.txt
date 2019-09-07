@@ -85,6 +85,10 @@ include_directories(${DOCOPT_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
+# Find local libraries using pkg-config(1).
+#
+find_package(PkgConfig REQUIRED)
+
 # Protobuf
 # - Find the lib, compile the protobuf declarations for jomiel messages
 #
@@ -97,8 +101,6 @@ protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
 # ZeroMQ.
 #   - kudos, https://stackoverflow.com/a/41252437
 #
-find_package(PkgConfig)
-
 pkg_check_modules(ZeroMQ libzmq)
 
 find_path(ZeroMQ_INCLUDE_DIR
