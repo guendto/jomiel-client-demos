@@ -98,16 +98,6 @@ pkg_check_modules(ZeroMQ REQUIRED libzmq)
 file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
 protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
 
-find_path(ZeroMQ_INCLUDE_DIR
-    PATHS ${ZeroMQ_INCLUDE_DIRS}
-    NAMES zmq.hpp
-)
-
-find_library(ZeroMQ_LIBRARY
-    PATHS ${ZeroMQ_LIBRARY_DIRS}
-    NAMES zmq
-)
-
 # Target.
 #
 add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO} ${docopt_LIBRARY})
