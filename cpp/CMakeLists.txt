@@ -104,7 +104,7 @@ add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO})
 
 target_include_directories(demo PUBLIC
     ${Protobuf_INCLUDE_DIRS}
-    ${ZeroMQ_INCLUDE_DIR}
+    ${ZeroMQ_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
