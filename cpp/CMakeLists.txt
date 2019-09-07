@@ -92,6 +92,9 @@ find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
 
+# Protobuf
+# - Compile the protobuf declarations for jomiel messages
+#
 file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
 protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
 
