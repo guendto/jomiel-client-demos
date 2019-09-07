@@ -85,18 +85,15 @@ include_directories(${DOCOPT_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
-# Find local libraries using pkg-config(1).
+# Find local libraries.
+#   - kudos, https://stackoverflow.com/a/41252437 (ZeroMQ)
 #
 find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
+pkg_check_modules(ZeroMQ REQUIRED libzmq)
 
 file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
 protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
-
-# ZeroMQ.
-#   - kudos, https://stackoverflow.com/a/41252437
-#
-pkg_check_modules(ZeroMQ libzmq)
 
 find_path(ZeroMQ_INCLUDE_DIR
     PATHS ${ZeroMQ_INCLUDE_DIRS}
