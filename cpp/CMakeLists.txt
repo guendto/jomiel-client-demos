@@ -12,6 +12,14 @@
 project(demo)
 cmake_minimum_required(VERSION 3.13)
 
+option(WITH_BUNDLED_PROTO_FILES "use bundled .proto files" OFF)
+
+if(WITH_BUNDLED_PROTO_FILES)
+    set(PROTO_DIR "proto/")
+else()
+    set(PROTO_DIR "../proto/")
+endif()
+
 set(CMAKE_CXX_STANDARD 14)
   # e.g. std::make_unique is a c++14 feature
 
@@ -83,7 +91,7 @@ include_directories(src)
 find_package(Protobuf REQUIRED)
 include_directories(${Protobuf_INCLUDE_DIRS})
 
-file(GLOB PROTO_FILES ../proto/*.proto)
+file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
 protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
 
 # ZeroMQ.
