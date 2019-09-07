@@ -88,12 +88,7 @@ include_directories(src)
 # Find local libraries using pkg-config(1).
 #
 find_package(PkgConfig REQUIRED)
-
-# Protobuf
-# - Find the lib, compile the protobuf declarations for jomiel messages
-#
 find_package(Protobuf REQUIRED)
-include_directories(${Protobuf_INCLUDE_DIRS})
 
 file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
 protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
@@ -118,6 +113,7 @@ find_library(ZeroMQ_LIBRARY
 add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO} ${docopt_LIBRARY})
 
 target_include_directories(demo PUBLIC
+    ${Protobuf_INCLUDE_DIRS}
     ${ZeroMQ_INCLUDE_DIR}
 )
 
