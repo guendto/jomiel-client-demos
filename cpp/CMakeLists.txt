@@ -107,6 +107,11 @@ target_include_directories(demo PUBLIC
     ${ZeroMQ_INCLUDE_DIR}
 )
 
+target_link_directories(demo PUBLIC
+    ${Protobuf_LIBRARY_DIRS}
+    ${ZeroMQ_LIBRARY_DIRS}
+)
+
 target_link_libraries(demo
     ${Protobuf_LIBRARIES}
     ${ZeroMQ_LIBRARY}
