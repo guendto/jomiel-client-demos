@@ -3,6 +3,7 @@
 ## Building and running
 
 ```shell
-$ cpanm --installdeps .
-$ ./bin/demo [args...]
+cpanm --notest --quiet Carton
+carton
+carton exec ./bin/demo [args...]
 ```
