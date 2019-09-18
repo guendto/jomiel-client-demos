@@ -4,5 +4,5 @@
 
 ```shell
 $ yarn install
-$ ./demo [args ...]
+$ ./bin/demo [args ...]
 ```
