@@ -14,6 +14,9 @@
 
 'use strict';
 
+process.env.NODE_PATH = '.';
+require('module').Module._initPaths();
+
 const cmdr = require('commander');
 
 cmdr
@@ -41,7 +44,7 @@ if (!cmdr.args.length) {
   process.exit(1);
 }
 
-const Jomiel = require('./lib/jomiel').Jomiel;
+const Jomiel = require('lib/jomiel').Jomiel;
 const jomiel = Jomiel.create(cmdr);
 
 jomiel.connect();
