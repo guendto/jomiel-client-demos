@@ -10,10 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 require_once __DIR__ . "/../vendor/autoload.php";
-require_once __DIR__ . "/../lib/Options.php";
-require_once __DIR__ . "/../lib/Jomiel.php";
-require_once __DIR__ . "/../lib/Logger.php";
+
+use function Demo\opts_init;
+use function Demo\log_init;
+use Demo\JomielClass;
 
 $opts = opts_init($argv);
 $args = $opts->getArguments();
@@ -24,7 +26,7 @@ if (empty($args)) {
 }
 
 $lg = log_init();
-$jomiel = new Jomiel($lg, $opts);
+$jomiel = JomielClass::create($lg, $opts);
 $jomiel->connect();
 
 foreach ($args as $arg) {
