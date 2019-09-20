@@ -9,7 +9,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-class Jomiel {
+
+namespace Demo;
+
+use \ZMQContext;
+use \ZMQSocket;
+use \ZMQPoll;
+use \ZMQ;
+
+use \Jomiel;
+
+class JomielClass {
     private $ctx, $sck;
     private $opts, $lg;
 
@@ -25,6 +35,10 @@ class Jomiel {
 
     function __destruct() {
         $this->sck->disconnect($this->opts->routerEndpoint);
+    }
+
+    static function create($lg, $opts) {
+        return new JomielClass($lg, $opts);
     }
 
     function connect() {
