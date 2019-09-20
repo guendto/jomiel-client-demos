@@ -1,12 +1,26 @@
 {
+    "name": "jomiel-examples/demo",
+    "description": "jomiel examples php demo",
+    "license": "Apache-2.0",
     "require": {
         "google/protobuf": "^3.8.0",
         "corneltek/getoptionkit": "^2.6",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "ext-zmq": "*",
+        "php": "^7"
     },
     "autoload": {
-        "psr-4": {
-            "": "lib/proto/"
-        }
+        "classmap": [
+            "lib/"
+        ],
+        "files": [
+            "lib/Options.php",
+            "lib/Logger.php"
+        ]
+    },
+    "config": {
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "sort-packages": true
     }
 }
