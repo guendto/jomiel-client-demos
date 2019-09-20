@@ -10,6 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+namespace Demo;
+
 use GetOptionKit\OptionPrinter\ConsoleOptionPrinter;
 use GetOptionKit\OptionCollection;
 use GetOptionKit\OptionParser;
