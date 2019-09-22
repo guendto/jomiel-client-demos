@@ -16,6 +16,8 @@ use GetOptionKit\OptionPrinter\ConsoleOptionPrinter;
 use GetOptionKit\OptionCollection;
 use GetOptionKit\OptionParser;
 
+use \ZMQ;
+
 function opts_init($argv) {
     $opts = new OptionCollection;
 
