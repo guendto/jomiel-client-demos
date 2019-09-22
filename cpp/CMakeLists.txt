@@ -10,18 +10,21 @@
 #
 
 project(demo)
+
 cmake_minimum_required(VERSION 3.13)
 
-option(WITH_BUNDLED_PROTO_FILES "use bundled .proto files" OFF)
+# Options.
+#
+option(WITH_DOCKER "build in docker container" OFF)
 
-if(WITH_BUNDLED_PROTO_FILES)
+if(WITH_DOCKER)
+    include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
     set(PROTO_DIR "proto/")
 else()
     set(PROTO_DIR "../proto/")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-  # e.g. std::make_unique is a c++14 feature
+set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
 
 # Additional CXX flags of interest.
 #
@@ -35,7 +38,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Source files.
 #
-set(SRC_DEMO
+set(SRC_DEMO_FILES
     src/demo/jomiel.cpp
     src/demo/jomiel.h
     src/demo/usage.cpp
@@ -50,38 +53,44 @@ include(ExternalProject)
 ## DocOpt.cpp
 ##  - kudos, https://stackoverflow.com/a/39112976
 ##
-set(DOCOPT_ROOT ${PROJECT_SOURCE_DIR}/ext/docopt)
-set(DOCOPT_INCLUDE_DIRS ${DOCOPT_ROOT}/include)
-set(DOCOPT_LIBRARIES ${DOCOPT_ROOT}/lib/libdocopt.a)
-set(DOCOPT_INSTALL_DIR "${DOCOPT_ROOT}")
-set(DOCOPT_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${DOCOPT_INSTALL_DIR})
+set(DOCOPTCPP_TARGET        docoptcpp.git)
+set(DOCOPTCPP_PREFIX        ${CMAKE_CURRENT_BINARY_DIR}/ext/${DOCOPTCPP_TARGET})
+set(DocOptCpp_INCLUDE_DIRS  ${DOCOPTCPP_PREFIX}/include)
+set(DocOptCpp_LIBRARY_DIRS  ${DOCOPTCPP_PREFIX})
+set(DocOptCpp_LIBRARIES     ${DOCOPTCPP_PREFIX}/libdocopt.a)
 
-externalproject_add(docopt
-    PREFIX ${DOCOPT_ROOT}
+set(DOCOPTCPP_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${DOCOPTCPP_PREFIX})
+
+externalproject_add(${DOCOPTCPP_TARGET}
+    CMAKE_ARGS      ${DOCOPTCPP_CMAKE_ARGS}
+    PREFIX          ${DOCOPTCPP_PREFIX}
     # ---
-    GIT_REPOSITORY https://github.com/docopt/docopt.cpp
-    GIT_TAG "master"
+    GIT_REPOSITORY  https://github.com/docopt/docopt.cpp
+    GIT_TAG         "master"
+    # ---
+    # ---
+    INSTALL_DIR     ${DOCOPTCPP_PREFIX}
+    BINARY_DIR      ${DOCOPTCPP_PREFIX}
+    # ---
+    LOG_CONFIGURE   ON
+    LOG_DOWNLOAD    ON
+    LOG_INSTALL     ON
+    LOG_BUILD       ON
+    # ---
     UPDATE_DISCONNECTED True
-    CMAKE_ARGS ${DOCOPT_CMAKE_ARGS}
-    INSTALL_DIR ${DOCOPT_ROOT}
-    BINARY_DIR ${DOCOPT_ROOT}
-    # ---
-    LOG_CONFIGURE ON
-    LOG_DOWNLOAD ON
-    LOG_INSTALL ON
-    LOG_BUILD ON
+    UPDATE_COMMAND      ""
 )
 
 add_library(libdocopt STATIC IMPORTED)
-add_dependencies(libdocopt docopt)
 
 set_target_properties(libdocopt
-    PROPERTIES IMPORTED_LOCATION ${DOCOPT_LIBRARIES})
+    PROPERTIES IMPORTED_LOCATION ${DocOptCpp_LIBRARIES})
+
+add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(${DOCOPT_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
@@ -96,24 +105,36 @@ pkg_check_modules(ZeroMQ REQUIRED libzmq)
 # - Compile the protobuf declarations for jomiel messages
 #
 file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
-protobuf_generate_cpp(SRC_PROTO HDR_PROTO ${PROTO_FILES})
+
+protobuf_generate_cpp(
+    SRC_PROTO_FILES
+    HDR_PROTO_FILES
+    ${PROTO_FILES}
+)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO} ${SRC_PROTO} ${HDR_PROTO})
+add_executable(demo
+    ${SRC_PROTO_FILES}
+    ${HDR_PROTO_FILES}
+    ${SRC_DEMO_FILES}
+)
 
 target_include_directories(demo PUBLIC
+    ${DocOptCpp_INCLUDE_DIRS}
     ${Protobuf_INCLUDE_DIRS}
     ${ZeroMQ_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
+    ${DocOptCpp_LIBRARY_DIRS}
     ${Protobuf_LIBRARY_DIRS}
     ${ZeroMQ_LIBRARY_DIRS}
 )
 
-target_link_libraries(demo
+target_link_libraries(demo PUBLIC
     ${Protobuf_LITE_LIBRARIES}
+    ${DocOptCpp_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${ZeroMQ_LIBRARIES}
     libdocopt
