@@ -8,4 +8,4 @@ structopt = "0.3"
 zmq = "0.9"
 
 [build-dependencies]
-protoc-rust = "2.0"
+protoc-rust = "2.8"
