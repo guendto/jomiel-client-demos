@@ -117,7 +117,7 @@ impl Jomiel {
         }
     }
 
-    pub fn print_message(&self, status: &str, response: &Message) {
+    pub fn print_message(&self, status: &str, response: &dyn Message) {
         self.print_status(status);
         /*
         if self.opts.output_json {
