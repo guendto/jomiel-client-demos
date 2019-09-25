@@ -1,3 +1,15 @@
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-examples
+ *
+ * Copyright
+ *  2019 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 extern crate protoc_rust;
 
 use protoc_rust::Customize;
