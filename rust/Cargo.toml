@@ -3,7 +3,7 @@ name = "demo"
 version = "0.1.0"
 
 [dependencies]
-protobuf = "2.4.0"
+protobuf = "2.8"
 structopt = "0.2"
 zmq = "0.8"
 #serde = "1.0.89"
