@@ -3,7 +3,7 @@
 ## Building and running
 
 ```shell
-$ mkdir build && cd build
-$ cmake .. && make
-$ ./demo [args...]
+mkdir build && cd build
+cmake .. && make
+./demo [args...]
 ```
