@@ -2,12 +2,13 @@
 
 `jomiel-examples` is a selection of examples written in a number of
 _different modern programming languages_. These examples show how the
-[jomiel][1] inquiries are made and responses are handled in different
-languages.
+[jomiel][1] inquiries are made -- and the responses are handled -- using
+different programming languages.
 
 **Notes**
 
-- The examples are not necessarily identical to one another
+- The examples may vary; they are not necessarily identical in terms of
+  the program features
 
 ## Dockerfiles
 
