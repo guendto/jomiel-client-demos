@@ -3,7 +3,7 @@
 ## Building and running
 
 ```shell
-$ pip install -r requirements.txt
-$ python demo --init
-$ python demo [args...]
+pip install -r requirements.txt
+python demo --init
+python demo [args...]
 ```
