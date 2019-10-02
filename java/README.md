@@ -3,8 +3,8 @@
 ## Building and running
 
 ```shell
-$ mvn compile exec:java -Dexec.args="[args...]"
+mvn compile exec:java -Dexec.args="[args...]"
 # Or
-$ mvn package
-$ java -jar target/<jarfile> [args...]
+mvn package
+java -jar target/<jarfile> [args...]
 ```
