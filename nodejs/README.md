@@ -3,6 +3,6 @@
 ## Building and running
 
 ```shell
-$ yarn install
-$ ./bin/demo [args ...]
+yarn install
+./bin/demo [args ...]
 ```
