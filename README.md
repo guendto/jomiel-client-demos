@@ -12,7 +12,8 @@ different programming languages.
 
 ## Dockerfiles
 
-Each language directory contains a dockerfile (some more than one).
+Each language specific directory contains a dockerfile (some more than
+one).
 
 ```shell
 docker build -t YOUR_TAGNAME -f PATH_TO_DOCKERFILE .
