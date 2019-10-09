@@ -24,6 +24,9 @@ else()
     set(PROTO_DIR "../proto/")
 endif()
 
+#set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_RULE_MESSAGES OFF)
+
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
 
 # Additional CXX flags of interest.
