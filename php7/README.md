@@ -4,9 +4,9 @@
 
 ### php-zmq
 
-See the notes below.
+Pick one of the three ways to install php-zmq. See also the notes below.
 
-**Install using phpbrew**
+**Option #1: Install using phpbrew**
 
 If you are using phpbrew, you can install the extension with:
 
@@ -14,13 +14,13 @@ If you are using phpbrew, you can install the extension with:
 phpbrew ext install github:zeromq/php-zmq master
 ```
 
-**Install as a Debian package**
+**Option #2: Install as a Debian package**
 
 ```shell
 apt-get install php-zmq  # debian stretch and earlier?
 ```
 
-**Build and install from the source**
+**Option #3: Build and install from the source**
 
 ```shell
 git clone https://github.com/zeromq/php-zmq
