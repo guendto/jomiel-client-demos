@@ -9,11 +9,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-set -e
 
 # Protobuffer compiler
 #
-PROTOC=protoc
+PROTOC=`which protoc`
+[ -z "$PROTOC" ] && {
+    echo "protoc: command not found"
+    exit 1
+}
 
 # Save generated files to this directory.
 #
