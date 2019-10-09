@@ -12,7 +12,7 @@
 project(demo C)
 cmake_minimum_required(VERSION 3.13)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 
 set(CMAKE_C_STANDARD 11)
