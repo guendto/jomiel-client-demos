@@ -4,7 +4,11 @@
 
 ```shell
 mvn compile exec:java -Dexec.args="[args...]"
-# Or
+```
+
+Or:
+
+```shell
 mvn package
 java -jar target/<jarfile> [args...]
 ```
