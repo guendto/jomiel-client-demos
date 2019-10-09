@@ -10,19 +10,7 @@
 #
 
 project(demo)
-
 cmake_minimum_required(VERSION 3.13)
-
-# Options.
-#
-option(WITH_DOCKER "build in docker container" OFF)
-
-if(WITH_DOCKER)
-    include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
-    set(PROTO_DIR "proto/")
-else()
-    set(PROTO_DIR "../proto/")
-endif()
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
@@ -35,6 +23,17 @@ string(APPEND CMAKE_CXX_FLAGS "--param=ssp-buffer-size=4 ")
 string(APPEND CMAKE_CXX_FLAGS "-Werror=format-security ")
 string(APPEND CMAKE_CXX_FLAGS "-D_FORTIFY_SOURCE=2 ")
 string(APPEND CMAKE_CXX_FLAGS "-Wpedantic ")
+
+# Options.
+#
+option(WITH_DOCKER "build in docker container" OFF)
+
+if(WITH_DOCKER)
+    include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
+    set(PROTO_DIR "proto/")
+else()
+    set(PROTO_DIR "../proto/")
+endif()
 
 # Source files.
 #
