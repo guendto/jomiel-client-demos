@@ -28,16 +28,13 @@ endif()
 set(CMAKE_RULE_MESSAGES OFF)
 
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
-
-# Additional CXX flags of interest.
-#
-#set(CMAKE_CXX_FLAGS "-Wall -Werror -march=native -O1 -ggdb3 -pipe ")
-#string(APPEND CMAKE_CXX_FLAGS "-Wformat -Wformat-security ")
-#string(APPEND CMAKE_CXX_FLAGS "-fstack-protector-strong ")
-#string(APPEND CMAKE_CXX_FLAGS "--param=ssp-buffer-size=4 ")
-#string(APPEND CMAKE_CXX_FLAGS "-Werror=format-security ")
-#string(APPEND CMAKE_CXX_FLAGS "-D_FORTIFY_SOURCE=2 ")
-#string(APPEND CMAKE_CXX_FLAGS "-Wpedantic ")
+set(CMAKE_CXX_FLAGS "-Wall -Werror -march=native -O1 -ggdb3 -pipe ")
+string(APPEND CMAKE_CXX_FLAGS "-Wformat -Wformat-security ")
+string(APPEND CMAKE_CXX_FLAGS "-fstack-protector-strong ")
+string(APPEND CMAKE_CXX_FLAGS "--param=ssp-buffer-size=4 ")
+string(APPEND CMAKE_CXX_FLAGS "-Werror=format-security ")
+string(APPEND CMAKE_CXX_FLAGS "-D_FORTIFY_SOURCE=2 ")
+string(APPEND CMAKE_CXX_FLAGS "-Wpedantic ")
 
 # Source files.
 #
