@@ -5,7 +5,7 @@ _different modern programming languages_. These examples show how the
 [jomiel][1] inquiries are made -- and the responses are handled -- using
 different programming languages.
 
-![Example (C)](./docs/examples/c-framed.svg)
+![Example](./docs/examples/nodejs-framed.svg)
 
 **Note**
 
