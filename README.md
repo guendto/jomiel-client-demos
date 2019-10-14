@@ -2,7 +2,7 @@
 
 `jomiel-examples` is a selection of examples written in a number of
 _different modern programming languages_. These examples show how the
-[jomiel][1] inquiries are made -- and the responses are handled -- using
+[jomiel] inquiries are made -- and the responses are handled -- using
 different programming languages.
 
 ![Example](./docs/examples/nodejs-framed.svg)
@@ -31,8 +31,9 @@ docker run --network host --rm -it tg/jomiel-examples/c-example foo
 
 ## License
 
-`jomiel-examples` is licensed under the [Apache License version 2.0][2]
-(APLv2).
+`jomiel-examples` is licensed under the [Apache License version
+2.0][APLv2].
 
-[1]: https://github.com/guendto/jomiel
-[2]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
+
+[jomiel]: https://github.com/guendto/jomiel
+[APLv2]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
