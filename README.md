@@ -7,7 +7,7 @@ different programming languages.
 
 ![Example](./docs/examples/nodejs-framed.svg)
 
-**Note**
+## Note
 
 - The examples may vary; they are not necessarily identical in terms of
   the program features
@@ -34,6 +34,5 @@ docker run --network host --rm -it tg/jomiel-examples/c-example foo
 `jomiel-examples` is licensed under the [Apache License version
 2.0][APLv2].
 
-
-[jomiel]: https://github.com/guendto/jomiel
 [APLv2]: https://www.tldrlegal.com/l/apache2
+[jomiel]: https://github.com/guendto/jomiel
