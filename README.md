@@ -36,4 +36,4 @@ docker run --network host --rm -it tg/jomiel-examples/c-example foo
 
 
 [jomiel]: https://github.com/guendto/jomiel
-[APLv2]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
+[APLv2]: https://www.tldrlegal.com/l/apache2
