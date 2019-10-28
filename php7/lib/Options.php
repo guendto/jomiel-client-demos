@@ -28,7 +28,7 @@ function opts_init($argv) {
     $opts->add("r|router-endpoint:",
         "Specify the rounter endpoint address")
         ->isa("string")
-        ->defaultValue("tcp://localhost:5570")
+        ->defaultValue("tcp://localhost:5514")
         ;
 
     $opts->add("t|connect-timeout:",
