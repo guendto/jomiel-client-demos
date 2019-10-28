@@ -24,7 +24,7 @@ require "./lib/Jomiel.pm";
 
 my %opts = (
     'print-config' => 0,
-    'router-endpoint' => 'tcp://localhost:5570',
+    'router-endpoint' => 'tcp://localhost:5514',
     'version-zmq' => 0,
     'be-terse' => 0,
 );

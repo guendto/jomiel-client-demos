@@ -23,7 +23,7 @@ cmdr
   .usage('[options] <uri ...>')
   .option('-r, --router-endpoint <addr>',
     'Specify the router endpoint address',
-    'tcp://localhost:5570')
+    'tcp://localhost:5514')
   .option('-V, --version-zmq',
     'Display ZeroMQ version and exit')
   .option('-j, --output-json',

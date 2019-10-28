@@ -43,7 +43,7 @@ def options_parse():
                         '--router-endpoint',
                         metavar='<addr>',
                         help='Specify the router endpoint address',
-                        default='tcp://localhost:5570')
+                        default='tcp://localhost:5514')
 
     parser.add_argument(
         '-t',

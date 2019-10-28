@@ -29,7 +29,7 @@ pub struct Options {
         name = "addr",
         short = "r",
         long = "router-endpoint",
-        default_value = "tcp://localhost:5570"
+        default_value = "tcp://localhost:5514"
     )]
     pub router_endpoint: String,
 

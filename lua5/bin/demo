@@ -31,7 +31,7 @@ function main()
 
     parser:option('-r --router-endpoint',
         'Specify the outer endpoint address',
-        'tcp://localhost:5570')
+        'tcp://localhost:5514')
 
     parser:option('-t --connect-timeout',
         'Specify maximum time in seconds for the connection allowed to take',

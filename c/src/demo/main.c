@@ -46,7 +46,7 @@ static inline int print_usage() {
 }
 
 static inline void opts_set_defaults(options_t* opts) {
-  static const char default_router_endpoint[] = "tcp://localhost:5570";
+  static const char default_router_endpoint[] = "tcp://localhost:5514";
   opts->router_endpoint = (char*)default_router_endpoint;
   opts->connect_timeout = 30;
 }

@@ -38,7 +38,7 @@ public class Options {
       names = {"-r", "--router-endpoint"},
       paramLabel = "<addr>",
       description = "Specify the router endpoint address (default: ${DEFAULT-VALUE})")
-  private String routerEndpoint = "tcp://localhost:5570";
+  private String routerEndpoint = "tcp://localhost:5514";
 
   @Option(
       names = {"-t", "--connect-timeout"},
