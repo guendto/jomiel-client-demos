@@ -19,7 +19,7 @@ Options:
     -D --print-config               Print configuration values and exit
     -V --version-zmq                Print ZeroMQ version and exit
     -r --router-endpoint <addr>     Specify the router endpoint address
-                                     [default: tcp://localhost:5570]
+                                     [default: tcp://localhost:5514]
     -t --connect-timeout <time>     Specify maximum time in seconds for
                                      the connection allowed to take
                                      [default: 30]
