@@ -35,7 +35,7 @@ func NewOptions() *Options {
 	flag.StringVarP(
 		&opts.RouterEndpoint,
 		"router-endpoint", "r",
-		"tcp://localhost:5570",
+		"tcp://localhost:5514",
 		"Specify the router endpoint address")
 
 	flag.IntVarP(
