@@ -2,20 +2,20 @@ GEM
   remote: https://rubygems.org/
   specs:
     docopt (0.6.1)
-    ffi (1.11.1)
+    ffi (1.11.3)
     ffi-rzmq (2.0.7)
       ffi-rzmq-core (>= 1.0.7)
     ffi-rzmq-core (1.0.7)
       ffi
-    google-protobuf (3.9.2)
+    google-protobuf (3.11.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  docopt (~> 0.6.1)
+  docopt (~> 0.6)
   ffi-rzmq (~> 2.0)
-  google-protobuf (~> 3.9)
+  google-protobuf (~> 3.0)
 
 BUNDLED WITH
    1.17.2
