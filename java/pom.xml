@@ -41,6 +41,27 @@
 
   <build>
     <plugins>
+      <!-- https://maven.apache.org/enforcer/enforcer-rules -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.1.1</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <!-- http://os72.github.io/protoc-jar-maven-plugin/ -->
       <plugin>
         <groupId>com.github.os72</groupId>
