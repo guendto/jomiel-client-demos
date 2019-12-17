@@ -9,6 +9,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# alpine 3.10 packages protobuf 3.6.1-r1 (2019-12-17). This is the
+# likely the cause for the google/protobuf gem not loading correctly at
+# runtime.
+#
+
 # stage: bootstrap-image
 #
 FROM ruby:2.6-alpine
