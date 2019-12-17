@@ -23,6 +23,7 @@ string(APPEND CMAKE_CXX_FLAGS "--param=ssp-buffer-size=4 ")
 string(APPEND CMAKE_CXX_FLAGS "-Werror=format-security ")
 string(APPEND CMAKE_CXX_FLAGS "-D_FORTIFY_SOURCE=2 ")
 string(APPEND CMAKE_CXX_FLAGS "-Wpedantic ")
+string(APPEND CMAKE_CXX_FLAGS "-Wno-deprecated-declarations ")
 
 # Options.
 #
