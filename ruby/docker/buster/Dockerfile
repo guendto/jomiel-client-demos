@@ -31,7 +31,7 @@ RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
     # Install the ruby runtime modules.
-    && ./bootstrap -p proto/ -l ruby -d proto/ \
+    && ./bootstrap -p proto/ -l ruby -d lib/ \
     && bundler install \
     # Cleanup (stage #1).
     && rm -rf ./bootstrap proto/ Gemfile Gemfile.lock \
