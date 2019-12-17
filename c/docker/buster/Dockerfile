@@ -25,6 +25,7 @@ RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
         protobuf-c-compiler \
+        protobuf-compiler \
         libprotobuf-c-dev \
         libprotobuf-dev \
         build-essential \
