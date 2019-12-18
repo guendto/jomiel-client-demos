@@ -60,11 +60,11 @@ RUN set -euxo pipefail \
             && cp $PHPINIDIR/php.ini-development $PHPINIDIR/php.ini \
             && sed -i 's/;extension=bz2/extension=zmq/' $PHPINIDIR/php.ini \
             && cd .. \
+    # Produce protobuf declarations.
+    && ./bootstrap -p proto/ -l php -d lib/proto/ \
     # Download composer and install deps.
     && wget $CMPSR_URI -O - -q | php -- --quiet \
     && php ./composer.phar install --no-cache \
-    # Produce protobuf declarations.
-    && ./bootstrap -p proto/ -l php -d lib/proto/ \
     # Install runtime deps.
     && apk --no-cache add \
         protobuf \
