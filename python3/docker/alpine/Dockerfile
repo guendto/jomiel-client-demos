@@ -8,7 +8,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM python:3.7-alpine
+FROM python:3.8-alpine
 
 WORKDIR /app
 
