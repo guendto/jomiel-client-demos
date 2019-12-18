@@ -24,7 +24,7 @@
 #           - Which is now (as of buster?) non-existing?
 #
 
-FROM php:7.3-cli-alpine
+FROM php:7.4-cli-alpine
 
 WORKDIR /app
 
