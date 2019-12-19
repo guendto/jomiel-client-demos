@@ -37,7 +37,8 @@ RUN set -eux \
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
     && sed -i 's/\.\.\/proto/\.\/proto/' lib/Jomiel.pm \
     # Install the perl runtime deps.
-    && cpanm --installdeps . \
+    && cpanm --notest --quiet Carton \
+    && carton \
     # Cleanup (stage #1).
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
@@ -49,6 +50,6 @@ RUN set -eux \
     # Cleanup (stage #2).
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["./bin/demo"]
+ENTRYPOINT ["perl", "-Ilocal/lib/perl5", "./bin/demo"]
 
 CMD ["-h"]
