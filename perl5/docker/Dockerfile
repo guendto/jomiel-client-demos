@@ -13,6 +13,8 @@ FROM perl:5-slim-buster
 WORKDIR /app
 
 COPY perl5/bin/demo ./bin/demo
+
+COPY perl5/cpanfile.snapshot .
 COPY perl5/cpanfile .
 
 COPY perl5/lib/ ./lib/
