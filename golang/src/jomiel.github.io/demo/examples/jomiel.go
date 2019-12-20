@@ -30,7 +30,7 @@ type Jomiel struct {
 
 func NewJomiel(opts *Options) *Jomiel {
 	sck := czmq.NewSock(czmq.Req)
-    sck.SetOption(czmq.SockSetLinger(0))
+	sck.SetOption(czmq.SockSetLinger(0))
 	return &Jomiel{
 		opts: opts,
 		sock: sck,
@@ -75,6 +75,14 @@ func (j *Jomiel) send(uri string) {
 }
 
 func (j *Jomiel) recv() {
+	/*
+	 * Timeout used to work with:
+	 *  - ZeroMQ version 4.2 (czmq version 4.0)
+	 *
+	 * poller.Wait() returns immediately with 'sck' set to 'nil' with:
+	 *  - ZeroMQ version 4.3 (czmq version 4.1)
+	 *  - ZeroMQ version 4.3 (czmq version 4.2)
+	 */
 	poller, err := czmq.NewPoller(j.sock)
 	if err != nil {
 		log.Fatalln("failed to create a poller: ", err)
@@ -83,12 +91,12 @@ func (j *Jomiel) recv() {
 
 	sck, err := poller.Wait(j.opts.ConnectTimeout * 1000)
 	if err != nil {
-        log.Fatalln("failed to pollin an event: ", err)
+		log.Fatalln("failed to pollin an event: ", err)
 	} else {
-        if sck == nil {
-            log.Fatalln("error: connection timed out")
-        }
-    }
+		if sck == nil {
+			log.Fatalln("error: connection timed out")
+		}
+	}
 
 	data, err := j.sock.RecvMessage()
 	if err != nil {
