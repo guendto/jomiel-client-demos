@@ -19,13 +19,15 @@ set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_C_FLAGS "-Wall -Werror -march=native -O1 -ggdb3 -pipe ")
-string(APPEND CMAKE_C_FLAGS "-Wformat -Wformat-security ")
-string(APPEND CMAKE_C_FLAGS "-fstack-protector-strong ")
-string(APPEND CMAKE_C_FLAGS "--param=ssp-buffer-size=4 ")
-string(APPEND CMAKE_C_FLAGS "-Werror=format-security ")
-string(APPEND CMAKE_C_FLAGS "-D_FORTIFY_SOURCE=2 ")
-string(APPEND CMAKE_C_FLAGS "-Wpedantic")
+add_compile_options(
+  -Wall -Werror -march=native -O1 -ggdb3 -pipe
+  -Wformat -Wformat-security
+  --param=ssp-buffer-size=4
+  -fstack-protector-strong
+  -Werror=format-security
+  -D_FORTIFY_SOURCE=2
+  -Wpedantic
+)
 
 set(SRC_DEMO
     src/demo/proto/Message.pb-c.c
