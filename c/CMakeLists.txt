@@ -12,10 +12,13 @@
 project(demo C)
 cmake_minimum_required(VERSION 3.13)
 
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+# Settings.
+#
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "-Wall -Werror -march=native -O1 -ggdb3 -pipe ")
 string(APPEND CMAKE_C_FLAGS "-Wformat -Wformat-security ")
 string(APPEND CMAKE_C_FLAGS "-fstack-protector-strong ")
