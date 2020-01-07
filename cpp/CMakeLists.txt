@@ -12,10 +12,13 @@
 project(demo)
 cmake_minimum_required(VERSION 3.13)
 
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+# Settings.
+#
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
-
+set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
+
 set(CMAKE_CXX_FLAGS "-Wall -Werror -march=native -O1 -ggdb3 -pipe ")
 string(APPEND CMAKE_CXX_FLAGS "-Wformat -Wformat-security ")
 string(APPEND CMAKE_CXX_FLAGS "-fstack-protector-strong ")
