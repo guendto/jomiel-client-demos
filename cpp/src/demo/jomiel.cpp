@@ -83,7 +83,7 @@ void jomiel::recv() const {
   auto const src = static_cast<char*>(ptr);
 
   auto const& size = msg.size();
-  std::string result(src, size);
+  const std::string result(src, size);
 
   Response resp;
   resp.ParseFromString(result);
