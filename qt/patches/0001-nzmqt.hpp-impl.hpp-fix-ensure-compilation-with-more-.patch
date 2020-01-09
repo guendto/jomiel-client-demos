@@ -1,0 +1,60 @@
+From 72533494e95cb8e08818c61a92854ee868dae7ff Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Toni=20G=C3=BCndo=C4=9Fdu?=
+ <47444442+guendto@users.noreply.github.com>
+Date: Wed, 8 Jan 2020 15:13:34 +0200
+Subject: [PATCH] nzmqt.hpp/impl.hpp: fix: ensure compilation with more strict
+ options
+
+Fixes the following issues:
+
+nzmqt.hpp
+- error: 'run' overrides a member function but is not marked 'override'
+- error: 'createSocketInternal' overrides a member function but is not
+marked 'override'
+
+impl.hpp
+- error: no viable conversion from 'nzmqt::ZMQSocket' to 'void *'
+---
+ include/nzmqt/impl.hpp  | 3 ++-
+ include/nzmqt/nzmqt.hpp | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/include/nzmqt/impl.hpp b/include/nzmqt/impl.hpp
+index a66377c..b1aa0fa 100644
+--- a/include/nzmqt/impl.hpp
++++ b/include/nzmqt/impl.hpp
+@@ -526,7 +526,8 @@ NZMQT_INLINE PollingZMQSocket* PollingZMQContext::createSocketInternal(ZMQSocket
+ 
+ NZMQT_INLINE void PollingZMQContext::registerSocket(ZMQSocket* socket_)
+ {
+-    pollitem_t pollItem = { *socket_, 0, ZMQSocket::EVT_POLLIN, 0 };
++    pollitem_t pollItem = {static_cast<void*>(*socket_), 0,
++                           ZMQSocket::EVT_POLLIN, 0};
+ 
+     QMutexLocker lock(&m_pollItemsMutex);
+ 
+diff --git a/include/nzmqt/nzmqt.hpp b/include/nzmqt/nzmqt.hpp
+index 4141bb5..6e57d35 100755
+--- a/include/nzmqt/nzmqt.hpp
++++ b/include/nzmqt/nzmqt.hpp
+@@ -447,7 +447,7 @@ namespace nzmqt
+         // If the polling process is not stopped (by a previous call to the 'stop()' method) this
+         // method will call the 'poll()' method once and re-schedule a subsequent call to this method
+         // using the current polling interval.
+-        void run();
++        void run() override;
+ 
+         // This method will poll on all currently available poll-items (known ZMQ sockets)
+         // using the given timeout to wait for incoming messages. Note that this timeout has
+@@ -534,7 +534,7 @@ namespace nzmqt
+         void notifierError(int errorNum, const QString& errorMsg);
+ 
+     protected:
+-        SocketNotifierZMQSocket* createSocketInternal(ZMQSocket::Type type_);
++        SocketNotifierZMQSocket* createSocketInternal(ZMQSocket::Type type_) override;
+     };
+ 
+     NZMQT_API inline ZMQContext* createDefaultContext(QObject* parent_ = nullptr, int io_threads_ = NZMQT_DEFAULT_IOTHREADS)
+-- 
+2.20.1
+
