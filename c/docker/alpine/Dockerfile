@@ -32,6 +32,8 @@ RUN set -eux \
         cmake \
         make \
         gcc \
+        # for bootstrap script
+        bash \
     && ./bootstrap -p proto -l c -d src/demo/proto/
 
 # stage: compile-image
