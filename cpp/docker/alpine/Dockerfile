@@ -36,6 +36,8 @@ RUN set -eux \
         make \
         git \
         g++ \
+        # for bootstrap script
+        bash \
     # See the 'cppzmq' note above.
     #
     && mkdir -p ext/cppzmq \
