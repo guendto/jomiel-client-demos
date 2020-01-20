@@ -40,6 +40,8 @@ else()
     set(PROTO_DIR "../proto/")
 endif()
 
+option(WITH_BOOTSTRAP_DEBUG "display details of the bootstrap script" OFF)
+
 # Source files.
 #
 set(SRC_DEMO_FILES
@@ -94,7 +96,7 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext/proto)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
@@ -108,19 +110,49 @@ pkg_check_modules(ZeroMQ REQUIRED libzmq)
 # Protobuf
 # - Compile the protobuf declarations for jomiel messages
 #
-file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
-
-protobuf_generate_cpp(
-    SRC_PROTO_FILES
-    HDR_PROTO_FILES
-    ${PROTO_FILES}
+set(BOOTSTRAP_COMMAND
+    ${PROTO_DIR}/bin/bootstrap
+    -p
+    ${PROTO_DIR}
+    -l
+    cpp
+    -d
+    ${CMAKE_CURRENT_BINARY_DIR}/ext/proto
 )
+
+if(WITH_BOOTSTRAP_DEBUG)
+    include(CMakePrintHelpers)
+    cmake_print_variables(BOOTSTRAP_COMMAND)
+    foreach(arg ${BOOTSTRAP_COMMAND})
+        message(STATUS "  '${arg}'")
+    endforeach()
+endif()
+
+message(STATUS "Compile the protobuf declarations for jomiel messages")
+
+execute_process(COMMAND
+    ${BOOTSTRAP_COMMAND}
+    OUTPUT_QUIET
+    RESULT_VARIABLE BOOTSTRAP_RESULT
+    OUTPUT_VARIABLE BOOTSTRAP_OUTPUT
+)
+
+file(GLOB_RECURSE
+    SRC_BOOTSTRAP_FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/*.cc
+    ${CMAKE_CURRENT_BINARY_DIR}/*.h
+)
+
+if(WITH_BOOTSTRAP_DEBUG)
+    cmake_print_variables(SRC_BOOTSTRAP_FILES)
+    cmake_print_variables(BOOTSTRAP_RESULT)
+    cmake_print_variables(BOOTSTRAP_OUTPUT)
+endif()
 
 # Target.
 #
 add_executable(demo
-    ${SRC_PROTO_FILES}
-    ${HDR_PROTO_FILES}
+    ${SRC_BOOTSTRAP_FILES}
     ${SRC_DEMO_FILES}
 )
 
