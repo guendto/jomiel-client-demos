@@ -35,9 +35,9 @@ option(WITH_DOCKER "build in docker container" OFF)
 
 if(WITH_DOCKER)
     include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
-    set(PROTO_DIR "proto/")
+    set(PROTO_DIR "${PROJECT_SOURCE_DIR}/proto")
 else()
-    set(PROTO_DIR "../proto/")
+    set(PROTO_DIR "${PROJECT_SOURCE_DIR}/../proto")
 endif()
 
 option(WITH_BOOTSTRAP_DEBUG "display details of the bootstrap script" OFF)
@@ -105,6 +105,7 @@ include_directories(src)
 #
 find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
+
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
 
 # Protobuf
