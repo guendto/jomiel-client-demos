@@ -17,7 +17,7 @@
 #include <cstdio>
 #include <string>
 
-#include "Status.pb.h"
+#include "jomiel/protobuf/v1alpha1/status.pb.h"
 #include "demo/jomiel.h"
 
 namespace jomiel {
@@ -49,7 +49,7 @@ void jomiel::inquire(std::string const& uri) const {
 }
 
 void jomiel::send(std::string const& uri) const {
-  Inquiry inquiry;
+  jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
   if (!this->opts.at("--be-terse").asBool()) {
@@ -85,7 +85,7 @@ void jomiel::recv() const {
   auto const& size = msg.size();
   const std::string result(src, size);
 
-  Response resp;
+  jp::Response resp;
   resp.ParseFromString(result);
 
   this->dump_response(resp);
@@ -132,7 +132,7 @@ void jomiel::print_message(std::string const& status,
 }
 
 void jomiel::dump_terse_response(
-    media::MediaResponse const& media_response) const {
+    jp::MediaResponse const& media_response) const {
   std::cout << "---\ntitle: " << media_response.title() << "\n";
   std::cout << "quality:\n";
 
@@ -146,11 +146,11 @@ void jomiel::dump_terse_response(
   }
 }
 
-void jomiel::dump_response(Response const& response) const {
+void jomiel::dump_response(jp::Response const& response) const {
   auto const& response_status = response.status();
   auto const& media_response = response.media();
 
-  if (response_status.code() == ::jomiel::status::OK) {
+  if (response_status.code() == jp::STATUS_CODE_OK) {
     if (this->opts.at("--be-terse").asBool()) {
       this->dump_terse_response(media_response);
     } else {
