@@ -10,15 +10,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <google/protobuf/util/json_util.h>
-#include <google/protobuf/text_format.h>
+#include "demo/jomiel.h"
 
-#include <sstream>
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/json_util.h>
+
 #include <cstdio>
+#include <sstream>
 #include <string>
 
 #include "jomiel/protobuf/v1alpha1/status.pb.h"
-#include "demo/jomiel.h"
 
 namespace jomiel {
 
@@ -27,7 +28,8 @@ jomiel::jomiel(opts_t const& opts) : opts(opts) {
   this->zmq.timeout = this->opts.at("--connect-timeout").asLong();
 
   this->zmq.ctx = std::make_unique<zmq::context_t>(1);
-  this->zmq.sck = std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
+  this->zmq.sck =
+    std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
 
   int n = 0;
   this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
@@ -70,7 +72,7 @@ void jomiel::send(std::string const& uri) const {
 
 void jomiel::recv() const {
   zmq::pollitem_t const items[] = {
-      {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
+    {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
 
   zmq::message_t msg;
 
@@ -132,7 +134,7 @@ void jomiel::print_message(std::string const& status,
 }
 
 void jomiel::dump_terse_response(
-    jp::MediaResponse const& media_response) const {
+  jp::MediaResponse const& media_response) const {
   std::cout << "---\ntitle: " << media_response.title() << "\n";
   std::cout << "quality:\n";
 

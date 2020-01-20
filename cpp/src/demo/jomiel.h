@@ -13,14 +13,14 @@
 #ifndef CPP_SRC_DEMO_JOMIEL_H_
 #define CPP_SRC_DEMO_JOMIEL_H_
 
+#include <google/protobuf/message.h>
+
 #include <memory>
 #include <string>
-
-#include <google/protobuf/message.h>
 #include <zmq.hpp>
 
-#include "jomiel/protobuf/v1alpha1/message.pb.h"
 #include "demo/types.h"
+#include "jomiel/protobuf/v1alpha1/message.pb.h"
 
 namespace jp = jomiel::protobuf::v1alpha1;
 namespace gp = google::protobuf;
