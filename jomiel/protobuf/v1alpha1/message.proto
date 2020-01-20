@@ -1,0 +1,39 @@
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-proto
+ *
+ * Copyright
+ *  2019-2020 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+syntax = "proto3";
+
+package jomiel.protobuf.v1alpha1;
+
+option java_package = "io.github.jomiel.protobuf.v1alpha1";
+option java_outer_classname = "MessageProto";
+option java_multiple_files = true;
+option csharp_namespace = "Jomiel.ProtoBuf.V1Alpha1";
+option php_namespace = "Jomiel\\ProtoBuf\\V1alpha1";
+
+import "jomiel/protobuf/v1alpha1/media.proto";
+import "jomiel/protobuf/v1alpha1/status.proto";
+
+message Inquiry {
+    oneof inquiry {
+        jomiel.protobuf.v1alpha1.MediaInquiry media = 1;
+    }
+}
+
+message Response {
+    oneof response {
+        jomiel.protobuf.v1alpha1.MediaResponse media = 1;
+    }
+    jomiel.protobuf.v1alpha1.ResponseStatus status = 2;
+}
+
+// vim: set ts=4 sw=4 tw=72 expandtab:
