@@ -19,9 +19,10 @@
 #include <google/protobuf/message.h>
 #include <zmq.hpp>
 
-#include "Message.pb.h"
+#include "jomiel/protobuf/v1alpha1/message.pb.h"
 #include "demo/types.h"
 
+namespace jp = jomiel::protobuf::v1alpha1;
 namespace gp = google::protobuf;
 
 namespace jomiel {
@@ -37,8 +38,8 @@ struct jomiel {
   void print_message(std::string const&, gp::Message const&) const;
   void print_status(std::string const&) const;
 
-  void dump_terse_response(media::MediaResponse const&) const;
-  void dump_response(Response const&) const;
+  void dump_terse_response(jp::MediaResponse const&) const;
+  void dump_response(jp::Response const&) const;
 
   void send(std::string const&) const;
   void recv() const;
