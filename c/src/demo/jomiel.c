@@ -123,7 +123,7 @@ static inline int jomiel_send(const jomiel_t* self, char* uri) {
 
 static inline void dump_terse_response(const Jomiel__Response* message) {
   const Jomiel__Media__MediaResponse* media_response = message->media;
-  const Jomiel__Media__MediaResponse__StreamQuality* quality;
+  const Jomiel__Media__MediaResponse__Stream__StreamQuality* quality;
   int i;
 
   printf(
@@ -140,7 +140,7 @@ static inline void dump_terse_response(const Jomiel__Response* message) {
 
 static inline void foreach_stream(
   const Jomiel__Media__MediaResponse* media) {
-  const Jomiel__Media__MediaResponse__StreamQuality* quality;
+  const Jomiel__Media__MediaResponse__Stream__StreamQuality* quality;
   const Jomiel__Media__MediaResponse__Stream* stream;
   int i;
   for (i = 0; i < media->n_stream; ++i) {
