@@ -51,7 +51,7 @@ struct jomiel {
   using zsck_t = std::unique_ptr<zmq::socket_t>;
   struct {
     std::string endpoint;
-    long timeout;
+    int16_t timeout;
     zctx_t ctx;
     zsck_t sck;
   } zmq;
