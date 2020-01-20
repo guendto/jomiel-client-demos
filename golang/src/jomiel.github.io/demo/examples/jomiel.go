@@ -20,7 +20,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	pb "jomiel.github.io/demo/examples/proto"
+	pb "jomiel.github.io/demo/examples/proto/jomiel/protobuf/v1alpha1"
 )
 
 type Jomiel struct {
@@ -141,7 +141,7 @@ func (j *Jomiel) dumpResponse(response *pb.Response) {
 	responseStatus := response.GetStatus()
 	mediaResponse := response.GetMedia()
 
-	if responseStatus.GetCode() == pb.StatusCode_OK {
+	if responseStatus.GetCode() == pb.StatusCode_STATUS_CODE_OK {
 		if j.opts.BeTerse {
 			j.dumpTerseResponse(mediaResponse)
 		} else {
