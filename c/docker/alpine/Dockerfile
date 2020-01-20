@@ -16,7 +16,6 @@ FROM alpine:3.10 AS bootstrap-image
 WORKDIR /app
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 COPY c/CMakeLists.txt .
 COPY c/src/ ./src/
@@ -34,7 +33,7 @@ RUN set -eux \
         gcc \
         # for bootstrap script
         bash \
-    && ./bootstrap -p proto -l c -d src/demo/proto/
+    && ./proto/bin/bootstrap -p proto -l c -d src/demo/proto/
 
 # stage: compile-image
 #
