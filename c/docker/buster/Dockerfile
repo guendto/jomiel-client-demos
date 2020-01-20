@@ -19,7 +19,6 @@ COPY c/CMakeLists.txt .
 COPY c/src/ ./src/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 RUN set -eux \
     ; apt-get -qq update \
@@ -33,7 +32,7 @@ RUN set -eux \
         pkgconf \
         cmake \
     && rm -rf /var/lib/apt/lists/* \
-    && ./bootstrap -p proto -l c -d src/demo/proto/
+    && ./proto/bin/bootstrap -p proto -l c -d src/demo/proto/
 
 # stage: compile-image
 #
