@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -15,16 +15,16 @@ package io.github.jomiel.examples;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
+import io.github.jomiel.protobuf.v1alpha1.Inquiry;
+import io.github.jomiel.protobuf.v1alpha1.MediaInquiry;
+import io.github.jomiel.protobuf.v1alpha1.MediaResponse;
+import io.github.jomiel.protobuf.v1alpha1.MediaResponse.Stream;
+import io.github.jomiel.protobuf.v1alpha1.MediaResponse.Stream.StreamQuality;
+import io.github.jomiel.protobuf.v1alpha1.Response;
+import io.github.jomiel.protobuf.v1alpha1.ResponseStatus;
+import io.github.jomiel.protobuf.v1alpha1.StatusCode;
 import java.io.IOException;
 import java.util.List;
-import jomiel.Message.Inquiry;
-import jomiel.Message.Response;
-import jomiel.media.Media.MediaInquiry;
-import jomiel.media.Media.MediaResponse;
-import jomiel.media.Media.MediaResponse.Stream;
-import jomiel.media.Media.MediaResponse.StreamQuality;
-import jomiel.status.Status.ResponseStatus;
-import jomiel.status.Status.StatusCode;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Poller;
@@ -113,7 +113,7 @@ public final class Jomiel {
     final ResponseStatus responseStatus = response.getStatus();
     final MediaResponse mediaResponse = response.getMedia();
 
-    if (responseStatus.getCode() == StatusCode.OK) {
+    if (responseStatus.getCode() == StatusCode.STATUS_CODE_OK) {
       if (options.beTerse()) {
         dumpTerseResponse(mediaResponse);
       } else {
