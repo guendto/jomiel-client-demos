@@ -17,7 +17,6 @@ WORKDIR $GOPATH/src/jomiel.github.io/demo
 
 COPY golang/src/jomiel.github.io/demo/ ./
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 RUN set -eux \
     ; apt-get -qq update \
@@ -34,7 +33,7 @@ RUN set -eux \
         gopkg.in/zeromq/goczmq.v4 \
         github.com/ghodss/yaml \
         github.com/spf13/pflag \
-    && ./bootstrap -p proto -l go -d examples/proto/
+    && ./proto/bin/bootstrap -p proto -l go -d examples/proto/
 
 # stage: compile-image
 #
