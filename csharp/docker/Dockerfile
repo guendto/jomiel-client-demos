@@ -24,7 +24,6 @@ COPY csharp/premake5.lua .
 COPY csharp/src/ ./src/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 # github-api-release-v3 returns nothing for 'premake/premake-core'
 #   - Use a hardcoded URL for premake5 instead [2019-09-18]
@@ -42,8 +41,13 @@ ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/
 ARG PKT_URI=https://api.github.com/repos/fsprojects/Paket/releases/latest
 
 RUN set -eux \
-    ; apt-get -qq update \
-    && apt-get -qq --no-install-recommends install \
+    # We need protoc 3.6.1 (protobuf-compiler) from the stretch
+    # backports.
+    #
+    ; echo 'deb http://deb.debian.org/debian stretch-backports main' \
+        >> /etc/apt/sources.list \
+    && apt-get -qq update \
+    && apt-get -t stretch-backports -qq --no-install-recommends install \
         protobuf-compiler \
         build-essential \
         mono-devel \
@@ -52,14 +56,14 @@ RUN set -eux \
         curl \
         jq \
     && rm -rf /var/lib/apt/lists/* \
+    && ./proto/bin/bootstrap -p proto/ -l csharp -d src/proto/ \
     && mkdir -p ext \
         && cd ext \
-        # "Download premake5.
+        # Download premake5.
         && curl -#JLO ${PM_URI} \
         # Download paket.
         && curl -#JLO `curl -s ${PKT_URI} \
-            | jq -r '.assets[] | select(.name == "paket.exe").browser_download_url'` \
-        && cd ..
+            | jq -r '.assets[] | select(.name == "paket.exe").browser_download_url'`
 
 # stage: compile-ext-image
 #
@@ -76,7 +80,7 @@ RUN set -eux \
         && cd premake-${PM_VER}/build/gmake.unix \
         && make config=release Premake5 \
         && cd ${WRKDIR} \
-    # Produce .snl file.
+    # Produce the .snl file.
     && premake5 vs2019
 
 # stage: compile-image
