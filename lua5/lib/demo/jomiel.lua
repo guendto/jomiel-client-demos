@@ -30,12 +30,12 @@ function Jomiel.new(logger, opts)
     p.include_imports = true
     p:addpath('../proto')
 
-    p:loadfile('Message.proto')
+    p:loadfile('jomiel/protobuf/v1alpha1/message.proto')
 
-    assert(pb.type 'jomiel.Inquiry')
-    assert(pb.type 'jomiel.media.MediaInquiry')
-    assert(pb.type 'jomiel.Response')
-    assert(pb.type 'jomiel.media.MediaResponse')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.Inquiry')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaInquiry')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.Response')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaResponse')
 
     return setmetatable({
         opts = opts,
@@ -71,7 +71,7 @@ function Jomiel:send(uri)
             self:printMessage('<send>', inquiry)
         end
 
-        local bytes = pb.encode('jomiel.Inquiry', inquiry)
+        local bytes = pb.encode('jomiel.protobuf.v1alpha1.Inquiry', inquiry)
         self:printSerialized('send', bytes)
 
         return bytes
@@ -86,7 +86,7 @@ function Jomiel:recv()
     poller:add(self.sck, zmq.POLLIN, function()
         local bytes = self.sck:recv()
         self:printSerialized('recv', bytes)
-        local response = pb.decode('jomiel.Response', bytes)
+        local response = pb.decode('jomiel.protobuf.v1alpha1.Response', bytes)
         self:dumpResponse(response)
     end)
 
@@ -124,8 +124,9 @@ function Jomiel:dumpTerseResponse(media_response)
 end
 
 function Jomiel:dumpResponse(response)
-    local code = pb.enum('jomiel.status.StatusCode', response.status.code)
-    local OK = pb.enum('jomiel.status.StatusCode', 'OK')
+    local code = pb.enum('jomiel.protobuf.v1alpha1.StatusCode',
+                            response.status.code)
+    local OK = pb.enum('jomiel.protobuf.v1alpha1.StatusCode', 'OK')
     if code == OK then
         if self.opts.be_terse then
             self:dumpTerseResponse(response.media)
