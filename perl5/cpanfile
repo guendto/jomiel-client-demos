@@ -1,4 +1,4 @@
-requires 'IO::Socket::SSL';
-requires 'ZMQ::FFI';
-requires 'YAML';
-requires 'Google::ProtocolBuffers::Dynamic';
+requires 'IO::Socket::SSL', '2.0';
+requires 'ZMQ::FFI', '1.17';
+requires 'YAML', '1.29';
+requires 'Google::ProtocolBuffers::Dynamic', '0.27';
