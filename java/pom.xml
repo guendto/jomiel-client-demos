@@ -74,6 +74,10 @@
               <goal>run</goal>
             </goals>
             <configuration>
+              <outputDirectory>src/main/java</outputDirectory>
+              <includeDirectories>
+                <include>../proto</include>
+              </includeDirectories>
               <inputDirectories>
                 <include>../proto</include>
               </inputDirectories>
