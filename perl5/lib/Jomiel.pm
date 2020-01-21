@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -28,16 +28,19 @@ use YAML qw(Dump);
 sub new {
     my ($class, $args) = @_;
 
-    my $gpd = Google::ProtocolBuffers::Dynamic->new("../proto");
-    $gpd->load_file('Message.proto');
+    my $pkg_path = 'jomiel/protobuf/v1alpha1';
+    my $pkg_path_dot = $pkg_path =~ s/\//\./gr;
+
+    my $gpd = Google::ProtocolBuffers::Dynamic->new('./proto/');
+    $gpd->load_file($pkg_path . "/message.proto");
 
     $gpd->map(
-        { message => 'jomiel.Inquiry', to => 'Inquiry'},
-        { message => 'jomiel.Response', to => 'Response'},
-        { message => 'jomiel.media.MediaInquiry', to => 'MediaInquiry' },
-        { message => 'jomiel.media.MediaResponse', to => 'MediaResponse' },
-        { message => 'jomiel.status.ResponseStatus', to => 'ResponseStatus' },
-        { enum => 'jomiel.status.StatusCode', to => 'StatusCode' }
+        { message => $pkg_path_dot . '.Inquiry',, to => 'Inquiry'},
+        { message => $pkg_path_dot . '.Response', to => 'Response'},
+        { message => $pkg_path_dot . '.MediaInquiry', to => 'MediaInquiry' },
+        { message => $pkg_path_dot . '.MediaResponse', to => 'MediaResponse' },
+        { message => $pkg_path_dot . '.ResponseStatus', to => 'ResponseStatus' },
+        { enum => $pkg_path_dot . '.StatusCode', to => 'StatusCode' }
     );
 
     my $ctx = ZMQ::FFI->new;
@@ -97,7 +100,7 @@ sub dump_response {
 
     my $code = $status->get_code;
 
-    if ($code == StatusCode->OK) {
+    if ($code == StatusCode->STATUS_CODE_OK) {
         if ($self->{opts}->{'be-terse'}) {
             $self->dump_terse_response($media);
         } else {
