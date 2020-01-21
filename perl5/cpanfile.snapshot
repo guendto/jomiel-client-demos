@@ -121,9 +121,30 @@ DISTRIBUTIONS
       List::Util 1.33
       Module::Load 0
       Path::Tiny 0.077
+      PkgConfig 0.14026
       Test2::API 1.302015
       Text::ParseWords 3.26
       perl 5.008001
+  Alien-FFI-0.24
+    pathname: P/PL/PLICEASE/Alien-FFI-0.24.tar.gz
+    provides:
+      Alien::FFI 0.24
+    requirements:
+      Alien::Base 0.73
+      Alien::Build 0.73
+      Alien::Build::MM 0.73
+      Archive::Tar 0
+      Config 0
+      ExtUtils::MakeMaker 6.52
+      HTTP::Tiny 0.044
+      IO::Socket::SSL 1.56
+      IO::Zlib 0
+      Mojo::DOM58 1.00
+      Net::SSLeay 1.49
+      Sort::Versions 0
+      URI 0
+      URI::Escape 0
+      perl 5.006
   Alien-ProtoBuf-0.09
     pathname: M/MB/MBARBON/Alien-ProtoBuf-0.09.tar.gz
     provides:
@@ -145,10 +166,10 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.52
       File::chdir 0
       perl 5.006
-  Alien-uPB-0.12
-    pathname: M/MB/MBARBON/Alien-uPB-0.12.tar.gz
+  Alien-uPB-0.13
+    pathname: M/MB/MBARBON/Alien-uPB-0.13.tar.gz
     provides:
-      Alien::uPB 0.12
+      Alien::uPB 0.13
     requirements:
       Alien::Base 0
       Alien::Base::ModuleBuild 0.023
@@ -425,6 +446,7 @@ DISTRIBUTIONS
       FFI::Probe::Runner::Result 0.96
       FFI::Temp 0.96
     requirements:
+      Alien::FFI 0.20
       Capture::Tiny 0
       ExtUtils::CBuilder 0
       ExtUtils::MakeMaker 7.12
@@ -457,16 +479,16 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       vars 0
-  Google-ProtocolBuffers-Dynamic-0.26
-    pathname: M/MB/MBARBON/Google-ProtocolBuffers-Dynamic-0.26.tar.gz
+  Google-ProtocolBuffers-Dynamic-0.27
+    pathname: M/MB/MBARBON/Google-ProtocolBuffers-Dynamic-0.27.tar.gz
     provides:
-      Google::ProtocolBuffers::Dynamic 0.26
+      Google::ProtocolBuffers::Dynamic 0.27
       Google::ProtocolBuffers::Dynamic::MakeModule undef
       Google::ProtocolBuffers::Dynamic::ProtocInterface undef
       Google::ProtocolBuffers::Dynamic::ProtocPlugin undef
     requirements:
       Alien::ProtoBuf 0.08
-      Alien::uPB 0.06
+      Alien::uPB 0.13
       ExtUtils::CppGuess 0.20
       ExtUtils::ParseXS 2.30
       ExtUtils::Typemaps::Default 1.05
@@ -582,6 +604,18 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Mojo-DOM58-2.000
+    pathname: D/DB/DBOOK/Mojo-DOM58-2.000.tar.gz
+    provides:
+      Mojo::DOM58 2.000
+      Mojo::DOM58::Entities 2.000
+    requirements:
+      Carp 0
+      Exporter 5.57
+      ExtUtils::MakeMaker 0
+      List::Util 0
+      Scalar::Util 0
+      perl 5.008001
   Moo-2.003004
     pathname: H/HA/HAARG/Moo-2.003004.tar.gz
     provides:
@@ -698,6 +732,14 @@ DISTRIBUTIONS
       strict 0
       warnings 0
       warnings::register 0
+  PkgConfig-0.23026
+    pathname: P/PL/PLICEASE/PkgConfig-0.23026.tar.gz
+    provides:
+      PkgConfig 0.23026
+    requirements:
+      ExtUtils::MakeMaker 6.56
+      Test::More 0.94
+      perl 5.006000
   Role-Tiny-2.000008
     pathname: H/HA/HAARG/Role-Tiny-2.000008.tar.gz
     provides:
