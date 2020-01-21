@@ -4,5 +4,6 @@
 
 ```shell
 yarn install
+./bin/gen-static -p ../proto
 ./bin/demo [args ...]
 ```
