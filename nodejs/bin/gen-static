@@ -1,0 +1,87 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+#
+# jomiel-proto
+#
+# Copyright
+#  2020 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# gen-static
+#
+# A simple script to compile protobuf declarations for jomiel messages
+# into a single static module using pbjs.
+#
+set -e;
+
+# Enable bash globstar for recursive search ("**/*.proto").
+#
+shopt -s globstar
+
+# The location of the protobuf declaration (.proto) files.
+#
+PROTODIR=
+
+# The path to the pbjs command.
+#
+PBJS=./node_modules/protobufjs/bin/pbjs
+
+# The destination module file to produce.
+#
+OUTFILE=lib/compiled.js
+
+help()
+{
+    cat <<EOF
+Usage: ${0##*/} [-j <pbjspath>] [-p <protodir>] [-o <outfile>]
+
+Notes
+    - Make sure you have installed protobufjs
+
+Where
+    <protodir> path to the _root_ dir containing the .proto files to
+        compile
+
+    <outfile> is the destination module file to produce (default:
+        $OUTFILE)
+
+    <pbjspath> is the path to the pbjs command
+        (default: $PBJS)
+
+
+EOF
+    [ -n "$1" ] && echo "error: $1"
+    exit 0
+}
+
+compile_files()
+{
+    OPTS="-t static-module -w commonjs"
+    PROTO_FILES=$PROTODIR/**/*.proto
+
+    echo -n "Compiling the protobuf declarations for jomiel messages..."
+    $PBJS $OPTS -o $OUTFILE $PROTO_FILES || exit $?
+    echo "done."
+
+    exit 0
+}
+
+while getopts "?hp:o:j:" o; do
+case "$o" in
+    p) PROTODIR=$OPTARG ;;
+    o) OUTFILE=$OPTARG ;;
+    j) PBJS=$OPTARG ;;
+    h|?) help ;;
+esac
+done
+
+shift $((OPTIND-1)) # Shift off the options and optional --
+
+[ -z "$PROTODIR" ] && help "-p <protodir> not specified"
+[ -z "$OUTFILE" ] && help "-o <outfile> not specified"
+compile_files
+
+exit $?
