@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -17,7 +17,6 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_STANDARD 11)
 
 add_compile_options(
   -Wall -Werror -march=native -O1 -ggdb3 -pipe
@@ -29,19 +28,31 @@ add_compile_options(
   -Wpedantic
 )
 
-set(SRC_DEMO
-    src/demo/proto/Message.pb-c.c
-    src/demo/proto/Message.pb-c.h
-    src/demo/proto/Status.pb-c.c
-    src/demo/proto/Status.pb-c.h
-    src/demo/proto/Media.pb-c.c
-    src/demo/proto/Media.pb-c.h
+list(APPEND CMAKE_MODULE_PATH # So we can find BootStrapProtoGen.
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
+
+# Helpers.
+#   - required by bootstrap_get_bindings (and friends)
+#
+include(CMakePrintHelpers)
+
+# Protobuf.
+#
+include(BootstrapProtoGen)
+
+bootstrap_gen_bindings(c ext/proto)
+#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+
+# Source files.
+#
+set(SRC_DEMO_FILES
     src/demo/jomiel.c
     src/demo/main.c
 )
 
 # Include dirs.
 #
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext/proto)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
@@ -57,7 +68,7 @@ pkg_check_modules(CZMQ REQUIRED libczmq)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO})
+add_executable(demo ${SRC_DEMO_FILES} ${SRC_BOOTSTRAP_FILES})
 
 target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
