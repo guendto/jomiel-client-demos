@@ -31,18 +31,20 @@ add_compile_options(
   -Wpedantic
 )
 
-# Options.
+list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
+
+# Helpers.
+#   - required by bootstrap_get_bindings (and friends)
 #
-option(WITH_DOCKER "build in docker container" OFF)
+include(CMakePrintHelpers)
 
-if(WITH_DOCKER)
-    include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
-    set(PROTO_DIR "${PROJECT_SOURCE_DIR}/proto")
-else()
-    set(PROTO_DIR "${PROJECT_SOURCE_DIR}/../proto")
-endif()
+# Protobuf.
+#
+include(BootstrapProtoGen)
 
-option(WITH_BOOTSTRAP_DEBUG "display details of the bootstrap script" OFF)
+bootstrap_gen_bindings(cpp ext/proto)
+#cmake_print_variables(SRC_BOOTSTRAP_FILES)
 
 # Source files.
 #
@@ -109,48 +111,6 @@ find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
 
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
-
-# Protobuf
-# - Compile the protobuf declarations for jomiel messages
-#
-set(BOOTSTRAP_COMMAND
-    ${PROTO_DIR}/bin/bootstrap
-    -p
-    ${PROTO_DIR}
-    -l
-    cpp
-    -d
-    ${CMAKE_CURRENT_BINARY_DIR}/ext/proto
-)
-
-if(WITH_BOOTSTRAP_DEBUG)
-    include(CMakePrintHelpers)
-    cmake_print_variables(BOOTSTRAP_COMMAND)
-    foreach(arg ${BOOTSTRAP_COMMAND})
-        message(STATUS "  '${arg}'")
-    endforeach()
-endif()
-
-message(STATUS "Compile the protobuf declarations for jomiel messages")
-
-execute_process(COMMAND
-    ${BOOTSTRAP_COMMAND}
-    OUTPUT_QUIET
-    RESULT_VARIABLE BOOTSTRAP_RESULT
-    OUTPUT_VARIABLE BOOTSTRAP_OUTPUT
-)
-
-file(GLOB_RECURSE
-    SRC_BOOTSTRAP_FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/*.cc
-    ${CMAKE_CURRENT_BINARY_DIR}/*.h
-)
-
-if(WITH_BOOTSTRAP_DEBUG)
-    cmake_print_variables(SRC_BOOTSTRAP_FILES)
-    cmake_print_variables(BOOTSTRAP_RESULT)
-    cmake_print_variables(BOOTSTRAP_OUTPUT)
-endif()
 
 # Target.
 #
