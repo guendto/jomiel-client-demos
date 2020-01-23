@@ -10,14 +10,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
+"use strict";
 
-const proto = require('lib/compiled').jomiel.protobuf.v1alpha1;
-const zmq = require('zeromq');
+const proto = require("lib/compiled").jomiel.protobuf.v1alpha1;
+const zmq = require("zeromq");
 
 class Jomiel {
   constructor(options) {
-    this.sock = zmq.socket('req');
+    this.sock = zmq.socket("req");
     //this.sock.setsockopt(zmq.ZMQ_LINGER, 0)
     this.options = options;
   }
@@ -30,13 +30,12 @@ class Jomiel {
 
   inquire(uri) {
     const inquiry = proto.Inquiry.create({
-        media: {
-            inputUri: uri,
-        },
+      media: {
+        inputUri: uri
+      }
     });
 
-    if (!this.options.beTerse)
-        this.printMessage(`<send>`, inquiry);
+    if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
     const serialized = proto.Inquiry.encode(inquiry).finish();
 
@@ -45,15 +44,15 @@ class Jomiel {
   }
 
   recv() {
-    this.sock.on('message', data => {
-        this.dumpResponse(data);
-        this.sock.close();
+    this.sock.on("message", data => {
+      this.dumpResponse(data);
+      this.sock.close();
     });
   }
 
   printStatus(message) {
     if (!this.options.beTerse) {
-      console.error('status: ' + message);
+      console.error("status: " + message);
     }
   }
 
@@ -99,7 +98,7 @@ class Jomiel {
 }
 
 module.exports = {
-  Jomiel,
+  Jomiel
 };
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
