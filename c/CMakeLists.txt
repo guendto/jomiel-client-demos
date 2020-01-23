@@ -40,7 +40,7 @@ include(CMakePrintHelpers)
 #
 include(BootstrapProtoGen)
 
-bootstrap_gen_bindings(c ext/proto)
+bootstrap_gen_bindings(c build/gen)
 #cmake_print_variables(SRC_BOOTSTRAP_FILES)
 
 # Source files.
@@ -52,7 +52,7 @@ set(SRC_DEMO_FILES
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext/proto)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
