@@ -16,9 +16,12 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-function log_init() {
-    function new_handler() {
-        function new_formatter() {
+function log_init()
+{
+    function new_handler()
+    {
+        function new_formatter()
+        {
             $fmt = "[%level_name%] status: %message%\n";
             return new LineFormatter($fmt);
         }
