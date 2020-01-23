@@ -43,7 +43,7 @@ include(CMakePrintHelpers)
 #
 include(BootstrapProtoGen)
 
-bootstrap_gen_bindings(cpp ext/proto)
+bootstrap_gen_bindings(cpp build/gen)
 #cmake_print_variables(SRC_BOOTSTRAP_FILES)
 
 # Source files.
@@ -100,7 +100,7 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext/proto)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
