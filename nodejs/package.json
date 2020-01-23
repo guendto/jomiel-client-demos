@@ -7,5 +7,11 @@
     "commander": "^3.0.1",
     "protobufjs": "^6.8.8",
     "zeromq": "^5.1.0"
+  },
+  "devDependencies": {
+    "prettier-eslint-cli": "^5.0.0"
+  },
+  "scripts": {
+    "format": "prettier-eslint --print-width 72 --write \"lib/**/*.js\" \"bin/demo\""
   }
 }
