@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -17,6 +17,7 @@ use \ZMQSocket;
 use \ZMQPoll;
 use \ZMQ;
 
+use Jomiel\ProtoBuf\V1alpha1\{MediaInquiry, Inquiry, Response, StatusCode};
 use \Jomiel;
 
 class JomielClass {
@@ -55,8 +56,8 @@ class JomielClass {
     }
 
     private function send($uri) {
-        $media_inquiry = new Jomiel\Media\MediaInquiry;
-        $inquiry = new Jomiel\Inquiry;
+        $media_inquiry = new MediaInquiry;
+        $inquiry = new Inquiry;
 
         $media_inquiry->setInputUri($uri);
         $inquiry->setMedia($media_inquiry);
@@ -98,7 +99,7 @@ class JomielClass {
             foreach ($readable as $r) {
                 try {
                     $bytes = $this->sck->recv();
-                    $response = new Jomiel\Response;
+                    $response = new Response;
                     $response->mergeFromString($bytes);
                     $this->dumpResponse($response);
                 } catch (Exception $e) {
@@ -133,7 +134,7 @@ class JomielClass {
 
         $status = $response->getStatus();
 
-        if ($status->getCode() == Jomiel\Status\StatusCode::OK) {
+        if ($status->getCode() == StatusCode::STATUS_CODE_OK) {
             $media_response = $response->getMedia();
             if ($this->opts->beTerse) {
                 $this->dumpTerseResponse($media_response);
