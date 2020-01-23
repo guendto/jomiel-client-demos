@@ -23,42 +23,39 @@ use ZMQ::FFI;
 require "./lib/Jomiel.pm";
 
 my %opts = (
-    'print-config' => 0,
-    'router-endpoint' => 'tcp://localhost:5514',
-    'version-zmq' => 0,
-    'be-terse' => 0,
+  'print-config'    => 0,
+  'router-endpoint' => 'tcp://localhost:5514',
+  'version-zmq'     => 0,
+  'be-terse'        => 0,
 );
 
-GetOptions(\%opts,
-            'print-config|D',
-            'router-endpoint|r=s',
-            'version-zmq|V',
-            'be-terse|q',
-            'help|h') or exit(1);
+GetOptions(\%opts, 'print-config|D', 'router-endpoint|r=s',
+  'version-zmq|V', 'be-terse|q', 'help|h')
+  or exit(1);
 
 pod2usage(0)
-    if $opts{help};
+  if $opts{help};
 
 # --print-config
 #
 say Dump \%opts and exit(0)
-    if $opts{'print-config'};
+  if $opts{'print-config'};
 
 my $jomiel = Jomiel->new({
-    opts => \%opts
+  opts => \%opts
 });
 
 # --version-zmq
 #
 $jomiel->print_zmq_version()
-    if $opts{'version-zmq'};
+  if $opts{'version-zmq'};
 
 say "error: no input URI given" and exit(1)
-    if scalar @ARGV == 0;
+  if scalar @ARGV == 0;
 
 $jomiel->connect;
 for (@ARGV) {
-    $jomiel->inquire($_);
+  $jomiel->inquire($_);
 }
 
 __END__
