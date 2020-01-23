@@ -17,32 +17,42 @@ use \ZMQSocket;
 use \ZMQPoll;
 use \ZMQ;
 
-use Jomiel\ProtoBuf\V1alpha1\{MediaInquiry, Inquiry, Response, StatusCode};
+use Jomiel\ProtoBuf\V1alpha1\{
+    MediaInquiry,
+    Inquiry,
+    Response,
+    StatusCode
+};
 use \Jomiel;
 
-class JomielClass {
+class JomielClass
+{
     private $ctx, $sck;
     private $opts, $lg;
 
-    function __construct($logger, $opts) {
+    function __construct($logger, $opts)
+    {
         $this->lg = $logger;
         $this->opts = $opts;
 
-        $this->ctx = new ZMQContext;
+        $this->ctx = new ZMQContext();
         $this->sck = new ZMQSocket($this->ctx, ZMQ::SOCKET_REQ);
 
         $this->sck->setSockOpt(ZMQ::SOCKOPT_LINGER, 0);
     }
 
-    function __destruct() {
+    function __destruct()
+    {
         $this->sck->disconnect($this->opts->routerEndpoint);
     }
 
-    static function create($lg, $opts) {
+    static function create($lg, $opts)
+    {
         return new JomielClass($lg, $opts);
     }
 
-    function connect() {
+    function connect()
+    {
         $addr = $this->opts->routerEndpoint;
         $time = $this->opts->connectTimeout;
         $status = sprintf("<connect> %s (timeout=%d)", $addr, $time);
@@ -50,19 +60,21 @@ class JomielClass {
         $this->sck->connect($addr);
     }
 
-    function inquire($uri) {
+    function inquire($uri)
+    {
         $this->send($uri);
         $this->recv();
     }
 
-    private function send($uri) {
-        $media_inquiry = new MediaInquiry;
-        $inquiry = new Inquiry;
+    private function send($uri)
+    {
+        $media_inquiry = new MediaInquiry();
+        $inquiry = new Inquiry();
 
         $media_inquiry->setInputUri($uri);
         $inquiry->setMedia($media_inquiry);
 
-        if (! $this->opts->beTerse) {
+        if (!$this->opts->beTerse) {
             $this->printMessage("<send>", $inquiry);
         }
 
@@ -70,12 +82,12 @@ class JomielClass {
         $this->sck->send($bytes);
     }
 
-    private function recv() {
-        $poll = new ZMQPoll;
+    private function recv()
+    {
+        $poll = new ZMQPoll();
         $poll->add($this->sck, ZMQ::POLL_IN);
 
         $timeout = $this->opts->connectTimeout * 1000; # to msec
-
         $writeable = array();
         $readable = array();
         $events = 0;
@@ -84,8 +96,8 @@ class JomielClass {
             $events = $poll->poll($readable, $writeable, $timeout);
             $errors = $poll->getLastErrors();
 
-            if (count($errors) >0) {
-                foreach($errors as $error) {
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
                     $this->lg->error($error);
                 }
                 die(1);
@@ -95,11 +107,11 @@ class JomielClass {
             die(1);
         }
 
-        if ($events >0) {
+        if ($events > 0) {
             foreach ($readable as $r) {
                 try {
                     $bytes = $this->sck->recv();
-                    $response = new Response;
+                    $response = new Response();
                     $response->mergeFromString($bytes);
                     $this->dumpResponse($response);
                 } catch (Exception $e) {
@@ -113,15 +125,19 @@ class JomielClass {
         }
     }
 
-    private function getQualityString($stream_quality) {
-        return sprintf("  profile: %s\n    width: %d\n    height: %d",
-                        $stream_quality->getProfile(),
-                        $stream_quality->getWidth(),
-                        $stream_quality->getHeight());
+    private function getQualityString($stream_quality)
+    {
+        return sprintf(
+            "  profile: %s\n    width: %d\n    height: %d",
+            $stream_quality->getProfile(),
+            $stream_quality->getWidth(),
+            $stream_quality->getHeight()
+        );
     }
 
-    private function dumpTerseResponse($media_response) {
-        echo "---\ntitle: " . $media_response->getTitle() ."\n";
+    private function dumpTerseResponse($media_response)
+    {
+        echo "---\ntitle: " . $media_response->getTitle() . "\n";
         echo "quality:\n";
         foreach ($media_response->getStream() as $stream) {
             $stream_quality = $stream->getQuality();
@@ -130,8 +146,8 @@ class JomielClass {
         }
     }
 
-    private function dumpResponse($response) {
-
+    private function dumpResponse($response)
+    {
         $status = $response->getStatus();
 
         if ($status->getCode() == StatusCode::STATUS_CODE_OK) {
@@ -146,13 +162,15 @@ class JomielClass {
         }
     }
 
-    private function printMessage($status, $message) {
+    private function printMessage($status, $message)
+    {
         $this->printStatus($status);
         echo $message->serializeToJsonString() . "\n";
     }
 
-    private function printStatus($status) {
-        if (! $this->opts->beTerse) {
+    private function printStatus($status)
+    {
+        if (!$this->opts->beTerse) {
             $this->lg->info($status);
         }
     }
