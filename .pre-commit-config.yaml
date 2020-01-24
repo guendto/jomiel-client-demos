@@ -1,0 +1,29 @@
+files: python3
+
+repos:
+-   repo: https://github.com/psf/black
+    rev: 19.10b0
+    hooks:
+    -   id: black
+        args: [--safe, --line-length=72]
+        language_version: python3.8
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+    -   id: check-vcs-permalinks
+    -   id: trailing-whitespace
+    -   id: fix-encoding-pragma
+    -   id: end-of-file-fixer
+    -   id: debug-statements
+    -   id: flake8
+        additional_dependencies: ["flake8-bugbear == 19.8.0"]
+        language_version: python3.8
+-   repo: https://github.com/timothycrosley/isort
+    rev: 4.3.21
+    hooks:
+    -   id: isort
+        args: [--thirdparty zmq, --project demo,jomiel]
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v1.26.2
+    hooks:
+    -   id: pyupgrade
