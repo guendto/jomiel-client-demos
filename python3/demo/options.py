@@ -23,12 +23,6 @@ def options_parse():
     parser = ArgumentParser(
         prog='demo', formatter_class=ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument(
-        '-i',
-        '--init',
-        help='Generate the protobuf declarations for jomiel messages',
-        action='store_true')
-
     parser.add_argument('-D',
                         '--print-config',
                         help='Print configuration and exit',
