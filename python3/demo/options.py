@@ -10,7 +10,7 @@
 #
 """TODO."""
 
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 
 
 def options_parse():
@@ -21,47 +21,56 @@ def options_parse():
 
     """
     parser = ArgumentParser(
-        prog='demo', formatter_class=ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('-D',
-                        '--print-config',
-                        help='Print configuration and exit',
-                        action='store_true')
-
-    parser.add_argument('-V',
-                        '--version-zmq',
-                        help='Display ZeroMQ version and exit',
-                        action='store_true')
-
-    parser.add_argument('-r',
-                        '--router-endpoint',
-                        metavar='<addr>',
-                        help='Specify the router endpoint address',
-                        default='tcp://localhost:5514')
+        prog="demo", formatter_class=ArgumentDefaultsHelpFormatter
+    )
 
     parser.add_argument(
-        '-t',
-        '--connect-timeout',
-        metavar='<time>',
-        help=
-        'Specify maximum time in seconds for the connection allowed to take',
-        default=30)
-
-    parser.add_argument('-j',
-                        '--output-json',
-                        help='Print dumped messages in JSON',
-                        action='store_true')
+        "-D",
+        "--print-config",
+        help="Print configuration and exit",
+        action="store_true",
+    )
 
     parser.add_argument(
-        '-q',
-        '--be-terse',
-        help='Be brief and to the point; dump interesting details only',
-        action='store_true')
+        "-V",
+        "--version-zmq",
+        help="Display ZeroMQ version and exit",
+        action="store_true",
+    )
 
-    parser.add_argument('uri',
-                        metavar='<uri>',
-                        nargs='*',
-                        help='the URIs to parse')
+    parser.add_argument(
+        "-r",
+        "--router-endpoint",
+        metavar="<addr>",
+        help="Specify the router endpoint address",
+        default="tcp://localhost:5514",
+    )
+
+    parser.add_argument(
+        "-t",
+        "--connect-timeout",
+        metavar="<time>",
+        help="Specify maximum time in seconds for the connection allowed to take",
+        default=30,
+    )
+
+    parser.add_argument(
+        "-j",
+        "--output-json",
+        help="Print dumped messages in JSON",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "-q",
+        "--be-terse",
+        help="Be brief and to the point; dump interesting details only",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "uri", metavar="<uri>", nargs="*", help="the URIs to parse"
+    )
 
     return parser.parse_args()
 
