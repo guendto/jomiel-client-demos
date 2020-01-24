@@ -12,16 +12,22 @@
 
 import logging as lg
 from sys import stdout
-from zmq import Context, REQ, LINGER  # pylint: disable=E0611
-from zmq import Poller, POLLIN
 
 from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry, Response
 from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
+from zmq import (
+    LINGER,
+    POLLIN,
+    REQ,
+    Context,
+    Poller,
+)  # pylint: disable=E0611
 
 
 class Jomiel:
     """Jomiel"""
-    __slots__ = ['ctx', 'sck', 'opts']
+
+    __slots__ = ["ctx", "sck", "opts"]
 
     def __init__(self, options):
         """__init__"""
@@ -34,7 +40,7 @@ class Jomiel:
         """connect"""
         addr = self.opts.router_endpoint
         time = self.opts.connect_timeout
-        lg.info('<connect> %s (%s)', addr, time)
+        lg.info("<connect> %s (%s)", addr, time)
         self.sck.connect(addr)
 
     def inquire(self, uri):
@@ -44,6 +50,7 @@ class Jomiel:
 
     def send(self, uri):
         """send"""
+
         def inquiry_new():
             """Create a new (serialized) media inquiry message."""
             inquiry = Inquiry()
@@ -59,6 +66,7 @@ class Jomiel:
 
     def recv(self):
         """recv"""
+
         def receive_response():
             """Receive a response message from jomiel."""
             data = self.sck.recv()
@@ -75,7 +83,7 @@ class Jomiel:
             response = receive_response()
             self.dump_response(response)
         else:
-            raise IOError('connection timed out')
+            raise IOError("connection timed out")
 
     def dump_response(self, response):
         """Dump a response
@@ -84,6 +92,7 @@ class Jomiel:
             response (obj): the response object to dump
 
         """
+
         def dump_terse_response(media_response):
             """Dump a terse response
 
@@ -91,14 +100,16 @@ class Jomiel:
                 response (obj): the response object to dump
 
             """
-            print('---\ntitle: ' + media_response.title)
-            print('quality:')
+            print("---\ntitle: " + media_response.title)
+            print("quality:")
 
             def get_terse_quality_string():
                 """Return terse string for a stream quality."""
-                return '  profile: {}\n    width: {}\n    height: {}'.format(
-                    stream_quality.profile, stream_quality.width,
-                    stream_quality.height)
+                return "  profile: {}\n    width: {}\n    height: {}".format(
+                    stream_quality.profile,
+                    stream_quality.width,
+                    stream_quality.height,
+                )
 
             for stream in media_response.stream:
                 stream_quality = stream.quality
@@ -109,9 +120,9 @@ class Jomiel:
             if self.opts.be_terse:
                 dump_terse_response(response.media)
             else:
-                self.print_message('<recv>', response.media)
+                self.print_message("<recv>", response.media)
         else:
-            self.print_message('<recv>', response)
+            self.print_message("<recv>", response)
 
     def print_message(self, status, message):
         """Print a message with a status
@@ -125,6 +136,7 @@ class Jomiel:
 
         if self.opts.output_json:
             from google.protobuf.json_format import MessageToJson
+
             result = MessageToJson(message)
         else:
             result = str(message)
