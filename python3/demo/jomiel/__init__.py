@@ -15,6 +15,9 @@ from sys import stdout
 from zmq import Context, REQ, LINGER  # pylint: disable=E0611
 from zmq import Poller, POLLIN
 
+from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry, Response
+from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
+
 
 class Jomiel:
     """Jomiel"""
@@ -43,8 +46,6 @@ class Jomiel:
         """send"""
         def inquiry_new():
             """Create a new (serialized) media inquiry message."""
-            from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry
-
             inquiry = Inquiry()
             inquiry.media.input_uri = uri  # pylint: disable=E1101
 
@@ -60,7 +61,6 @@ class Jomiel:
         """recv"""
         def receive_response():
             """Receive a response message from jomiel."""
-            from jomiel.protobuf.v1alpha1.message_pb2 import Response
             data = self.sck.recv()
             resp = Response()
             resp.ParseFromString(data)
@@ -104,8 +104,6 @@ class Jomiel:
                 stream_quality = stream.quality
                 quality_string = get_terse_quality_string()
                 print(quality_string)
-
-        from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
 
         if response.status.code == STATUS_CODE_OK:
             if self.opts.be_terse:
