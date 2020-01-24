@@ -15,13 +15,7 @@ from sys import stdout
 
 from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry, Response
 from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
-from zmq import (
-    LINGER,
-    POLLIN,
-    REQ,
-    Context,
-    Poller,
-)  # pylint: disable=E0611
+from zmq import LINGER, POLLIN, REQ, Context, Poller
 
 
 class Jomiel:
@@ -54,7 +48,7 @@ class Jomiel:
         def inquiry_new():
             """Create a new (serialized) media inquiry message."""
             inquiry = Inquiry()
-            inquiry.media.input_uri = uri  # pylint: disable=E1101
+            inquiry.media.input_uri = uri
 
             if not self.opts.be_terse:
                 self.print_message("<send>", inquiry)
