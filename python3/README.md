@@ -4,6 +4,6 @@
 
 ```shell
 pip install -r requirements.txt
-python demo --init
+../proto/bin/bootstrap -p ../proto -l python -d demo
 python demo [args...]
 ```
