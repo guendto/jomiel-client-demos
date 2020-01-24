@@ -14,8 +14,9 @@ import logging as lg
 from sys import exit as _exit
 from sys import stdout
 
-from demo.options import options_parse
 from demo.jomiel import Jomiel
+from demo.options import options_parse
+
 
 def main():
     """main"""
@@ -47,8 +48,9 @@ def main():
     opts = options_parse()
     jomiel = Jomiel(opts)
 
-    lg.basicConfig(level=lg.INFO,
-                   format="[%(levelname)s] status: %(message)s")
+    lg.basicConfig(
+        level=lg.INFO, format="[%(levelname)s] status: %(message)s"
+    )
 
     enable_logger(not opts.be_terse)
 
@@ -58,7 +60,7 @@ def main():
         print_version_zmq()
 
     if not opts.uri:
-        print_error('no input URI given')
+        print_error("no input URI given")
 
     jomiel.connect()
 
@@ -72,9 +74,10 @@ def main():
 def print_config(data):
     """Print config values."""
     from ruamel.yaml import YAML, round_trip_dump
-    yaml = YAML(typ='safe')
+
+    yaml = YAML(typ="safe")
     yaml.default_flow_style = False
-    print('---')
+    print("---")
     round_trip_dump(data, stdout)
     _exit(0)
 
@@ -82,7 +85,8 @@ def print_config(data):
 def print_version_zmq():
     """Print ZeroMQ version."""
     from zmq import zmq_version
-    print('ZeroMQ version %s' % zmq_version())
+
+    print("ZeroMQ version %s" % zmq_version())
     _exit(0)
 
 
