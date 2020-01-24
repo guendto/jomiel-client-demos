@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -14,13 +14,36 @@ import logging as lg
 from sys import exit as _exit
 from sys import stdout
 
-from demo import print_error, enable_logger
 from demo.options import options_parse
 from demo.jomiel import Jomiel
 
+def main():
+    """main"""
 
-def run():
-    """run"""
+    def enable_logger(value=True):
+        """Enable/disable the logger
+
+        Args:
+            value (bool): if True, enables the logger, otherwise the
+                logger is disabled
+
+        """
+        lg.getLogger().disabled = not value
+
+    def print_error(msg):
+        """Print the error message and exit.
+
+        Note:
+            Force-enables the logger so that the error messages get printed
+
+        Args:
+            msg: the message to be printed
+
+        """
+        enable_logger(True)
+        lg.error(msg)
+        _exit(1)
+
     opts = options_parse()
     jomiel = Jomiel(opts)
 
@@ -29,9 +52,7 @@ def run():
 
     enable_logger(not opts.be_terse)
 
-    if opts.init:
-        generate_proto_files()
-    elif opts.print_config:
+    if opts.print_config:
         print_config(opts.__dict__)
     elif opts.version_zmq:
         print_version_zmq()
@@ -46,55 +67,6 @@ def run():
             jomiel.inquire(uri)
     except IOError as exc:
         print_error(str(exc))
-
-
-def generate_proto_files():
-    """Generates the bindings for the .proto message declarations."""
-    def detect_protoc():
-        """Try to find te protoc(1) command."""
-        from os.path import exists
-        from os import environ
-
-        if 'PROTOC' in environ and exists(environ['PROTOC']):
-            return environ['PROTOC']
-
-        from distutils.spawn import find_executable  # pylint: disable=E0401,E0611
-        return find_executable('protoc')
-
-    protoc = detect_protoc()
-    if not protoc:
-        print_error('protoc command not found')
-
-    def find_proto_files():
-        """Determine paths to .proto files"""
-        from os.path import join
-        input_path = '../proto'
-        output_path = 'demo/proto/'
-        proto_files = ['Message.proto', 'Status.proto', 'Media.proto']
-        proto_files = [join(input_path, fname) for fname in proto_files]
-        return {
-            'input_path': input_path,
-            'proto_files': proto_files,
-            'output_path': output_path,
-        }
-
-    proto = find_proto_files()
-    lg.info('Compiling the protobuf declarations for jomiel messages')
-
-    from subprocess import call
-    from os import EX_OK
-
-    for fname in proto['proto_files']:
-        lg.info('Compiling %s...', fname)
-        args = [
-            protoc, '-I' + proto['input_path'],
-            '--python_out=' + proto['output_path'], fname
-        ]
-        if call(args) != EX_OK:
-            _exit(1)
-
-    lg.info('Done')
-    _exit(0)
 
 
 def print_config(data):
