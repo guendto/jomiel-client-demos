@@ -50,7 +50,8 @@ def options_parse():
         "-t",
         "--connect-timeout",
         metavar="<time>",
-        help="Specify maximum time in seconds for the connection allowed to take",
+        help="""Specify maximum time in seconds for the connection
+            allowed to take""",
         default=30,
     )
 
