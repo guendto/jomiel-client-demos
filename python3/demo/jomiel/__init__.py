@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -14,8 +14,6 @@ import logging as lg
 from sys import stdout
 from zmq import Context, REQ, LINGER  # pylint: disable=E0611
 from zmq import Poller, POLLIN
-
-from demo import print_error
 
 
 class Jomiel:
@@ -45,10 +43,7 @@ class Jomiel:
         """send"""
         def inquiry_new():
             """Create a new (serialized) media inquiry message."""
-            try:
-                from .proto.Message_pb2 import Inquiry
-            except ImportError as exc:
-                print_error(str(exc) + ' -- did you run with `--init`?')
+            from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry
 
             inquiry = Inquiry()
             inquiry.media.input_uri = uri  # pylint: disable=E1101
@@ -65,7 +60,7 @@ class Jomiel:
         """recv"""
         def receive_response():
             """Receive a response message from jomiel."""
-            from .proto.Message_pb2 import Response
+            from jomiel.protobuf.v1alpha1.message_pb2 import Response
             data = self.sck.recv()
             resp = Response()
             resp.ParseFromString(data)
@@ -110,9 +105,9 @@ class Jomiel:
                 quality_string = get_terse_quality_string()
                 print(quality_string)
 
-        from .proto.Status_pb2 import OK
+        from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
 
-        if response.status.code == OK:
+        if response.status.code == STATUS_CODE_OK:
             if self.opts.be_terse:
                 dump_terse_response(response.media)
             else:
