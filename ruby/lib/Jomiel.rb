@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -12,7 +12,10 @@
 require "ffi-rzmq"
 require "json"
 
-require "Message_pb"
+require 'jomiel/protobuf/v1alpha1/message_pb'
+
+JP = Jomiel::Protobuf::V1alpha1
+JPS = JP::StatusCode
 
 module Jomiel
 
@@ -38,10 +41,10 @@ module Jomiel
         end
 
         def send(uri)
-            inquiry = Jomiel::Inquiry.new(
-                :media => Jomiel::Media::MediaInquiry.new(:input_uri => uri)
+            inquiry = JP::Inquiry.new(
+                :media => JP::MediaInquiry.new(:input_uri => uri)
             )
-            serialized = Jomiel::Inquiry.encode(inquiry)
+            serialized = JP::Inquiry.encode(inquiry)
             @sck.send_string(serialized)
         end
 
@@ -52,7 +55,7 @@ module Jomiel
             if poll.poll(@timeout * 1000) >0
                 data = ''
                 @sck.recv_string(data)
-                response = Jomiel::Response.decode(data)
+                response = JP::Response.decode(data)
                 dumpResponse(response)
             else
                 Kernel.abort("error: connection timed out")
@@ -79,9 +82,8 @@ QUALITYSTRING
         end
 
         def dumpResponse(response)
-            js = Jomiel::Status::StatusCode
             status = response.status
-            if js.resolve(status.code) == js::OK
+            if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
                 if @opts["--be-terse"]
                     dumpTerseResponse(response.media)
                 else
