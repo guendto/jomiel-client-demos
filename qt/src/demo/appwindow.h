@@ -19,7 +19,7 @@
 #include <QVBoxLayout>
 
 #include "DemoMainWindow"
-#include "Message.pb.h"
+#include "jomiel/protobuf/v1alpha1/message.pb.h"
 #include "nzmqt/nzmqt.hpp"
 
 namespace demo {
