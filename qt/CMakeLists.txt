@@ -18,8 +18,6 @@ set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 11)
 
-set(DEMO_PROTO_DIR "proto/")
-
 add_compile_options(
   -Wall -Werror -march=native -O1 -ggdb3 -pipe
   -Wformat -Wformat-security
@@ -30,15 +28,20 @@ add_compile_options(
   -Wpedantic
 )
 
-# Options.
-#
-option(WITH_DOCKER "build in docker container" OFF)
+list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
 
-if(WITH_DOCKER)
-    set(DEMO_PROTO_DIR "proto/")
-else()
-    set(DEMO_PROTO_DIR "../proto/")
-endif()
+# Helpers.
+#   - required by bootstrap_get_bindings (and friends)
+#
+include(CMakePrintHelpers)
+
+# Protobuf.
+#
+include(BootstrapProtoGen)
+
+bootstrap_gen_bindings(cpp build/gen)
+#cmake_print_variables(SRC_BOOTSTRAP_FILES)
 
 # Source files.
 #
@@ -58,11 +61,11 @@ include(ExternalProject)
 
 # nzmqt
 #
-set(NZMQT_TARGET            nzmqt)
-set(NZMQT_PREFIX            ${CMAKE_CURRENT_BINARY_DIR}/ext/${NZMQT_TARGET})
-set(Nzmqt_INCLUDE_DIRS      ${NZMQT_PREFIX}/src/nzmqt/include)
-set(Nzmqt_LIBRARY_DIRS      ${NZMQT_PREFIX}/src/nzmqt/bin)
-set(Nzmqt_LIBRARIES         ${NZMQT_PREFIX}/src/nzmqt/bin/libnzmqt.a)
+set(NZMQT_TARGET        nzmqt)
+set(NZMQT_PREFIX        ${CMAKE_CURRENT_BINARY_DIR}/ext/${NZMQT_TARGET})
+set(Nzmqt_INCLUDE_DIRS  ${NZMQT_PREFIX}/src/nzmqt/include)
+set(Nzmqt_LIBRARY_DIRS  ${NZMQT_PREFIX}/src/nzmqt/bin)
+set(Nzmqt_LIBRARIES     ${NZMQT_PREFIX}/src/nzmqt/bin/libnzmqt.a)
 
 set(NZMQT_PATCH_FILE
     ${PROJECT_SOURCE_DIR}/patches/0001-nzmqt.hpp-impl.hpp-fix-ensure-compilation-with-more-.patch)
@@ -98,6 +101,7 @@ add_dependencies(libnzmqt ${NZMQT_TARGET})
 
 # Include dirs.
 #
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
@@ -110,17 +114,6 @@ find_package(Protobuf REQUIRED)
 
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
 
-# Protobuffer.
-# - Compile the protobuf declarations for jomiel messages
-#
-file(GLOB PROTO_FILES ${DEMO_PROTO_DIR}/*.proto)
-
-protobuf_generate_cpp(
-    SRC_PROTO_FILES
-    HDR_PROTO_FILES
-    ${PROTO_FILES}
-)
-
 # Qt.
 #
 set(CMAKE_AUTOMOC ON)
@@ -130,8 +123,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 # Target.
 #
 add_executable(demo
-    ${SRC_PROTO_FILES}
-    ${HDR_PROTO_FILES}
+    ${SRC_BOOTSTRAP_FILES}
     ${SRC_DEMO_FILES}
 )
 
