@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -16,17 +16,17 @@ COPY python3/requirements.txt .
 COPY python3/demo/ ./demo/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 RUN set -eux \
     ; apk --update --no-cache --virtual .build_deps add \
         linux-headers \
         protobuf \
         g++ \
-    && ./bootstrap -p proto/ -l python -d demo/proto/ \
+        # for bootstrap script
+        bash \
+    && ./proto/bin/bootstrap -p proto/ -l python -d demo/ \
     && pip install --no-cache-dir -r requirements.txt \
-    && sed -i 's/\.\.\/proto/\.\/proto/' demo/app.py \
-    && rm -rf ./bootstrap proto/ requirements.txt \
+    && rm -rf proto/ requirements.txt \
     && apk del .build_deps \
     && apk add libzmq
 
