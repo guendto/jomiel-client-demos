@@ -14,6 +14,8 @@
 
 #include "DemoAppWindow"
 
+namespace jp = jomiel::protobuf::v1alpha1;
+
 namespace demo {
 
 DemoAppWindow::DemoAppWindow() : DemoMainWindow() {
@@ -53,7 +55,7 @@ void DemoAppWindow::sendInquiry() {
 
   auto const uri = mainWidget->addressbar->text().toStdString();
 
-  jomiel::Inquiry inquiry;
+  jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
   std::string serialized;
