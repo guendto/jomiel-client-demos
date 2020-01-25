@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -16,7 +16,6 @@ COPY python3/requirements.txt .
 COPY python3/demo/ ./demo/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 ENV BUILD_DEPS \
         protobuf-compiler \
@@ -28,12 +27,10 @@ RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
     # Install the python runtime modules.
-    && ./bootstrap -p proto/ -l python -d demo/proto/ \
+    && ./proto/bin/bootstrap -p proto/ -l python -d demo/ \
     && pip install --no-cache-dir -r requirements.txt \
-    # Modify the import path.
-    && sed -i 's/\.\.\/proto/\.\/proto/' demo/app.py \
     # Cleanup (stage #1).
-    && rm -rf ./bootstrap proto/ requirements.txt \
+    && rm -rf proto/ requirements.txt \
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
     # Install the required runtime.
