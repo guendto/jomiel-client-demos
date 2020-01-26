@@ -101,7 +101,7 @@ QUALITYSTRING
     end
 
     def print_status(status)
-      @logger.info(status) if not @opts['--be-terse']
+      @logger.info(status) unless @opts['--be-terse']
     end
   end
 end
