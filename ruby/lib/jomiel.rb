@@ -18,6 +18,7 @@ JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
 module Jomiel
+  # :nodoc:
   class Demo
     def initialize(opts, lg)
       @opts = opts
