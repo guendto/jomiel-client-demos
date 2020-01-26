@@ -9,8 +9,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-require "ffi-rzmq"
-require "json"
+require 'ffi-rzmq'
+require 'json'
 
 require 'jomiel/protobuf/v1alpha1/message_pb'
 
@@ -18,94 +18,91 @@ JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
 module Jomiel
+  class Demo
+    def initialize(opts, lg)
+      @opts = opts
+      @lg = lg
+      @timeout = opts['--connect-timeout'].to_i
+      @ctx = ZMQ::Context.new
+      @sck = @ctx.socket ZMQ::REQ
+      @sck.setsockopt(ZMQ::LINGER, 0)
+    end
 
-    class Demo
-        def initialize(opts, lg)
-            @opts = opts
-            @lg = lg
-            @timeout = opts["--connect-timeout"].to_i
-            @ctx = ZMQ::Context.new
-            @sck = @ctx.socket ZMQ::REQ
-            @sck.setsockopt(ZMQ::LINGER, 0)
-        end
+    def connect
+      addr = @opts['--router-endpoint']
+      printStatus("<connect> #{addr} (timeout=#{@timeout})")
+      @sck.connect(addr)
+    end
 
-        def connect
-            addr = @opts["--router-endpoint"]
-            printStatus("<connect> #{addr} (timeout=#{@timeout})")
-            @sck.connect(addr)
-        end
+    def inquire(uri)
+      send(uri)
+      recv
+    end
 
-        def inquire(uri)
-            send(uri)
-            recv()
-        end
+    def send(uri)
+      inquiry =
+        JP::Inquiry.new(media: JP::MediaInquiry.new(input_uri: uri))
+      serialized = JP::Inquiry.encode(inquiry)
+      @sck.send_string(serialized)
+    end
 
-        def send(uri)
-            inquiry = JP::Inquiry.new(
-                :media => JP::MediaInquiry.new(:input_uri => uri)
-            )
-            serialized = JP::Inquiry.encode(inquiry)
-            @sck.send_string(serialized)
-        end
+    def recv
+      poll = ZMQ::Poller.new
+      poll.register_readable(@sck)
 
-        def recv
-            poll = ZMQ::Poller.new
-            poll.register_readable(@sck)
+      if poll.poll(@timeout * 1_000) > 0
+        data = ''
+        @sck.recv_string(data)
+        response = JP::Response.decode(data)
+        dumpResponse(response)
+      else
+        Kernel.abort('error: connection timed out')
+      end
+    end
 
-            if poll.poll(@timeout * 1000) >0
-                data = ''
-                @sck.recv_string(data)
-                response = JP::Response.decode(data)
-                dumpResponse(response)
-            else
-                Kernel.abort("error: connection timed out")
-            end
-        end
-
-        def getQualityString(streamQuality)
-            return <<QUALITYSTRING
+    def getQualityString(streamQuality)
+      return(
+        <<QUALITYSTRING
   profile: #{streamQuality.profile}
     width: #{streamQuality.width}
     height: #{streamQuality.height}
 QUALITYSTRING
-        end
-
-        def dumpTerseResponse(mediaResponse)
-            puts "---\ntitle: #{mediaResponse.title}"
-            puts "quality:"
-
-            mediaResponse.stream.each do |stream|
-                streamQuality = stream.quality
-                qualityString = getQualityString(streamQuality)
-                puts(qualityString)
-            end
-        end
-
-        def dumpResponse(response)
-            status = response.status
-            if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
-                if @opts["--be-terse"]
-                    dumpTerseResponse(response.media)
-                else
-                    printMessage("<recv>", response.media)
-                end
-            else
-                printMessage("<recv>", response)
-            end
-        end
-
-        def printMessage(status, message)
-            printStatus(status)
-            puts @opts["--output-json"] ? message.to_json : message
-        end
-
-        def printStatus(status)
-            if not @opts["--be-terse"]
-                @lg.info(status)
-            end
-        end
-
+      )
     end
+
+    def dumpTerseResponse(mediaResponse)
+      puts "---\ntitle: #{mediaResponse.title}"
+      puts 'quality:'
+
+      mediaResponse.stream.each do |stream|
+        streamQuality = stream.quality
+        qualityString = getQualityString(streamQuality)
+        puts(qualityString)
+      end
+    end
+
+    def dumpResponse(response)
+      status = response.status
+      if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
+        if @opts['--be-terse']
+          dumpTerseResponse(response.media)
+        else
+          printMessage('<recv>', response.media)
+        end
+      else
+        printMessage('<recv>', response)
+      end
+    end
+
+    def printMessage(status, message)
+      printStatus(status)
+      puts @opts['--output-json'] ? message.to_json : message
+    end
+
+    def printStatus(status)
+      @lg.info(status) if not @opts['--be-terse']
+    end
+  end
 end
 
 # vim: set ts=4 sw=4 tw=72 expandtab:
