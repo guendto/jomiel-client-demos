@@ -13,6 +13,13 @@
 #   - This is the likely the cause for the google/protobuf gem not
 #   loading correctly at runtime
 #
+# 2020-01-26
+#   - Still the same, the workaround causes ruby to raise an issue
+#   claiming that the google-protobuf module cannot be found
+#   - If those workaround lines are commented out, we still get the
+#   segfault as described here:
+#       - https://github.com/protocolbuffers/protobuf/issues/4460
+#
 
 # stage: bootstrap-image
 #
