@@ -61,7 +61,7 @@ module Jomiel
       end
     end
 
-    def getQualityString(streamQuality)
+    def get_quality_string(streamQuality)
       return(
         <<QUALITYSTRING
   profile: #{streamQuality.profile}
@@ -77,7 +77,7 @@ QUALITYSTRING
 
       mediaResponse.stream.each do |stream|
         streamQuality = stream.quality
-        qualityString = getQualityString(streamQuality)
+        qualityString = get_quality_string(streamQuality)
         puts(qualityString)
       end
     end
