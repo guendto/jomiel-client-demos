@@ -48,17 +48,17 @@ module Jomiel
       @zmq[:socket].send_string(serialized)
     end
 
+    def recv_data()
+      data = +''
+      @zmq[:socket].recv_string(data)
+      dump_response JP::Response.decode(data)
+    end
+
     def recv
       poll = ZMQ::Poller.new
-      sck = @zmq[:socket]
-
-      poll.register_readable(sck)
-
+      poll.register_readable(@zmq[:socket])
       if poll.poll(@zmq[:timeout] * 1_000).positive?
-        data = +''
-        sck.recv_string(data)
-        response = JP::Response.decode(data)
-        dump_response(response)
+        recv_data
       else
         Kernel.abort('error: connection timed out')
       end
