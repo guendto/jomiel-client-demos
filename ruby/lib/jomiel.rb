@@ -62,13 +62,11 @@ module Jomiel
     end
 
     def get_quality_string(stream_quality)
-      return(
-        <<QUALITYSTRING
+      <<-QUALITYSTRING
   profile: #{stream_quality.profile}
     width: #{stream_quality.width}
     height: #{stream_quality.height}
-QUALITYSTRING
-      )
+      QUALITYSTRING
     end
 
     def dump_terse_response(media_response)
