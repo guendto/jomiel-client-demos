@@ -31,7 +31,7 @@ module Jomiel
 
     def connect
       addr = @opts['--router-endpoint']
-      printStatus("<connect> #{addr} (timeout=#{@timeout})")
+      print_status("<connect> #{addr} (timeout=#{@timeout})")
       @sck.connect(addr)
     end
 
@@ -96,11 +96,11 @@ QUALITYSTRING
     end
 
     def print_message(status, message)
-      printStatus(status)
+      print_status(status)
       puts @opts['--output-json'] ? message.to_json : message
     end
 
-    def printStatus(status)
+    def print_status(status)
       @logger.info(status) if not @opts['--be-terse']
     end
   end
