@@ -78,8 +78,7 @@ module Jomiel
 
       media_response.stream.each do |stream|
         stream_quality = stream.quality
-        quality_string = get_quality_string(stream_quality)
-        puts(quality_string)
+        puts get_quality_string(stream_quality)
       end
     end
 
