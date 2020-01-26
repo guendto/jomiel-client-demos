@@ -55,7 +55,7 @@ module Jomiel
         data = +''
         @sck.recv_string(data)
         response = JP::Response.decode(data)
-        dumpResponse(response)
+        dump_response(response)
       else
         Kernel.abort('error: connection timed out')
       end
@@ -82,7 +82,7 @@ QUALITYSTRING
       end
     end
 
-    def dumpResponse(response)
+    def dump_response(response)
       status = response.status
       if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
         if @opts['--be-terse']
