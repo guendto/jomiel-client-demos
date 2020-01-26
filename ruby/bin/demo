@@ -12,10 +12,10 @@
 #
 $:.push File.expand_path(File.dirname(__FILE__) + '/../lib/')
 
-require "docopt"
-require "logger"
+require 'docopt'
+require 'logger'
 
-require "Jomiel"
+require 'Jomiel'
 
 usage = <<HELP
 Usage:
@@ -35,33 +35,30 @@ Options:
 HELP
 
 begin
-    opts = Docopt::docopt(usage)
+  opts = Docopt.docopt(usage)
 
-    if opts["--print-config"]
-        opts.each do |key, value|
-            puts "#{key.sub('--', '')}: #{value}"
+  if opts['--print-config']
+    opts.each { |key, value| puts "#{key.sub('--', '')}: #{value}" }
+    Kernel.exit(0)
+  end
+
+  Kernel.abort('error: no input URI given') if opts['URI'].empty?
+
+  lg =
+    Logger.new(
+      STDERR,
+      formatter:
+        proc do |severity, datetime, progname, msg|
+          "#{severity}: #{msg}\n"
         end
-        Kernel.exit(0)
-    end
+    )
 
-    if opts["URI"].empty?
-        Kernel.abort("error: no input URI given")
-    end
+  jomiel = Jomiel::Demo.new(opts, lg)
+  jomiel.connect
 
-    lg = Logger.new(STDERR,
-        formatter: proc {|severity, datetime, progname, msg|
-            "#{severity}: #{msg}\n"
-    })
-
-    jomiel = Jomiel::Demo.new(opts, lg)
-    jomiel.connect()
-
-    opts["URI"].each do |uri|
-        jomiel.inquire(uri)
-    end
-
+  opts['URI'].each { |uri| jomiel.inquire(uri) }
 rescue Docopt::Exit => e
-    puts e.message
+  puts e.message
 end
 
 # vim: set ts=4 sw=4 tw=72 expandtab:
