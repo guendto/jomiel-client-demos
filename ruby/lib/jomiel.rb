@@ -71,11 +71,11 @@ QUALITYSTRING
       )
     end
 
-    def dump_terse_response(mediaResponse)
-      puts "---\ntitle: #{mediaResponse.title}"
+    def dump_terse_response(media_response)
+      puts "---\ntitle: #{media_response.title}"
       puts 'quality:'
 
-      mediaResponse.stream.each do |stream|
+      media_response.stream.each do |stream|
         stream_quality = stream.quality
         qualityString = get_quality_string(stream_quality)
         puts(qualityString)
