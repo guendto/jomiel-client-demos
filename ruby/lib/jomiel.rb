@@ -18,7 +18,7 @@ JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
 module Jomiel
-  def Jomiel.get_quality_string(stream_quality)
+  def self.get_quality_string(stream_quality)
     <<-QUALITYSTRING
   profile: #{stream_quality.profile}
     width: #{stream_quality.width}
