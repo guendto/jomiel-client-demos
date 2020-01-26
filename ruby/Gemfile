@@ -3,9 +3,9 @@
 source "https://rubygems.org"
 #git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem "docopt", "~> 0.6"
-gem "ffi-rzmq", "~> 2.0"
 gem "google-protobuf", "~> 3.0"
+gem "ffi-rzmq", "~> 2.0"
+gem "docopt", "~> 0.6"
 
 # bundler install --with development
 group :development, :optional => true do
