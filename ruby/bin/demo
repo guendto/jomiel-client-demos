@@ -47,10 +47,7 @@ begin
   lg =
     Logger.new(
       STDERR,
-      formatter:
-        proc do |severity, datetime, progname, msg|
-          "#{severity}: #{msg}\n"
-        end
+      formatter: proc { |severity, _, _, msg| "#{severity}: #{msg}\n" }
     )
 
   jomiel = Jomiel::Demo.new(opts, lg)
