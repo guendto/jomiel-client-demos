@@ -5,6 +5,7 @@
   },
   "scripts": {
     "format": "prettier --print-width 72 --write \"lib/*.rb\" \"bin/demo\"",
+    "rubocop": "rubocop bin/demo lib/*.rb",
     "reek": "reek bin/demo lib/*.rb"
   }
 }
