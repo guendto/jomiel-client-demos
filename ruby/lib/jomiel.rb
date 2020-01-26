@@ -83,10 +83,11 @@ module Jomiel
     def dump_response(response)
       status = response.status
       if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
+        media = response.media
         if @opts['--be-terse']
-          dump_terse_response(response.media)
+          dump_terse_response(media)
         else
-          print_message('<recv>', response.media)
+          print_message('<recv>', media)
         end
       else
         print_message('<recv>', response)
