@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -19,7 +19,6 @@ COPY ruby/lib/ ./lib/
 COPY ruby/bin/ ./bin/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 ENV BUILD_DEPS \
         protobuf-compiler \
@@ -31,10 +30,10 @@ RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
     # Install the ruby runtime modules.
-    && ./bootstrap -p proto/ -l ruby -d lib/ \
+    && ./proto/bin/bootstrap -p proto/ -l ruby -d lib/ \
     && bundler install \
     # Cleanup (stage #1).
-    && rm -rf ./bootstrap proto/ Gemfile Gemfile.lock \
+    && rm -rf proto/ Gemfile Gemfile.lock \
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
     # Install the required runtime.
