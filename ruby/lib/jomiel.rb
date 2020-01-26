@@ -52,7 +52,7 @@ module Jomiel
       poll.register_readable(@sck)
 
       if poll.poll(@timeout * 1_000).positive?
-        data = ''
+        data = +''
         @sck.recv_string(data)
         response = JP::Response.decode(data)
         dumpResponse(response)
