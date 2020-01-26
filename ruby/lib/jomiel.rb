@@ -88,14 +88,14 @@ QUALITYSTRING
         if @opts['--be-terse']
           dump_terse_response(response.media)
         else
-          printMessage('<recv>', response.media)
+          print_message('<recv>', response.media)
         end
       else
-        printMessage('<recv>', response)
+        print_message('<recv>', response)
       end
     end
 
-    def printMessage(status, message)
+    def print_message(status, message)
       printStatus(status)
       puts @opts['--output-json'] ? message.to_json : message
     end
