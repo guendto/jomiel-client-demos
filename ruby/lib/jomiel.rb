@@ -71,7 +71,7 @@ QUALITYSTRING
       )
     end
 
-    def dumpTerseResponse(mediaResponse)
+    def dump_terse_response(mediaResponse)
       puts "---\ntitle: #{mediaResponse.title}"
       puts 'quality:'
 
@@ -86,7 +86,7 @@ QUALITYSTRING
       status = response.status
       if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
         if @opts['--be-terse']
-          dumpTerseResponse(response.media)
+          dump_terse_response(response.media)
         else
           printMessage('<recv>', response.media)
         end
