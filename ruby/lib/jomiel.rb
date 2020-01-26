@@ -56,7 +56,7 @@ module Jomiel
       @zmq[:socket].send_string(serialized)
     end
 
-    def recv_data()
+    def recv_data
       data = +''
       @zmq[:socket].recv_string(data)
       dump_response JP::Response.decode(data)
