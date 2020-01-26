@@ -51,7 +51,7 @@ module Jomiel
       poll = ZMQ::Poller.new
       poll.register_readable(@sck)
 
-      if poll.poll(@timeout * 1_000) > 0
+      if poll.poll(@timeout * 1_000).positive?
         data = ''
         @sck.recv_string(data)
         response = JP::Response.decode(data)
