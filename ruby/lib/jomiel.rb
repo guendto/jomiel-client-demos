@@ -17,6 +17,7 @@ require 'jomiel/protobuf/v1alpha1/message_pb'
 JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
+# Jomiel module.
 module Jomiel
   # Returns the quality string created from the given StreamQuality.
   def self.get_quality_string(stream_quality)
