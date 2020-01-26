@@ -83,8 +83,7 @@ module Jomiel
     end
 
     def dump_response(response)
-      status = response.status
-      if JPS.resolve(status.code) == JPS::STATUS_CODE_OK
+      if JPS.resolve(response.status.code) == JPS::STATUS_CODE_OK
         media = response.media
         if @opts['--be-terse']
           dump_terse_response(media)
