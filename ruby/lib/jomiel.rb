@@ -22,17 +22,18 @@ module Jomiel
   class Demo
     def initialize(opts, logger)
       @opts = opts
-      @logger = logger
-      @timeout = opts['--connect-timeout'].to_i
-      @ctx = ZMQ::Context.new
-      @sck = @ctx.socket ZMQ::REQ
-      @sck.setsockopt(ZMQ::LINGER, 0)
+      @opts[:logger] = logger
+      @zmq = {
+        timeout: opts['--connect-timeout'].to_i,
+        socket: ZMQ::Context.new.socket(ZMQ::REQ)
+      }
+      @zmq[:socket].setsockopt(ZMQ::LINGER, 0)
     end
 
     def connect
       addr = @opts['--router-endpoint']
-      print_status("<connect> #{addr} (timeout=#{@timeout})")
-      @sck.connect(addr)
+      print_status("<connect> #{addr} (timeout=#{@zmq[:timeout]})")
+      @zmq[:socket].connect(addr)
     end
 
     def inquire(uri)
@@ -44,16 +45,18 @@ module Jomiel
       inquiry =
         JP::Inquiry.new(media: JP::MediaInquiry.new(input_uri: uri))
       serialized = JP::Inquiry.encode(inquiry)
-      @sck.send_string(serialized)
+      @zmq[:socket].send_string(serialized)
     end
 
     def recv
       poll = ZMQ::Poller.new
-      poll.register_readable(@sck)
+      sck = @zmq[:socket]
 
-      if poll.poll(@timeout * 1_000).positive?
+      poll.register_readable(sck)
+
+      if poll.poll(@zmq[:timeout] * 1_000).positive?
         data = +''
-        @sck.recv_string(data)
+        sck.recv_string(data)
         response = JP::Response.decode(data)
         dump_response(response)
       else
@@ -100,7 +103,7 @@ module Jomiel
     end
 
     def print_status(status)
-      @logger.info(status) unless @opts['--be-terse']
+      @opts[:logger].info(status) unless @opts['--be-terse']
     end
   end
 end
