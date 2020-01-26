@@ -20,9 +20,9 @@ JPS = JP::StatusCode
 module Jomiel
   # :nodoc:
   class Demo
-    def initialize(opts, lg)
+    def initialize(opts, logger)
       @opts = opts
-      @lg = lg
+      @logger = logger
       @timeout = opts['--connect-timeout'].to_i
       @ctx = ZMQ::Context.new
       @sck = @ctx.socket ZMQ::REQ
@@ -101,7 +101,7 @@ QUALITYSTRING
     end
 
     def printStatus(status)
-      @lg.info(status) if not @opts['--be-terse']
+      @logger.info(status) if not @opts['--be-terse']
     end
   end
 end
