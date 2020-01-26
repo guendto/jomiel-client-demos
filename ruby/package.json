@@ -4,6 +4,7 @@
     "prettier": "^1.19.1"
   },
   "scripts": {
-    "format": "prettier --print-width 72 --write \"lib/**/*.rb\" \"bin/demo\""
+    "format": "prettier --print-width 72 --write \"lib/*.rb\" \"bin/demo\"",
+    "reek": "reek bin/demo lib/*.rb"
   }
 }
