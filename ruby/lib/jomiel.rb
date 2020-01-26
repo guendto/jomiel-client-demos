@@ -18,6 +18,7 @@ JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
 module Jomiel
+  # Returns the quality string created from the given StreamQuality.
   def self.get_quality_string(stream_quality)
     <<-QUALITYSTRING
   profile: #{stream_quality.profile}
