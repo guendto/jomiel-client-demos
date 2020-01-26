@@ -28,7 +28,8 @@ module Jomiel
     QUALITYSTRING
   end
 
-  # :nodoc:
+  # A simple demo, that makes an inquiry and dumps the returned
+  # metadata.
   class Demo
     def initialize(opts, logger)
       @opts = opts
