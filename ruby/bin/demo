@@ -15,7 +15,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'docopt'
 require 'logger'
-require 'Jomiel'
+require 'jomiel'
 
 usage = <<~HELP
   Usage:
