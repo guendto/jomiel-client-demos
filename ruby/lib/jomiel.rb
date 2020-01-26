@@ -18,6 +18,14 @@ JP = Jomiel::Protobuf::V1alpha1
 JPS = JP::StatusCode
 
 module Jomiel
+  def Jomiel.get_quality_string(stream_quality)
+    <<-QUALITYSTRING
+  profile: #{stream_quality.profile}
+    width: #{stream_quality.width}
+    height: #{stream_quality.height}
+    QUALITYSTRING
+  end
+
   # :nodoc:
   class Demo
     def initialize(opts, logger)
@@ -64,21 +72,13 @@ module Jomiel
       end
     end
 
-    def get_quality_string(stream_quality)
-      <<-QUALITYSTRING
-  profile: #{stream_quality.profile}
-    width: #{stream_quality.width}
-    height: #{stream_quality.height}
-      QUALITYSTRING
-    end
-
     def dump_terse_response(media_response)
       puts "---\ntitle: #{media_response.title}"
       puts 'quality:'
 
       media_response.stream.each do |stream|
         stream_quality = stream.quality
-        puts get_quality_string(stream_quality)
+        puts Jomiel.get_quality_string(stream_quality)
       end
     end
 
