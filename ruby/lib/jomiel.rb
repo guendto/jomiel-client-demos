@@ -77,8 +77,8 @@ QUALITYSTRING
 
       media_response.stream.each do |stream|
         stream_quality = stream.quality
-        qualityString = get_quality_string(stream_quality)
-        puts(qualityString)
+        quality_string = get_quality_string(stream_quality)
+        puts(quality_string)
       end
     end
 
