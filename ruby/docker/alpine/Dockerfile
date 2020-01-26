@@ -3,15 +3,15 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# alpine 3.10 packages protobuf 3.6.1-r1 (2019-12-17). This is the
-# likely the cause for the google/protobuf gem not loading correctly at
-# runtime.
+# alpine 3.10 packages protobuf 3.6.1-r1 (2019-12-17).
+#   - This is the likely the cause for the google/protobuf gem not
+#   loading correctly at runtime
 #
 
 # stage: bootstrap-image
@@ -27,7 +27,6 @@ COPY ruby/lib/ ./lib/
 COPY ruby/bin/ ./bin/
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 RUN set -eux \
     # Install the build deps.
@@ -37,15 +36,17 @@ RUN set -eux \
         musl-dev \
         make \
         gcc \
+        # for bootstrap script
+        bash \
     # Install the ruby runtime modules.
-    && ./bootstrap -p proto/ -l ruby -d lib/ \
+    && ./proto/bin/bootstrap -p proto/ -l ruby -d lib/ \
     && bundle install \
     # Workaround (build the module):
     #   https://github.com/protocolbuffers/protobuf/issues/4460
     && gem uninstall -I google-protobuf \
     && gem install google-protobuf --platform=ruby \
     # Cleanup.
-    && rm -rf ./bootstrap proto/ Gemfile Gemfile.lock \
+    && rm -rf proto/ Gemfile Gemfile.lock \
     && apk del .build_deps \
     # Install the runtime deps.
     #   Note: 'libzmq' package not enough (why? ruby related?)
