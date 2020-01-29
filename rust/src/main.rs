@@ -35,7 +35,7 @@ fn main() {
         print_zmq_version()
     }
 
-    if jomiel.opts.uri.len() < 1 {
+    if jomiel.opts.uri.is_empty() {
         println!("error: input URI not given");
         std::process::exit(1);
     }
