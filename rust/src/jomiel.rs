@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -15,9 +15,9 @@ use structopt::StructOpt;
 use zmq::{Context, Socket, REQ};
 
 use options::Options;
-use proto::Media::MediaResponse;
-use proto::Message::{Inquiry, Response};
-use proto::Status::StatusCode;
+use proto::media::MediaResponse;
+use proto::message::{Inquiry, Response};
+use proto::status::StatusCode;
 
 #[allow(dead_code)]
 pub struct Jomiel {
@@ -92,7 +92,7 @@ impl Jomiel {
     pub fn dump_response(&self, response: &Response) {
         let response_status = response.get_status();
         let media_response = response.get_media();
-        if response_status.get_code() == StatusCode::OK {
+        if response_status.get_code() == StatusCode::STATUS_CODE_OK {
             if self.opts.be_terse {
                 self.dump_terse_response(media_response);
             } else {
