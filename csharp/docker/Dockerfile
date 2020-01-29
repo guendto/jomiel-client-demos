@@ -55,6 +55,9 @@ RUN set -eux \
         unzip \
         curl \
         jq \
+        # not needed for building, install here until mkbundle issue is
+        # resolved, see notes below.
+        libzmq5 \
     && rm -rf /var/lib/apt/lists/* \
     && ./proto/bin/bootstrap -p proto/ -l csharp -d src/proto/ \
     && mkdir -p ext \
@@ -88,24 +91,31 @@ RUN set -eux \
 FROM compile-ext-image AS compile-image
 
 RUN set -eux \
-    ; msbuild demo.sln -v:q -p:Configuration=release \
-    && mkbundle -o demo --simple demo.exe \
-        --machine-config /etc/mono/4.5/machine.config \
-        --no-config
+    ; msbuild demo.sln -v:q -p:Configuration=release
+    # mkbundle: objects due to missing netstandard ref
+    #   - like runtime-image below, comment out the mkbundle step
+    #&& mkbundle -o demo --simple demo.exe \
+    #    --machine-config /etc/mono/4.5/machine.config \
+    #    --no-config
 
-# stage: runtime-image
-#
-FROM mono:6-slim AS runtime-image
-
-RUN set -eux \
-    ; apt-get -qq update \
-    && apt-get -qq --no-install-recommends install \
-        libzmq5 \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=compile-image /app/demo.exe.config /
-COPY --from=compile-image /app/demo /
-
-ENTRYPOINT ["/demo"]
+ENTRYPOINT ["mono", "/app/demo.exe"]
 
 CMD ["-h"]
+
+# stage: runtime-image
+#   - commented out until mkbundle issue with netstandard is resolved
+#
+#FROM mono:6-slim AS runtime-image
+#
+#RUN set -eux \
+#    ; apt-get -qq update \
+#    && apt-get -qq --no-install-recommends install \
+#        libzmq5 \
+#    && rm -rf /var/lib/apt/lists/*
+#
+#COPY --from=compile-image /app/demo.exe.config /
+#COPY --from=compile-image /app/demo /
+#
+#ENTRYPOINT ["/demo"]
+#
+#CMD ["-h"]
