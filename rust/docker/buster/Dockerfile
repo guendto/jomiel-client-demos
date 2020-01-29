@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,14 +11,16 @@
 
 # stage: bootstrap-image
 #
-FROM rust:1.39-slim AS bootstrap-image
+FROM rust:1.40-slim AS bootstrap-image
 
 WORKDIR /app
 
 COPY rust/Cargo.toml .
-COPY rust/build.rs .
+COPY rust/Cargo.lock .
 
 COPY rust/src/ ./src/
+COPY rust/build.rs .
+
 COPY proto/ ./proto/
 
 RUN set -eux \
