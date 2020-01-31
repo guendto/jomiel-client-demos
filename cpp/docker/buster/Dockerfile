@@ -39,7 +39,7 @@ RUN set -eux \
 #
 FROM bootstrap-image AS compile-image
 
-RUN set-eux \
+RUN set -eux \
     ; cmake -DWITH_DOCKER=ON . \
     && make
 
