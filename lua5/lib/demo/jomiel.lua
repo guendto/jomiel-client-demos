@@ -17,6 +17,7 @@ local zpoller = require 'lzmq.poller'
 local zmq = require 'lzmq'
 
 local serpent = require 'serpent'
+local package_path = 'jomiel.protobuf.v1alpha1'
 
 local Jomiel = {}
 Jomiel.__index = Jomiel
