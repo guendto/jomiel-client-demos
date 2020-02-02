@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -35,7 +35,6 @@ COPY php7/composer.json .
 COPY php7/composer.lock .
 
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 ARG CMPSR_URI=https://raw.githubusercontent.com/composer/getcomposer.org/76a7060/web/installer
 
@@ -48,6 +47,8 @@ RUN set -euxo pipefail \
         make \
         gcc \
         git \
+        # for bootstrap script
+        bash \
     # Download and install php-zmq from git repo.
     && git clone https://github.com/zeromq/php-zmq \
         && cd php-zmq \
@@ -61,7 +62,7 @@ RUN set -euxo pipefail \
             && sed -i 's/;extension=bz2/extension=zmq/' $PHPINIDIR/php.ini \
             && cd .. \
     # Produce protobuf declarations.
-    && ./bootstrap -p proto/ -l php -d lib/proto/ \
+    && ./proto/bin/bootstrap -p proto/ -l php -d lib/proto/ \
     # Download composer and install deps.
     && wget $CMPSR_URI -O - -q | php -- --quiet \
     && php ./composer.phar install --no-cache \

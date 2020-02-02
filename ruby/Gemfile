@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-
-gem "docopt", "~> 0.6"
-
-gem "ffi-rzmq", "~> 2.0"
+#git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "google-protobuf", "~> 3.0"
+gem "ffi-rzmq", "~> 2.0"
+gem "docopt", "~> 0.6"
+
+# bundler install --with development
+group :development, :optional => true do
+    gem "rubocop", "~> 0.7"
+    gem "reek", "~> 5.6"
+end

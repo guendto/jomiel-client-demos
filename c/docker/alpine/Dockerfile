@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,8 +15,8 @@ FROM alpine:3.10 AS bootstrap-image
 
 WORKDIR /app
 
+COPY tools/cmake ./cmake/
 COPY proto/ ./proto/
-COPY bin/bootstrap .
 
 COPY c/CMakeLists.txt .
 COPY c/src/ ./src/
@@ -32,14 +32,16 @@ RUN set -eux \
         cmake \
         make \
         gcc \
-    && ./bootstrap -p proto -l c -d src/demo/proto/
+        # for bootstrap script
+        bash \
+    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
 
 # stage: compile-image
 #
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake . \
+    ; cmake . -DWITH_DOCKER=1 \
     && make
 
 # stage: runtime-image

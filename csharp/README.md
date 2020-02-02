@@ -4,7 +4,7 @@
 
 ```shell
 mono paket.exe install
-../bin/bootstrap -p ../proto/ -l csharp -d src/proto/
+../proto/bin/bootstrap -p ../proto/ -l csharp -d src/proto/
 premake5 gmake2
 make
 mono demo.exe [args...]

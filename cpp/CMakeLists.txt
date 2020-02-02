@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -20,6 +20,8 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
 
 add_compile_options(
+    # Disable deprecated declarations in cppzmq.
+  -Wno-error=deprecated-declarations
   -Wall -Werror -march=native -O1 -ggdb3 -pipe
   -Wformat -Wformat-security
   --param=ssp-buffer-size=4
@@ -29,16 +31,20 @@ add_compile_options(
   -Wpedantic
 )
 
-# Options.
-#
-option(WITH_DOCKER "build in docker container" OFF)
+list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
 
-if(WITH_DOCKER)
-    include_directories(${PROJECT_SOURCE_DIR}/ext) # for cppzmq (alpine)
-    set(PROTO_DIR "proto/")
-else()
-    set(PROTO_DIR "../proto/")
-endif()
+# Helpers.
+#   - required by bootstrap_get_bindings (and friends)
+#
+include(CMakePrintHelpers)
+
+# Protobuf.
+#
+include(BootstrapProtoGen)
+
+bootstrap_gen_bindings(cpp build/gen)
+#cmake_print_variables(SRC_BOOTSTRAP_FILES)
 
 # Source files.
 #
@@ -94,33 +100,29 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
+
+if(WITH_DOCKER)
+    # alpine: workaround alpine 3.10 not packaging cppzmq
+    #   - download the missing zmq.hpp to the specified dir
+    #   - include this dir
+    include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext)
+endif()
 
 # Find local libraries.
 #   - kudos, https://stackoverflow.com/a/41252437 (ZeroMQ)
 #
 find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
+
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
-
-# Protobuf
-# - Compile the protobuf declarations for jomiel messages
-#
-file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
-
-protobuf_generate_cpp(
-    SRC_PROTO_FILES
-    HDR_PROTO_FILES
-    ${PROTO_FILES}
-)
 
 # Target.
 #
 add_executable(demo
-    ${SRC_PROTO_FILES}
-    ${HDR_PROTO_FILES}
+    ${SRC_BOOTSTRAP_FILES}
     ${SRC_DEMO_FILES}
 )
 

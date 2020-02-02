@@ -15,7 +15,7 @@ FROM node:12-alpine AS bootstrap-image
 
 WORKDIR /app
 
-COPY nodejs/bin/demo ./bin/demo
+COPY nodejs/bin/ ./bin/
 COPY nodejs/lib/ ./lib/
 
 COPY nodejs/package.json .
@@ -30,8 +30,10 @@ RUN set -eux \
         python2 \
         make \
         g++ \
-    && yarn install --no-lockfile \
-    && sed -i 's/\.\.\/proto/\.\/proto/' lib/jomiel.js
+        # for gen-static script
+        bash \
+    && yarn install --frozen-lockfile \
+    && ./bin/gen-static -p ./proto
 
 # stage: runtime-image
 #

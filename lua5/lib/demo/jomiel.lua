@@ -4,7 +4,7 @@
 -- jomiel-examples
 --
 -- Copyright
---  2019 Toni Gündoğdu
+--  2019-2020 Toni Gündoğdu
 --
 --
 -- SPDX-License-Identifier: Apache-2.0
@@ -17,6 +17,7 @@ local zpoller = require 'lzmq.poller'
 local zmq = require 'lzmq'
 
 local serpent = require 'serpent'
+local package_path = 'jomiel.protobuf.v1alpha1'
 
 local Jomiel = {}
 Jomiel.__index = Jomiel
@@ -30,12 +31,15 @@ function Jomiel.new(logger, opts)
     p.include_imports = true
     p:addpath('../proto')
 
-    p:loadfile('Message.proto')
+    p:loadfile(package_path:gsub('%.', '/') .. '/message.proto')
 
-    assert(pb.type 'jomiel.Inquiry')
-    assert(pb.type 'jomiel.media.MediaInquiry')
-    assert(pb.type 'jomiel.Response')
-    assert(pb.type 'jomiel.media.MediaResponse')
+    --[[
+    assert(pb.type 'jomiel.protobuf.v1alpha1.Inquiry')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaInquiry')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.Response')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaResponse')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.StatusCode')
+    ]]--
 
     return setmetatable({
         opts = opts,
@@ -71,7 +75,7 @@ function Jomiel:send(uri)
             self:printMessage('<send>', inquiry)
         end
 
-        local bytes = pb.encode('jomiel.Inquiry', inquiry)
+        local bytes = pb.encode(package_path .. '.Inquiry', inquiry)
         self:printSerialized('send', bytes)
 
         return bytes
@@ -86,7 +90,7 @@ function Jomiel:recv()
     poller:add(self.sck, zmq.POLLIN, function()
         local bytes = self.sck:recv()
         self:printSerialized('recv', bytes)
-        local response = pb.decode('jomiel.Response', bytes)
+        local response = pb.decode(package_path .. '.Response', bytes)
         self:dumpResponse(response)
     end)
 
@@ -124,9 +128,15 @@ function Jomiel:dumpTerseResponse(media_response)
 end
 
 function Jomiel:dumpResponse(response)
-    local code = pb.enum('jomiel.status.StatusCode', response.status.code)
-    local OK = pb.enum('jomiel.status.StatusCode', 'OK')
-    if code == OK then
+    local status_path = package_path .. 'StatusCode'
+
+    local resp_code = -- Look up response code enum, << numerical value
+        pb.enum(status_path, response.status.code)
+
+    local STATUS_CODE_OK = -- Look up STATUS_CODE_OK, << numerical value
+        pb.enum(status_path, 'STATUS_CODE_OK')
+
+    if resp_code == STATUS_CODE_OK then
         if self.opts.be_terse then
             self:dumpTerseResponse(response.media)
         else

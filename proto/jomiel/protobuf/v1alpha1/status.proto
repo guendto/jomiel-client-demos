@@ -1,0 +1,97 @@
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-proto
+ *
+ * Copyright
+ *  2019-2020 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+syntax = "proto3";
+
+package jomiel.protobuf.v1alpha1;
+
+option java_package = "io.github.jomiel.protobuf.v1alpha1";
+option java_outer_classname = "StatusProto";
+option java_multiple_files = true;
+option csharp_namespace = "Jomiel.ProtoBuf.V1Alpha1";
+option php_namespace = "Jomiel\\ProtoBuf\\V1alpha1";
+
+/*
+ * NOTE: See also "Examples" at the bottom of this file
+ */
+
+enum StatusCode {
+    STATUS_CODE_UNSPECIFIED             = 0;
+    STATUS_CODE_OK                      = 200;
+    // The client seems to have erred.
+    STATUS_CODE_BAD_REQUEST             = 400;
+    STATUS_CODE_UNAUTHORIZED            = 401;
+    STATUS_CODE_FORBIDDEN               = 403;
+    STATUS_CODE_NOT_FOUND               = 404;
+    // The service failed to fulfill an apparently valid request.
+    STATUS_CODE_INTERNAL_SERVER         = 500;
+    STATUS_CODE_NOT_IMPLEMENTED         = 501;
+}
+
+enum ErrorCode {
+    ERROR_CODE_UNSPECIFIED          = 0;
+    ERROR_CODE_NO_PARSER            = 500;
+    ERROR_CODE_PARSE                = 501;
+    ERROR_CODE_INVALID_INPUT        = 502;
+    ERROR_CODE_HTTP                 = 505;
+    ERROR_CODE_UNKNOWN_SEE_MESSAGE  = 550;
+}
+
+message ResponseStatus {
+
+    message Http {
+        sfixed32 code = 1 /* [default = 200] */;
+    }
+
+    StatusCode  code        = 1; /* [default = STATUS_CODE_OK] */
+    ErrorCode   error       = 2; /* [default = ERROR_CODE_UNSPECIFIED] */
+    Http        http        = 3;
+    string      message     = 4; /* [default = "Not an error"] */
+}
+
+/*
+ * Examples
+ * --------
+ *
+ * Case: No error occurred
+ *  status code: STATUS_CODE_OK
+ *   error code: ERROR_CODE_UNSPECIFIED
+ *    http code: 200 (OK)
+ *
+ * Case: No matching media parser for the given URI
+ *  status code: STATUS_CODE_NOT_IMPLEMENTED
+ *   error code: ERROR_CODE_NO_PARSER
+ *    http code: 200 (OK)
+ *
+ * Case: Parsing failed for the contents of the given URI
+ *  status code: STATUS_CODE_INTERNAL_SERVER
+ *   error code: ERROR_CODE_PARSE
+ *    http code: 200 (OK)
+ *
+ * Case: Invalid input URI given
+ *  status code: STATUS_CODE_BAD_REQUEST
+ *   error code: ERROR_CODE_INVALID_INPUT
+ *    http code: 200 (OK)
+ *
+ * Case: HTTP connection failure
+ *  status code: STATUS_CODE_INTERNAL_SERVER
+ *   error code: ERROR_CODE_HTTP
+ *    http code: 404 (Not found)
+ *
+ * Case: Unspecified or otherwise unknown error occurred
+ *  status code: STATUS_CODE_INTERNAL_SERVER
+ *   error code: ERROR_CODE_UNKNOWN_SEE_MESSAGE
+ *    http code: 200 (OK)
+ *
+ */
+
+// vim: set ts=4 sw=4 tw=72 expandtab:

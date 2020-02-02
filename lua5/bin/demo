@@ -5,7 +5,7 @@
 -- jomiel-examples
 --
 -- Copyright
---  2019 Toni Gündoğdu
+--  2019-2020 Toni Gündoğdu
 --
 --
 -- SPDX-License-Identifier: Apache-2.0
@@ -47,17 +47,17 @@ function main()
 
     local opts = parser:parse()
 
-    if opts['version_zmq'] then
+    if opts.version_zmq then
         local zmq = require 'lzmq'
         print('ZeroMQ version ' .. table.concat(zmq.version(), '.'))
         os.exit(0)
-    elseif opts['print_config'] then
+    elseif opts.print_config then
         local s = require 'serpent'
         print(s.block(opts))
         os.exit(0)
     end
 
-    if next(opts['URI']) == nil then
+    if next(opts.URI) == nil then
         print('error: no input URI given')
         os.exit(1)
     end
@@ -65,7 +65,7 @@ function main()
     local jomiel = jml.Jomiel.new(lg, opts)
     jomiel:connect()
 
-    for _, uri in pairs(opts['URI']) do
+    for _, uri in pairs(opts.URI) do
         jomiel:inquire(uri)
     end
 end

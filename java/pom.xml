@@ -18,7 +18,7 @@
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>4.1.2</version>
+      <version>4.1.4</version>
     </dependency>
     <!-- https://github.com/protocolbuffers/protobuf/tree/master/java#maven -->
     <dependency>
@@ -74,6 +74,10 @@
               <goal>run</goal>
             </goals>
             <configuration>
+              <outputDirectory>src/main/java</outputDirectory>
+              <includeDirectories>
+                <include>../proto</include>
+              </includeDirectories>
               <inputDirectories>
                 <include>../proto</include>
               </inputDirectories>

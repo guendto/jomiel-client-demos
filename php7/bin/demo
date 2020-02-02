@@ -32,4 +32,6 @@ $jomiel->connect();
 foreach ($args as $arg) {
     $jomiel->inquire($arg);
 }
+
+
 ?>

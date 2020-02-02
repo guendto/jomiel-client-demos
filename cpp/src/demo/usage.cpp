@@ -11,7 +11,7 @@
  */
 
 const char* usage =
-    R"(Usage:
+  R"(Usage:
     demo [-hDVqj] [-r <addr>] [-t <time>] [URI ...]
 
 Options:

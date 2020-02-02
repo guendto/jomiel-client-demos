@@ -12,39 +12,41 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
+"use strict";
 
-process.env.NODE_PATH = '.';
-require('module').Module._initPaths();
+process.env.NODE_PATH = ".";
+require("module").Module._initPaths();
 
-const cmdr = require('commander');
+const cmdr = require("commander");
 
 cmdr
-  .usage('[options] <uri ...>')
-  .option('-r, --router-endpoint <addr>',
-    'Specify the router endpoint address',
-    'tcp://localhost:5514')
-  .option('-V, --version-zmq',
-    'Display ZeroMQ version and exit')
-  .option('-j, --output-json',
-    'Print dumped messages in JSON')
-  .option('-q, --be-terse',
-    'Be brief and to the point; dump interesting details only');
+  .usage("[options] <uri ...>")
+  .option(
+    "-r, --router-endpoint <addr>",
+    "Specify the router endpoint address",
+    "tcp://localhost:5514"
+  )
+  .option("-V, --version-zmq", "Display ZeroMQ version and exit")
+  .option("-j, --output-json", "Print dumped messages in JSON")
+  .option(
+    "-q, --be-terse",
+    "Be brief and to the point; dump interesting details only"
+  );
 
 cmdr.parse(process.argv);
 
 if (cmdr.versionZmq) {
-  const zmq = require('zeromq');
-  console.log('ZeroMQ version %s', zmq.version);
+  const zmq = require("zeromq");
+  console.log("ZeroMQ version %s", zmq.version);
   process.exit();
 }
 
 if (!cmdr.args.length) {
-  console.error('error: input URI not given');
+  console.error("error: input URI not given");
   process.exit(1);
 }
 
-const Jomiel = require('lib/jomiel').Jomiel;
+const Jomiel = require("lib/jomiel").Jomiel;
 const jomiel = Jomiel.create(cmdr);
 
 jomiel.connect();

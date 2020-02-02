@@ -13,9 +13,9 @@
 #ifndef CPP_SRC_DEMO_TYPES_H_
 #define CPP_SRC_DEMO_TYPES_H_
 
-#include <vector>
-#include <string>
 #include <map>
+#include <string>
+#include <vector>
 
 #include "docopt/docopt.h"
 

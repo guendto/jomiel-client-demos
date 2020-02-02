@@ -10,15 +10,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <google/protobuf/util/json_util.h>
-#include <google/protobuf/text_format.h>
+#include "demo/jomiel.h"
 
-#include <sstream>
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/json_util.h>
+
 #include <cstdio>
+#include <sstream>
 #include <string>
 
-#include "Status.pb.h"
-#include "demo/jomiel.h"
+#include "jomiel/protobuf/v1alpha1/status.pb.h"
 
 namespace jomiel {
 
@@ -27,7 +28,8 @@ jomiel::jomiel(opts_t const& opts) : opts(opts) {
   this->zmq.timeout = this->opts.at("--connect-timeout").asLong();
 
   this->zmq.ctx = std::make_unique<zmq::context_t>(1);
-  this->zmq.sck = std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
+  this->zmq.sck =
+    std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
 
   int n = 0;
   this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
@@ -49,7 +51,7 @@ void jomiel::inquire(std::string const& uri) const {
 }
 
 void jomiel::send(std::string const& uri) const {
-  Inquiry inquiry;
+  jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
   if (!this->opts.at("--be-terse").asBool()) {
@@ -70,7 +72,7 @@ void jomiel::send(std::string const& uri) const {
 
 void jomiel::recv() const {
   zmq::pollitem_t const items[] = {
-      {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
+    {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
 
   zmq::message_t msg;
 
@@ -85,7 +87,7 @@ void jomiel::recv() const {
   auto const& size = msg.size();
   const std::string result(src, size);
 
-  Response resp;
+  jp::Response resp;
   resp.ParseFromString(result);
 
   this->dump_response(resp);
@@ -132,7 +134,7 @@ void jomiel::print_message(std::string const& status,
 }
 
 void jomiel::dump_terse_response(
-    media::MediaResponse const& media_response) const {
+  jp::MediaResponse const& media_response) const {
   std::cout << "---\ntitle: " << media_response.title() << "\n";
   std::cout << "quality:\n";
 
@@ -146,11 +148,11 @@ void jomiel::dump_terse_response(
   }
 }
 
-void jomiel::dump_response(Response const& response) const {
+void jomiel::dump_response(jp::Response const& response) const {
   auto const& response_status = response.status();
   auto const& media_response = response.media();
 
-  if (response_status.code() == ::jomiel::status::OK) {
+  if (response_status.code() == jp::STATUS_CODE_OK) {
     if (this->opts.at("--be-terse").asBool()) {
       this->dump_terse_response(media_response);
     } else {

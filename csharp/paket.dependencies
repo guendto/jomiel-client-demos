@@ -1,10 +1,8 @@
-framework: auto-detect
+source https://api.nuget.org/v3/index.json
 
 storage: symlink
-
-source https://www.nuget.org/api/v2
-
-nuget docopt.net >= 0.6.1.10
-nuget Google.Protobuf >= 3.9.1
-nuget log4net >= 2.0.8
-nuget ZeroMQ >= 4.1.0.31
+framework: netcore3.0, netstandard2.0, netstandard2.1
+nuget Google.Protobuf
+nuget docopt.net
+nuget log4net
+nuget ZeroMQ

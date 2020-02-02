@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -22,6 +22,8 @@ WORKDIR /app
 
 COPY cpp/CMakeLists.txt .
 COPY cpp/src/ ./src/
+
+COPY tools/cmake ./cmake/
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -36,6 +38,9 @@ RUN set -eux \
         make \
         git \
         g++ \
+        # for bootstrap script
+        bash \
+    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt \
     # See the 'cppzmq' note above.
     #
     && mkdir -p ext/cppzmq \

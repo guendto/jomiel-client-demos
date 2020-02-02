@@ -32,7 +32,7 @@ extern const char* usage;
 struct runner {
   inline int run(int const argc, char const** argv) {
     auto const& opts =
-        docopt::docopt(usage, {argv + 1, argv + argc}, true, "demo");
+      docopt::docopt(usage, {argv + 1, argv + argc}, true, "demo");
 
     if (opts.at("--print-config").asBool()) {
       print_config(opts);

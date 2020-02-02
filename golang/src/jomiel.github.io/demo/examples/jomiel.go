@@ -20,7 +20,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	pb "jomiel.github.io/demo/examples/proto"
+	pb "jomiel.github.io/demo/examples/proto/jomiel/protobuf/v1alpha1"
 )
 
 type Jomiel struct {
@@ -76,13 +76,26 @@ func (j *Jomiel) send(uri string) {
 
 func (j *Jomiel) recv() {
 	/*
-	 * Timeout used to work with:
-	 *  - ZeroMQ version 4.2 (czmq version 4.0)
-	 *
-	 * poller.Wait() returns immediately with 'sck' set to 'nil' with:
-	 *  - ZeroMQ version 4.3 (czmq version 4.1)
-	 *  - ZeroMQ version 4.3 (czmq version 4.2)
-	 */
+	     * NOTE
+	     *
+	     * Poller.Wait() seems to behave strangely in docker containers.
+	     * The function timeouts immediately when the container is run:
+	     *  $ docker run --rm -t TAGNAME [args...]
+	     *
+	     * In contrast:
+	     *  $ docker run --entrypoint '' --rm -it TAGNAME sh
+	     *  (container) ./demo [args...]  # works as expected
+	     *
+	     * Previously, with the following configuration, Poller.Wait()
+	     * would return only after a timeout:
+		 *  - ZeroMQ version 4.2 (czmq version 4.0)
+		 *
+	     * Whereas, with the following configuration, Poller.Wait() would
+	     * return immediately with 'sck' set to 'nil' when run in a docker
+	     * container (as described above):
+		 *  - ZeroMQ version 4.3 (czmq version 4.1)
+		 *  - ZeroMQ version 4.3 (czmq version 4.2)
+	*/
 	poller, err := czmq.NewPoller(j.sock)
 	if err != nil {
 		log.Fatalln("failed to create a poller: ", err)
@@ -141,7 +154,7 @@ func (j *Jomiel) dumpResponse(response *pb.Response) {
 	responseStatus := response.GetStatus()
 	mediaResponse := response.GetMedia()
 
-	if responseStatus.GetCode() == pb.StatusCode_OK {
+	if responseStatus.GetCode() == pb.StatusCode_STATUS_CODE_OK {
 		if j.opts.BeTerse {
 			j.dumpTerseResponse(mediaResponse)
 		} else {

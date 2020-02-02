@@ -10,12 +10,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "demo/jomiel.h"
+
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "demo/jomiel.h"
-#include "demo/proto/Message.pb-c.h"
+#include "jomiel/protobuf/v1alpha1/message.pb-c.h"
 
 static inline void print_status(const jomiel_t* self,
                                 const char* format,
@@ -80,18 +81,23 @@ static inline void to_hex(const jomiel_t* self,
 static inline void* inquiry_new(const jomiel_t* self,
                                 char* uri,
                                 size_t* len) {
-  Jomiel__Media__MediaInquiry media = JOMIEL__MEDIA__MEDIA_INQUIRY__INIT;
-  Jomiel__Inquiry inquiry = JOMIEL__INQUIRY__INIT;
+  Jomiel__Protobuf__V1alpha1__MediaInquiry media =
+    JOMIEL__PROTOBUF__V1ALPHA1__MEDIA_INQUIRY__INIT;
 
-  inquiry.inquiry_case = JOMIEL__INQUIRY__INQUIRY_MEDIA;
+  Jomiel__Protobuf__V1alpha1__Inquiry inquiry =
+    JOMIEL__PROTOBUF__V1ALPHA1__INQUIRY__INIT;
+
+  inquiry.inquiry_case =
+    JOMIEL__PROTOBUF__V1ALPHA1__INQUIRY__INQUIRY_MEDIA;
 
   inquiry.media = &media;
   media.input_uri = uri;
 
-  *len = jomiel__inquiry__get_packed_size(&inquiry);
+  *len = jomiel__protobuf__v1alpha1__inquiry__get_packed_size(&inquiry);
 
+  /* Build a serialized string. */
   void* bytes = (void*)calloc(1, *len);
-  jomiel__inquiry__pack(&inquiry, bytes);  // Build a serialized string.
+  jomiel__protobuf__v1alpha1__inquiry__pack(&inquiry, bytes);
 
   return bytes;
 }
@@ -121,9 +127,12 @@ static inline int jomiel_send(const jomiel_t* self, char* uri) {
   return (rc == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-static inline void dump_terse_response(const Jomiel__Response* message) {
-  const Jomiel__Media__MediaResponse* media_response = message->media;
-  const Jomiel__Media__MediaResponse__StreamQuality* quality;
+static inline void dump_terse_response(
+  const Jomiel__Protobuf__V1alpha1__Response* message) {
+  const Jomiel__Protobuf__V1alpha1__MediaResponse* media_response =
+    message->media;
+  const Jomiel__Protobuf__V1alpha1__MediaResponse__Stream__StreamQuality*
+    quality;
   int i;
 
   printf(
@@ -139,9 +148,10 @@ static inline void dump_terse_response(const Jomiel__Response* message) {
 }
 
 static inline void foreach_stream(
-  const Jomiel__Media__MediaResponse* media) {
-  const Jomiel__Media__MediaResponse__StreamQuality* quality;
-  const Jomiel__Media__MediaResponse__Stream* stream;
+  const Jomiel__Protobuf__V1alpha1__MediaResponse* media) {
+  const Jomiel__Protobuf__V1alpha1__MediaResponse__Stream__StreamQuality*
+    quality;
+  const Jomiel__Protobuf__V1alpha1__MediaResponse__Stream* stream;
   int i;
   for (i = 0; i < media->n_stream; ++i) {
     stream = media->stream[i];
@@ -157,18 +167,21 @@ static inline void foreach_stream(
   }
 }
 
-static inline void print_message(const jomiel_t* self,
-                                 const char* status,
-                                 const Jomiel__Response* message) {
+static inline void print_message(
+  const jomiel_t* self,
+  const char* status,
+  const Jomiel__Protobuf__V1alpha1__Response* message) {
   print_status(self, status);
-  if (message->status->code != JOMIEL__STATUS__STATUS_CODE__OK) {
+  if (message->status->code !=
+      JOMIEL__PROTOBUF__V1ALPHA1__STATUS_CODE__STATUS_CODE_OK) {
     fprintf(stderr,
             "failed: code: %d, error: %d, http: %d\n    msg: '%s'\n",
             message->status->code, message->status->error,
             message->status->http->code, message->status->message);
 
   } else {
-    const Jomiel__Media__MediaResponse* media = message->media;
+    const Jomiel__Protobuf__V1alpha1__MediaResponse* media =
+      message->media;
 
     printf("title: \"%s\"\n", media->title);
     printf("identifier: \"%s\"\n", media->identifier);
@@ -177,9 +190,11 @@ static inline void print_message(const jomiel_t* self,
   }
 }
 
-static inline void dump_response(const jomiel_t* self,
-                                 const Jomiel__Response* response) {
-  if (response->status->code == JOMIEL__STATUS__STATUS_CODE__OK) {
+static inline void dump_response(
+  const jomiel_t* self,
+  const Jomiel__Protobuf__V1alpha1__Response* response) {
+  if (response->status->code ==
+      JOMIEL__PROTOBUF__V1ALPHA1__STATUS_CODE__STATUS_CODE_OK) {
     if (self->opts->be_terse)
       dump_terse_response(response);
     else
@@ -196,15 +211,15 @@ static inline int recv_response(const jomiel_t* self) {
   const uint8_t* bytes = zframe_data(frame);  // Serialized string.
   const size_t len = zframe_size(frame);
 
-  Jomiel__Response* response =
-    jomiel__response__unpack(NULL, len, bytes);
+  Jomiel__Protobuf__V1alpha1__Response* response =
+    jomiel__protobuf__v1alpha1__response__unpack(NULL, len, bytes);
 
   int rc = EXIT_FAILURE;
 
   if (response != NULL) {
     to_hex(self, "recv", bytes, len);
     dump_response(self, response);
-    jomiel__response__free_unpacked(response, NULL);
+    jomiel__protobuf__v1alpha1__response__free_unpacked(response, NULL);
     rc = EXIT_SUCCESS;
   } else {
     fprintf(stderr, "error: unpacking serialized string failed\n");

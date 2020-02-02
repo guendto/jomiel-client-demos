@@ -17,6 +17,8 @@
 
 #include "DemoAppWindow"
 
+namespace jp = jomiel::protobuf::v1alpha1;
+
 namespace demo {
 
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
@@ -44,7 +46,7 @@ void MainWidget::setupUi() {
   endpoint->setText("tcp://localhost:5514");
 }
 
-using resp_t = jomiel::media::MediaResponse;
+using resp_t = jp::MediaResponse;
 using stream_t = resp_t::Stream;
 
 static inline void add_streams(QTreeWidget* tree,
@@ -94,7 +96,7 @@ void MainWidget::parseResponse(QList<QByteArray> const& data) {
 
   const std::string serialized(ptr, size);
 
-  jomiel::Response response;
+  jp::Response response;
   response.ParseFromString(serialized);
 
   // Parse the returned jomiel::Response.
@@ -119,7 +121,7 @@ void MainWidget::parseResponse(QList<QByteArray> const& data) {
     QMessageBox::critical(parent, qApp->applicationName(), text);
   };
 
-  if (responseStatus.code() == ::jomiel::status::OK) {
+  if (responseStatus.code() == jp::STATUS_CODE_OK) {
     set_title(mediaResponse);
     add_streams(details->tree, mediaResponse);
   } else {

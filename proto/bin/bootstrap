@@ -1,0 +1,129 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+#
+# jomiel-proto
+#
+# Copyright
+#  2019-2020 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# bootstrap
+#
+# A simple script to compile the protobuf declarations for jomiel
+# messages. This script is intended to be used with the jomiel
+# (sub)project(s).
+#
+# Notes:
+#   - This is a bash script (namely the globstar dependency)
+#
+#   - Make sure you have installed the protobuf-compiler (protoc) and it
+#   can be found the path.
+#
+#   - When lang ID is set to 'c', this script will call protoc-c(1),
+#   instead of protoc(1)
+#
+#   - This script will not validate lang ID, the value is simply passed
+#   as such to protoc(1)
+#
+# Examples:
+#   bootstrap -p jomiel/comm/proto/ -l python -d jomiel/data/bindings/
+#       # Compiling the python bindings for 'jomiel'.
+#
+#   bootstrap -p ../proto/ -l c -d src/demo/proto/
+#       # Compiling the c bindings for the jomiel-examples/c.
+#
+set -e;
+
+# Enable bash globstar for recursive search ("**/*.proto").
+#
+shopt -s globstar
+
+# Protobuffer compiler
+#
+PROTOC=`which protoc`
+[ -z "$PROTOC" ] && {
+    echo "protoc: command not found"
+    exit 1
+}
+
+# Save generated files to this directory.
+#
+DESTDIR=
+
+# The location of the protobuf declaration (.proto) files.
+#
+PROTODIR=
+
+# The language bindings ID to use (e.g. go or python)
+#
+LANGID=
+
+help()
+{
+    cat <<EOF
+Usage: ${0##*/} [-p <protodir>] [-l <langid>] [-d <destdir>]
+
+Notes
+    - Make sure you have installed protobuf-compiler (protoc) and/or
+      protobuf-c-compiler (protoc-c) if you intend to produce c
+      bindings
+
+    - Make sure the compilers can be found in your path
+
+Where
+    <protodir> path to the _root_ dir containing the .proto files to
+        compile
+
+    <langid> language binding identifier (e.g. "go" or "python"). The
+        identifier must be understood by protoc(1); note that if the
+        identifier is "c", the script will use protocc-c(1), instead of
+        protoc(1).
+
+    <destdir> is the destination dir for the compiled protobuf messages
+
+EOF
+    [ -n "$1" ] && echo "error: $1"
+    exit 0
+}
+
+compile_files()
+{
+    echo -n "Compiling the protobuf declarations for jomiel messages"
+    for f in $PROTODIR/**/*.proto; do
+        $PROTOC -I$PROTODIR --"$LANGID"_out=$DESTDIR $f || exit $?
+        echo -n "."
+    done
+    echo "done."
+    exit 0
+}
+
+while getopts "?hd:p:l:" o; do
+case "$o" in
+    p) PROTODIR=$OPTARG ;;
+    d) DESTDIR=$OPTARG ;;
+    l) LANGID=$OPTARG ;;
+    h|?) help ;;
+esac
+done
+
+shift $((OPTIND-1)) # Shift off the options and optional --
+
+[ -z "$PROTODIR" ] && help "-p <protodir> not specified"
+[ -z "$DESTDIR" ] && help "-d <destdir> not specified"
+[ -z "$LANGID" ] && help "-l <langid> not specified"
+
+[ "$LANGID" = "c" ] && {
+    PROTOC=`which protoc-c`
+    [ -z "$PROTOC" ] && {
+        echo "protoc-c: command not found"
+        exit 1
+    }
+}
+
+[ -d "$DESTDIR" ] || mkdir -p "$DESTDIR"
+compile_files
+
+# vim: set ts=4 sw=4 tw=72 expandtab:

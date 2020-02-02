@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -17,6 +17,8 @@ WORKDIR /app
 
 COPY cpp/CMakeLists.txt .
 COPY cpp/src/ ./src/
+
+COPY tools/cmake ./cmake/
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -30,13 +32,14 @@ RUN set -eux \
         pkgconf \
         cmake \
         git \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
 
 # stage: compile-image
 #
 FROM bootstrap-image AS compile-image
 
-RUN set-eux \
+RUN set -eux \
     ; cmake -DWITH_DOCKER=ON . \
     && make
 

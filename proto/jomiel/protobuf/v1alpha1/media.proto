@@ -1,0 +1,81 @@
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-proto
+ *
+ * Copyright
+ *  2019-2020 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+syntax = "proto3";
+
+package jomiel.protobuf.v1alpha1;
+
+option java_package = "io.github.jomiel.protobuf.v1alpha1";
+option java_outer_classname = "MediaProto";
+option java_multiple_files = true;
+option csharp_namespace = "Jomiel.ProtoBuf.V1Alpha1";
+option php_namespace = "Jomiel\\ProtoBuf\\V1alpha1";
+
+message MediaInquiry {
+    string input_uri = 1;
+}
+
+message MediaResponse {
+
+    message Thumbnail {
+        string  uri    = 1;
+        fixed32 width  = 2;
+        fixed32 height = 3;
+    }
+
+    message Stream {
+        message StreamQuality {
+            string  profile = 1;
+            fixed32 width   = 2;
+            fixed32 height  = 3;
+            fixed32 bitrate = 4;
+        }
+        string        uri            = 1;
+        StreamQuality quality        = 2;
+        string        mime_type      = 3;
+        fixed64       content_length = 4;
+    }
+
+    message Image {
+        message ImageQuality {
+            string  profile = 1;
+            fixed32 width   = 2;
+            fixed32 height  = 3;
+        }
+        string       title     = 1;
+        string       uri       = 2;
+        ImageQuality quality   = 3;
+        Thumbnail    thumbnail = 4;
+    }
+
+    message Statistics {
+      float average_rating = 1;
+      fixed64 view_count   = 2;
+    }
+
+    message Author {
+      string name       = 1;
+      string channel_id = 2;
+    }
+
+    string             title          = 1;
+    string             description    = 2;
+    string             identifier     = 3;
+    repeated Thumbnail thumbnail      = 4;
+    repeated Stream    stream         = 5;
+    repeated Image     image          = 6;
+    fixed32            length_seconds = 7;
+    Statistics         statistics     = 8;
+    Author             author         = 9;
+}
+
+// vim: set ts=4 sw=4 tw=72 expandtab:
