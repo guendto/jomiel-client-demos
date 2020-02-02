@@ -33,10 +33,13 @@ function Jomiel.new(logger, opts)
 
     p:loadfile('jomiel/protobuf/v1alpha1/message.proto')
 
+    --[[
     assert(pb.type 'jomiel.protobuf.v1alpha1.Inquiry')
     assert(pb.type 'jomiel.protobuf.v1alpha1.MediaInquiry')
     assert(pb.type 'jomiel.protobuf.v1alpha1.Response')
     assert(pb.type 'jomiel.protobuf.v1alpha1.MediaResponse')
+    assert(pb.type 'jomiel.protobuf.v1alpha1.StatusCode')
+    ]]--
 
     return setmetatable({
         opts = opts,
