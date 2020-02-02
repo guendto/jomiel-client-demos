@@ -126,8 +126,9 @@ end
 function Jomiel:dumpResponse(response)
     local code = pb.enum('jomiel.protobuf.v1alpha1.StatusCode',
                             response.status.code)
-    local OK = pb.enum('jomiel.protobuf.v1alpha1.StatusCode', 'OK')
-    if code == OK then
+    local STATUS_CODE_OK = pb.enum('jomiel.protobuf.v1alpha1.StatusCode',
+                            'STATUS_CODE_OK')
+    if code == STATUS_CODE_OK then
         if self.opts.be_terse then
             self:dumpTerseResponse(response.media)
         else
