@@ -8,15 +8,18 @@ repos:
         args: [--safe, --line-length=72]
         language_version: python3.8
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v2.5.0
     hooks:
     -   id: check-vcs-permalinks
     -   id: trailing-whitespace
     -   id: fix-encoding-pragma
     -   id: end-of-file-fixer
     -   id: debug-statements
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
     -   id: flake8
-        additional_dependencies: ["flake8-bugbear == 19.8.0"]
+        additional_dependencies: ["flake8-bugbear == 20.1.4"]
         language_version: python3.8
 -   repo: https://github.com/timothycrosley/isort
     rev: 4.3.21
@@ -24,6 +27,6 @@ repos:
     -   id: isort
         args: [--thirdparty zmq, --project demo,jomiel]
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v1.26.2
+    rev: v2.1.0
     hooks:
     -   id: pyupgrade
