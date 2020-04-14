@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM golang:1.13-buster AS bootstrap-image
+FROM golang:1.14-buster AS bootstrap-image
 
 WORKDIR $GOPATH/src/jomiel.github.io/demo
 
