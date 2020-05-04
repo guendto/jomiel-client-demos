@@ -55,8 +55,10 @@ RUN set -eux \
         unzip \
         curl \
         jq \
-        # not needed for building, install here until mkbundle issue is
-        # resolved, see notes below.
+        # NOTE:
+        #  - libzmq5 package is not needed for building; install only
+        #  until the mkbundle issue is resolved, see notes at the bottom
+        #  of this file
         libzmq5 \
     && rm -rf /var/lib/apt/lists/* \
     && ./proto/bin/bootstrap -p proto/ -l csharp -d src/proto/ \
