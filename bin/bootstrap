@@ -86,7 +86,7 @@ Where
 
 EOF
     [ -n "$1" ] && echo "error: $1"
-    exit 0
+    exit 1
 }
 
 compile_files()
@@ -125,5 +125,7 @@ shift $((OPTIND-1)) # Shift off the options and optional --
 
 [ -d "$DESTDIR" ] || mkdir -p "$DESTDIR"
 compile_files
+
+exit $?
 
 # vim: set ts=4 sw=4 tw=72 expandtab:

@@ -1,6 +1,7 @@
+---
 build:
-  roots:
-    - .
+    roots:
+        - .
 lint:
-  use:
-    - DEFAULT
+    use:
+        - DEFAULT
