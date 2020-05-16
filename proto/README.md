@@ -1,18 +1,23 @@
 # jomiel-proto
 
-The [Protocol Buffer][1] declarations for [jomiel][2] messages.
+The [Protocol Buffer] declarations for [jomiel] messages.
 
 ## License
 
-`jomiel-proto` is licensed under the [Apache License version 2.0][3]
-(APLv2).
+`jomiel-proto` is licensed under the [Apache License version
+2.0][aplv2].
 
 ## Installation
 
 `jomiel-proto` is intended to be `git-subtree`'d into your project.
-Installation from [PyPI][4] is not currently supported.
+Installation from [PyPI] is not currently supported.
 
-[1]: https://developers.google.com/protocol-buffers/
-[2]: https://github.com/guendto/jomiel/
-[3]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
-[4]: https://pypi.org
+## Acknowledgements
+
+Linted by [buf.build].
+
+[aplv2]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
+[protocol buffer]: https://developers.google.com/protocol-buffers/
+[buf.build]: https://github.com/bufbuild/buf
+[jomiel]: https://github.com/guendto/jomiel/
+[pypi]: https://pypi.org
