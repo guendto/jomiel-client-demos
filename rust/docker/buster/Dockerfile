@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM rust:1.40-slim AS bootstrap-image
+FROM rust:1.43-slim AS bootstrap-image
 
 WORKDIR /app
 
