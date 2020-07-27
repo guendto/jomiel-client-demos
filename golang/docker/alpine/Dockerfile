@@ -47,7 +47,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM alpine:3.10 AS runtime-image
+FROM alpine:3.12 AS runtime-image
 
 RUN set -eux \
     ; apk --update --no-cache add \
