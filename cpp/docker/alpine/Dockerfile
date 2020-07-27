@@ -10,13 +10,13 @@
 #
 
 # Note:
-#   - alpine packages cppzmq (zmq.hpp) in edge [2019-09-22]
+#   - alpine packages cppzmq (zmq.hpp) in edge [2019-09-22, 2020-07-27]
 #   - Until that becomes available, workaround this
 #
 
 # stage: bootstrap-image
 #
-FROM alpine:3.10 AS bootstrap-image
+FROM alpine:3.12 AS bootstrap-image
 
 WORKDIR /app
 
@@ -59,7 +59,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM alpine:3.10 AS runtime-image
+FROM alpine:3.12 AS runtime-image
 
 RUN set -eux \
     ; apk --update --no-cache add \
