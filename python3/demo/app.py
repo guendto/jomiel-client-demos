@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # jomiel-examples
 #
@@ -9,7 +8,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 """TODO."""
-
 import logging as lg
 from sys import exit as _exit
 from sys import stdout
@@ -49,7 +47,7 @@ def main():
     jomiel = Jomiel(opts)
 
     lg.basicConfig(
-        level=lg.INFO, format="[%(levelname)s] status: %(message)s"
+        level=lg.INFO, format="[%(levelname)s] status: %(message)s",
     )
 
     enable_logger(not opts.be_terse)
@@ -67,7 +65,7 @@ def main():
     try:
         for uri in opts.uri:
             jomiel.inquire(uri)
-    except IOError as exc:
+    except OSError as exc:
         print_error(str(exc))
 
 
