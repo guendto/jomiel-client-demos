@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # jomiel-examples
 #
@@ -9,13 +8,17 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 """TODO."""
-
 import logging as lg
 from sys import stdout
 
-from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry, Response
+from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry
+from jomiel.protobuf.v1alpha1.message_pb2 import Response
 from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
-from zmq import LINGER, POLLIN, REQ, Context, Poller
+from zmq import Context
+from zmq import LINGER
+from zmq import Poller
+from zmq import POLLIN
+from zmq import REQ
 
 
 class Jomiel:
@@ -77,7 +80,7 @@ class Jomiel:
             response = receive_response()
             self.dump_response(response)
         else:
-            raise IOError("connection timed out")
+            raise OSError("connection timed out")
 
     def dump_response(self, response):
         """Dump a response
