@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM node:12-alpine AS bootstrap-image
+FROM node:14-alpine AS bootstrap-image
 
 WORKDIR /app
 
@@ -37,7 +37,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM node:12-alpine AS runtime-image
+FROM node:14-alpine AS runtime-image
 
 WORKDIR /app
 
