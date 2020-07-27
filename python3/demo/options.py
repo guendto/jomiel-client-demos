@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # jomiel-examples
 #
@@ -9,8 +8,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 """TODO."""
-
-from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
+from argparse import ArgumentDefaultsHelpFormatter
+from argparse import ArgumentParser
 
 
 def options_parse():
@@ -21,7 +20,7 @@ def options_parse():
 
     """
     parser = ArgumentParser(
-        prog="demo", formatter_class=ArgumentDefaultsHelpFormatter
+        prog="demo", formatter_class=ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument(
@@ -70,7 +69,7 @@ def options_parse():
     )
 
     parser.add_argument(
-        "uri", metavar="<uri>", nargs="*", help="the URIs to parse"
+        "uri", metavar="<uri>", nargs="*", help="the URIs to parse",
     )
 
     return parser.parse_args()
