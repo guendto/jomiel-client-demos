@@ -9,15 +9,18 @@ The [Protocol Buffer] declarations for [jomiel] messages.
 
 ## Installation
 
-`jomiel-proto` is intended to be `git-subtree`'d into your project.
-Installation from [PyPI] is not currently supported.
+`jomiel-proto` isn't [PyPI] ready, you can subtree (see git-subtree) it
+into your project source tree, instead. If you are looking for the
+Python bindings for the [jomiel] protobuf messages, see
+[jomiel-messages].
 
 ## Acknowledgements
 
 Linted by [buf.build].
 
-[aplv2]: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
 [protocol buffer]: https://developers.google.com/protocol-buffers/
+[jomiel-messages]: https://github.com/guendto/jomiel-messages
+[aplv2]: https://www.tldrlegal.com/l/apache2
 [buf.build]: https://github.com/bufbuild/buf
 [jomiel]: https://github.com/guendto/jomiel/
 [pypi]: https://pypi.org
