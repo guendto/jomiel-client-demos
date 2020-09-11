@@ -18,6 +18,8 @@ using DocoptNet;
 using ZeroMQ.lib;
 using ZeroMQ;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+
 namespace Demo {
 
 internal class Program {
