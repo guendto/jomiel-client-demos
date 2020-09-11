@@ -33,10 +33,13 @@ project "demo"
     }
 
     libdirs {
-        "./packages/Google.Protobuf/lib/net45/",
-        "./packages/log4net/lib/net40-client/",
-        "./packages/docopt.net/lib/net40/",
-        "./packages/ZeroMQ/lib/net40/"
+        "./packages/Google.Protobuf/lib/netstandard2.0/",
+        "./packages/docopt.net/lib/netstandard1.5/",
+        "./packages/log4net/lib/netstandard2.0/",
+        "./packages/ZeroMQ/lib/net40/",
+        "./packages/System.Memory/lib/netstandard2.0",
+        "./packages/System.Runtime.CompilerServices.Unsafe/lib/netstandard2.0",
+        "./packages/System.Buffers/lib/netstandard2.0"
     }
 
     links {
