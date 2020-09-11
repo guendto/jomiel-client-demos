@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -18,7 +18,7 @@ ENV WRKDIR /app
 WORKDIR $WRKDIR
 
 COPY csharp/paket.dependencies .
-COPY csharp/demo.exe.config .
+COPY csharp/log4net.config .
 
 COPY csharp/premake5.lua .
 COPY csharp/src/ ./src/
