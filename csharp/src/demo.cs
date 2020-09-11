@@ -64,9 +64,6 @@ Options:
 
         var inputUri = opts["URI"].AsList;
 
-        log4net.Config.XmlConfigurator.Configure();
-        var log = log4net.LogManager.GetLogger("demo");
-
         if (inputUri.Count == 0) {
             log.Error("no input URI given");
             System.Environment.Exit(1);
