@@ -17,7 +17,7 @@ project "demo"
     kind "ConsoleApp"
     language "C#"
 
-    targetdir "."
+    targetdir "dist"
     clr "On"
 
     files {
