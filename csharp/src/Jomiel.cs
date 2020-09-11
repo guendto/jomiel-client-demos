@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -23,8 +23,11 @@ using Jomiel.ProtoBuf.V1Alpha1;
 namespace Demo {
 
 public class Jomiel {
+    private static readonly log4net.ILog log =
+	    log4net.LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType
+        );
     private IDictionary<string, DocoptNet.ValueObject> opts;
-    private log4net.ILog log;
     private ZContext ctx;
     private ZSocket sck;
     private string addr;
