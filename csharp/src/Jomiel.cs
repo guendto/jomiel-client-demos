@@ -42,16 +42,16 @@ public class Jomiel {
     }
 
     ~Jomiel() {
-        //this.sck.Disconnect(this.addr);
-        //this.ctx.Terminate();
+        // this.sck.Disconnect(this.addr);
+        // this.ctx.Terminate();
     }
 
     public void connect() {
         this.addr = this.opts["--router-endpoint"].ToString();
         this.timeout = this.opts["--connect-timeout"].AsInt;
 
-        var status = String.Format("<connect> {0} (timeout={1})", this.addr,
-                                   this.timeout);
+        var status = String.Format("<connect> {0} (timeout={1})",
+                        this.addr, this.timeout);
 
         this.printStatus(status);
         this.sck.Connect(this.addr);
@@ -85,7 +85,7 @@ public class Jomiel {
             using (var stream = msg.Pop()) {
                 Response response = Response.Parser.ParseFrom(stream);
                 this.dumpResponse(response);
-                //Console.WriteLine(response.ToString());
+                // Console.WriteLine(response.ToString());
             }
         } else {
             if (error == ZError.EAGAIN) {
@@ -99,10 +99,11 @@ public class Jomiel {
 
     private string getQualityString(StreamQuality streamQuality) {
         return String.Format(
-                   "  profile: {0}\n    width: {1}\n    height: {2}",
-                   streamQuality.Profile,
-                   streamQuality.Width,
-                   streamQuality.Height);
+            "  profile: {0}\n    width: {1}\n    height: {2}",
+                streamQuality.Profile,
+                streamQuality.Width,
+                streamQuality.Height
+        );
     }
 
     private void dumpTerseResponse(MediaResponse mediaResponse) {
