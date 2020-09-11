@@ -20,6 +20,10 @@ project "demo"
     targetdir "dist"
     clr "On"
 
+    defines {
+        "GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE"
+    }
+
     files {
         "src/proto/Message.cs",
         "src/proto/Status.cs",
