@@ -81,7 +81,7 @@ RUN set -eux \
     # Install premake5.
     && cd ext \
         && unzip ${PM_FILE} \
-        && cd premake-${PM_VER}/build/gmake.unix \
+        && cd premake-${PM_VER}/build/gmake2.unix \
         && make config=release Premake5 \
         && cd ${WRKDIR} \
     # Produce the .snl file.
