@@ -46,7 +46,12 @@ project "demo"
         "Google.Protobuf.dll",
         "DocoptNet.dll",
         "log4net.dll",
-        "ZeroMQ.dll"
+        "ZeroMQ.dll",
+        "System.dll",
+        "System.Xml.dll",
+        "System.Memory.dll",
+        "System.Runtime.CompilerServices.Unsafe.dll",
+        "System.Buffers.dll"
     }
 
     filter "configurations:debug"
