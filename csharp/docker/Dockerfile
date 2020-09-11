@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -18,7 +18,7 @@ ENV WRKDIR /app
 WORKDIR $WRKDIR
 
 COPY csharp/paket.dependencies .
-COPY csharp/demo.exe.config .
+COPY csharp/log4net.config .
 
 COPY csharp/premake5.lua .
 COPY csharp/src/ ./src/
@@ -34,20 +34,19 @@ COPY proto/ ./proto/
 #   - The standalone exe still needs libzmq5 and mono-runtime packages
 #
 
-ENV PM_VER 5.0.0-alpha14
+ENV PM_VER 5.0.0-alpha15
 ENV PM_FILE premake-${PM_VER}-src.zip
 
 ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/${PM_FILE}
 ARG PKT_URI=https://api.github.com/repos/fsprojects/Paket/releases/latest
 
 RUN set -eux \
-    # We need protoc 3.6.1 (protobuf-compiler) from the stretch
-    # backports.
+    # We want to use protobuf-compiler 3.12 from buster-backports.
     #
-    ; echo 'deb http://deb.debian.org/debian stretch-backports main' \
+    ; echo 'deb http://deb.debian.org/debian buster-backports main' \
         >> /etc/apt/sources.list \
     && apt-get -qq update \
-    && apt-get -t stretch-backports -qq --no-install-recommends install \
+    && apt-get -t buster-backports -qq --no-install-recommends install \
         protobuf-compiler \
         build-essential \
         mono-devel \
@@ -82,7 +81,7 @@ RUN set -eux \
     # Install premake5.
     && cd ext \
         && unzip ${PM_FILE} \
-        && cd premake-${PM_VER}/build/gmake.unix \
+        && cd premake-${PM_VER}/build/gmake2.unix \
         && make config=release Premake5 \
         && cd ${WRKDIR} \
     # Produce the .snl file.
@@ -93,14 +92,15 @@ RUN set -eux \
 FROM compile-ext-image AS compile-image
 
 RUN set -eux \
-    ; msbuild demo.sln -v:q -p:Configuration=release
-    # mkbundle: objects due to missing netstandard ref
-    #   - like runtime-image below, comment out the mkbundle step
-    #&& mkbundle -o demo --simple demo.exe \
+    ; msbuild build/demo.sln -v:q -p:Configuration=release
+    # mkbundle:
+    #   - ERROR: unable to load assembly `netstandard` referenced by DLL
+    #   - Until this gets fixed, the mkbundle step remains commented out
+    # && mkbundle -o demo --simple demo.exe \
     #    --machine-config /etc/mono/4.5/machine.config \
     #    --no-config
 
-ENTRYPOINT ["mono", "/app/demo.exe"]
+ENTRYPOINT ["mono", "/app/dist/demo.exe"]
 
 CMD ["-h"]
 

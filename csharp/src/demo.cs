@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -18,9 +18,15 @@ using DocoptNet;
 using ZeroMQ.lib;
 using ZeroMQ;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+
 namespace Demo {
 
 internal class Program {
+    private static readonly log4net.ILog log =
+        log4net.LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType
+        );
     private const string usage =
         @"Usage:
     demo [-hDVq] [-r <addr>] [-t <time>] [URI ...]
@@ -58,15 +64,12 @@ Options:
 
         var inputUri = opts["URI"].AsList;
 
-        log4net.Config.XmlConfigurator.Configure();
-        var log = log4net.LogManager.GetLogger("demo");
-
         if (inputUri.Count == 0) {
             log.Error("no input URI given");
             System.Environment.Exit(1);
         }
 
-        var jomiel = new Jomiel(opts);
+        var jomiel = new Demo.Jomiel(opts);
         jomiel.connect();
 
         foreach (var uri in inputUri) {
