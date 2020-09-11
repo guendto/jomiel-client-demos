@@ -41,13 +41,12 @@ ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/
 ARG PKT_URI=https://api.github.com/repos/fsprojects/Paket/releases/latest
 
 RUN set -eux \
-    # We need protoc 3.6.1 (protobuf-compiler) from the stretch
-    # backports.
+    # We want to use protobuf-compiler 3.12 from buster-backports.
     #
-    ; echo 'deb http://deb.debian.org/debian stretch-backports main' \
+    ; echo 'deb http://deb.debian.org/debian buster-backports main' \
         >> /etc/apt/sources.list \
     && apt-get -qq update \
-    && apt-get -t stretch-backports -qq --no-install-recommends install \
+    && apt-get -t buster-backports -qq --no-install-recommends install \
         protobuf-compiler \
         build-essential \
         mono-devel \
