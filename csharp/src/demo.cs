@@ -69,7 +69,7 @@ Options:
             System.Environment.Exit(1);
         }
 
-        var jomiel = new Jomiel(opts);
+        var jomiel = new Demo.Jomiel(opts);
         jomiel.connect();
 
         foreach (var uri in inputUri) {
