@@ -34,7 +34,7 @@ COPY proto/ ./proto/
 #   - The standalone exe still needs libzmq5 and mono-runtime packages
 #
 
-ENV PM_VER 5.0.0-alpha14
+ENV PM_VER 5.0.0-alpha15
 ENV PM_FILE premake-${PM_VER}-src.zip
 
 ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/${PM_FILE}
