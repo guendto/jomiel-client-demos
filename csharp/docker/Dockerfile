@@ -92,10 +92,11 @@ RUN set -eux \
 FROM compile-ext-image AS compile-image
 
 RUN set -eux \
-    ; msbuild demo.sln -v:q -p:Configuration=release
-    # mkbundle: objects due to missing netstandard ref
-    #   - like runtime-image below, comment out the mkbundle step
-    #&& mkbundle -o demo --simple demo.exe \
+    ; msbuild build/demo.sln -v:q -p:Configuration=release
+    # mkbundle:
+    #   - ERROR: unable to load assembly `netstandard` referenced by DLL
+    #   - Until this gets fixed, the mkbundle step remains commented out
+    # && mkbundle -o demo --simple demo.exe \
     #    --machine-config /etc/mono/4.5/machine.config \
     #    --no-config
 
