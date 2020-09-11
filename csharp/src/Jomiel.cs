@@ -89,7 +89,7 @@ public class Jomiel {
             }
         } else {
             if (error == ZError.EAGAIN) {
-                this.log.Error("connection timed out");
+                log.Error("connection timed out");
                 System.Environment.Exit(1);
             } else {
                 throw new ZException(error);
@@ -139,7 +139,7 @@ public class Jomiel {
 
     private void printStatus(string status) {
         if (! this.opts["--be-terse"].IsTrue) {
-            this.log.Info(status);
+            log.Info(status);
         }
     }
 }
