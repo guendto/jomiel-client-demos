@@ -100,7 +100,7 @@ RUN set -eux \
     #    --machine-config /etc/mono/4.5/machine.config \
     #    --no-config
 
-ENTRYPOINT ["mono", "/app/demo.exe"]
+ENTRYPOINT ["mono", "/app/dist/demo.exe"]
 
 CMD ["-h"]
 
