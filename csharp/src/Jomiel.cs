@@ -34,13 +34,11 @@ public class Jomiel {
     private int timeout;
 
     public Jomiel(IDictionary<string, DocoptNet.ValueObject> opts) {
-        this.log = log4net.LogManager.GetLogger("demo");
-        this.opts = opts;
-
         this.ctx = new ZContext();
         this.sck = new ZSocket(this.ctx, ZSocketType.REQ);
 
         this.sck.Linger = TimeSpan.FromMilliseconds(0);
+        this.opts = opts;
     }
 
     ~Jomiel() {
