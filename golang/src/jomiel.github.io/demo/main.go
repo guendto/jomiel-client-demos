@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -21,15 +21,15 @@ import (
 	flag "github.com/spf13/pflag"
 	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	examples "jomiel.github.io/demo/examples"
+	jomiel "jomiel.github.io/demo/golang"
 )
 
-var opts *examples.Options
+var opts *jomiel.Options
 
 func init() {
 	log.SetOutput(os.Stderr)
 	log.SetFlags(0)
-	opts = examples.NewOptions()
+	opts = jomiel.NewOptions()
 }
 
 func main() {
@@ -51,7 +51,7 @@ func main() {
 		log.Fatalln("error: no input URI given")
 	}
 
-	jomiel := examples.NewJomiel(opts)
+	jomiel := jomiel.NewJomiel(opts)
 	defer jomiel.Destroy()
 
 	jomiel.Connect()
