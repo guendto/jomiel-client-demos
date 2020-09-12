@@ -8,7 +8,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM ruby:2.6-slim
+FROM ruby:2.7-slim
 
 WORKDIR /app
 
@@ -39,6 +39,7 @@ RUN set -eux \
     # Install the required runtime.
     # Note: 'libzmq5' package is not enough (why? ruby related?)
     #           ("The lib zmq library (or DLL) could not be loaded")
+    # && apt-get -qq --no-install-recommends install libzmq5 \
     && apt-get -qq --no-install-recommends install libzmq3-dev \
     # Cleanup (stage #2).
     && rm -rf /var/lib/apt/lists/*
