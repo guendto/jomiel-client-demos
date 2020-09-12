@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2020 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -13,11 +13,17 @@
 name = "demo"
 version = "0.1.0"
 
+# Specifying the deps:
+#   https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
+#
+# Creates:
+#   https://crates.io/
+
 [dependencies]
-protobuf = "^2.8"
+protobuf = "^2.17"
 structopt = "^0.3"
 zmq = "^0.9"
 
 [build-dependencies]
-protoc-rust = "^2.8"
+protoc-rust = "^2.17"
 glob = "^0.3"
