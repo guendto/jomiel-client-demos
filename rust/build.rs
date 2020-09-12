@@ -13,7 +13,6 @@
 extern crate glob;
 extern crate protoc_rust;
 
-use protoc_rust::Customize;
 use std::iter::FromIterator;
 
 fn main() {
@@ -22,16 +21,12 @@ fn main() {
     // https://stackoverflow.com/a/37470838, kudos.
     let input_files = Vec::from_iter(r.iter().map(String::as_str));
 
-    protoc_rust::run(protoc_rust::Args {
-        out_dir: "src/proto",
-        input: &input_files,
-        includes: &["../proto"],
-        customize: Customize {
-            //serde_derive: Some(true),
-            ..Default::default()
-        },
-    })
-    .expect("protoc");
+    protoc_rust::Codegen::new()
+        .out_dir("src/proto")
+        .inputs(&input_files)
+        .include("../proto")
+        .run()
+        .expect("protoc");
 }
 
 /* https://git.io/JvY72, kudos. */
