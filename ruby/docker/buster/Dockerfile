@@ -8,7 +8,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM ruby:2.6-slim
+FROM ruby:2.7-slim
 
 WORKDIR /app
 
