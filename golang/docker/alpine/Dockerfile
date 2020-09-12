@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM golang:1.14-alpine AS bootstrap-image
+FROM golang:1.15-alpine AS bootstrap-image
 
 WORKDIR $GOPATH/src/jomiel.github.io/demo
 
