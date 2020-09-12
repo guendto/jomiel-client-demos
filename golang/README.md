@@ -6,7 +6,7 @@
 export GOPATH=`pwd -P`
 export PATH="$GOPATH/bin:$PATH"
 go get -v github.com/golang/protobuf/protoc-gen-go
-../proto/bin/bootstrap -p ../proto/ -l go -d src/jomiel.github.io/demo/examples/proto/
+../proto/bin/bootstrap -p ../proto/ -l go -d src/jomiel.github.io/demo/golang
 cd src/jomiel.github.io/demo/
 go get -v
 go build
