@@ -19,6 +19,7 @@ option java_outer_classname = "StatusProto";
 option java_multiple_files = true;
 option csharp_namespace = "Jomiel.ProtoBuf.V1Alpha1";
 option php_namespace = "Jomiel\\ProtoBuf\\V1alpha1";
+option go_package = "jomiel/protobuf/v1alpha1";
 
 /*
  * NOTE: See also "Examples" at the bottom of this file

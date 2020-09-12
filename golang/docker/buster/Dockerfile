@@ -33,7 +33,7 @@ RUN set -eux \
         gopkg.in/zeromq/goczmq.v4 \
         github.com/ghodss/yaml \
         github.com/spf13/pflag \
-    && ./proto/bin/bootstrap -p proto -l go -d examples/proto/
+    && ./proto/bin/bootstrap -p proto -l go -d golang
 
 # stage: compile-image
 #
