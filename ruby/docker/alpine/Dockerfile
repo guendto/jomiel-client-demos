@@ -20,10 +20,23 @@
 #   segfault as described here:
 #       - https://github.com/protocolbuffers/protobuf/issues/4460
 #
+# 2020-09-11
+#   (...)
+#   "`require': cannot load such file -- google/2.7/protobuf_c
+#   (LoadError)"
+#   (...)
+#   "Error relocating
+#   /usr/local/bundle/gems/google-protobuf-3.13.0/lib/google/protobuf_c.so:
+#   __va_copy: symbol not found -
+#   /usr/local/bundle/gems/google-protobuf-3.13.0/lib/google/protobuf_c.so
+#   (LoadError)"
+#   - Possibly related:
+#     https://github.com/protocolbuffers/protobuf/issues/3509#issuecomment-568050411
+#
 
 # stage: bootstrap-image
 #
-FROM ruby:2.6-alpine
+FROM ruby:2.7-alpine
 
 WORKDIR /app
 
