@@ -4,7 +4,7 @@
 modern programming languages_ showing how the [jomiel] inquiries are
 made and the responses are handled.
 
-![Example](./docs/examples/nodejs-framed.svg)
+![Example](./docs/demo.svg)
 
 ## Note
 
