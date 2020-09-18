@@ -9,8 +9,8 @@ different programming languages.
 
 ## Note
 
-- The examples may vary; they are not necessarily identical in terms of
-  the program features
+The examples are not identical (in terms of the features) but they all
+have the same basic functionalities.
 
 ## Dockerfiles
 
