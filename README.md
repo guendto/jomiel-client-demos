@@ -1,9 +1,8 @@
 # jomiel-examples
 
-`jomiel-examples` is a selection of examples written in a number of
-_different modern programming languages_. These examples show how the
-[jomiel] inquiries are made -- and the responses are handled -- using
-different programming languages.
+`jomiel-examples` is a selection of examples written in _different
+modern programming languages_ showing how the [jomiel] inquiries are
+made and the responses are handled.
 
 ![Example](./docs/examples/nodejs-framed.svg)
 
