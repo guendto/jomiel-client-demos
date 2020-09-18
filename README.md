@@ -13,25 +13,15 @@ have the same basic functionalities.
 
 ## Dockerfiles
 
-Each language specific directory contains a dockerfile (some more than
-one).
-
-```shell
-docker build -t YOUR_TAGNAME -f PATH_TO_DOCKERFILE .
-docker run --network host --rm -it YOUR_TAGNAME [args...]
-```
-
-For example:
-
-```shell
-docker build -t tg/jomiel-examples/c-example -f c/docker/alpine/Dockerfile .
-docker run --network host --rm -it tg/jomiel-examples/c-example foo
-```
+You can find a Dockerfile in each language dir. Some may have more than
+one. See [HOWTO: jomiel] for instructions on how to build and run these
+examples in containers with `jomiel`.
 
 ## License
 
 `jomiel-examples` is licensed under the [Apache License version
 2.0][APLv2].
 
+[howto: jomiel]: https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container
 [APLv2]: https://www.tldrlegal.com/l/apache2
 [jomiel]: https://github.com/guendto/jomiel
