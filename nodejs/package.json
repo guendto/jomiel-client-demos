@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "^3.0.1",
-    "protobufjs": "^6.8.8",
+    "protobufjs": "^6.10.1",
     "zeromq": "^5.1.0"
   },
   "devDependencies": {
