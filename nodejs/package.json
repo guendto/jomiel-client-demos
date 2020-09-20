@@ -6,7 +6,7 @@
   "dependencies": {
     "commander": "^3.0.1",
     "protobufjs": "^6.10.1",
-    "zeromq": "^5.1.0"
+    "zeromq": "^5.2.0"
   },
   "devDependencies": {
     "prettier-eslint-cli": "^5.0.0"
