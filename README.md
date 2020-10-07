@@ -13,15 +13,20 @@ have the same basic functionalities.
 
 ## Dockerfiles
 
-You can find a Dockerfile in each language dir. Some may have more than
-one. See [HOWTO: jomiel] for instructions on how to build and run these
-examples in containers with `jomiel`.
+You can find a Dockerfile in each `language` specific `docker`
+directory. In some cases (e.g. [cpp] or [golang]), there are more than
+one Dockerfile (typically one for `alpine-linux` and `debian` image).
+
+To get started, see `jomiel` [HOWTO] for building and running
+instructions.
 
 ## License
 
 `jomiel-examples` is licensed under the [Apache License version
 2.0][APLv2].
 
-[howto: jomiel]: https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container
+[howto]: https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container
 [APLv2]: https://www.tldrlegal.com/l/apache2
 [jomiel]: https://github.com/guendto/jomiel
+[cpp]: https://github.com/guendto/jomiel-examples/blob/master/cpp/docker
+[golang]: https://github.com/guendto/jomiel-examples/blob/master/golang/docker
