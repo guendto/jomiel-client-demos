@@ -23,10 +23,10 @@ instructions.
 ## License
 
 `jomiel-examples` is licensed under the [Apache License version
-2.0][APLv2].
+2.0][aplv2].
 
 [howto]: https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container
-[APLv2]: https://www.tldrlegal.com/l/apache2
+[aplv2]: https://www.tldrlegal.com/l/apache2
 [jomiel]: https://github.com/guendto/jomiel
 [cpp]: https://github.com/guendto/jomiel-examples/blob/master/cpp/docker
 [golang]: https://github.com/guendto/jomiel-examples/blob/master/golang/docker
