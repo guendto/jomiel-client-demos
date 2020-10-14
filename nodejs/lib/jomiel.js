@@ -38,7 +38,7 @@ class Jomiel {
 
     const inquiry_serialized = proto.Inquiry.encode(inquiry).finish();
 
-    this.sock.send(inquiry_serialized);
+    await this.sock.send(inquiry_serialized);
     this.recv();
   }
 
