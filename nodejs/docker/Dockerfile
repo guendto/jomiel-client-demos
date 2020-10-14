@@ -29,6 +29,7 @@ RUN set -eux \
         g++ \
         # for gen-static script
         bash \
+    && npm i -g pnpm \
     && pnpm install \
     && ./bin/gen-static -p ./proto \
     && apk del .build_deps
