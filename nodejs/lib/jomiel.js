@@ -17,8 +17,7 @@ const zmq = require("zeromq");
 
 class Jomiel {
   constructor(options) {
-    this.sock = zmq.socket("req");
-    //this.sock.setsockopt(zmq.ZMQ_LINGER, 0)
+    this.sock = new zmq.Request();
     this.options = options;
   }
 
@@ -28,7 +27,7 @@ class Jomiel {
     this.sock.connect(re);
   }
 
-  inquire(uri) {
+  async inquire(uri) {
     const inquiry = proto.Inquiry.create({
       media: {
         inputUri: uri
@@ -37,17 +36,15 @@ class Jomiel {
 
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
-    const serialized = proto.Inquiry.encode(inquiry).finish();
+    const inquiry_serialized = proto.Inquiry.encode(inquiry).finish();
 
-    this.sock.send(serialized);
+    await this.sock.send(inquiry_serialized);
     this.recv();
   }
 
-  recv() {
-    this.sock.on("message", data => {
-      this.dumpResponse(data);
-      this.sock.close();
-    });
+  async recv() {
+    const [result] = await this.sock.receive();
+    this.dumpResponse(result);
   }
 
   printStatus(message) {

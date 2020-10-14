@@ -8,9 +8,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
-# stage: bootstrap-image
-#
 FROM node:14-alpine AS bootstrap-image
 
 WORKDIR /app
@@ -18,13 +15,13 @@ WORKDIR /app
 COPY nodejs/bin/ ./bin/
 COPY nodejs/lib/ ./lib/
 
+COPY nodejs/pnpm-lock.yaml .
 COPY nodejs/package.json .
-COPY nodejs/yarn.lock .
 
 COPY proto/ ./proto/
 
 RUN set -eux \
-    ; apk --update --no-cache add \
+    ; apk --update --no-cache --virtual .build_deps add \
         zeromq-dev \
         musl-dev \
         python2 \
@@ -32,21 +29,11 @@ RUN set -eux \
         g++ \
         # for gen-static script
         bash \
-    && yarn install --frozen-lockfile \
-    && ./bin/gen-static -p ./proto
+    && npm i -g pnpm \
+    && pnpm install \
+    && ./bin/gen-static -p ./proto \
+    && apk del .build_deps
 
-# stage: runtime-image
-#
-FROM node:14-alpine AS runtime-image
-
-WORKDIR /app
-
-COPY --from=bootstrap-image /app/node_modules/ ./node_modules/
-COPY --from=bootstrap-image /app/bin/demo .
-
-COPY --from=bootstrap-image /app/proto/ ./proto/
-COPY --from=bootstrap-image /app/lib/ ./lib/
-
-ENTRYPOINT ["/app/demo"]
+ENTRYPOINT ["/app/bin/demo"]
 
 CMD ["-h"]

@@ -1,17 +1,19 @@
 {
   "name": "jomiel-examples",
   "version": "1.0.0",
-  "main": "index.js",
+  "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "^6.1.0",
     "protobufjs": "^6.10.1",
-    "zeromq": "^5.2.0"
+    "zeromq": "^6.0.0-beta.6"
   },
   "devDependencies": {
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
-    "format": "prettier-eslint --print-width 72 --write \"lib/**/*.js\" \"bin/demo\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\" \"bin/demo\"",
+    "start": "node bin/demo"
   }
 }
