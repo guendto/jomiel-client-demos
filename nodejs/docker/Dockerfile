@@ -18,8 +18,8 @@ WORKDIR /app
 COPY nodejs/bin/ ./bin/
 COPY nodejs/lib/ ./lib/
 
+COPY nodejs/pnpm-lock.yaml .
 COPY nodejs/package.json .
-COPY nodejs/yarn.lock .
 
 COPY proto/ ./proto/
 
