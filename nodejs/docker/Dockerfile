@@ -34,6 +34,6 @@ RUN set -eux \
     && ./bin/gen-static -p ./proto \
     && apk del .build_deps
 
-ENTRYPOINT ["/app/demo"]
+ENTRYPOINT ["/app/bin/demo"]
 
 CMD ["-h"]
