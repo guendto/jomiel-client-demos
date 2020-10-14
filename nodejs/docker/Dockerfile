@@ -21,7 +21,7 @@ COPY nodejs/package.json .
 COPY proto/ ./proto/
 
 RUN set -eux \
-    ; apk --update --no-cache add \
+    ; apk --update --no-cache --virtual .build_deps add \
         zeromq-dev \
         musl-dev \
         python2 \
@@ -30,7 +30,8 @@ RUN set -eux \
         # for gen-static script
         bash \
     && pnpm install \
-    && ./bin/gen-static -p ./proto
+    && ./bin/gen-static -p ./proto \
+    && apk del .build_deps
 
 ENTRYPOINT ["/app/demo"]
 
