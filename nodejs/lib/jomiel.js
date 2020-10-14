@@ -27,7 +27,7 @@ class Jomiel {
     this.sock.connect(re);
   }
 
-  inquire(uri) {
+  async inquire(uri) {
     const inquiry = proto.Inquiry.create({
       media: {
         inputUri: uri
