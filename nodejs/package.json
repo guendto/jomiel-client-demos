@@ -12,6 +12,6 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
-    "format": "prettier-eslint --print-width 72 --write \"lib/**/*.js\" \"bin/demo\""
+    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\" \"bin/demo\""
   }
 }
