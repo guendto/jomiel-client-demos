@@ -17,8 +17,7 @@ const zmq = require("zeromq");
 
 class Jomiel {
   constructor(options) {
-    this.sock = zmq.socket("req");
-    //this.sock.setsockopt(zmq.ZMQ_LINGER, 0)
+    this.sock = new zmq.Request();
     this.options = options;
   }
 
