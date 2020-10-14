@@ -43,10 +43,8 @@ class Jomiel {
   }
 
   async recv() {
-    this.sock.on("message", data => {
-      this.dumpResponse(data);
-      this.sock.close();
-    });
+    const [result] = await this.sock.receive();
+    this.dumpResponse(result);
   }
 
   printStatus(message) {
