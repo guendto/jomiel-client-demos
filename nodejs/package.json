@@ -12,6 +12,7 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\" \"bin/demo\""
   }
 }
