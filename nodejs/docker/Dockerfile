@@ -32,7 +32,7 @@ RUN set -eux \
         g++ \
         # for gen-static script
         bash \
-    && yarn install --frozen-lockfile \
+    && pnpm install \
     && ./bin/gen-static -p ./proto
 
 # stage: runtime-image
