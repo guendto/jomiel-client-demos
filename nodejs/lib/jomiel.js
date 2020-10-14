@@ -42,7 +42,7 @@ class Jomiel {
     this.recv();
   }
 
-  recv() {
+  async recv() {
     this.sock.on("message", data => {
       this.dumpResponse(data);
       this.sock.close();
