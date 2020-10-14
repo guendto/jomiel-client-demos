@@ -8,9 +8,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
-# stage: bootstrap-image
-#
 FROM node:14-alpine AS bootstrap-image
 
 WORKDIR /app
@@ -34,18 +31,6 @@ RUN set -eux \
         bash \
     && pnpm install \
     && ./bin/gen-static -p ./proto
-
-# stage: runtime-image
-#
-FROM node:14-alpine AS runtime-image
-
-WORKDIR /app
-
-COPY --from=bootstrap-image /app/node_modules/ ./node_modules/
-COPY --from=bootstrap-image /app/bin/demo .
-
-COPY --from=bootstrap-image /app/proto/ ./proto/
-COPY --from=bootstrap-image /app/lib/ ./lib/
 
 ENTRYPOINT ["/app/demo"]
 
