@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\" \"bin/demo\"",
+    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\"",
     "start": "node bin/demo"
   }
 }
