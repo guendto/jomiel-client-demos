@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -17,11 +17,12 @@ const zmq = require("zeromq");
 
 class Jomiel {
   constructor(options) {
-    this.sock = new zmq.Request();
     this.options = options;
   }
 
   connect() {
+    this.sock = new zmq.Request();
+    this.sock.receiveTimeout = this.options.connectTimeout * 1000;
     const re = this.options.routerEndpoint;
     this.printStatus(`<connect> ${re}`);
     this.sock.connect(re);
@@ -29,22 +30,18 @@ class Jomiel {
 
   async inquire(uri) {
     const inquiry = proto.Inquiry.create({
-      media: {
-        inputUri: uri
-      }
+      media: { inputUri: uri }
     });
+
+    const serialize = msg => proto.Inquiry.encode(msg).finish();
+    const deserialize = msg => proto.Response.decode(msg);
 
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
-    const inquiry_serialized = proto.Inquiry.encode(inquiry).finish();
-
-    await this.sock.send(inquiry_serialized);
-    this.recv();
-  }
-
-  async recv() {
+    await this.sock.send(serialize(inquiry));
     const [result] = await this.sock.receive();
-    this.dumpResponse(result);
+
+    this.dumpResponse(deserialize(result));
   }
 
   printStatus(message) {
@@ -63,8 +60,7 @@ class Jomiel {
     });
   }
 
-  dumpResponse(data) {
-    const response = proto.Response.decode(data);
+  dumpResponse(response) {
     if (response.status.code == proto.StatusCode.STATUS_CODE_OK) {
       if (this.options.beTerse) {
         this.dumpTerseResponse(response.media);

@@ -6,7 +6,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2020 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -25,6 +25,11 @@ cmdr
     "-r, --router-endpoint <addr>",
     "Specify the router endpoint address",
     "tcp://localhost:5514"
+  )
+  .option(
+    "-t, --connect-timeout <secs>",
+    "Specify maximum time in seconds for the connection allowed to take",
+    30
   )
   .option("-V, --version-zmq", "Display ZeroMQ version and exit")
   .option("-j, --output-json", "Print dumped messages in JSON")
@@ -51,8 +56,17 @@ const jomiel = Jomiel.create(cmdr);
 
 jomiel.connect();
 
-cmdr.args.forEach(uri => {
-  jomiel.inquire(uri);
+cmdr.args.forEach(async uri => {
+  try {
+    await jomiel.inquire(uri);
+  } catch (e) {
+    if (e.errno == 11 && e.code == "EAGAIN") {
+      console.error("error: connection timed out");
+      process.exit(1);
+    } else {
+      throw new Error(e);
+    }
+  }
 });
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
