@@ -35,6 +35,9 @@ class Jomiel {
       }
     });
 
+    const serialize = msg => proto.Inquiry.encode(msg).finish();
+    const deserialize = msg => proto.Response.decode(msg);
+
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
     const inquiry_serialized = proto.Inquiry.encode(inquiry).finish();
