@@ -30,9 +30,7 @@ class Jomiel {
 
   async inquire(uri) {
     const inquiry = proto.Inquiry.create({
-      media: {
-        inputUri: uri
-      }
+      media: { inputUri: uri }
     });
 
     const serialize = msg => proto.Inquiry.encode(msg).finish();
