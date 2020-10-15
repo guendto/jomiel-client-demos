@@ -12,8 +12,10 @@
 
 "use strict";
 
+/*
 process.env.NODE_PATH = ".";
 require("module").Module._initPaths();
+*/
 
 const opts = require("lib/options").parse();
 
