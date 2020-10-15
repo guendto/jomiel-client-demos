@@ -22,6 +22,7 @@ class Jomiel {
 
   connect() {
     this.sock = new zmq.Request();
+    this.sock.receiveTimeout = this.options.connectTimeout * 1000;
     const re = this.options.routerEndpoint;
     this.printStatus(`<connect> ${re}`);
     this.sock.connect(re);
