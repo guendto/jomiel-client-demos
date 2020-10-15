@@ -40,15 +40,10 @@ class Jomiel {
 
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
-    const inquiry_serialized = proto.Inquiry.encode(inquiry).finish();
-
-    await this.sock.send(inquiry_serialized);
-    this.recv();
-  }
-
-  async recv() {
+    await this.sock.send(serialize(inquiry));
     const [result] = await this.sock.receive();
-    this.dumpResponse(result);
+
+    this.dumpResponse(deserialize(result));
   }
 
   printStatus(message) {
@@ -67,8 +62,7 @@ class Jomiel {
     });
   }
 
-  dumpResponse(data) {
-    const response = proto.Response.decode(data);
+  dumpResponse(response) {
     if (response.status.code == proto.StatusCode.STATUS_CODE_OK) {
       if (this.options.beTerse) {
         this.dumpTerseResponse(response.media);
