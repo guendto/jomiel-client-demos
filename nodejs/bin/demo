@@ -17,46 +17,25 @@
 process.env.NODE_PATH = ".";
 require("module").Module._initPaths();
 
-const cmdr = require("commander");
+const opts = require("lib/options").parse();
 
-cmdr
-  .usage("[options] <uri ...>")
-  .option(
-    "-r, --router-endpoint <addr>",
-    "Specify the router endpoint address",
-    "tcp://localhost:5514"
-  )
-  .option(
-    "-t, --connect-timeout <secs>",
-    "Specify maximum time in seconds for the connection allowed to take",
-    30
-  )
-  .option("-V, --version-zmq", "Display ZeroMQ version and exit")
-  .option("-j, --output-json", "Print dumped messages in JSON")
-  .option(
-    "-q, --be-terse",
-    "Be brief and to the point; dump interesting details only"
-  );
-
-cmdr.parse(process.argv);
-
-if (cmdr.versionZmq) {
+if (opts.versionZmq) {
   const zmq = require("zeromq");
   console.log("ZeroMQ version %s", zmq.version);
   process.exit();
 }
 
-if (!cmdr.args.length) {
+if (!opts.args.length) {
   console.error("error: input URI not given");
   process.exit(1);
 }
 
 const Jomiel = require("lib/jomiel").Jomiel;
-const jomiel = Jomiel.create(cmdr);
+const jomiel = Jomiel.create(opts);
 
 jomiel.connect();
 
-cmdr.args.forEach(async uri => {
+opts.args.forEach(async uri => {
   try {
     await jomiel.inquire(uri);
   } catch (e) {
