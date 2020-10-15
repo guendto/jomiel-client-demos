@@ -56,8 +56,17 @@ const jomiel = Jomiel.create(cmdr);
 
 jomiel.connect();
 
-cmdr.args.forEach(uri => {
-  jomiel.inquire(uri);
+cmdr.args.forEach(async uri => {
+  try {
+    await jomiel.inquire(uri);
+  } catch (e) {
+    if (e.errno == 11 && e.code == "EAGAIN") {
+      console.error("error: connection timed out");
+      process.exit(1);
+    } else {
+      throw new Error(e);
+    }
+  }
 });
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
