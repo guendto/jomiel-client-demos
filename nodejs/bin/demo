@@ -26,6 +26,11 @@ cmdr
     "Specify the router endpoint address",
     "tcp://localhost:5514"
   )
+  .option(
+    "-t, --connect-timeout <secs>",
+    "Specify maximum time in seconds for the connection allowed to take",
+    30
+  )
   .option("-V, --version-zmq", "Display ZeroMQ version and exit")
   .option("-j, --output-json", "Print dumped messages in JSON")
   .option(
