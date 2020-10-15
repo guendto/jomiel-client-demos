@@ -4,6 +4,9 @@
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
   "main": "bin/demo",
+  "bin": {
+    "demo": "bin/demo"
+  },
   "dependencies": {
     "commander": "^6.1.0",
     "protobufjs": "^6.10.1",
