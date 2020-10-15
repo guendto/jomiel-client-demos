@@ -17,11 +17,11 @@ const zmq = require("zeromq");
 
 class Jomiel {
   constructor(options) {
-    this.sock = new zmq.Request();
     this.options = options;
   }
 
   connect() {
+    this.sock = new zmq.Request();
     const re = this.options.routerEndpoint;
     this.printStatus(`<connect> ${re}`);
     this.sock.connect(re);
