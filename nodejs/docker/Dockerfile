@@ -30,10 +30,11 @@ RUN set -eux \
         # for gen-static script
         bash \
     && npm i -g pnpm \
-    && pnpm install \
+    && pnpm install -P \
     && ./bin/gen-static -p ./proto \
-    && apk del .build_deps
+    && apk del .build_deps \
+    && rm -rf ./bin ./proto
 
-ENTRYPOINT ["/app/bin/demo"]
+ENTRYPOINT ["node", "."]
 
 CMD ["-h"]

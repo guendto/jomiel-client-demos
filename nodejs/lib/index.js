@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * -*- coding: utf-8 -*-
  *
@@ -14,10 +12,12 @@
 
 "use strict";
 
+/*
 process.env.NODE_PATH = ".";
 require("module").Module._initPaths();
+*/
 
-const opts = require("lib/options").parse();
+const opts = require("./options").parse();
 
 if (opts.versionZmq) {
   const zmq = require("zeromq");
@@ -30,7 +30,7 @@ if (!opts.args.length) {
   process.exit(1);
 }
 
-const Jomiel = require("lib/jomiel").Jomiel;
+const Jomiel = require("./jomiel").Jomiel;
 const jomiel = Jomiel.create(opts);
 
 jomiel.connect();

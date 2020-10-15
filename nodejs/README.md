@@ -3,7 +3,7 @@
 ## Building and running
 
 ```shell
-yarn install
+pnpm i -P
 ./bin/gen-static -p ../proto
-./bin/demo [args ...]
+node . [args ...]
 ```
