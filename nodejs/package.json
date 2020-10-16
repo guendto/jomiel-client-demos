@@ -1,19 +1,29 @@
 {
-  "name": "jomiel-examples",
+  "name": "demo",
   "version": "1.0.0",
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "dependencies": {
     "commander": "^6.1.0",
     "protobufjs": "^6.10.1",
     "zeromq": "^6.0.0-beta.6"
   },
   "devDependencies": {
-    "prettier-eslint-cli": "^5.0.0"
+    "chalk": "^4.1.0",
+    "escodegen": "^1.14.3",
+    "espree": "^7.3.0",
+    "estraverse": "^5.2.0",
+    "glob": "^7.1.6",
+    "jsdoc": "^3.6.6",
+    "minimist": "^1.2.5",
+    "prettier-eslint-cli": "^5.0.0",
+    "semver": "^7.3.2",
+    "tmp": "^0.2.1",
+    "uglify-js": "^3.11.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\""
+    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
