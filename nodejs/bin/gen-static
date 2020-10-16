@@ -31,7 +31,7 @@ PBJS=./node_modules/protobufjs/bin/pbjs
 
 # The destination module file to produce.
 #
-OUTFILE=lib/compiled.js
+OUTFILE=src/compiled.js
 
 # PBJS: Specifies the wrapper to use.
 PBJS_WRAP=commonjs
