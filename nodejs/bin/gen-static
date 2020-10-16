@@ -33,16 +33,23 @@ PBJS=./node_modules/protobufjs/bin/pbjs
 #
 OUTFILE=lib/compiled.js
 
+# PBJS: Specifies the wrapper to use.
+PBJS_WRAP=commonjs
+
 help()
 {
     cat <<EOF
-Usage: ${0##*/} [-j <pbjspath>] [-p <protodir>] [-o <outfile>]
+Usage: ${0##*/} [-e] [-j <pbjspath>] [-p <protodir>] [-o <outfile>]
 
 Notes
-    - Make sure you have installed protobufjs
+    - Make sure you have installed protobufjs first
 
 Where
-    <protodir> path to the _root_ dir containing the .proto files to
+    -e  enable the ES6 support in the compiled static library; implies
+    (for example) ECMAScript modules (ESM) support which nodejs supports
+    as of 13.2.0 (without a flag).
+
+    <protodir> path to the root dir containing the .proto files to
         compile
 
     <outfile> is the destination module file to produce (default:
@@ -59,7 +66,7 @@ EOF
 
 compile_files()
 {
-    OPTS="-t static-module -w commonjs"
+    OPTS="-t static-module -w $PBJS_WRAP"
     PROTO_FILES=$PROTODIR/**/*.proto
 
     echo -n "Compiling the protobuf declarations for jomiel messages..."
@@ -69,8 +76,9 @@ compile_files()
     exit 0
 }
 
-while getopts "?hp:o:j:" o; do
+while getopts "?hep:o:j:" o; do
 case "$o" in
+    e) PBJS_WRAP=es6 ;;
     p) PROTODIR=$OPTARG ;;
     o) OUTFILE=$OPTARG ;;
     j) PBJS=$OPTARG ;;
