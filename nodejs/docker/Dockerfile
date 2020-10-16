@@ -13,7 +13,7 @@ FROM node:14-alpine AS bootstrap-image
 WORKDIR /app
 
 COPY nodejs/bin/ ./bin/
-COPY nodejs/lib/ ./lib/
+COPY nodejs/src/ ./src/
 
 COPY nodejs/pnpm-lock.yaml .
 COPY nodejs/package.json .
