@@ -20,7 +20,8 @@ def options_parse():
 
     """
     parser = ArgumentParser(
-        prog="demo", formatter_class=ArgumentDefaultsHelpFormatter,
+        prog="demo",
+        formatter_class=ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument(
@@ -69,7 +70,10 @@ def options_parse():
     )
 
     parser.add_argument(
-        "uri", metavar="<uri>", nargs="*", help="the URIs to parse",
+        "uri",
+        metavar="<uri>",
+        nargs="*",
+        help="the URIs to parse",
     )
 
     return parser.parse_args()
