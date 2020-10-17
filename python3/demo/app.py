@@ -47,7 +47,8 @@ def main():
     jomiel = Jomiel(opts)
 
     lg.basicConfig(
-        level=lg.INFO, format="[%(levelname)s] status: %(message)s",
+        level=lg.INFO,
+        format="[%(levelname)s] status: %(message)s",
     )
 
     enable_logger(not opts.be_terse)
