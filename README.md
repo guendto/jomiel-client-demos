@@ -1,8 +1,8 @@
 # jomiel-examples
 
-`jomiel-examples` is a selection of examples written in _different
-modern programming languages_ showing how the [jomiel] inquiries are
-made and the responses are handled.
+`jomiel-examples` is a selection of demo programs written in different
+modern programming languages showing how the [jomiel] inquiries are made
+and the responses are handled.
 
 ![Example](./docs/demo.svg)
 
