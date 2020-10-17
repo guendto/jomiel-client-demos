@@ -3,7 +3,7 @@
 ## Building and running
 
 ```shell
-pnpm i -P
+pnpm i
 ./bin/gen-static -p ../proto
 node . [args ...]
 ```
