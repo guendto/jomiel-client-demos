@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -12,9 +12,9 @@
 require 'ffi-rzmq'
 require 'json'
 
-require 'jomiel/protobuf/v1alpha1/message_pb'
+require 'jomiel/protobuf/v1beta1/message_pb'
 
-JP = Jomiel::Protobuf::V1alpha1
+JP = Jomiel::Protobuf::V1beta1
 JPS = JP::StatusCode
 
 # Jomiel module.

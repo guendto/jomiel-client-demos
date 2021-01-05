@@ -2,7 +2,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,9 +11,9 @@
 import logging as lg
 from sys import stdout
 
-from jomiel.protobuf.v1alpha1.message_pb2 import Inquiry
-from jomiel.protobuf.v1alpha1.message_pb2 import Response
-from jomiel.protobuf.v1alpha1.status_pb2 import STATUS_CODE_OK
+from jomiel.protobuf.v1beta1.message_pb2 import Inquiry
+from jomiel.protobuf.v1beta1.message_pb2 import Response
+from jomiel.protobuf.v1beta1.status_pb2 import STATUS_CODE_OK
 from zmq import Context
 from zmq import LINGER
 from zmq import Poller

@@ -4,7 +4,7 @@
  * jomiel-proto
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -12,14 +12,14 @@
 
 syntax = "proto3";
 
-package jomiel.protobuf.v1alpha1;
+package jomiel.protobuf.v1beta1;
 
-option java_package = "io.github.jomiel.protobuf.v1alpha1";
+option java_package = "io.github.jomiel.protobuf.v1beta1";
 option java_outer_classname = "MediaProto";
 option java_multiple_files = true;
-option csharp_namespace = "Jomiel.ProtoBuf.V1Alpha1";
-option php_namespace = "Jomiel\\ProtoBuf\\V1alpha1";
-option go_package = "jomiel/protobuf/v1alpha1";
+option csharp_namespace = "Jomiel.ProtoBuf.V1Beta1";
+option php_namespace = "Jomiel\\ProtoBuf\\V1beta1";
+option go_package = "jomiel/protobuf/v1beta1";
 
 message MediaInquiry {
     string input_uri = 1;

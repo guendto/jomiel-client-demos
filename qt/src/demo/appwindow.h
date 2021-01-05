@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2020 Toni Gündoğdu
+ *  2020-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -19,7 +19,7 @@
 #include <QVBoxLayout>
 
 #include "DemoMainWindow"
-#include "jomiel/protobuf/v1alpha1/message.pb.h"
+#include "jomiel/protobuf/v1beta1/message.pb.h"
 #include "nzmqt/nzmqt.hpp"
 
 namespace demo {

@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -20,7 +20,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	pb "jomiel.github.io/demo/golang/jomiel/protobuf/v1alpha1"
+	pb "jomiel.github.io/demo/golang/jomiel/protobuf/v1beta1"
 )
 
 type Jomiel struct {

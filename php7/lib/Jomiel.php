@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -17,7 +17,7 @@ use \ZMQSocket;
 use \ZMQPoll;
 use \ZMQ;
 
-use Jomiel\ProtoBuf\V1alpha1\{
+use Jomiel\ProtoBuf\V1beta1\{
     MediaInquiry,
     Inquiry,
     Response,

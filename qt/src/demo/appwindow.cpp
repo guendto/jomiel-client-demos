@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2020 Toni Gündoğdu
+ *  2020-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -14,7 +14,7 @@
 
 #include "DemoAppWindow"
 
-namespace jp = jomiel::protobuf::v1alpha1;
+namespace jp = jomiel::protobuf::v1beta1;
 
 namespace demo {
 

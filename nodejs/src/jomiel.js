@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -12,7 +12,7 @@
 
 "use strict";
 
-const proto = require("./compiled").jomiel.protobuf.v1alpha1;
+const proto = require("./compiled").jomiel.protobuf.v1beta1;
 const zmq = require("zeromq");
 
 class Jomiel {

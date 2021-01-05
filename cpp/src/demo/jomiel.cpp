@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -19,7 +19,7 @@
 #include <sstream>
 #include <string>
 
-#include "jomiel/protobuf/v1alpha1/status.pb.h"
+#include "jomiel/protobuf/v1beta1/status.pb.h"
 
 namespace jomiel {
 

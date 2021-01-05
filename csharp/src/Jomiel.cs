@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -17,8 +17,8 @@ using System;
 using Google.Protobuf;
 using ZeroMQ;
 
-using static Jomiel.ProtoBuf.V1Alpha1.MediaResponse.Types.Stream.Types; // StreamQuality
-using Jomiel.ProtoBuf.V1Alpha1;
+using static Jomiel.ProtoBuf.V1Beta1.MediaResponse.Types.Stream.Types; // StreamQuality
+using Jomiel.ProtoBuf.V1Beta1;
 
 namespace Demo {
 
