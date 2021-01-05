@@ -17,7 +17,7 @@ use \ZMQSocket;
 use \ZMQPoll;
 use \ZMQ;
 
-use Jomiel\ProtoBuf\V1alpha1\{
+use Jomiel\ProtoBuf\V1beta1\{
     MediaInquiry,
     Inquiry,
     Response,
