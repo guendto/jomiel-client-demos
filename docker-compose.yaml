@@ -1,0 +1,113 @@
+# -*- coding: utf-8 -*-
+#
+# jomiel-examples
+#
+# Copyright
+#  2021 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+---
+version: '3.5'
+
+services:
+  rust_buster:
+    image: jomiel-ex-buster-rust
+    build:
+      dockerfile: rust/docker/buster/Dockerfile
+      context: .
+  ruby_buster:
+    image: jomiel-ex-buster-ruby
+    build:
+      dockerfile: ruby/docker/buster/Dockerfile
+      context: .
+  ruby_alpine:
+    image: jomiel-ex-alpine-ruby
+    build:
+      dockerfile: ruby/docker/alpine/Dockerfile
+      context: .
+  qt_buster:
+    image: jomiel-ex-buster-qt
+    build:
+      dockerfile: qt/docker/buster/Dockerfile
+      context: .
+  python3_buster:
+    image: jomiel-ex-buster-python3
+    build:
+      dockerfile: python3/docker/buster/Dockerfile
+      context: .
+  python3_alpine:
+    image: jomiel-ex-alpine-python3
+    build:
+      dockerfile: python3/docker/alpine/Dockerfile
+      context: .
+  php7_alpine:
+    image: jomiel-ex-php7
+    build:
+      dockerfile: php7/docker/alpine/Dockerfile
+      context: .
+  perl5_buster:
+    image: jomiel-ex-perl5
+    build:
+      dockerfile: perl5/docker/buster/Dockerfile
+      context: .
+  nodejs_alpine:
+    image: jomiel-ex-nodejs
+    build:
+      dockerfile: nodejs/docker/alpine/Dockerfile
+      context: .
+  lua5_buster:
+    image: jomiel-ex-buster-lua
+    build:
+      dockerfile: lua5/docker/buster/Dockerfile
+      context: .
+  lua5_alpine:
+    image: jomiel-ex-alpine-lua
+    build:
+      dockerfile: lua5/docker/alpine/Dockerfile
+      context: .
+  java_buster:
+    image: jomiel-ex-java
+    build:
+      dockerfile: java/docker/buster/Dockerfile
+      context: .
+  golang_alpine:
+    image: jomiel-ex-alpine-go
+    build:
+      dockerfile: golang/docker/alpine/Dockerfile
+      context: .
+  golang_buster:
+    image: jomiel-ex-buster-go
+    build:
+      dockerfile: golang/docker/buster/Dockerfile
+      context: .
+  csharp_buster:
+    image: jomiel-ex-csharp
+    build:
+      dockerfile: csharp/docker/buster/Dockerfile
+      context: .
+  cpp_alpine:
+    image: jomiel-ex-alpine-cpp
+    build:
+      dockerfile: cpp/docker/alpine/Dockerfile
+      context: .
+  cpp_buster:
+    image: jomiel-ex-buster-cpp
+    build:
+      dockerfile: cpp/docker/buster/Dockerfile
+      context: .
+  c_alpine:
+    image: jomiel-ex-alpine-c
+    build:
+      dockerfile: c/docker/alpine/Dockerfile
+      context: .
+  c_buster:
+    image: jomiel-ex-buster-c
+    build:
+      dockerfile: c/docker/buster/Dockerfile
+      context: .
+
+networks:
+  default:
+    name: jomiel_network  # Requires 3.5+
