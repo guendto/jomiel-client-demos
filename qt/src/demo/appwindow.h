@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2020 Toni Gündoğdu
+ *  2020-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
