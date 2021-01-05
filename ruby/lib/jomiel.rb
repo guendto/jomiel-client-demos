@@ -12,9 +12,9 @@
 require 'ffi-rzmq'
 require 'json'
 
-require 'jomiel/protobuf/v1alpha1/message_pb'
+require 'jomiel/protobuf/v1beta1/message_pb'
 
-JP = Jomiel::Protobuf::V1alpha1
+JP = Jomiel::Protobuf::V1beta1
 JPS = JP::StatusCode
 
 # Jomiel module.
