@@ -17,8 +17,8 @@ using System;
 using Google.Protobuf;
 using ZeroMQ;
 
-using static Jomiel.ProtoBuf.V1Alpha1.MediaResponse.Types.Stream.Types; // StreamQuality
-using Jomiel.ProtoBuf.V1Alpha1;
+using static Jomiel.ProtoBuf.V1Beta1.MediaResponse.Types.Stream.Types; // StreamQuality
+using Jomiel.ProtoBuf.V1Beta1;
 
 namespace Demo {
 
