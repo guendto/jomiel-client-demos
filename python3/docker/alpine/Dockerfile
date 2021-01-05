@@ -3,12 +3,12 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 
 WORKDIR /app
 
