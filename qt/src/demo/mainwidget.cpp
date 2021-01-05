@@ -17,7 +17,7 @@
 
 #include "DemoAppWindow"
 
-namespace jp = jomiel::protobuf::v1alpha1;
+namespace jp = jomiel::protobuf::v1beta1;
 
 namespace demo {
 
