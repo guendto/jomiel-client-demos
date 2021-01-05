@@ -17,7 +17,7 @@ local zpoller = require 'lzmq.poller'
 local zmq = require 'lzmq'
 
 local serpent = require 'serpent'
-local package_path = 'jomiel.protobuf.v1alpha1'
+local package_path = 'jomiel.protobuf.v1beta1'
 
 local Jomiel = {}
 Jomiel.__index = Jomiel
@@ -34,11 +34,11 @@ function Jomiel.new(logger, opts)
     p:loadfile(package_path:gsub('%.', '/') .. '/message.proto')
 
     --[[
-    assert(pb.type 'jomiel.protobuf.v1alpha1.Inquiry')
-    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaInquiry')
-    assert(pb.type 'jomiel.protobuf.v1alpha1.Response')
-    assert(pb.type 'jomiel.protobuf.v1alpha1.MediaResponse')
-    assert(pb.type 'jomiel.protobuf.v1alpha1.StatusCode')
+    assert(pb.type 'jomiel.protobuf.v1beta1.Inquiry')
+    assert(pb.type 'jomiel.protobuf.v1beta1.MediaInquiry')
+    assert(pb.type 'jomiel.protobuf.v1beta1.Response')
+    assert(pb.type 'jomiel.protobuf.v1beta1.MediaResponse')
+    assert(pb.type 'jomiel.protobuf.v1beta1.StatusCode')
     ]]--
 
     return setmetatable({
