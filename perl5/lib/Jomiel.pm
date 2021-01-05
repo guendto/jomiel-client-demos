@@ -28,7 +28,7 @@ use YAML qw(Dump);
 sub new {
   my ($class, $args) = @_;
 
-  my $pkg_path     = 'jomiel/protobuf/v1alpha1';
+  my $pkg_path     = 'jomiel/protobuf/v1beta1';
   my $pkg_path_dot = $pkg_path =~ s/\//\./gr;
 
   my $gpd = Google::ProtocolBuffers::Dynamic->new('./proto/');
