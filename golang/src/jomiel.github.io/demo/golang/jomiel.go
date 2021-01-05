@@ -20,7 +20,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	pb "jomiel.github.io/demo/golang/jomiel/protobuf/v1alpha1"
+	pb "jomiel.github.io/demo/golang/jomiel/protobuf/v1beta1"
 )
 
 type Jomiel struct {
