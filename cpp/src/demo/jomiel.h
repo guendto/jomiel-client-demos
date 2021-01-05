@@ -20,9 +20,9 @@
 #include <zmq.hpp>
 
 #include "demo/types.h"
-#include "jomiel/protobuf/v1alpha1/message.pb.h"
+#include "jomiel/protobuf/v1beta1/message.pb.h"
 
-namespace jp = jomiel::protobuf::v1alpha1;
+namespace jp = jomiel::protobuf::v1beta1;
 namespace gp = google::protobuf;
 
 namespace jomiel {
