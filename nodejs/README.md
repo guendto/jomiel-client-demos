@@ -3,7 +3,7 @@
 ## Building and running
 
 ```shell
-pnpm i
-./bin/gen-static -p ../proto
+pnpm i    # Install deps.
+pnpm gen  # Compile protobuf declarations for jomiel messages.
 node . [args ...]
 ```
