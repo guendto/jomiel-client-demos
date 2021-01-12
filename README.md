@@ -36,6 +36,10 @@ one Dockerfile (typically one for `alpine-linux` and `debian` image).
 To get started, see `jomiel` [HOWTO] for building and running
 instructions.
 
+### docker-compose
+
+See also `docker-compose.yaml` file.
+
 ## License
 
 `jomiel-examples` is licensed under the [Apache License version
