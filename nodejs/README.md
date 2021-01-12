@@ -1,4 +1,4 @@
-# Javascript example
+# Node example
 
 ## Building and running
 
