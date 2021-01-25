@@ -4,7 +4,7 @@
 # jomiel-proto
 #
 # Copyright
-#  2020 Toni Gündoğdu
+#  2020-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -36,6 +36,10 @@ OUTFILE=src/compiled.js
 # PBJS: Specifies the wrapper to use.
 PBJS_WRAP=commonjs
 
+# Extra options for pbjs.
+PBJS_EXTRAOPTS="--no-verify --no-convert --no-delimited"
+PBJS_EXTRAOPTS="$PBJS_EXTRAOPTS --no-beautify --no-comments"
+
 help()
 {
     cat <<EOF
@@ -66,7 +70,7 @@ EOF
 
 compile_files()
 {
-    OPTS="-t static-module -w $PBJS_WRAP"
+    OPTS="-t static-module -w $PBJS_WRAP $PBJS_EXTRAOPTS"
     PROTO_FILES=$PROTODIR/**/*.proto
 
     echo -n "Compiling the protobuf declarations for jomiel messages..."
