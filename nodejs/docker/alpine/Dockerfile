@@ -28,7 +28,7 @@ RUN set -eux \
         make \
         g++ \
     && sed -i 's/\.\.\/proto/\.\/proto/' package.json \
-    && npm i \
+    && npm i -q \
     && npm run gen \
     && apk del .build_deps \
     && rm -rf ./bin ./proto
