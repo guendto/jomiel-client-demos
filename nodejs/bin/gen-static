@@ -1,99 +1,83 @@
-#!/bin/bash
-# -*- coding: utf-8 -*-
-#
-# jomiel-proto
-#
-# Copyright
-#  2020-2021 Toni Gündoğdu
-#
-#
-# SPDX-License-Identifier: Apache-2.0
-#
+#!/usr/bin/env node
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-examples
+ *
+ * Copyright
+ *  2019-2020 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-# gen-static
-#
-# A simple script to compile protobuf declarations for jomiel messages
-# into a single static module using pbjs.
-#
-set -e;
+const parseOptions = () => {
+  const cmdr = require("commander");
 
-# Enable bash globstar for recursive search ("**/*.proto").
-#
-shopt -s globstar
+  cmdr
+    .usage("[options]")
+    .requiredOption(
+      "-p, --proto-dir <path>",
+      "Specify path to the .proto files"
+    )
+    .option(
+      "-w, --wrapper <wrapper>",
+      "Use specified wrapper; default (cjs+amd), es6, commonjs, amd, closure",
+      "default"
+    )
+    .option(
+      "-o, --output-file <path>",
+      "Write output to the specified file",
+      "src/messages.js"
+    );
 
-# The location of the protobuf declaration (.proto) files.
-#
-PROTODIR=
+  return cmdr.parse();
+};
 
-# The path to the pbjs command.
-#
-PBJS=./node_modules/protobufjs/bin/pbjs
+const opts = parseOptions();
 
-# The destination module file to produce.
-#
-OUTFILE=src/compiled.js
+const { join } = require("path");
+const glob = require("glob");
 
-# PBJS: Specifies the wrapper to use.
-PBJS_WRAP=commonjs
+glob(join(opts.protoDir, "**/*.proto"), (err, files) => {
+  if (err) throw err;
 
-# Extra options for pbjs.
-PBJS_EXTRAOPTS="--no-verify --no-convert --no-delimited"
-PBJS_EXTRAOPTS="$PBJS_EXTRAOPTS --no-beautify --no-comments"
+  if (files.length == 0) {
+    console.log(
+      `error: ${opts.protoDir}: unable to find any .proto files`
+    );
+    process.exit(1);
+  }
 
-help()
-{
-    cat <<EOF
-Usage: ${0##*/} [-e] [-j <pbjspath>] [-p <protodir>] [-o <outfile>]
+  const { execFile } = require("child_process");
+  const pbjs_path = "./node_modules/.bin/pbjs";
 
-Notes
-    - Make sure you have installed protobufjs first
+  const pbjs_args = [
+    "--target",
+    "static-module",
+    "--wrap",
+    opts.wrapper,
+    "--out",
+    opts.outputFile,
+    "--no-verify",
+    "--no-convert",
+    "--no-delimited",
+    "--no-beautify",
+    "--no-comments",
+  ];
 
-Where
-    -e  enable the ES6 support in the compiled static library; implies
-    (for example) ECMAScript modules (ESM) support which nodejs supports
-    as of 13.2.0 (without a flag).
+  // console.log(pbjs_args.concat(files));
 
-    <protodir> path to the root dir containing the .proto files to
-        compile
+  process.stdout.write(
+    "Compiling the static protobuf declarations for jomiel messages..."
+  );
 
-    <outfile> is the destination module file to produce (default:
-        $OUTFILE)
-
-    <pbjspath> is the path to the pbjs command
-        (default: $PBJS)
-
-
-EOF
-    [ -n "$1" ] && echo "error: $1"
-    exit 0
-}
-
-compile_files()
-{
-    OPTS="-t static-module -w $PBJS_WRAP $PBJS_EXTRAOPTS"
-    PROTO_FILES=$PROTODIR/**/*.proto
-
-    echo -n "Compiling the protobuf declarations for jomiel messages..."
-    $PBJS $OPTS -o $OUTFILE $PROTO_FILES || exit $?
-    echo "done."
-
-    exit 0
-}
-
-while getopts "?hep:o:j:" o; do
-case "$o" in
-    e) PBJS_WRAP=es6 ;;
-    p) PROTODIR=$OPTARG ;;
-    o) OUTFILE=$OPTARG ;;
-    j) PBJS=$OPTARG ;;
-    h|?) help ;;
-esac
-done
-
-shift $((OPTIND-1)) # Shift off the options and optional --
-
-[ -z "$PROTODIR" ] && help "-p <protodir> not specified"
-[ -z "$OUTFILE" ] && help "-o <outfile> not specified"
-compile_files
-
-exit $?
+  const chld = execFile(
+    pbjs_path,
+    pbjs_args.concat(files),
+    (err, stdout, stderr) => {
+      if (err) throw err;
+      console.log("done.");
+    }
+  );
+});

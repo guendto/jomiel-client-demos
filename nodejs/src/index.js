@@ -35,7 +35,7 @@ const jomiel = Jomiel.create(opts);
 
 jomiel.connect();
 
-opts.args.forEach(async uri => {
+opts.args.forEach(async (uri) => {
   try {
     await jomiel.inquire(uri);
   } catch (e) {

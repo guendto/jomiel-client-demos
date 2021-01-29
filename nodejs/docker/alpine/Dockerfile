@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -27,11 +27,9 @@ RUN set -eux \
         python2 \
         make \
         g++ \
-        # for gen-static script
-        bash \
-    && npm i -g pnpm \
-    && pnpm install -P \
-    && ./bin/gen-static -p ./proto \
+    && sed -i 's/\.\.\/proto/\.\/proto/' package.json \
+    && npm i -q \
+    && npm run gen \
     && apk del .build_deps \
     && rm -rf ./bin ./proto
 

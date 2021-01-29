@@ -34,9 +34,7 @@ const parse = () => {
       "Be brief and to the point; dump interesting details only"
     );
 
-  cmdr.parse(process.argv);
-
-  return cmdr;
+  return cmdr.parse(process.argv);
 };
 
 module.exports = { parse };
