@@ -27,8 +27,6 @@ RUN set -eux \
         python2 \
         make \
         g++ \
-        # for gen-static script
-        bash \
     && npm i -g pnpm \
     && pnpm install -P \
     && ./bin/gen-static -p ./proto \
