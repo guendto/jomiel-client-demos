@@ -27,9 +27,10 @@ RUN set -eux \
         python2 \
         make \
         g++ \
-    && npm i -g pnpm \
-    && pnpm install -P \
     && ./bin/gen-static -p ./proto \
+    && sed -i 's/\.\.\/proto/\.\/proto/' package.json \
+    && npm i \
+    && npm run gen \
     && apk del .build_deps \
     && rm -rf ./bin ./proto
 
