@@ -12,7 +12,12 @@
 
 "use strict";
 
-const proto = require("./messages").jomiel.protobuf.v1beta1;
+const {
+  Inquiry,
+  Response,
+  StatusCode,
+} = require("./messages").jomiel.protobuf.v1beta1;
+
 const zmq = require("zeromq");
 
 class Jomiel {
@@ -29,12 +34,12 @@ class Jomiel {
   }
 
   async inquire(uri) {
-    const inquiry = proto.Inquiry.create({
+    const inquiry = Inquiry.create({
       media: { inputUri: uri },
     });
 
-    const serialize = (msg) => proto.Inquiry.encode(msg).finish();
-    const deserialize = (msg) => proto.Response.decode(msg);
+    const serialize = (msg) => Inquiry.encode(msg).finish();
+    const deserialize = (msg) => Response.decode(msg);
 
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
@@ -61,7 +66,7 @@ class Jomiel {
   }
 
   dumpResponse(response) {
-    if (response.status.code == proto.StatusCode.STATUS_CODE_OK) {
+    if (response.status.code == StatusCode.STATUS_CODE_OK) {
       if (this.options.beTerse) {
         this.dumpTerseResponse(response.media);
       } else {
