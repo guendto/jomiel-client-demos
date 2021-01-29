@@ -95,8 +95,6 @@ class Jomiel {
   }
 }
 
-module.exports = {
-  Jomiel,
-};
+module.exports = { Jomiel };
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
