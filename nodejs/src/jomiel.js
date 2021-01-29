@@ -18,7 +18,7 @@ const {
   StatusCode,
 } = require("./messages").jomiel.protobuf.v1beta1;
 
-const zmq = require("zeromq");
+const { Request } = require("zeromq");
 
 class Jomiel {
   constructor(options) {
@@ -26,7 +26,7 @@ class Jomiel {
   }
 
   connect() {
-    this.sock = new zmq.Request();
+    this.sock = new Request();
     this.sock.receiveTimeout = this.options.connectTimeout * 1000;
     const re = this.options.routerEndpoint;
     this.printStatus(`<connect> ${re}`);
