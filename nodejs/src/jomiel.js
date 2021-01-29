@@ -30,11 +30,11 @@ class Jomiel {
 
   async inquire(uri) {
     const inquiry = proto.Inquiry.create({
-      media: { inputUri: uri }
+      media: { inputUri: uri },
     });
 
-    const serialize = msg => proto.Inquiry.encode(msg).finish();
-    const deserialize = msg => proto.Response.decode(msg);
+    const serialize = (msg) => proto.Inquiry.encode(msg).finish();
+    const deserialize = (msg) => proto.Response.decode(msg);
 
     if (!this.options.beTerse) this.printMessage(`<send>`, inquiry);
 
@@ -52,7 +52,7 @@ class Jomiel {
 
   dumpTerseResponse(mediaResponse) {
     console.log(`---\ntitle: ` + mediaResponse.title);
-    mediaResponse.stream.forEach(stream => {
+    mediaResponse.stream.forEach((stream) => {
       const quality = stream.quality;
       console.log(`  profile: ${quality.profile}`);
       console.log(`    width: ${quality.width}`);
@@ -91,7 +91,7 @@ class Jomiel {
 }
 
 module.exports = {
-  Jomiel
+  Jomiel,
 };
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
