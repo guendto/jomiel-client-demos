@@ -12,7 +12,7 @@
 
 "use strict";
 
-const proto = require("./compiled").jomiel.protobuf.v1beta1;
+const proto = require("./messages").jomiel.protobuf.v1beta1;
 const zmq = require("zeromq");
 
 class Jomiel {
