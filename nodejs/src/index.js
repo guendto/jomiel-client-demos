@@ -30,7 +30,7 @@ if (!opts.args.length) {
   process.exit(1);
 }
 
-const Jomiel = require("./jomiel").Jomiel;
+const { Jomiel } = require("./jomiel");
 const jomiel = Jomiel.create(opts);
 
 jomiel.connect();
