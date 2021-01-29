@@ -27,7 +27,6 @@ RUN set -eux \
         python2 \
         make \
         g++ \
-    && ./bin/gen-static -p ./proto \
     && sed -i 's/\.\.\/proto/\.\/proto/' package.json \
     && npm i \
     && npm run gen \
