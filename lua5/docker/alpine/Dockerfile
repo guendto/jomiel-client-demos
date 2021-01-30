@@ -8,7 +8,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM alpine:3.12
+FROM alpine:3.13
 
 WORKDIR /app
 
