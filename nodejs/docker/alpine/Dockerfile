@@ -8,7 +8,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM node:14-alpine AS bootstrap-image
+FROM node:15-alpine AS bootstrap-image
 
 WORKDIR /app
 
