@@ -16,7 +16,7 @@
 
 # stage: bootstrap-image
 #
-FROM alpine:3.12 AS bootstrap-image
+FROM alpine:3.13 AS bootstrap-image
 
 WORKDIR /app
 
@@ -59,7 +59,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM alpine:3.12 AS runtime-image
+FROM alpine:3.13 AS runtime-image
 
 RUN set -eux \
     ; apk --update --no-cache add \
