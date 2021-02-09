@@ -6,10 +6,13 @@ and the responses are handled.
 
 ![Example](./docs/demo.svg)
 
-## Note
+The examples are functionally similar but not necessarily identical (in
+terms of features). Each example shows how to
 
-The examples are not identical (in terms of the features) but they all
-have the same basic functionalities.
+- `make an inquiry` and
+- `handle the result`.
+
+Some examples have extra features, like additional output options.
 
 |                                                                           | Notes     |
 | ------------------------------------------------------------------------- | --------- |
