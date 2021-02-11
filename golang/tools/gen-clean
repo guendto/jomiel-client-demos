@@ -1,0 +1,24 @@
+#!/bin/sh
+# -*- coding: utf-8 -*-
+#
+# jomiel-examples
+#
+# Copyright
+#  2021 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+set -e
+
+# gen-clean
+#
+# Remove the generated protobuf binding files from ./internal.
+#
+
+_bindingsdir="./internal/gen/jomiel/protobuf/v1beta1"
+_files="$_bindingsdir/*.go"
+
+echo -n "clean: $_files ..."
+rm -f $_files
+echo "done."
