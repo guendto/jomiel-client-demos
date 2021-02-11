@@ -4,17 +4,16 @@
 # jomiel-proto
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+set -e
 
 # bootstrap
 #
-# A simple script to compile the protobuf declarations for jomiel
-# messages. This script is intended to be used with the jomiel
-# (sub)project(s).
+# Make protobuf declaration compilation (a bit) easier.
 #
 # Notes:
 #   - This is a bash script (namely the globstar dependency)
@@ -22,20 +21,20 @@
 #   - Make sure you have installed the protobuf-compiler (protoc) and it
 #   can be found the path.
 #
-#   - When lang ID is set to 'c', this script will call protoc-c(1),
-#   instead of protoc(1)
+#   - When the langid is set to:
+#       - 'c', the script will call proto-c(1) instead of protoc(1)
+#       - 'go', the script will append "~/go/bin" to the PATH
 #
-#   - This script will not validate lang ID, the value is simply passed
-#   as such to protoc(1)
+#   - The langid value will not be validated, the value passed as such
+#   to the protobuf compiler
 #
 # Examples:
-#   bootstrap -p jomiel/comm/proto/ -l python -d jomiel/data/bindings/
-#       # Compiling the python bindings for 'jomiel'.
+#   bootstrap -p jomiel-proto/ -l python -d bindings/
+#       # Compile the Python bindings for 'jomiel'.
 #
-#   bootstrap -p ../proto/ -l c -d src/demo/proto/
-#       # Compiling the c bindings for the jomiel-examples/c.
+#   bootstrap -p jomiel-proto/ -l c -d bindings/
+#       # Same as above, but for C language.
 #
-set -e;
 
 # Enable bash globstar for recursive search ("**/*.proto").
 #
@@ -79,7 +78,7 @@ Where
 
     <langid> language binding identifier (e.g. "go" or "python"). The
         identifier must be understood by protoc(1); note that if the
-        identifier is "c", the script will use protocc-c(1), instead of
+        identifier is "c", the script will use protoc-c(1), instead of
         protoc(1).
 
     <destdir> is the destination dir for the compiled protobuf messages
@@ -121,6 +120,10 @@ shift $((OPTIND-1)) # Shift off the options and optional --
         echo "protoc-c: command not found"
         exit 1
     }
+}
+
+[ "$LANGID" = "go" ] && {
+  PATH=$PATH:~/go/bin
 }
 
 [ -d "$DESTDIR" ] || mkdir -p "$DESTDIR"
