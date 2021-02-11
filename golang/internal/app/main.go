@@ -4,13 +4,13 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package main
+package app
 
 import (
 	"fmt"
@@ -19,20 +19,20 @@ import (
 
 	yaml "github.com/ghodss/yaml"
 	flag "github.com/spf13/pflag"
-	czmq "gopkg.in/zeromq/goczmq.v4"
 
-	jomiel "jomiel.github.io/demo/golang"
+	// czmq "gopkg.in/zeromq/goczmq.v4"  // See README.md for Notes
+	czmq "github.com/zeromq/goczmq"
 )
 
-var opts *jomiel.Options
+var opts *options
 
 func init() {
 	log.SetOutput(os.Stderr)
 	log.SetFlags(0)
-	opts = jomiel.NewOptions()
+	opts = newOptions()
 }
 
-func main() {
+func Main() {
 
 	flag.Parse()
 
@@ -51,13 +51,13 @@ func main() {
 		log.Fatalln("error: no input URI given")
 	}
 
-	jomiel := jomiel.NewJomiel(opts)
+	jomiel := newJomiel(opts)
 	defer jomiel.Destroy()
 
-	jomiel.Connect()
+	jomiel.connect()
 
 	for i := 0; i < flag.NArg(); i++ {
-		jomiel.Inquire(flag.Arg(i))
+		jomiel.inquire(flag.Arg(i))
 	}
 }
 

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package demo
+package app
 
 import (
 	"encoding/json"
@@ -18,30 +18,31 @@ import (
 	"log"
 
 	proto "github.com/golang/protobuf/proto"
-	czmq "gopkg.in/zeromq/goczmq.v4"
+	// czmq "gopkg.in/zeromq/goczmq.v4"  // See README.md for Notes
+	czmq "github.com/zeromq/goczmq"
 
-	pb "jomiel.github.io/demo/golang/jomiel/protobuf/v1beta1"
+	msgs "internal/gen/messages"
 )
 
-type Jomiel struct {
+type jomiel struct {
 	sock *czmq.Sock
-	opts *Options
+	opts *options
 }
 
-func NewJomiel(opts *Options) *Jomiel {
+func newJomiel(opts *options) *jomiel {
 	sck := czmq.NewSock(czmq.Req)
 	sck.SetOption(czmq.SockSetLinger(0))
-	return &Jomiel{
+	return &jomiel{
 		opts: opts,
 		sock: sck,
 	}
 }
 
-func (j *Jomiel) Destroy() {
+func (j *jomiel) Destroy() {
 	defer j.sock.Destroy()
 }
 
-func (j *Jomiel) Connect() {
+func (j *jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
 
@@ -51,15 +52,15 @@ func (j *Jomiel) Connect() {
 	j.sock.Connect(j.opts.RouterEndpoint)
 }
 
-func (j *Jomiel) Inquire(uri string) {
+func (j *jomiel) inquire(uri string) {
 	j.send(uri)
 	j.recv()
 }
 
-func (j *Jomiel) send(uri string) {
-	inquiry := &pb.Inquiry{
-		Inquiry: &pb.Inquiry_Media{
-			Media: &pb.MediaInquiry{
+func (j *jomiel) send(uri string) {
+	inquiry := &msgs.Inquiry{
+		Inquiry: &msgs.Inquiry_Media{
+			Media: &msgs.MediaInquiry{
 				InputUri: uri,
 			},
 		},
@@ -74,7 +75,7 @@ func (j *Jomiel) send(uri string) {
 	j.sock.SendMessage([][]byte{out})
 }
 
-func (j *Jomiel) recv() {
+func (j *jomiel) recv() {
 	/*
 	 * NOTE
 	 *
@@ -116,7 +117,7 @@ func (j *Jomiel) recv() {
 		log.Fatalln("failed to receive message: ", err)
 	}
 
-	response := &pb.Response{}
+	response := &msgs.Response{}
 	err = proto.Unmarshal(data[0], response)
 	if err != nil {
 		log.Fatalln("failed to decode response: ", err)
@@ -125,13 +126,13 @@ func (j *Jomiel) recv() {
 	j.dumpResponse(response)
 }
 
-func (j *Jomiel) printStatus(status string) {
+func (j *jomiel) printStatus(status string) {
 	if !j.opts.BeTerse {
 		log.Println("status: " + status)
 	}
 }
 
-func (j *Jomiel) toJson(response *pb.Response) string {
+func (j *jomiel) toJson(response *msgs.Response) string {
 	json, err := json.MarshalIndent(response, "", "  ")
 	if err != nil {
 		log.Fatalln("error: ", err)
@@ -139,7 +140,7 @@ func (j *Jomiel) toJson(response *pb.Response) string {
 	return string(json)
 }
 
-func (j *Jomiel) printMessage(status string, message *pb.Response) {
+func (j *jomiel) printMessage(status string, message *msgs.Response) {
 	var result string
 	if j.opts.OutputJson {
 		result = j.toJson(message)
@@ -150,11 +151,11 @@ func (j *Jomiel) printMessage(status string, message *pb.Response) {
 	fmt.Printf(result)
 }
 
-func (j *Jomiel) dumpResponse(response *pb.Response) {
+func (j *jomiel) dumpResponse(response *msgs.Response) {
 	responseStatus := response.GetStatus()
 	mediaResponse := response.GetMedia()
 
-	if responseStatus.GetCode() == pb.StatusCode_STATUS_CODE_OK {
+	if responseStatus.GetCode() == msgs.StatusCode_STATUS_CODE_OK {
 		if j.opts.BeTerse {
 			j.dumpTerseResponse(mediaResponse)
 		} else {
@@ -165,7 +166,7 @@ func (j *Jomiel) dumpResponse(response *pb.Response) {
 	}
 }
 
-func (j *Jomiel) dumpTerseResponse(response *pb.MediaResponse) {
+func (j *jomiel) dumpTerseResponse(response *msgs.MediaResponse) {
 	fmt.Println("---\ntitle: " + response.GetTitle())
 	fmt.Println("quality:")
 

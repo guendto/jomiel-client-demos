@@ -4,17 +4,17 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package demo
+package app
 
 import flag "github.com/spf13/pflag"
 
-type Options struct {
+type options struct {
 	RouterEndpoint string `json:"router-endpoint"`
 	ConnectTimeout int    `json:"connect-timeout"`
 	PrintConfig    bool
@@ -23,8 +23,8 @@ type Options struct {
 	BeTerse        bool `json:"be-terse"`
 }
 
-func NewOptions() *Options {
-	opts := &Options{}
+func newOptions() *options {
+	opts := &options{}
 
 	flag.BoolVarP(
 		&opts.PrintConfig,
