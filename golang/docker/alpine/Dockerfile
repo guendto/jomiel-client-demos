@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -13,9 +13,11 @@
 #
 FROM golang:1.15-alpine AS bootstrap-image
 
-WORKDIR $GOPATH/src/jomiel.github.io/demo
+WORKDIR /app
 
-COPY golang/src/jomiel.github.io/demo/ ./
+COPY golang/internal/ ./internal/
+COPY golang/main.go ./
+COPY golang/go.* ./
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -31,12 +33,9 @@ RUN set -eux \
         git \
         # for bootstrap script
         bash \
-    && go get -v \
-        github.com/golang/protobuf/protoc-gen-go \
-        gopkg.in/zeromq/goczmq.v4 \
-        github.com/ghodss/yaml \
-        github.com/spf13/pflag \
-    && ./proto/bin/bootstrap -p proto -l go -d golang
+    && sed -i 's/\.\.\/proto/\.\/proto/g' main.go \
+    && go get -v google.golang.org/protobuf/cmd/protoc-gen-go \
+    && go generate
 
 # stage: compile-image
 #
