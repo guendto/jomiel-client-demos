@@ -13,7 +13,7 @@
 #
 FROM golang:1.15-buster AS bootstrap-image
 
-WORKDIR $GOPATH/src/jomiel.github.io/demo
+WORKDIR /app
 
 COPY golang/src/jomiel.github.io/demo/ ./
 COPY proto/ ./proto/
