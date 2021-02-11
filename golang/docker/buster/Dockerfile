@@ -30,12 +30,9 @@ RUN set -eux \
         libczmq-dev \
         pkgconf \
         git \
-    && go get -v \
-        github.com/golang/protobuf/protoc-gen-go \
-        gopkg.in/zeromq/goczmq.v4 \
-        github.com/ghodss/yaml \
-        github.com/spf13/pflag \
-    && ./proto/bin/bootstrap -p proto -l go -d golang
+    && sed -i 's/\.\.\/proto/\.\/proto/g' main.go \
+    && go get -v google.golang.org/protobuf/cmd/protoc-gen-go \
+    && go generate
 
 # stage: compile-image
 #
