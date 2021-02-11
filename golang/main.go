@@ -15,7 +15,7 @@ package main
 import "github.com/guendto/jomiel-examples/golang/internal/app"
 
 func main() {
-    app.Main()
+	app.Main()
 }
 
 //go:generate ../proto/bin/bootstrap -p ../proto -l go -d internal/gen
