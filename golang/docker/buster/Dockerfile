@@ -15,7 +15,9 @@ FROM golang:1.15-buster AS bootstrap-image
 
 WORKDIR /app
 
-COPY golang/src/jomiel.github.io/demo/ ./
+COPY golang/internal/ ./internal/
+COPY golang/main.go ./
+COPY golang/go.* ./
 COPY proto/ ./proto/
 
 RUN set -eux \
