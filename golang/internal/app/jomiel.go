@@ -16,22 +16,25 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	proto "github.com/golang/protobuf/proto"
-	// czmq "gopkg.in/zeromq/goczmq.v4"  // See README.md for Notes
-	czmq "github.com/zeromq/goczmq"
+	zmq4 "github.com/pebbe/zmq4"
 
 	msgs "internal/gen/messages"
 )
 
 type jomiel struct {
-	sock *czmq.Sock
+	sock *zmq4.Socket
 	opts *options
 }
 
 func newJomiel(opts *options) *jomiel {
-	sck := czmq.NewSock(czmq.Req)
-	sck.SetOption(czmq.SockSetLinger(0))
+	sck, err := zmq4.NewSocket(zmq4.REQ)
+	if err != nil {
+		log.Fatalln("failed to create a socket: ", err)
+	}
+	sck.SetLinger(0)
 	return &jomiel{
 		opts: opts,
 		sock: sck,
@@ -39,7 +42,7 @@ func newJomiel(opts *options) *jomiel {
 }
 
 func (j *jomiel) Destroy() {
-	defer j.sock.Destroy()
+	j.sock.Close()
 }
 
 func (j *jomiel) connect() {
@@ -97,28 +100,26 @@ func (j *jomiel) recv() {
 	 *  - ZeroMQ version 4.3 (czmq version 4.1)
 	 *  - ZeroMQ version 4.3 (czmq version 4.2)
 	 */
-	poller, err := czmq.NewPoller(j.sock)
-	if err != nil {
-		log.Fatalln("failed to create a poller: ", err)
-	}
-	defer poller.Destroy()
+	poller := zmq4.NewPoller()
+	poller.Add(j.sock, zmq4.POLLIN)
 
-	sck, err := poller.Wait(j.opts.ConnectTimeout * 1000)
+	timeout := time.Duration(j.opts.ConnectTimeout)
+	sck, err := poller.Poll(timeout * time.Second)
 	if err != nil {
 		log.Fatalln("failed to pollin an event: ", err)
 	} else {
-		if sck == nil {
+		if len(sck) == 0 {
 			log.Fatalln("error: connection timed out")
 		}
 	}
 
-	data, err := j.sock.RecvMessage()
+	data, err := j.sock.Recv(0)
 	if err != nil {
 		log.Fatalln("failed to receive message: ", err)
 	}
 
 	response := &msgs.Response{}
-	err = proto.Unmarshal(data[0], response)
+	err = proto.Unmarshal([]byte(data), response)
 	if err != nil {
 		log.Fatalln("failed to decode response: ", err)
 	}
