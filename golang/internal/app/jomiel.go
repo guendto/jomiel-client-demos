@@ -79,27 +79,6 @@ func (j *jomiel) send(uri string) {
 }
 
 func (j *jomiel) recv() {
-	/*
-	 * NOTE
-	 *
-	 * Poller.Wait() seems to behave strangely in docker containers.
-	 * The function timeouts immediately when the container is run:
-	 *  $ docker run --rm -t IMAGE [args...]
-	 *
-	 * Where as,
-	 *  $ docker run --rm -it IMAGE sh
-	 *  (container) ./demo [args...]  # Works as expected.
-	 *
-	 * Previously, with the following setup, Poller.Wait() would
-	 * return only after timeout was met:
-	 *  - ZeroMQ version 4.2 (czmq version 4.0)
-	 *
-	 * Whereas, with the following setup, Poller.Wait() returns
-	 * immediately with 'sck' set to 'nil' when run in a docker
-	 * container (as described above):
-	 *  - ZeroMQ version 4.3 (czmq version 4.1)
-	 *  - ZeroMQ version 4.3 (czmq version 4.2)
-	 */
 	poller := zmq4.NewPoller()
 	poller.Add(j.sock, zmq4.POLLIN)
 
