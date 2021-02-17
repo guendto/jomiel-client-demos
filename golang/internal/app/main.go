@@ -18,10 +18,8 @@ import (
 	"os"
 
 	yaml "github.com/ghodss/yaml"
+	zmq4 "github.com/pebbe/zmq4"
 	flag "github.com/spf13/pflag"
-
-	// czmq "gopkg.in/zeromq/goczmq.v4"  // See README.md for Notes
-	czmq "github.com/zeromq/goczmq"
 )
 
 var opts *options
@@ -41,9 +39,8 @@ func Main() {
 		prettyPrintYaml(opts)
 		os.Exit(0)
 	} else if opts.VersionZmq {
-		fmt.Printf("ZeroMQ version %d.%d (czmq version %d.%d)\n",
-			czmq.ZMQVersionMajor, czmq.ZMQVersionMinor,
-			czmq.CZMQVersionMajor, czmq.CZMQVersionMinor)
+		major, minor, patch := zmq4.Version()
+		fmt.Printf("ZeroMQ version %d.%d.%d\n", major, minor, patch)
 		os.Exit(0)
 	}
 
