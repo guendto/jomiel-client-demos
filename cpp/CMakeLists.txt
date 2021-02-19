@@ -12,6 +12,9 @@
 cmake_minimum_required(VERSION 3.16.3)
 project(demo)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 # Settings.
 #
 # Set CMAKE_CXX_STANDARD until "How to manage C++ standard
