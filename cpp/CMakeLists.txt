@@ -59,7 +59,7 @@ protoc_gen_bindings(cpp
 
 # Source files.
 #
-set(SRC_DEMO_FILES
+set(DEMO_SRCFILES
     src/demo/jomiel.cpp
     src/demo/jomiel.h
     src/demo/usage.cpp
@@ -75,5 +75,5 @@ include_directories(src)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO_FILES} ${PROTOC_GEN_SRCFILES})
+add_executable(demo ${DEMO_SRCFILES} ${PROTOC_GEN_SRCFILES})
 target_link_libraries(demo ${CONAN_LIBS})
