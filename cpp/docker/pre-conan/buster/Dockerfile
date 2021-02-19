@@ -57,7 +57,7 @@ RUN set -eux \
         libzmq5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/cpp/build/demo /
 
 ENTRYPOINT ["/demo"]
 
