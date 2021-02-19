@@ -2,8 +2,12 @@
 
 ## Building and running
 
+### Prior to conan (package manager)
+
 ```shell
-mkdir build && cd build
-cmake ../cmake && make
+mkdir build
+cd build
+cmake ../cmake
+make
 ./demo [args...]
 ```
