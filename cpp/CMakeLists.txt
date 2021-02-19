@@ -56,3 +56,13 @@ protoc_gen_bindings(cpp
     ${PROJECT_SOURCE_DIR}/../proto
     ${PROJECT_BINARY_DIR}/build/gen)
 # cmake_print_variables(PROTOC_GEN_SRCFILES)
+
+# Source files.
+#
+set(SRC_DEMO_FILES
+    src/demo/jomiel.cpp
+    src/demo/jomiel.h
+    src/demo/usage.cpp
+    src/demo/main.cpp
+    src/demo/types.h
+)
