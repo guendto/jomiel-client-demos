@@ -51,8 +51,10 @@ include(CMakePrintHelpers)
 #
 include(InvokeProtoc)
 
-bootstrap_gen_bindings(cpp build/gen)
-#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+protoc_gen_bindings(cpp
+    ${PROJECT_SOURCE_DIR}/../../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
 
 # Source files.
 #
