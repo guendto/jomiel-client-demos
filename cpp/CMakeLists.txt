@@ -70,3 +70,4 @@ set(SRC_DEMO_FILES
 # Include dirs.
 #
 include_directories(${PROJECT_BINARY_DIR}/build/gen)
+include_directories(${PROJECT_SOURCE_DIR})
