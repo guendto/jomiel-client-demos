@@ -27,13 +27,15 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
 
 add_compile_options(
-  -Wall -Werror -march=native -O1 -ggdb3 -pipe
-  -Wformat -Wformat-security
-  --param=ssp-buffer-size=4
-  -fstack-protector-strong
-  -Werror=format-security
-  -D_FORTIFY_SOURCE=2
-  -Wpedantic
+    # Disable deprecated declarations in cppzmq.
+    -Wno-error=deprecated-declarations
+    -Wall -Werror -march=native -O1 -ggdb3 -pipe
+    -Wformat -Wformat-security
+    --param=ssp-buffer-size=4
+    -fstack-protector-strong
+    -Werror=format-security
+    -D_FORTIFY_SOURCE=2
+    -Wpedantic
 )
 
 # Helpers.
