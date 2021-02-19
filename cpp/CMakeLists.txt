@@ -35,3 +35,8 @@ add_compile_options(
   -D_FORTIFY_SOURCE=2
   -Wpedantic
 )
+
+# Helpers.
+#   - Namely the useful cmake_print_variables() used everywhere.
+#
+include(CMakePrintHelpers)
