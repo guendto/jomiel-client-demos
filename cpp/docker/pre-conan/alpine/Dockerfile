@@ -40,7 +40,6 @@ RUN set -eux \
         g++ \
         # for bootstrap script
         bash \
-    # && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt \
     && cd cpp \
     # See the 'cppzmq' note above.
     #
