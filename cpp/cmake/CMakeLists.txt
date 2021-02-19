@@ -59,11 +59,11 @@ protoc_gen_bindings(cpp
 # Source files.
 #
 set(SRC_DEMO_FILES
-    src/demo/jomiel.cpp
-    src/demo/jomiel.h
-    src/demo/usage.cpp
-    src/demo/main.cpp
-    src/demo/types.h
+    ../src/demo/jomiel.cpp
+    ../src/demo/jomiel.h
+    ../src/demo/usage.cpp
+    ../src/demo/main.cpp
+    ../src/demo/types.h
 )
 
 # Build local copies of external dependencies.
