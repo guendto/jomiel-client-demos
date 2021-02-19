@@ -15,10 +15,10 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY cpp/CMakeLists.txt .
-COPY cpp/src/ ./src/
+COPY cpp/cmake/ ./cpp/cmake/
+COPY cpp/src/ ./cpp/src/
 
-COPY tools/cmake ./cmake/
+COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
