@@ -110,7 +110,7 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
+include_directories(${CMAKE_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
