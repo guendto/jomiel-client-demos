@@ -74,7 +74,7 @@ include(ExternalProject)
 ##  - kudos, https://stackoverflow.com/a/39112976
 ##
 set(DOCOPTCPP_TARGET        docoptcpp.git)
-set(DOCOPTCPP_PREFIX        ${CMAKE_CURRENT_BINARY_DIR}/ext/${DOCOPTCPP_TARGET})
+set(DOCOPTCPP_PREFIX        ${CMAKE_BINARY_DIR}/ext/${DOCOPTCPP_TARGET})
 set(DocOptCpp_INCLUDE_DIRS  ${DOCOPTCPP_PREFIX}/include)
 set(DocOptCpp_LIBRARY_DIRS  ${DOCOPTCPP_PREFIX})
 set(DocOptCpp_LIBRARIES     ${DOCOPTCPP_PREFIX}/libdocopt.a)
