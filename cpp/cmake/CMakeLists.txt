@@ -112,7 +112,7 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 #
 include_directories(${CMAKE_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
-include_directories(src)
+include_directories(../src)
 
 if(WITH_DOCKER)
     # alpine: workaround alpine 3.10 not packaging cppzmq
