@@ -40,3 +40,9 @@ add_compile_options(
 #   - Namely the useful cmake_print_variables() used everywhere.
 #
 include(CMakePrintHelpers)
+
+# CMAKE_MODULE_PATH.
+#   - Modify so that tools/cmake/*.cmake modules can be used.
+#
+list(APPEND CMAKE_MODULE_PATH
+    ${PROJECT_SOURCE_DIR}/../tools/cmake)
