@@ -49,7 +49,7 @@ include(CMakePrintHelpers)
 # Protobuf.
 #   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
 #
-include(BootstrapProtoGen)
+include(InvokeProtoc)
 
 bootstrap_gen_bindings(cpp build/gen)
 #cmake_print_variables(SRC_BOOTSTRAP_FILES)
