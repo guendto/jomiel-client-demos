@@ -132,7 +132,7 @@ pkg_check_modules(ZeroMQ REQUIRED libzmq)
 # Target.
 #
 add_executable(demo
-    ${SRC_BOOTSTRAP_FILES}
+    ${PROTOC_GEN_SRCFILES}
     ${SRC_DEMO_FILES}
 )
 
