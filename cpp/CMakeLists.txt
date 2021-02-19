@@ -35,7 +35,7 @@ add_compile_options(
     -fstack-protector-strong
     -Werror=format-security
     -D_FORTIFY_SOURCE=2
-    -Wpedantic
+    # -Wpedantic
 )
 
 # Helpers.
