@@ -46,3 +46,13 @@ include(CMakePrintHelpers)
 #
 list(APPEND CMAKE_MODULE_PATH
     ${PROJECT_SOURCE_DIR}/../tools/cmake)
+
+# Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
+#
+include(InvokeProtoc)
+
+protoc_gen_bindings(cpp
+    ${PROJECT_SOURCE_DIR}/../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
