@@ -35,8 +35,11 @@ add_compile_options(
 #
 option(WITH_DOCKER "build in docker container" OFF)
 
-list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
+# CMAKE_MODULE_PATH.
+#   - Modify so that tools/cmake/*.cmake modules can be used.
+#
+list(APPEND CMAKE_MODULE_PATH
+    ${PROJECT_SOURCE_DIR}/../../tools/cmake)
 
 # Helpers.
 #   - required by bootstrap_get_bindings (and friends)
