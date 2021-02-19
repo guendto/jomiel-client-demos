@@ -66,3 +66,7 @@ set(SRC_DEMO_FILES
     src/demo/main.cpp
     src/demo/types.h
 )
+
+# Include dirs.
+#
+include_directories(${PROJECT_BINARY_DIR}/build/gen)
