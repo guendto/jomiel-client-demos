@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -20,10 +20,10 @@ FROM alpine:3.13 AS bootstrap-image
 
 WORKDIR /app
 
-COPY cpp/CMakeLists.txt .
-COPY cpp/src/ ./src/
+COPY cpp/cmake/ ./cpp/cmake/
+COPY cpp/src/ ./cpp/src/
 
-COPY tools/cmake ./cmake/
+COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -33,14 +33,14 @@ RUN set -eux \
         zeromq-dev \
         musl-dev \
         pkgconf \
-        #cppzmq \
+        # cppzmq \
         cmake \
         make \
         git \
         g++ \
         # for bootstrap script
         bash \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt \
+    && cd cpp \
     # See the 'cppzmq' note above.
     #
     && mkdir -p ext/cppzmq \
@@ -54,7 +54,10 @@ RUN set -eux \
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake -DWITH_DOCKER=ON . \
+    ; cd cpp \
+    && mkdir build \
+    && cd build \
+    && cmake ../cmake -DWITH_DOCKER=ON \
     && make
 
 # stage: runtime-image
@@ -66,7 +69,7 @@ RUN set -eux \
         protobuf \
         zeromq
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/cpp/build/demo /
 
 ENTRYPOINT ["/demo"]
 

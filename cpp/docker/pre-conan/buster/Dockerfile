@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,10 +15,10 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY cpp/CMakeLists.txt .
-COPY cpp/src/ ./src/
+COPY cpp/cmake/ ./cpp/cmake/
+COPY cpp/src/ ./cpp/src/
 
-COPY tools/cmake ./cmake/
+COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -32,15 +32,17 @@ RUN set -eux \
         pkgconf \
         cmake \
         git \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+    && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
 #
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake -DWITH_DOCKER=ON . \
+    ; cd cpp \
+    && mkdir build \
+    && cd build \
+    && cmake ../cmake -DWITH_DOCKER=ON \
     && make
 
 # stage: runtime-image
@@ -55,7 +57,7 @@ RUN set -eux \
         libzmq5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/cpp/build/demo /
 
 ENTRYPOINT ["/demo"]
 
