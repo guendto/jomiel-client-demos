@@ -42,7 +42,7 @@ list(APPEND CMAKE_MODULE_PATH
     ${PROJECT_SOURCE_DIR}/../../tools/cmake)
 
 # Helpers.
-#   - required by bootstrap_get_bindings (and friends)
+#   - Namely the useful cmake_print_variables() used everywhere.
 #
 include(CMakePrintHelpers)
 
