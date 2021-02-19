@@ -118,7 +118,7 @@ if(WITH_DOCKER)
     # alpine: workaround alpine 3.10 not packaging cppzmq
     #   - download the missing zmq.hpp to the specified dir
     #   - include this dir
-    include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext)
+    include_directories(${CMAKE_BINARY_DIR}/ext)
 endif()
 
 # Find local libraries.
