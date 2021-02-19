@@ -76,3 +76,4 @@ include_directories(src)
 # Target.
 #
 add_executable(demo ${SRC_DEMO_FILES} ${PROTOC_GEN_SRCFILES})
+target_link_libraries(demo ${CONAN_LIBS})
