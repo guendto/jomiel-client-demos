@@ -47,6 +47,7 @@ list(APPEND CMAKE_MODULE_PATH
 include(CMakePrintHelpers)
 
 # Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
 #
 include(BootstrapProtoGen)
 
