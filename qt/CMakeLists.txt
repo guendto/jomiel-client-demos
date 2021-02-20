@@ -37,7 +37,7 @@ include(CMakePrintHelpers)
 #   - Modify so that tools/cmake/*.cmake modules can be used.
 #
 list(APPEND CMAKE_MODULE_PATH
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
+    ${PROJECT_SOURCE_DIR}/../tools/cmake)
 
 # Protobuf.
 #
