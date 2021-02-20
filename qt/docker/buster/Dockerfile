@@ -44,7 +44,10 @@ RUN set -eux \
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake -DWITH_DOCKER=ON . \
+    ; cd qt \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
     && make
 
 # state: runtime-image
