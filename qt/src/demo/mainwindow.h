@@ -4,14 +4,13 @@
  * jomiel-examples
  *
  * Copyright
- *  2020 Toni Gündoğdu
+ *  2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef SRC_DEMO_MAINWINDOW_H_
-#define SRC_DEMO_MAINWINDOW_H_
+#pragma once
 
 #include <QApplication>
 #include <QCloseEvent>
@@ -91,7 +90,5 @@ class DemoMainWindow : public QMainWindow {
 };
 
 }  // namespace demo
-
-#endif  // SRC_DEMO_MAINWINDOW_H_
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
