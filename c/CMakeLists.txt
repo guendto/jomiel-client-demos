@@ -40,11 +40,14 @@ list(APPEND CMAKE_MODULE_PATH
 include(CMakePrintHelpers)
 
 # Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
 #
-include(BootstrapProtoGen)
+include(InvokeProtoc)
 
-bootstrap_gen_bindings(c build/gen)
-#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+protoc_gen_bindings(c
+    ${PROJECT_SOURCE_DIR}/../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
 
 # Source files.
 #
@@ -71,7 +74,7 @@ pkg_check_modules(CZMQ REQUIRED libczmq)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO_FILES} ${SRC_BOOTSTRAP_FILES})
+add_executable(demo ${SRC_DEMO_FILES} ${PROTOC_GEN_SRCFILES})
 
 target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
