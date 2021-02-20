@@ -31,10 +31,7 @@ RUN set -eux \
         pkgconf \
         cmake \
         make \
-        gcc \
-        # for bootstrap script
-        bash \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+        gcc
 
 # stage: compile-image
 #
