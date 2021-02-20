@@ -19,13 +19,13 @@ set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
 add_compile_options(
-  -Wall -Werror -march=native -O1 -ggdb3 -pipe
-  -Wformat -Wformat-security
-  --param=ssp-buffer-size=4
-  -fstack-protector-strong
-  -Werror=format-security
-  -D_FORTIFY_SOURCE=2
-  -Wpedantic
+    -Wall -Werror -march=native -O1 -ggdb3 -pipe
+    -Wformat -Wformat-security
+    --param=ssp-buffer-size=4
+    -fstack-protector-strong
+    -Werror=format-security
+    -D_FORTIFY_SOURCE=2
+    -Wpedantic
 )
 
 # CMAKE_MODULE_PATH.
