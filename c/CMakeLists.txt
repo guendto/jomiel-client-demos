@@ -3,14 +3,13 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
-project(demo C)
 cmake_minimum_required(VERSION 3.13)
+project(demo C)
 
 # Settings.
 #
@@ -19,40 +18,46 @@ set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
 add_compile_options(
-  -Wall -Werror -march=native -O1 -ggdb3 -pipe
-  -Wformat -Wformat-security
-  --param=ssp-buffer-size=4
-  -fstack-protector-strong
-  -Werror=format-security
-  -D_FORTIFY_SOURCE=2
-  -Wpedantic
+    -Wall -Werror -march=native -O1 -ggdb3 -pipe
+    -Wformat -Wformat-security
+    --param=ssp-buffer-size=4
+    -fstack-protector-strong
+    -Werror=format-security
+    -D_FORTIFY_SOURCE=2
+    -Wpedantic
 )
-
-list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
 
 # Helpers.
 #   - required by bootstrap_get_bindings (and friends)
 #
 include(CMakePrintHelpers)
 
-# Protobuf.
+# CMAKE_MODULE_PATH.
+#   - Modify so that tools/cmake/*.cmake modules can be used.
 #
-include(BootstrapProtoGen)
+list(APPEND CMAKE_MODULE_PATH
+    ${PROJECT_SOURCE_DIR}/../tools/cmake)
 
-bootstrap_gen_bindings(c build/gen)
-#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+# Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
+#
+include(InvokeProtoc)
+
+protoc_gen_bindings(c
+    ${PROJECT_SOURCE_DIR}/../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
 
 # Source files.
 #
-set(SRC_DEMO_FILES
+set(DEMO_SRCFILES
     src/demo/jomiel.c
     src/demo/main.c
 )
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
+include_directories(${PROJECT_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
@@ -68,7 +73,7 @@ pkg_check_modules(CZMQ REQUIRED libczmq)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO_FILES} ${SRC_BOOTSTRAP_FILES})
+add_executable(demo ${DEMO_SRCFILES} ${PROTOC_GEN_SRCFILES})
 
 target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}

@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,11 +15,11 @@ FROM alpine:3.13 AS bootstrap-image
 
 WORKDIR /app
 
-COPY tools/cmake ./cmake/
-COPY proto/ ./proto/
+COPY c/CMakeLists.txt ./c/
+COPY c/src/ ./c/src/
 
-COPY c/CMakeLists.txt .
-COPY c/src/ ./src/
+COPY tools/ ./tools/
+COPY proto/ ./proto/
 
 RUN set -eux \
     ; apk --update --no-cache add \
@@ -31,17 +31,17 @@ RUN set -eux \
         pkgconf \
         cmake \
         make \
-        gcc \
-        # for bootstrap script
-        bash \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+        gcc
 
 # stage: compile-image
 #
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake . -DWITH_DOCKER=1 \
+    ; cd c \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
     && make
 
 # stage: runtime-image
@@ -54,7 +54,7 @@ RUN set -eux \
         protobuf \
         czmq
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
