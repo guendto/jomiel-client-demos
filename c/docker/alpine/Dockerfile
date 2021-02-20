@@ -15,11 +15,11 @@ FROM alpine:3.13 AS bootstrap-image
 
 WORKDIR /app
 
-COPY tools/cmake ./cmake/
-COPY proto/ ./proto/
+COPY c/CMakeLists.txt ./c/
+COPY c/src/ ./c/src/
 
-COPY c/CMakeLists.txt .
-COPY c/src/ ./src/
+COPY tools/ ./tools/
+COPY proto/ ./proto/
 
 RUN set -eux \
     ; apk --update --no-cache add \
