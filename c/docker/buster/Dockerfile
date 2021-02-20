@@ -56,7 +56,7 @@ RUN set -eux \
         libczmq4 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
