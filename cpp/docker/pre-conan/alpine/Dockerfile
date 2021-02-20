@@ -38,8 +38,6 @@ RUN set -eux \
         make \
         git \
         g++ \
-        # for bootstrap script
-        bash \
     && cd cpp \
     # See the 'cppzmq' note above.
     #
