@@ -28,13 +28,13 @@ add_compile_options(
     -Wpedantic
 )
 
-list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
-
 # Helpers.
 #   - required by bootstrap_get_bindings (and friends)
 #
 include(CMakePrintHelpers)
+
+list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
 
 # Protobuf.
 #
