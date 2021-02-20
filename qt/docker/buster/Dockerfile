@@ -37,8 +37,7 @@ RUN set -eux \
         qtbase5-dev \
         libqt5opengl5-dev \
         qt5-default \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+    && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
 #
