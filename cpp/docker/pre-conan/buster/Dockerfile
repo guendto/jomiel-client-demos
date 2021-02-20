@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2021 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,8 +15,7 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY cpp/CMakeLists.txt ./cpp/
-COPY cpp/conanfile.txt ./cpp/
+COPY cpp/cmake/ ./cpp/cmake/
 COPY cpp/src/ ./cpp/src/
 
 COPY tools/ ./tools/
@@ -25,14 +24,14 @@ COPY proto/ ./proto/
 RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
-        python3-setuptools \
-        python3-pip \
+        protobuf-compiler \
+        ca-certificates \
+        libprotobuf-dev \
         build-essential \
+        libzmq3-dev \
+        pkgconf \
         cmake \
-    && pip3 install -q conan \
-    && conan profile new default --detect \
-    && conan profile update \
-        settings.compiler.libcxx=libstdc++11 default \
+        git \
     && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
@@ -43,15 +42,22 @@ RUN set -eux \
     ; cd cpp \
     && mkdir build \
     && cd build \
-    && conan install .. \
-    && cmake .. \
+    && cmake ../cmake -DWITH_DOCKER=ON \
     && make
 
 # stage: runtime-image
 #
 FROM debian:buster-slim AS runtime-image
 
-COPY --from=compile-image /app/cpp/build/bin/demo /
+RUN set -eux \
+    ; apt-get -qq update \
+    && apt-get -qq --no-install-recommends install \
+        libprotobuf-lite17 \
+        libprotobuf17 \
+        libzmq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=compile-image /app/cpp/build/demo /
 
 ENTRYPOINT ["/demo"]
 
