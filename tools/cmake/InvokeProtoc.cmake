@@ -30,7 +30,7 @@ function(protoc_gen_bindings _langid _protodir _destdir)
     elseif(${_langid} STREQUAL "c")
         set(_ext "c")
     else()
-        message(FATAL_ERROR "invalid value: ${_langid} (_langid)")
+        message(FATAL_ERROR "error: invalid value: ${_langid} (_langid)")
     endif()
 
     # Locate protoc(1).
@@ -45,6 +45,11 @@ function(protoc_gen_bindings _langid _protodir _destdir)
     # cmake_print_variables(_protodir)
     file(GLOB_RECURSE _protofiles ${_protodir}/*.proto)
     # cmake_print_variables(_protofiles)
+
+    if (NOT _protofiles)
+        cmake_print_variables(_protodir)
+        message(FATAL_ERROR "error: .proto files not found")
+    endif()
 
     # Make destination directory for the generated files.
     #   - protoc does not seem to do this.
@@ -76,7 +81,7 @@ function(protoc_gen_bindings _langid _protodir _destdir)
             endforeach()
             cmake_print_variables(_protoc_invoke_result)
             cmake_print_variables(_protoc_failed)
-            message(FATAL_ERROR "${_protoc} failed")
+            message(FATAL_ERROR "error: ${_protoc} failed")
         else()
             message(STATUS "  Compiled ${_protofile}")
         endif()
