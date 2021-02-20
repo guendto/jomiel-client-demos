@@ -27,16 +27,16 @@ add_compile_options(
     -Wpedantic
 )
 
+# Helpers.
+#   - required by bootstrap_get_bindings (and friends)
+#
+include(CMakePrintHelpers)
+
 # CMAKE_MODULE_PATH.
 #   - Modify so that tools/cmake/*.cmake modules can be used.
 #
 list(APPEND CMAKE_MODULE_PATH
     ${PROJECT_SOURCE_DIR}/../tools/cmake)
-
-# Helpers.
-#   - required by bootstrap_get_bindings (and friends)
-#
-include(CMakePrintHelpers)
 
 # Protobuf.
 #   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
