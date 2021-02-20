@@ -39,7 +39,10 @@ RUN set -eux \
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake . -DWITH_DOCKER=1 \
+    ; cd c \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
     && make
 
 # stage: runtime-image
