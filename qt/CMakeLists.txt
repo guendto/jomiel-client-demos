@@ -40,11 +40,14 @@ list(APPEND CMAKE_MODULE_PATH
     ${PROJECT_SOURCE_DIR}/../tools/cmake)
 
 # Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
 #
-include(BootstrapProtoGen)
+include(InvokeProtoc)
 
-bootstrap_gen_bindings(cpp build/gen)
-#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+protoc_gen_bindings(cpp
+    ${PROJECT_SOURCE_DIR}/../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
 
 # Source files.
 #
@@ -126,7 +129,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 # Target.
 #
 add_executable(demo
-    ${SRC_BOOTSTRAP_FILES}
+    ${PROTOC_GEN_SRCFILES}
     ${SRC_DEMO_FILES}
 )
 
