@@ -32,8 +32,7 @@ RUN set -eux \
         libczmq-dev \
         pkgconf \
         cmake \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+    && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
 #
