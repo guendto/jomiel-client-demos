@@ -50,7 +50,7 @@ protoc_gen_bindings(c
 
 # Source files.
 #
-set(SRC_DEMO_FILES
+set(DEMO_SRCFILES
     src/demo/jomiel.c
     src/demo/main.c
 )
@@ -73,7 +73,7 @@ pkg_check_modules(CZMQ REQUIRED libczmq)
 
 # Target.
 #
-add_executable(demo ${SRC_DEMO_FILES} ${PROTOC_GEN_SRCFILES})
+add_executable(demo ${DEMO_SRCFILES} ${PROTOC_GEN_SRCFILES})
 
 target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
