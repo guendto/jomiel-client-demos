@@ -51,7 +51,7 @@ protoc_gen_bindings(cpp
 
 # Source files.
 #
-set(SRC_DEMO_FILES
+set(DEMO_SRCFILES
     src/demo/appwindow.cpp
     src/demo/appwindow.h
     src/demo/mainwidget.cpp
@@ -130,7 +130,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 #
 add_executable(demo
     ${PROTOC_GEN_SRCFILES}
-    ${SRC_DEMO_FILES}
+    ${DEMO_SRCFILES}
 )
 
 target_include_directories(demo PUBLIC
