@@ -66,6 +66,6 @@ RUN set -eux \
         libqt5gui5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/qt/build/demo /
 
 ENTRYPOINT ["/demo"]
