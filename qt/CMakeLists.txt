@@ -19,13 +19,13 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 11)
 
 add_compile_options(
-  -Wall -Werror -march=native -O1 -ggdb3 -pipe
-  -Wformat -Wformat-security
-  --param=ssp-buffer-size=4
-  -fstack-protector-strong
-  -Werror=format-security
-  -D_FORTIFY_SOURCE=2
-  -Wpedantic
+    -Wall -Werror -march=native -O1 -ggdb3 -pipe
+    -Wformat -Wformat-security
+    --param=ssp-buffer-size=4
+    -fstack-protector-strong
+    -Werror=format-security
+    -D_FORTIFY_SOURCE=2
+    -Wpedantic
 )
 
 list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
