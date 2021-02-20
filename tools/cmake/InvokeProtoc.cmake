@@ -46,6 +46,11 @@ function(protoc_gen_bindings _langid _protodir _destdir)
     file(GLOB_RECURSE _protofiles ${_protodir}/*.proto)
     # cmake_print_variables(_protofiles)
 
+    if (NOT _protofiles)
+        cmake_print_variables(_protodir)
+        message(FATAL_ERROR "error: .proto files not found")
+    endif()
+
     # Make destination directory for the generated files.
     #   - protoc does not seem to do this.
     #
