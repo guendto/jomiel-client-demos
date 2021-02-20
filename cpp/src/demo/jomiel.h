@@ -10,8 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef CPP_SRC_DEMO_JOMIEL_H_
-#define CPP_SRC_DEMO_JOMIEL_H_
+#pragma once
 
 #include <google/protobuf/message.h>
 
@@ -59,7 +58,5 @@ struct jomiel {
 };
 
 }  // namespace jomiel
-
-#endif  // CPP_SRC_JOMIEL_H_
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
