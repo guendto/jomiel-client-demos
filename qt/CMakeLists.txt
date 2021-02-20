@@ -68,7 +68,7 @@ include(ExternalProject)
 # nzmqt
 #
 set(NZMQT_TARGET        nzmqt)
-set(NZMQT_PREFIX        ${CMAKE_CURRENT_BINARY_DIR}/ext/${NZMQT_TARGET})
+set(NZMQT_PREFIX        ${PROJECT_BINARY_DIR}/ext/${NZMQT_TARGET})
 set(Nzmqt_INCLUDE_DIRS  ${NZMQT_PREFIX}/src/nzmqt/include)
 set(Nzmqt_LIBRARY_DIRS  ${NZMQT_PREFIX}/src/nzmqt/bin)
 set(Nzmqt_LIBRARIES     ${NZMQT_PREFIX}/src/nzmqt/bin/libnzmqt.a)
@@ -107,8 +107,8 @@ add_dependencies(libnzmqt ${NZMQT_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${PROJECT_BINARY_DIR}/build/gen)
+include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
