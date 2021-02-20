@@ -29,7 +29,7 @@ add_compile_options(
 )
 
 # Helpers.
-#   - required by bootstrap_get_bindings (and friends)
+#   - Namely the useful cmake_print_variables() used everywhere.
 #
 include(CMakePrintHelpers)
 
