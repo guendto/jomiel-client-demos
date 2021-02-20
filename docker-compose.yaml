@@ -87,15 +87,15 @@ services:
     build:
       dockerfile: csharp/docker/buster/Dockerfile
       context: .
-  cpp_alpine:
-    image: jomiel-ex-alpine-cpp
+  cpp_pre_conan_alpine:
+    image: jomiel-ex-alpine-pre-conan-cpp
     build:
-      dockerfile: cpp/docker/alpine/Dockerfile
+      dockerfile: cpp/docker/pre-conan/alpine/Dockerfile
       context: .
-  cpp_buster:
-    image: jomiel-ex-buster-cpp
+  cpp_pre_conan_buster:
+    image: jomiel-ex-buster-pre-conan-cpp
     build:
-      dockerfile: cpp/docker/buster/Dockerfile
+      dockerfile: cpp/docker/pre-conan/buster/Dockerfile
       context: .
   c_alpine:
     image: jomiel-ex-alpine-c

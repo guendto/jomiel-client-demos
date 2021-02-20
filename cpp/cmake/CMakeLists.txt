@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -31,29 +31,39 @@ add_compile_options(
   -Wpedantic
 )
 
-list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
+# Options.
+#
+option(WITH_DOCKER "build in docker container" OFF)
+
+# CMAKE_MODULE_PATH.
+#   - Modify so that tools/cmake/*.cmake modules can be used.
+#
+list(APPEND CMAKE_MODULE_PATH
+    ${PROJECT_SOURCE_DIR}/../../tools/cmake)
 
 # Helpers.
-#   - required by bootstrap_get_bindings (and friends)
+#   - Namely the useful cmake_print_variables() used everywhere.
 #
 include(CMakePrintHelpers)
 
 # Protobuf.
+#   - A "cmake-only" alternative to bootstrap script of jomiel-proto.
 #
-include(BootstrapProtoGen)
+include(InvokeProtoc)
 
-bootstrap_gen_bindings(cpp build/gen)
-#cmake_print_variables(SRC_BOOTSTRAP_FILES)
+protoc_gen_bindings(cpp
+    ${PROJECT_SOURCE_DIR}/../../proto
+    ${PROJECT_BINARY_DIR}/build/gen)
+# cmake_print_variables(PROTOC_GEN_SRCFILES)
 
 # Source files.
 #
 set(SRC_DEMO_FILES
-    src/demo/jomiel.cpp
-    src/demo/jomiel.h
-    src/demo/usage.cpp
-    src/demo/main.cpp
-    src/demo/types.h
+    ../src/demo/jomiel.cpp
+    ../src/demo/jomiel.h
+    ../src/demo/usage.cpp
+    ../src/demo/main.cpp
+    ../src/demo/types.h
 )
 
 # Build local copies of external dependencies.
@@ -64,7 +74,7 @@ include(ExternalProject)
 ##  - kudos, https://stackoverflow.com/a/39112976
 ##
 set(DOCOPTCPP_TARGET        docoptcpp.git)
-set(DOCOPTCPP_PREFIX        ${CMAKE_CURRENT_BINARY_DIR}/ext/${DOCOPTCPP_TARGET})
+set(DOCOPTCPP_PREFIX        ${CMAKE_BINARY_DIR}/ext/${DOCOPTCPP_TARGET})
 set(DocOptCpp_INCLUDE_DIRS  ${DOCOPTCPP_PREFIX}/include)
 set(DocOptCpp_LIBRARY_DIRS  ${DOCOPTCPP_PREFIX})
 set(DocOptCpp_LIBRARIES     ${DOCOPTCPP_PREFIX}/libdocopt.a)
@@ -100,15 +110,15 @@ add_dependencies(libdocopt ${DOCOPTCPP_TARGET})
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
+include_directories(${CMAKE_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
-include_directories(src)
+include_directories(../src)
 
 if(WITH_DOCKER)
     # alpine: workaround alpine 3.10 not packaging cppzmq
     #   - download the missing zmq.hpp to the specified dir
     #   - include this dir
-    include_directories(${CMAKE_CURRENT_BINARY_DIR}/ext)
+    include_directories(${CMAKE_BINARY_DIR}/../ext)
 endif()
 
 # Find local libraries.
@@ -122,7 +132,7 @@ pkg_check_modules(ZeroMQ REQUIRED libzmq)
 # Target.
 #
 add_executable(demo
-    ${SRC_BOOTSTRAP_FILES}
+    ${PROTOC_GEN_SRCFILES}
     ${SRC_DEMO_FILES}
 )
 
