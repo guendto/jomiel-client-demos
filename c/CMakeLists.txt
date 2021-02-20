@@ -57,7 +57,7 @@ set(DEMO_SRCFILES
 
 # Include dirs.
 #
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/build/gen)
+include_directories(${PROJECT_BINARY_DIR}/build/gen)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(src)
 
