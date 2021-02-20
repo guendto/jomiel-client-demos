@@ -33,7 +33,10 @@ add_compile_options(
 #
 include(CMakePrintHelpers)
 
-list(APPEND CMAKE_MODULE_PATH # So we can find BootstrapProtoGen.
+# CMAKE_MODULE_PATH.
+#   - Modify so that tools/cmake/*.cmake modules can be used.
+#
+list(APPEND CMAKE_MODULE_PATH
     "${CMAKE_CURRENT_SOURCE_DIR}/../tools/cmake")
 
 # Protobuf.
