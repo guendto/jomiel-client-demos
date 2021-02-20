@@ -15,11 +15,11 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY qt/patches/ ./patches/
-COPY qt/CMakeLists.txt .
-COPY qt/src/ ./src/
+COPY qt/patches/ ./qt/patches/
+COPY qt/CMakeLists.txt ./qt/
+COPY qt/src/ ./qt/src/
 
-COPY tools/cmake ./cmake/
+COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
