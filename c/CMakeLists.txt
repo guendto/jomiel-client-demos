@@ -8,9 +8,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
-project(demo C)
 cmake_minimum_required(VERSION 3.13)
+project(demo C)
 
 # Settings.
 #
