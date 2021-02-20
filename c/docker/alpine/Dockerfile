@@ -54,7 +54,7 @@ RUN set -eux \
         protobuf \
         czmq
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
