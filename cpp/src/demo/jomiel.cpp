@@ -31,8 +31,7 @@ jomiel::jomiel(opts_t const& opts) : opts(opts) {
   this->zmq.sck =
     std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
 
-  int n = 0;
-  this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+  this->zmq.sck->set(zmq::sockopt::linger, 0);
 }
 
 void jomiel::connect() const {
