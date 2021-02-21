@@ -64,7 +64,11 @@ void jomiel::send(std::string const& uri) const {
   std::string result;
   inquiry.SerializeToString(&result);
 
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
   this->zmq.sck->send(zmq::buffer(result));
+#else
+  this->zmq.sck->send(result.c_str(), result.size());
+#endif
 }
 
 void jomiel::recv() const {
