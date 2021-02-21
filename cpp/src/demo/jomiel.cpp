@@ -92,7 +92,12 @@ void jomiel::recv() const {
     throw std::runtime_error("connection timed out");
 
   jp::Response response;
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
   response.ParseFromString(msg.to_string());
+#else
+  const std::string str(static_cast<char*>(msg.data()), msg.size());
+  response.ParseFromString(str);
+#endif
 
   this->dump_response(response);
 }
