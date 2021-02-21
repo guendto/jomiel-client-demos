@@ -72,9 +72,14 @@ void jomiel::send(std::string const& uri) const {
 }
 
 void jomiel::recv() const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
   zmq::pollitem_t items[] = {
     {*this->zmq.sck, 0, ZMQ_POLLIN, 0}
   };
+#else
+  zmq::pollitem_t const items[] = {
+    {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
+#endif
   zmq::message_t msg;
 
   if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
