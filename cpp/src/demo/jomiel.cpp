@@ -74,16 +74,10 @@ void jomiel::recv() const {
   else
     throw std::runtime_error("connection timed out");
 
-  auto const ptr = msg.data();
-  auto const src = static_cast<char*>(ptr);
+  jp::Response response;
+  response.ParseFromString(msg.to_string());
 
-  auto const& size = msg.size();
-  const std::string result(src, size);
-
-  jp::Response resp;
-  resp.ParseFromString(result);
-
-  this->dump_response(resp);
+  this->dump_response(response);
 }
 
 void jomiel::cleanup() const {
