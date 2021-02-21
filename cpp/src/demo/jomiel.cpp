@@ -83,7 +83,11 @@ void jomiel::recv() const {
   zmq::message_t msg;
 
   if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
     this->zmq.sck->recv(msg);
+#else
+    this->zmq.sck->recv(&msg);
+#endif
   else
     throw std::runtime_error("connection timed out");
 
