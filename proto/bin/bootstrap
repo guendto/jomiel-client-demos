@@ -42,9 +42,15 @@ shopt -s globstar
 
 # Protobuffer compiler
 #
-PROTOC=`which protoc`
 [ -z "$PROTOC" ] && {
-    echo "protoc: command not found"
+    PROTOC=`which protoc`
+    [ -z "$PROTOC" ] && {
+        echo "protoc: command not found"
+        exit 1
+    }
+}
+[ -x "$PROTOC" ] || {
+    echo "$PROTOC: file does not exist or execute permission is not granted"
     exit 1
 }
 
