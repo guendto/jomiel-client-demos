@@ -10,8 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef SRC_DEMO_APPWINDOW_H_
-#define SRC_DEMO_APPWINDOW_H_
+#pragma once
 
 #include <QGroupBox>
 #include <QLineEdit>
@@ -117,7 +116,5 @@ class DemoAppWindow : public DemoMainWindow {
 };
 
 }  // namespace demo
-
-#endif  // SRC_DEMO_APPWINDOW_H_
 
 // vim: set ts=2 sw=2 tw=72 expandtab:

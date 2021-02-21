@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2020 Toni Gündoğdu
+#  2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,11 +15,11 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY qt/patches/ ./patches/
-COPY qt/CMakeLists.txt .
-COPY qt/src/ ./src/
+COPY qt/patches/ ./qt/patches/
+COPY qt/CMakeLists.txt ./qt/
+COPY qt/src/ ./qt/src/
 
-COPY tools/cmake ./cmake/
+COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
@@ -37,15 +37,17 @@ RUN set -eux \
         qtbase5-dev \
         libqt5opengl5-dev \
         qt5-default \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed -i 's/\.\.\/tools/\./' ./CMakeLists.txt
+    && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
 #
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cmake -DWITH_DOCKER=ON . \
+    ; cd qt \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
     && make
 
 # state: runtime-image
@@ -64,6 +66,6 @@ RUN set -eux \
         libqt5gui5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/demo /
+COPY --from=compile-image /app/qt/build/demo /
 
 ENTRYPOINT ["/demo"]

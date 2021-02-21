@@ -15,8 +15,8 @@ FROM debian:buster-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY c/CMakeLists.txt ./c/
-COPY c/src/ ./c/src/
+COPY cpp/cmake/ ./cpp/cmake/
+COPY cpp/src/ ./cpp/src/
 
 COPY tools/ ./tools/
 COPY proto/ ./proto/
@@ -24,14 +24,14 @@ COPY proto/ ./proto/
 RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
-        protobuf-c-compiler \
         protobuf-compiler \
-        libprotobuf-c-dev \
+        ca-certificates \
         libprotobuf-dev \
         build-essential \
-        libczmq-dev \
+        libzmq3-dev \
         pkgconf \
         cmake \
+        git \
     && rm -rf /var/lib/apt/lists/*
 
 # stage: compile-image
@@ -39,10 +39,10 @@ RUN set -eux \
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; cd c \
+    ; cd cpp \
     && mkdir build \
     && cd build \
-    && cmake .. \
+    && cmake ../cmake -DWITH_DOCKER=ON \
     && make
 
 # stage: runtime-image
@@ -52,11 +52,12 @@ FROM debian:buster-slim AS runtime-image
 RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
-        libprotobuf-c1 \
-        libczmq4 \
+        libprotobuf-lite17 \
+        libprotobuf17 \
+        libzmq5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/c/build/demo /
+COPY --from=compile-image /app/cpp/build/demo /
 
 ENTRYPOINT ["/demo"]
 
