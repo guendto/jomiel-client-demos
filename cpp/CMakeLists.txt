@@ -26,8 +26,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
 
 add_compile_options(
-    # Disable deprecated declarations in cppzmq.
-    -Wno-error=deprecated-declarations
+    # -Wno-error=deprecated-declarations
     -Wall -Werror -march=native -O1 -ggdb3 -pipe
     -Wformat -Wformat-security
     --param=ssp-buffer-size=4
