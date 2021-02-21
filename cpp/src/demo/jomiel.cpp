@@ -64,9 +64,9 @@ void jomiel::send(std::string const& uri) const {
 }
 
 void jomiel::recv() const {
-  zmq::pollitem_t const items[] = {
-    {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
-
+  zmq::pollitem_t items[] = {
+    {*this->zmq.sck, 0, ZMQ_POLLIN, 0}
+  };
   zmq::message_t msg;
 
   if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
