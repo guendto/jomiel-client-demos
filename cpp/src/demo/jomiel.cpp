@@ -30,8 +30,12 @@ jomiel::jomiel(opts_t const& opts) : opts(opts) {
   this->zmq.ctx = std::make_unique<zmq::context_t>(1);
   this->zmq.sck =
     std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
-
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
   this->zmq.sck->set(zmq::sockopt::linger, 0);
+#else
+  int n = 0;
+  this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+#endif
 }
 
 void jomiel::connect() const {
