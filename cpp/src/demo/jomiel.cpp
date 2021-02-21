@@ -30,9 +30,12 @@ jomiel::jomiel(opts_t const& opts) : opts(opts) {
   this->zmq.ctx = std::make_unique<zmq::context_t>(1);
   this->zmq.sck =
     std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
-
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
+  this->zmq.sck->set(zmq::sockopt::linger, 0);
+#else
   int n = 0;
   this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+#endif
 }
 
 void jomiel::connect() const {
@@ -61,36 +64,42 @@ void jomiel::send(std::string const& uri) const {
   std::string result;
   inquiry.SerializeToString(&result);
 
-  auto const& src = result.c_str();
-  auto const& size = result.size();
-
-  zmq::message_t zmsg(size);
-  memcpy(zmsg.data(), src, size);
-
-  this->zmq.sck->send(zmsg);
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
+  this->zmq.sck->send(zmq::buffer(result));
+#else
+  this->zmq.sck->send(result.c_str(), result.size());
+#endif
 }
 
 void jomiel::recv() const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+  zmq::pollitem_t items[] = {
+    {*this->zmq.sck, 0, ZMQ_POLLIN, 0}
+  };
+#else
   zmq::pollitem_t const items[] = {
     {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
-
+#endif
   zmq::message_t msg;
 
   if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+    this->zmq.sck->recv(msg);
+#else
     this->zmq.sck->recv(&msg);
+#endif
   else
     throw std::runtime_error("connection timed out");
 
-  auto const ptr = msg.data();
-  auto const src = static_cast<char*>(ptr);
+  jp::Response response;
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
+  response.ParseFromString(msg.to_string());
+#else
+  const std::string str(static_cast<char*>(msg.data()), msg.size());
+  response.ParseFromString(str);
+#endif
 
-  auto const& size = msg.size();
-  const std::string result(src, size);
-
-  jp::Response resp;
-  resp.ParseFromString(result);
-
-  this->dump_response(resp);
+  this->dump_response(response);
 }
 
 void jomiel::cleanup() const {
