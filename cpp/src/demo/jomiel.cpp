@@ -60,13 +60,7 @@ void jomiel::send(std::string const& uri) const {
   std::string result;
   inquiry.SerializeToString(&result);
 
-  auto const& src = result.c_str();
-  auto const& size = result.size();
-
-  zmq::message_t zmsg(size);
-  memcpy(zmsg.data(), src, size);
-
-  this->zmq.sck->send(zmsg);
+  this->zmq.sck->send(zmq::buffer(result));
 }
 
 void jomiel::recv() const {
