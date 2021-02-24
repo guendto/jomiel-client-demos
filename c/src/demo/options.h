@@ -16,7 +16,7 @@
 #include <stdbool.h>
 
 struct options_s {
-  char* router_endpoint;
+  char *router_endpoint;
   char print_serialized;
   int connect_timeout;
   bool print_config;
@@ -25,6 +25,6 @@ struct options_s {
 
 typedef struct options_s options_t;
 
-#endif  // DEMO_OPTIONS_H
+#endif // DEMO_OPTIONS_H
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
