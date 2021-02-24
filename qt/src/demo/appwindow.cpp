@@ -18,9 +18,7 @@ namespace jp = jomiel::protobuf::v1beta1;
 
 namespace demo {
 
-DemoAppWindow::DemoAppWindow() : DemoMainWindow() {
-  setupUi();
-}
+DemoAppWindow::DemoAppWindow() : DemoMainWindow() { setupUi(); }
 
 void DemoAppWindow::setupUi() {
   // UI.
@@ -45,7 +43,8 @@ void DemoAppWindow::setupUi() {
 
   // Shortcuts.
   //
-  new QShortcut(QKeySequence(tr("Ctrl+Q", "Quit")), this, SLOT(close()));
+  new QShortcut(QKeySequence(tr("Ctrl+Q", "Quit")), this,
+                SLOT(close()));
 }
 
 void DemoAppWindow::sendInquiry() {
@@ -69,11 +68,11 @@ void DemoAppWindow::sendInquiry() {
 }
 
 void DemoAppWindow::receiveResponse(
-  QList<QByteArray> const& data) const {
+    QList<QByteArray> const &data) const {
   zmq.sck->disconnectFrom(zmq.endpoint);
   mainWidget->parseResponse(data);
 }
 
-}  // namespace demo
+} // namespace demo
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
