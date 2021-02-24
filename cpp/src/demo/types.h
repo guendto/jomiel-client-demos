@@ -23,6 +23,6 @@ namespace jomiel {
 using opts_t = std::map<std::string, docopt::value>;
 using strvect_t = std::vector<std::string>;
 
-}  // namespace jomiel
+} // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
