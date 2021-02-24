@@ -16,7 +16,7 @@ import org.zeromq.ZMQ;
 import picocli.CommandLine;
 import picocli.CommandLine.ParameterException;
 
-public final class Demo {
+public final class App {
   public static void main(final String[] args) {
     final Options opts = new Options();
     try {
