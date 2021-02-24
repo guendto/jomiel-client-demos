@@ -10,21 +10,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package io.github.jomiel.examples;
+package jomiel.examples;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
-import io.github.jomiel.protobuf.v1beta1.Inquiry;
-import io.github.jomiel.protobuf.v1beta1.MediaInquiry;
-import io.github.jomiel.protobuf.v1beta1.MediaResponse;
-import io.github.jomiel.protobuf.v1beta1.MediaResponse.Stream;
-import io.github.jomiel.protobuf.v1beta1.MediaResponse.Stream.StreamQuality;
-import io.github.jomiel.protobuf.v1beta1.Response;
-import io.github.jomiel.protobuf.v1beta1.ResponseStatus;
-import io.github.jomiel.protobuf.v1beta1.StatusCode;
 import java.io.IOException;
 import java.util.List;
+import jomiel.protobuf.v1beta1.Inquiry;
+import jomiel.protobuf.v1beta1.MediaInquiry;
+import jomiel.protobuf.v1beta1.MediaResponse;
+import jomiel.protobuf.v1beta1.MediaResponse.Stream;
+import jomiel.protobuf.v1beta1.MediaResponse.Stream.StreamQuality;
+import jomiel.protobuf.v1beta1.Response;
+import jomiel.protobuf.v1beta1.ResponseStatus;
+import jomiel.protobuf.v1beta1.StatusCode;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Poller;

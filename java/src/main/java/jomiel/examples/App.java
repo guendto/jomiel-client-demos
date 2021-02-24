@@ -4,19 +4,19 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package io.github.jomiel.examples;
+package jomiel.examples;
 
 import org.zeromq.ZMQ;
 import picocli.CommandLine;
 import picocli.CommandLine.ParameterException;
 
-public final class Demo {
+public final class App {
   public static void main(final String[] args) {
     final Options opts = new Options();
     try {
