@@ -75,7 +75,7 @@ impl Jomiel {
         if items[0].is_readable() {
             let bytes = self.sock.recv_bytes(0).unwrap();
             //println!("{:X?}", bytes);
-            let response: Response = protobuf::parse_from_bytes(&bytes).unwrap();
+            let response: Response = Message::parse_from_bytes(&bytes).unwrap();
             self.dump_response(&response);
         } else {
             println!("error: connection timed out");
