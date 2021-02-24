@@ -10,8 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const char* usage =
-  R"(Usage:
+const char *usage =
+    R"(Usage:
     demo [-hDVqj] [-r <addr>] [-t <time>] [URI ...]
 
 Options:
