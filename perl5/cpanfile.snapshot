@@ -498,17 +498,17 @@ DISTRIBUTIONS
       Module::Build::WithXSpp 0.14
       autodie 0
       perl 5.008
-  IO-Socket-SSL-2.066
-    pathname: S/SU/SULLR/IO-Socket-SSL-2.066.tar.gz
+  IO-Socket-SSL-2.069
+    pathname: S/SU/SULLR/IO-Socket-SSL-2.069.tar.gz
     provides:
-      IO::Socket::SSL 2.066
+      IO::Socket::SSL 2.069
       IO::Socket::SSL::Intercept 2.056
-      IO::Socket::SSL::OCSP_Cache 2.066
-      IO::Socket::SSL::OCSP_Resolver 2.066
+      IO::Socket::SSL::OCSP_Cache 2.069
+      IO::Socket::SSL::OCSP_Resolver 2.069
       IO::Socket::SSL::PublicSuffix undef
-      IO::Socket::SSL::SSL_Context 2.066
-      IO::Socket::SSL::SSL_HANDLE 2.066
-      IO::Socket::SSL::Session_Cache 2.066
+      IO::Socket::SSL::SSL_Context 2.069
+      IO::Socket::SSL::SSL_HANDLE 2.069
+      IO::Socket::SSL::Session_Cache 2.069
       IO::Socket::SSL::Utils 2.014
     requirements:
       ExtUtils::MakeMaker 0
