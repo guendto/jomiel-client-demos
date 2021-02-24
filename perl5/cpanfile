@@ -1,8 +1,8 @@
-requires 'IO::Socket::SSL', '2.0';
+requires 'IO::Socket::SSL', '2.069';
 requires 'ZMQ::FFI', '1.17';
-requires 'YAML', '1.29';
-requires 'Google::ProtocolBuffers::Dynamic', '0.27';
+requires 'YAML', '1.30';
+requires 'Google::ProtocolBuffers::Dynamic', '0.30';
 
 on 'develop' => sub {
-    recommends 'Perl::Tidy', '20200110';
+    recommends 'Perl::Tidy', '20210111';
 };
