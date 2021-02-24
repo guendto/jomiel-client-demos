@@ -10,8 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef DEMO_OPTIONS_H
-#define DEMO_OPTIONS_H
+#pragma once
 
 #include <stdbool.h>
 
@@ -24,7 +23,5 @@ struct options_s {
 };
 
 typedef struct options_s options_t;
-
-#endif // DEMO_OPTIONS_H
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
