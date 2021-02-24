@@ -29,14 +29,14 @@ class DemoAppWindow;
 class Details : public QGroupBox {
   Q_OBJECT
 
- public:
-  inline explicit Details(const QString& text = "",
-                          QWidget* parent = Q_NULLPTR)
-    : QGroupBox(text, parent) {
+public:
+  inline explicit Details(const QString &text = "",
+                          QWidget *parent = Q_NULLPTR)
+      : QGroupBox(text, parent) {
     title = new QLineEdit;
     tree = new QTreeWidget;
 
-    QVBoxLayout* box = new QVBoxLayout;
+    QVBoxLayout *box = new QVBoxLayout;
     box->addWidget(title);
     box->addWidget(tree);
     box->addStretch(0);
@@ -51,9 +51,9 @@ class Details : public QGroupBox {
     tree->clear();
   }
 
- public:
-  QTreeWidget* tree;
-  QLineEdit* title;
+public:
+  QTreeWidget *tree;
+  QLineEdit *title;
 };
 
 // Holds the main window components.
@@ -61,17 +61,17 @@ class Details : public QGroupBox {
 //
 class MainWidget : public QWidget {
   Q_OBJECT
- public:
-  explicit MainWidget(QWidget* parent = Q_NULLPTR);
-  void parseResponse(QList<QByteArray> const&);
+public:
+  explicit MainWidget(QWidget *parent = Q_NULLPTR);
+  void parseResponse(QList<QByteArray> const &);
 
- private:
+private:
   void setupUi();
 
- private:
-  QLineEdit* addressbar;
-  QLineEdit* endpoint;
-  Details* details;
+private:
+  QLineEdit *addressbar;
+  QLineEdit *endpoint;
+  Details *details;
 
   friend class DemoAppWindow;
 };
@@ -80,10 +80,10 @@ class MainWidget : public QWidget {
 class DemoAppWindow : public DemoMainWindow {
   Q_OBJECT
 
- public:
+public:
   DemoAppWindow();
 
-  static inline int main(int argc, char** argv) {
+  static inline int main(int argc, char **argv) {
     // Options for the main window.
     //
     DemoMainWindowOptions opts;
@@ -99,22 +99,22 @@ class DemoAppWindow : public DemoMainWindow {
     return DemoAppWindow().run(app, opts);
   }
 
- private:
+private:
   void setupUi();
 
- protected slots:
-  void receiveResponse(QList<QByteArray> const& msg) const;
+protected slots:
+  void receiveResponse(QList<QByteArray> const &msg) const;
   void sendInquiry();
 
- private:
+private:
   struct {
-    nzmqt::ZMQContext* ctx;
-    nzmqt::ZMQSocket* sck;
+    nzmqt::ZMQContext *ctx;
+    nzmqt::ZMQSocket *sck;
     QString endpoint;
   } zmq;
-  MainWidget* mainWidget;
+  MainWidget *mainWidget;
 };
 
-}  // namespace demo
+} // namespace demo
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
