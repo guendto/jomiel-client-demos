@@ -21,21 +21,19 @@ namespace jp = jomiel::protobuf::v1beta1;
 
 namespace demo {
 
-MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
-  setupUi();
-}
+MainWidget::MainWidget(QWidget *parent) : QWidget(parent) { setupUi(); }
 
 void MainWidget::setupUi() {
   details = new Details(tr("Details"));
   addressbar = new QLineEdit;
   endpoint = new QLineEdit;
 
-  QHBoxLayout* endpointBox = new QHBoxLayout;
+  QHBoxLayout *endpointBox = new QHBoxLayout;
   endpointBox->addWidget(new QLabel(tr("Endpoint:")));
   endpointBox->addWidget(endpoint);
   // endpointBox->addStretch(0);
 
-  QVBoxLayout* box = new QVBoxLayout;
+  QVBoxLayout *box = new QVBoxLayout;
   box->addWidget(addressbar);
   box->addLayout(endpointBox);
   box->addWidget(details);
@@ -49,13 +47,13 @@ void MainWidget::setupUi() {
 using resp_t = jp::MediaResponse;
 using stream_t = resp_t::Stream;
 
-static inline void add_streams(QTreeWidget* tree,
-                               resp_t const& mediaResponse) {
+static inline void add_streams(QTreeWidget *tree,
+                               resp_t const &mediaResponse) {
   // add_child_item() -- a nested (lambda) function.
   //
-  auto const add_child_item = [](QTreeWidgetItem* root,
-                                 QString const& itemName,
-                                 QString const& value) {
+  auto const add_child_item = [](QTreeWidgetItem *root,
+                                 QString const &itemName,
+                                 QString const &value) {
     auto const child = new QTreeWidgetItem;
     child->setText(0, itemName);
     child->setText(1, value);
@@ -64,9 +62,9 @@ static inline void add_streams(QTreeWidget* tree,
 
   // add_root_item() -- a nested (lambda) function.
   //
-  auto const add_root_item = [&](stream_t const& stream) {
+  auto const add_root_item = [&](stream_t const &stream) {
     auto const root = new QTreeWidgetItem(tree);
-    auto const& quality = stream.quality();
+    auto const &quality = stream.quality();
 
     root->setText(0, QString::fromStdString(quality.profile()));
 
@@ -80,7 +78,7 @@ static inline void add_streams(QTreeWidget* tree,
   const bool sortingEnabled = tree->isSortingEnabled();
   tree->setSortingEnabled(false);
 
-  for (auto const& stream : mediaResponse.stream())
+  for (auto const &stream : mediaResponse.stream())
     add_root_item(stream);
 
   tree->topLevelItem(0)->setExpanded(true);
@@ -88,10 +86,10 @@ static inline void add_streams(QTreeWidget* tree,
   tree->setSortingEnabled(sortingEnabled);
 }
 
-void MainWidget::parseResponse(QList<QByteArray> const& data) {
+void MainWidget::parseResponse(QList<QByteArray> const &data) {
   // Convert serialized data into jomiel::Response.
   //
-  auto const& size = data[0].length();
+  auto const &size = data[0].length();
   auto const ptr = data[0].constData();
 
   const std::string serialized(ptr, size);
@@ -103,19 +101,19 @@ void MainWidget::parseResponse(QList<QByteArray> const& data) {
   //  - If status is not OK, display an error
   //  - Otherwise update the details
   //
-  auto const& responseStatus = response.status();
-  auto const& mediaResponse = response.media();
+  auto const &responseStatus = response.status();
+  auto const &mediaResponse = response.media();
 
   // set_title() -- a nested (lambda) function.
   //
-  auto const set_title = [&](resp_t const& mediaResponse) {
+  auto const set_title = [&](resp_t const &mediaResponse) {
     auto const text = QString::fromStdString(mediaResponse.title());
     details->title->setText(text);
   };
 
   // show_error() -- a nested (lambda) function.
   //
-  auto const show_error = [&](QWidget* parent) {
+  auto const show_error = [&](QWidget *parent) {
     auto const message = responseStatus.message();
     auto const text = QString::fromStdString(message);
     QMessageBox::critical(parent, qApp->applicationName(), text);
@@ -131,6 +129,6 @@ void MainWidget::parseResponse(QList<QByteArray> const& data) {
   endpoint->setDisabled(false);
 }
 
-}  // namespace demo
+} // namespace demo
 
 // vim: set ts=2 sw=2 tw=72 expandtab:

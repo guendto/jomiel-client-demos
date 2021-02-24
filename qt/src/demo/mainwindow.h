@@ -19,9 +19,9 @@
 
 namespace demo {
 
-static const char* SETTINGS_GROUP = "MainWindow";
-static const char* SETTINGS_GEOMETRY = "geometry";
-static const char* SETTINGS_STATE = "state";
+static const char *SETTINGS_GROUP = "MainWindow";
+static const char *SETTINGS_GEOMETRY = "geometry";
+static const char *SETTINGS_STATE = "state";
 
 struct DemoMainWindowOptions {
   struct {
@@ -37,13 +37,13 @@ struct DemoMainWindowOptions {
 class DemoMainWindow : public QMainWindow {
   Q_OBJECT
 
- protected:
-  inline int run(QApplication const& app,
-                 DemoMainWindowOptions const& opts) {
+protected:
+  inline int run(QApplication const &app,
+                 DemoMainWindowOptions const &opts) {
     initialize(opts);
     return app.exec();
   }
-  inline void initialize(DemoMainWindowOptions const& opts) {
+  inline void initialize(DemoMainWindowOptions const &opts) {
     QCoreApplication::setApplicationVersion(opts.properties.appVersion);
     QCoreApplication::setApplicationName(opts.properties.appName);
 
@@ -74,7 +74,7 @@ class DemoMainWindow : public QMainWindow {
     conf.endGroup();
   }
 
- private:
+private:
   inline void noMinMaxHints() {
     Qt::WindowFlags flags = windowFlags();
     flags &= ~Qt::WindowMinimizeButtonHint;
@@ -82,13 +82,13 @@ class DemoMainWindow : public QMainWindow {
     setWindowFlags(flags);
   }
 
- protected:
-  inline void closeEvent(QCloseEvent* e) override {
+protected:
+  inline void closeEvent(QCloseEvent *e) override {
     saveSettings();
     e->accept();
   }
 };
 
-}  // namespace demo
+} // namespace demo
 
 // vim: set ts=2 sw=2 tw=72 expandtab:

@@ -10,7 +10,7 @@
 
 #include "DemoAppWindow"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   return demo::DemoAppWindow::main(argc, argv);
 }
 
