@@ -28,24 +28,24 @@ namespace jomiel {
 
 struct jomiel {
   inline virtual ~jomiel() { cleanup(); }
-  explicit jomiel(opts_t const&);
+  explicit jomiel(opts_t const &);
 
-  void inquire(std::string const&) const;
+  void inquire(std::string const &) const;
   void connect() const;
 
- private:
-  void print_message(std::string const&, gp::Message const&) const;
-  void print_status(std::string const&) const;
+private:
+  void print_message(std::string const &, gp::Message const &) const;
+  void print_status(std::string const &) const;
 
-  void dump_terse_response(jp::MediaResponse const&) const;
-  void dump_response(jp::Response const&) const;
+  void dump_terse_response(jp::MediaResponse const &) const;
+  void dump_response(jp::Response const &) const;
 
-  void send(std::string const&) const;
+  void send(std::string const &) const;
   void recv() const;
 
   void cleanup() const;
 
- private:
+private:
   using zctx_t = std::unique_ptr<zmq::context_t>;
   using zsck_t = std::unique_ptr<zmq::socket_t>;
   struct {
@@ -57,6 +57,6 @@ struct jomiel {
   opts_t opts;
 };
 
-}  // namespace jomiel
+} // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:

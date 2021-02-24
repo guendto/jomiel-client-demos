@@ -23,13 +23,13 @@
 
 namespace jomiel {
 
-jomiel::jomiel(opts_t const& opts) : opts(opts) {
+jomiel::jomiel(opts_t const &opts) : opts(opts) {
   this->zmq.endpoint = this->opts.at("--router-endpoint").asString();
   this->zmq.timeout = this->opts.at("--connect-timeout").asLong();
 
   this->zmq.ctx = std::make_unique<zmq::context_t>(1);
   this->zmq.sck =
-    std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
+      std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
   this->zmq.sck->set(zmq::sockopt::linger, 0);
 #else
@@ -48,12 +48,12 @@ void jomiel::connect() const {
   this->zmq.sck->connect(this->zmq.endpoint);
 }
 
-void jomiel::inquire(std::string const& uri) const {
+void jomiel::inquire(std::string const &uri) const {
   this->send(uri);
   this->recv();
 }
 
-void jomiel::send(std::string const& uri) const {
+void jomiel::send(std::string const &uri) const {
   jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
@@ -73,12 +73,10 @@ void jomiel::send(std::string const& uri) const {
 
 void jomiel::recv() const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq::pollitem_t items[] = {
-    {*this->zmq.sck, 0, ZMQ_POLLIN, 0}
-  };
+  zmq::pollitem_t items[] = {{*this->zmq.sck, 0, ZMQ_POLLIN, 0}};
 #else
   zmq::pollitem_t const items[] = {
-    {static_cast<void*>(*this->zmq.sck), 0, ZMQ_POLLIN}};
+      {static_cast<void *>(*this->zmq.sck), 0, ZMQ_POLLIN}};
 #endif
   zmq::message_t msg;
 
@@ -95,7 +93,7 @@ void jomiel::recv() const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
   response.ParseFromString(msg.to_string());
 #else
-  const std::string str(static_cast<char*>(msg.data()), msg.size());
+  const std::string str(static_cast<char *>(msg.data()), msg.size());
   response.ParseFromString(str);
 #endif
 
@@ -118,14 +116,14 @@ void jomiel::cleanup() const {
   gp::ShutdownProtobufLibrary();
 }
 
-void jomiel::print_status(std::string const& status) const {
+void jomiel::print_status(std::string const &status) const {
   if (!this->opts.at("--be-terse").asBool()) {
     std::clog << "status: " << status;
   }
 }
 
-void jomiel::print_message(std::string const& status,
-                           gp::Message const& msg) const {
+void jomiel::print_message(std::string const &status,
+                           gp::Message const &msg) const {
   std::string result;
 
   if (this->opts.at("--output-json").asBool()) {
@@ -143,12 +141,12 @@ void jomiel::print_message(std::string const& status,
 }
 
 void jomiel::dump_terse_response(
-  jp::MediaResponse const& media_response) const {
+    jp::MediaResponse const &media_response) const {
   std::cout << "---\ntitle: " << media_response.title() << "\n";
   std::cout << "quality:\n";
 
-  for (auto const& stream : media_response.stream()) {
-    auto const& quality = stream.quality();
+  for (auto const &stream : media_response.stream()) {
+    auto const &quality = stream.quality();
     std::ostringstream format;
     format << "  profile: " << quality.profile() << "\n"
            << "    width: " << quality.width() << "\n"
@@ -157,9 +155,9 @@ void jomiel::dump_terse_response(
   }
 }
 
-void jomiel::dump_response(jp::Response const& response) const {
-  auto const& response_status = response.status();
-  auto const& media_response = response.media();
+void jomiel::dump_response(jp::Response const &response) const {
+  auto const &response_status = response.status();
+  auto const &media_response = response.media();
 
   if (response_status.code() == jp::STATUS_CODE_OK) {
     if (this->opts.at("--be-terse").asBool()) {
@@ -172,6 +170,6 @@ void jomiel::dump_response(jp::Response const& response) const {
   }
 }
 
-}  // namespace jomiel
+} // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
