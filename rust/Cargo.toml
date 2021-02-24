@@ -20,7 +20,7 @@ version = "0.1.0"
 #   https://crates.io/
 
 [dependencies]
-protobuf = "^2.17"
+protobuf = "^2.22"
 structopt = "^0.3"
 zmq = "^0.9"
 
