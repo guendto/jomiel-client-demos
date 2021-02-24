@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package io.github.jomiel.examples;
+package jomiel.examples;
 
 import org.zeromq.ZMQ;
 import picocli.CommandLine;
