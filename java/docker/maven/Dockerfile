@@ -40,8 +40,13 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM openjdk:11-jre-slim AS runtime-image
-#FROM openjdk:14-alpine AS runtime-image
+# See also:
+# - https://github.com/adoptopenjdk/openjdk-docker
+FROM openjdk:8-alpine AS runtime-image
+# FROM adoptopenjdk/openjdk8-openj9:alpine-slim as runtime-image
+# FROM openjdk:8-jre-slim AS runtime-image
+# FROM adoptopenjdk/openjdk15-openj9:alpine-slim as runtime-image
+# FROM adoptopenjdk:8-openj9 as runtime-image
 
 COPY --from=compile-image /app/target/demo-1.0-SNAPSHOT.jar /
 
