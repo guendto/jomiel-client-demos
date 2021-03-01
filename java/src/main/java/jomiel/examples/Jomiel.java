@@ -94,8 +94,7 @@ public final class Jomiel {
       final Response response = Response.parseFrom(data);
       dumpResponse(response);
     } else {
-      System.err.println("error: connection timed out");
-      System.exit(1);
+      throw new RuntimeException("connection timed out");
     }
   }
 
