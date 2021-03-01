@@ -67,6 +67,11 @@ services:
     build:
       dockerfile: lua5/docker/alpine/Dockerfile
       context: .
+  java_gradle:
+    image: jomiel-ex-gradle-java
+    build:
+      dockerfile: java/docker/gradle/Dockerfile
+      context: .
   java_maven:
     image: jomiel-ex-maven-java
     build:
