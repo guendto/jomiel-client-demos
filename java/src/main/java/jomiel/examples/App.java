@@ -41,8 +41,8 @@ public final class App {
       final Jomiel jomiel = Jomiel.create(opts);
       jomiel.inquire();
     } catch (final Exception exc) {
-      System.err.println("error: " + exc.getMessage());
-      System.exit(1);
+      exc.printStackTrace();
+      throw new RuntimeException(exc.getMessage());
     }
   }
 

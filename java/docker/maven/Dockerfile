@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,8 +11,10 @@
 
 # stage: bootstrap-image
 #
-FROM maven:3-jdk-8-slim AS bootstrap-image
-#FROM maven:3-jdk-11-slim AS bootstrap-image
+FROM maven:3-adoptopenjdk-15-openj9 as bootstrap-image
+# FROM maven:3-adoptopenjdk-11-openj9 as bootstrap-image
+# FROM maven:3-jdk-8-slim AS bootstrap-image
+# FROM maven:3-jdk-11-slim AS bootstrap-image
 
 WORKDIR /app
 
@@ -38,8 +40,13 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM openjdk:11-jre-slim AS runtime-image
-#FROM openjdk:14-alpine AS runtime-image
+# See also:
+# - https://github.com/adoptopenjdk/openjdk-docker
+FROM openjdk:8-alpine AS runtime-image
+# FROM adoptopenjdk/openjdk8-openj9:alpine-slim as runtime-image
+# FROM openjdk:8-jre-slim AS runtime-image
+# FROM adoptopenjdk/openjdk15-openj9:alpine-slim as runtime-image
+# FROM adoptopenjdk:8-openj9 as runtime-image
 
 COPY --from=compile-image /app/target/demo-1.0-SNAPSHOT.jar /
 
