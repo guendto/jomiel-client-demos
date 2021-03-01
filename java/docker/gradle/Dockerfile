@@ -26,3 +26,10 @@ RUN set -eux \
     && apt-get install -qq --no-install-recommends \
         protobuf-compiler \
     && sed -i 's/\.\.\/proto/\.\/proto/' ./build.gradle
+
+# stage: compile-image
+#
+FROM bootstrap-image AS compile-image
+
+RUN set -eux \
+    ; gradle build -q
