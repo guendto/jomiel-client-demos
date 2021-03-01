@@ -9,6 +9,7 @@
  */
 
 plugins {
+    id 'com.google.protobuf' version '0.8.15'
     id 'application'
     id 'java'
 }
@@ -28,4 +29,14 @@ dependencies {
     implementation 'com.google.protobuf:protobuf-java:3.15.2'
     implementation 'info.picocli:picocli:4.6.1'
     implementation 'org.zeromq:jeromq:0.5.2'
+}
+
+sourceSets {
+    main {
+        // 'com.google.protobuf' plugin.
+        proto {
+            // In addition to the default 'src/main/proto'
+            srcDir '../proto'
+        }
+    }
 }
