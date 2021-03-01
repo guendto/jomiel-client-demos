@@ -20,6 +20,11 @@ import java.util.List;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+@SuppressWarnings({
+  "PMD.AvoidFieldNameMatchingMethodName",
+  "PMD.BeanMembersShouldSerialize",
+  "PMD.EmptyCatchBlock"
+})
 @Command(name = "demo")
 public class Options {
 

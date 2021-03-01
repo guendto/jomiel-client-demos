@@ -30,6 +30,7 @@ import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQ.Socket;
 
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public final class Jomiel {
   private List<String> input = null;
   private Options options = null;
@@ -46,7 +47,7 @@ public final class Jomiel {
     return new Jomiel(options);
   }
 
-  public void inquire() {
+  public void inquire() throws InvalidProtocolBufferException {
     try (ZContext ctx = new ZContext();
         Socket sck = ctx.createSocket(SocketType.REQ);
         Poller poller = ctx.createPoller(1)) {
@@ -61,11 +62,7 @@ public final class Jomiel {
       }
 
     } catch (final Exception exc) {
-      System.err.println("error: " + exc.getMessage());
-      for (final Throwable suppressed : exc.getSuppressed()) {
-        System.err.println("error: " + suppressed.getMessage());
-      }
-      System.exit(1);
+      throw exc;
     }
   }
 
@@ -97,8 +94,7 @@ public final class Jomiel {
       final Response response = Response.parseFrom(data);
       dumpResponse(response);
     } else {
-      System.err.println("error: connection timed out");
-      System.exit(1);
+      throw new RuntimeException("connection timed out");
     }
   }
 
@@ -111,6 +107,7 @@ public final class Jomiel {
   private void dumpResponse(final Response response) throws InvalidProtocolBufferException {
 
     final ResponseStatus responseStatus = response.getStatus();
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     final MediaResponse mediaResponse = response.getMedia();
 
     if (responseStatus.getCode() == StatusCode.STATUS_CODE_OK) {
