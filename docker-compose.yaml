@@ -67,10 +67,10 @@ services:
     build:
       dockerfile: lua5/docker/alpine/Dockerfile
       context: .
-  java_buster:
-    image: jomiel-ex-java
+  java_maven:
+    image: jomiel-ex-maven-java
     build:
-      dockerfile: java/docker/buster/Dockerfile
+      dockerfile: java/docker/maven/Dockerfile
       context: .
   golang_alpine:
     image: jomiel-ex-alpine-go
