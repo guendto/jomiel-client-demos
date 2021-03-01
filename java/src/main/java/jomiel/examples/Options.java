@@ -21,7 +21,8 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @SuppressWarnings({
-  "PMD.AvoidFieldNameMatchingMethodName"
+  "PMD.AvoidFieldNameMatchingMethodName",
+  "PMD.BeanMembersShouldSerialize"
 })
 @Command(name = "demo")
 public class Options {
