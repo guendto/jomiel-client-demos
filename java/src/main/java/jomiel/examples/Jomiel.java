@@ -107,6 +107,7 @@ public final class Jomiel {
   private void dumpResponse(final Response response) throws InvalidProtocolBufferException {
 
     final ResponseStatus responseStatus = response.getStatus();
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     final MediaResponse mediaResponse = response.getMedia();
 
     if (responseStatus.getCode() == StatusCode.STATUS_CODE_OK) {
