@@ -47,7 +47,7 @@ public final class Jomiel {
     return new Jomiel(options);
   }
 
-  public void inquire() {
+  public void inquire() throws InvalidProtocolBufferException {
     try (ZContext ctx = new ZContext();
         Socket sck = ctx.createSocket(SocketType.REQ);
         Poller poller = ctx.createPoller(1)) {
@@ -62,11 +62,7 @@ public final class Jomiel {
       }
 
     } catch (final Exception exc) {
-      System.err.println("error: " + exc.getMessage());
-      for (final Throwable suppressed : exc.getSuppressed()) {
-        System.err.println("error: " + suppressed.getMessage());
-      }
-      System.exit(1);
+      throw exc;
     }
   }
 
