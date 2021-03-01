@@ -9,5 +9,12 @@
  */
 
 plugins {
+    id 'application'
     id 'java'
+}
+
+application {
+    version '0.1.0-SNAPSHOT'
+    group 'jomiel.examples'
+    mainClass = 'jomiel.examples.App'
 }
