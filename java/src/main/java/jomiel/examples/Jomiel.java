@@ -30,6 +30,7 @@ import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQ.Socket;
 
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public final class Jomiel {
   private List<String> input = null;
   private Options options = null;
