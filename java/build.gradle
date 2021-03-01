@@ -18,3 +18,7 @@ application {
     group 'jomiel.examples'
     mainClass = 'jomiel.examples.App'
 }
+
+repositories {
+    mavenCentral()
+}
