@@ -2,6 +2,8 @@
 
 ## Building and running
 
+### Maven
+
 ```shell
 mvn compile exec:java -Dexec.args="[args...]"
 ```
