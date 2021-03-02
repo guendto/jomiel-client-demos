@@ -15,13 +15,13 @@ FROM php:7.4-cli-alpine
 
 WORKDIR /app
 
-COPY php/bin/getcomposer.sh ./bin/getcomposer.sh
+COPY php/docker/bin/ ./docker/bin/
 COPY php/bin/demo ./bin/demo
+COPY php/lib/ ./lib/
 
 COPY php/composer.json .
 COPY php/composer.lock .
 
-COPY php/lib/ ./lib/
 COPY proto/ ./proto/
 
 RUN set -euxo pipefail \
@@ -40,7 +40,7 @@ RUN set -euxo pipefail \
     # Produce protobuf declarations.
     && ./proto/bin/bootstrap -p proto/ -l php -d lib/proto/ \
     # Download the latest composer.
-    && sh ./bin/getcomposer.sh \
+    && sh ./docker/bin/getcomposer.sh \
     # Install the php deps.
     && php ./composer.phar install --no-cache \
     # Install runtime deps.
@@ -48,7 +48,7 @@ RUN set -euxo pipefail \
         protobuf \
         zeromq \
     # Clean up.
-    && rm -rf php-zmq composer.* bin/getcomposer.sh bootstrap proto/ \
+    && rm -rf php-zmq composer.* docker/ bootstrap proto/ \
     && apk del .build_deps curl xz
 
 ENTRYPOINT ["/app/bin/demo"]
