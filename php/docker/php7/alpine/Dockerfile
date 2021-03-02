@@ -34,7 +34,7 @@ RUN set -euxo pipefail \
     # Download the latest composer.
     && sh ./docker/bin/getcomposer.sh \
     # Install the php deps.
-    && php ./composer.phar install --no-cache \
+    && php ./composer.phar install -q --no-cache \
     # Install runtime deps.
     && sh ./docker/bin/getrtdeps.sh \
     # Clean up.
