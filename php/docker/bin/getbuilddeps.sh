@@ -10,6 +10,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+
+# NOTES:
+# - 'bash' is installed for the bootstrap script
+#
 apk --update --no-cache --virtual .build_deps add \
     zeromq-dev \
     php7-dev \
@@ -18,5 +22,4 @@ apk --update --no-cache --virtual .build_deps add \
     make \
     gcc \
     git \
-    # for bootstrap script
     bash
