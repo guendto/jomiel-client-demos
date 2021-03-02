@@ -223,7 +223,7 @@
     "prefer-lowest": false,
     "platform": {
         "ext-zmq": "*",
-        "php": "^7"
+        "php": ">=7.4 <9.0"
     },
     "platform-dev": []
 }
