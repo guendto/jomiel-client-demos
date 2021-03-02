@@ -26,7 +26,7 @@ COPY proto/ ./proto/
 
 RUN set -euxo pipefail \
     # Install build deps.
-    && sh ./docker/bin/getbuilddeps.sh \
+    && sh ./docker/bin/getbuilddeps.sh php7-dev\
     # Download and install php-zmq from git repo.
     && sh ./docker/bin/getphpzmq.sh \
     # Produce protobuf declarations.
