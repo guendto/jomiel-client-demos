@@ -38,8 +38,7 @@ RUN set -euxo pipefail \
     # Install runtime deps.
     && sh ./docker/bin/getrtdeps.sh \
     # Clean up.
-    && rm -rf php-zmq composer.* docker/ bootstrap proto/ \
-    && apk del .build_deps curl xz
+    && sh ./docker/bin/cleanup.sh
 
 ENTRYPOINT ["/app/bin/demo"]
 
