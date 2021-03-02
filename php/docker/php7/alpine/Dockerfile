@@ -25,16 +25,8 @@ COPY php/composer.lock .
 COPY proto/ ./proto/
 
 RUN set -euxo pipefail \
-    ; apk --update --no-cache --virtual .build_deps add \
-        zeromq-dev \
-        php7-dev \
-        libc-dev \
-        protobuf \
-        make \
-        gcc \
-        git \
-        # for bootstrap script
-        bash \
+    # Install build deps.
+    && sh ./docker/bin/getbuilddeps.sh \
     # Download and install php-zmq from git repo.
     && sh ./docker/bin/getphpzmq.sh \
     # Produce protobuf declarations.
