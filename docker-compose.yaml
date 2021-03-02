@@ -43,9 +43,14 @@ services:
       dockerfile: python3/docker/alpine/Dockerfile
       context: .
   php7_alpine:
-    image: jomiel-ex-php7
+    image: jomiel-ex-alpine-php7
     build:
-      dockerfile: php7/docker/alpine/Dockerfile
+      dockerfile: php/docker/php7/alpine/Dockerfile
+      context: .
+  php8_alpine:
+    image: jomiel-ex-alpine-php8
+    build:
+      dockerfile: php/docker/php8/alpine/Dockerfile
       context: .
   perl5_buster:
     image: jomiel-ex-perl5

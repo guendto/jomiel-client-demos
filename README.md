@@ -14,21 +14,21 @@ terms of features). Each example shows how to
 
 Some examples have extra features, like additional output options.
 
-|                                                                           | Notes     |
-| ------------------------------------------------------------------------- | --------- |
-|  [C](https://github.com/guendto/jomiel-examples/blob/master/c)            |           |
-|  [C++](https://github.com/guendto/jomiel-examples/blob/master/cpp)        | C++14     |
-|  [C#](https://github.com/guendto/jomiel-examples/blob/master/csharp)      |           |
-|  [Go](https://github.com/guendto/jomiel-examples/blob/master/golang)      |           |
-|  [Java](https://github.com/guendto/jomiel-examples/blob/master/java)      |           |
-|  [Lua](https://github.com/guendto/jomiel-examples/blob/master/lua5)       | version 5 |
-|  [Node](https://github.com/guendto/jomiel-examples/blob/master/nodejs)    |           |
-|  [Perl](https://github.com/guendto/jomiel-examples/blob/master/perl5)     | version 5 |
-|  [Php](https://github.com/guendto/jomiel-examples/blob/master/php7)       | version 7 |
-|  [Python](https://github.com/guendto/jomiel-examples/blob/master/python3) | version 3 |
-|  [Qt](https://github.com/guendto/jomiel-examples/blob/master/qt)          |           |
-|  [Ruby](https://github.com/guendto/jomiel-examples/blob/master/ruby)      |           |
-|  [Rust](https://github.com/guendto/jomiel-examples/blob/master/rust)      |           |
+|                                                                           | Notes       |
+| ------------------------------------------------------------------------- | ----------- |
+|  [C](https://github.com/guendto/jomiel-examples/blob/master/c)            |             |
+|  [C++](https://github.com/guendto/jomiel-examples/blob/master/cpp)        | C++14       |
+|  [C#](https://github.com/guendto/jomiel-examples/blob/master/csharp)      |             |
+|  [Go](https://github.com/guendto/jomiel-examples/blob/master/golang)      |             |
+|  [Java](https://github.com/guendto/jomiel-examples/blob/master/java)      |             |
+|  [Lua](https://github.com/guendto/jomiel-examples/blob/master/lua5)       | version 5   |
+|  [Node](https://github.com/guendto/jomiel-examples/blob/master/nodejs)    |             |
+|  [Perl](https://github.com/guendto/jomiel-examples/blob/master/perl5)     | version 5   |
+|  [Php](https://github.com/guendto/jomiel-examples/blob/master/php)        | version 7/8 |
+|  [Python](https://github.com/guendto/jomiel-examples/blob/master/python3) | version 3   |
+|  [Qt](https://github.com/guendto/jomiel-examples/blob/master/qt)          |             |
+|  [Ruby](https://github.com/guendto/jomiel-examples/blob/master/ruby)      |             |
+|  [Rust](https://github.com/guendto/jomiel-examples/blob/master/rust)      |             |
 
 ## Dockerfiles
 
