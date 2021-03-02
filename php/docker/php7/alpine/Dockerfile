@@ -28,11 +28,11 @@ FROM php:7.4-cli-alpine
 
 WORKDIR /app
 
-COPY php7/bin/demo ./bin/demo
-COPY php7/lib/ ./lib/
+COPY php/bin/demo ./bin/demo
+COPY php/lib/ ./lib/
 
-COPY php7/composer.json .
-COPY php7/composer.lock .
+COPY php/composer.json .
+COPY php/composer.lock .
 
 COPY proto/ ./proto/
 
