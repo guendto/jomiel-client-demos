@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM golang:1.15-buster AS bootstrap-image
+FROM golang:1.16-buster AS bootstrap-image
 
 WORKDIR /app
 
