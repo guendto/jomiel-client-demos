@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM golang:1.15-alpine AS bootstrap-image
+FROM golang:1.16-alpine AS bootstrap-image
 
 WORKDIR /app
 
