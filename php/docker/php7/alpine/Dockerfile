@@ -28,15 +28,14 @@ FROM php:7.4-cli-alpine
 
 WORKDIR /app
 
+COPY php/bin/getcomposer.sh ./bin/getcomposer.sh
 COPY php/bin/demo ./bin/demo
-COPY php/lib/ ./lib/
 
 COPY php/composer.json .
 COPY php/composer.lock .
 
+COPY php/lib/ ./lib/
 COPY proto/ ./proto/
-
-ARG CMPSR_URI=https://raw.githubusercontent.com/composer/getcomposer.org/76a7060/web/installer
 
 RUN set -euxo pipefail \
     ; apk --update --no-cache --virtual .build_deps add \
@@ -63,15 +62,16 @@ RUN set -euxo pipefail \
             && cd .. \
     # Produce protobuf declarations.
     && ./proto/bin/bootstrap -p proto/ -l php -d lib/proto/ \
-    # Download composer and install deps.
-    && wget $CMPSR_URI -O - -q | php -- --quiet \
+    # Download the latest composer.
+    && sh ./bin/getcomposer.sh \
+    # Install the php deps.
     && php ./composer.phar install --no-cache \
     # Install runtime deps.
     && apk --no-cache add \
         protobuf \
         zeromq \
     # Clean up.
-    && rm -rf php-zmq composer.* bootstrap proto/ \
+    && rm -rf php-zmq composer.* bin/getcomposer.sh bootstrap proto/ \
     && apk del .build_deps curl xz
 
 ENTRYPOINT ["/app/bin/demo"]
