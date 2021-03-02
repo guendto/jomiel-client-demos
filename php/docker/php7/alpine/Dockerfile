@@ -36,9 +36,7 @@ RUN set -euxo pipefail \
     # Install the php deps.
     && php ./composer.phar install --no-cache \
     # Install runtime deps.
-    && apk --no-cache add \
-        protobuf \
-        zeromq \
+    && sh ./docker/bin/getrtdeps.sh \
     # Clean up.
     && rm -rf php-zmq composer.* docker/ bootstrap proto/ \
     && apk del .build_deps curl xz
