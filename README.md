@@ -41,7 +41,7 @@ instructions.
 
 ### docker-compose
 
-See also `docker-compose.yaml` file.
+See also [docker-compose.yaml] file.
 
 ## License
 
@@ -53,3 +53,4 @@ See also `docker-compose.yaml` file.
 [jomiel]: https://github.com/guendto/jomiel
 [cpp]: https://github.com/guendto/jomiel-examples/blob/master/cpp/docker
 [golang]: https://github.com/guendto/jomiel-examples/blob/master/golang/docker
+[docker-compose.yaml]: https://github.com/guendto/jomiel-examples/blob/master/docker-compose.yaml
