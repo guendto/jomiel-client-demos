@@ -16,7 +16,7 @@
 #
 apk --update --no-cache --virtual .build_deps add \
     zeromq-dev \
-    php7-dev \
+    $1\
     libc-dev \
     protobuf \
     make \
