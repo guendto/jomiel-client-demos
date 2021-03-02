@@ -36,17 +36,7 @@ RUN set -euxo pipefail \
         # for bootstrap script
         bash \
     # Download and install php-zmq from git repo.
-    && git clone https://github.com/zeromq/php-zmq \
-        && cd php-zmq \
-            && phpize \
-            && ./configure \
-            && make install \
-            && export PHPINIDIR=`php -i \
-                | grep -i 'conf.* path' \
-                | awk '{print$NF}'` \
-            && cp $PHPINIDIR/php.ini-development $PHPINIDIR/php.ini \
-            && sed -i 's/;extension=bz2/extension=zmq/' $PHPINIDIR/php.ini \
-            && cd .. \
+    && sh ./docker/bin/getphpzmq.sh \
     # Produce protobuf declarations.
     && ./proto/bin/bootstrap -p proto/ -l php -d lib/proto/ \
     # Download the latest composer.
