@@ -9,21 +9,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Notes
-#   - php-zmq
-#       - php-zmq exists in PECL; it's outdated and has issues w/ php7
-#           - https://pecl.php.net/package/zmq
-#           - https://github.com/zeromq/php-zmq/issues/203
-#           - https://github.com/zeromq/php-zmq/issues/193
-#       - github.com/zeromq/php-zmq:master works (2019-09-20)
-#           - phpbrew ext install github:zeromq/php-zmq master
-#               - Not ideal because
-#                   - We want to use composer (packagist.org)
-#                   - Needs phpbrew installation
-#       - Debian has php-zmq package
-#           - Which is now (as of buster?) non-existing?
+# See also Notes.md in php/docker/
 #
-
 FROM php:7.4-cli-alpine
 
 WORKDIR /app
