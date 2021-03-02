@@ -11,8 +11,8 @@
 
 # stage: bootstrap-image
 #
-FROM maven:3-adoptopenjdk-15-openj9 as bootstrap-image
-# FROM maven:3-adoptopenjdk-11-openj9 as bootstrap-image
+# FROM maven:3-adoptopenjdk-15-openj9 as bootstrap-image
+FROM maven:3-adoptopenjdk-11-openj9 as bootstrap-image
 # FROM maven:3-jdk-8-slim AS bootstrap-image
 # FROM maven:3-jdk-11-slim AS bootstrap-image
 
