@@ -1,12 +1,24 @@
-rootProject.name = 'jomiel.examples'
+/*
+ * -*- coding: utf-8 -*-
+ *
+ * jomiel-examples
+ *
+ * Copyright
+ *  2021 Toni Gündoğdu
+ *
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-startParameter.excludedTaskNames = [
+rootProject.name = "jomiel.examples"
+
+startParameter.setExcludedTaskNames(listOf(
     // ":verifyGoogleJavaFormat",
     // ":shadowJar",
     // ":shadowDistTar",
     ":shadowDistZip",
     // ":pmdMain",
-    ":pmdTest",
+    // ":pmdTest",
     ":distTar",
     ":distZip",
     ":jar",
@@ -16,4 +28,4 @@ startParameter.excludedTaskNames = [
     ":compileTestJava",
     ":testClasses",
     ":test"
-]
+))
