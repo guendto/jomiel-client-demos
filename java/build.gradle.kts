@@ -14,7 +14,7 @@ plugins {
     id("com.google.protobuf") version "0.8.15"
     id("application")
     id("java")
-    id("pmd")
+    // id("pmd")
 }
 
 application {
