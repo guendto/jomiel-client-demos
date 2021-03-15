@@ -30,6 +30,7 @@ Some examples have extra features, like additional output options.
 |  [Qt](https://github.com/guendto/jomiel-examples/blob/master/qt)          |             |
 |  [Ruby](https://github.com/guendto/jomiel-examples/blob/master/ruby)      |             |
 |  [Rust](https://github.com/guendto/jomiel-examples/blob/master/rust)      |             |
+|  [Scala](https://github.com/guendto/jomiel-examples/blob/master/scala)    |             |
 
 ## Dockerfiles
 
