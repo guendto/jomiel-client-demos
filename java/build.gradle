@@ -18,8 +18,8 @@ plugins {
 }
 
 application {
-    version '0.1.0-SNAPSHOT'
-    group 'jomiel.examples'
+    // version '0.1.0-SNAPSHOT'
+    // group 'jomiel.examples'
     mainClass = 'jomiel.examples.App'
 }
 
@@ -39,12 +39,8 @@ dependencies {
     implementation 'org.zeromq:jeromq:0.5.2'
 }
 
-sourceSets {
-    main {
-        // 'com.google.protobuf' plugin.
-        proto {
-            // In addition to the default 'src/main/proto'
-            srcDir '../proto'
-        }
-    }
+sourceSets.main {
+    java.srcDirs 'build/generated/source/proto/main/java'
+    // 'com.google.protobuf' plugin.
+    proto.srcDirs '../proto'
 }
