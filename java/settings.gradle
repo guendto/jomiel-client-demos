@@ -1,1 +1,19 @@
 rootProject.name = 'jomiel.examples'
+
+startParameter.excludedTaskNames = [
+    // ":verifyGoogleJavaFormat",
+    // ":shadowJar",
+    // ":shadowDistTar",
+    ":shadowDistZip",
+    // ":pmdMain",
+    ":pmdTest",
+    ":distTar",
+    ":distZip",
+    ":jar",
+    ":extractIncludeTestProto",
+    ":processTestResources",
+    ":extractTestProto",
+    ":compileTestJava",
+    ":testClasses",
+    ":test"
+]
