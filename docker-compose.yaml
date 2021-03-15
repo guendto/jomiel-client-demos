@@ -127,6 +127,11 @@ services:
     build:
       dockerfile: rust/docker/buster/Dockerfile
       context: .
+  scala_buster:
+    image: jomiel-ex-buster-scala
+    build:
+      dockerfile: scala/docker/buster/Dockerfile
+      context: .
 
 networks:
   default:
