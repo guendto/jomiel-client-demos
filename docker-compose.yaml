@@ -12,6 +12,11 @@
 version: '3.5'
 
 services:
+  kotlin_buster:
+    image: jomiel-ex-buster-kotlin
+    build:
+      dockerfile: kotlin/docker/buster/Dockerfile
+      context: .
   rust_buster:
     image: jomiel-ex-buster-rust
     build:

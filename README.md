@@ -21,6 +21,7 @@ Some examples have extra features, like additional output options.
 |  [C#](https://github.com/guendto/jomiel-examples/blob/master/csharp)      |             |
 |  [Go](https://github.com/guendto/jomiel-examples/blob/master/golang)      |             |
 |  [Java](https://github.com/guendto/jomiel-examples/blob/master/java)      |             |
+|  [Kotlin](https://github.com/guendto/jomiel-examples/blob/master/kotlin)  |             |
 |  [Lua](https://github.com/guendto/jomiel-examples/blob/master/lua5)       | version 5   |
 |  [Node](https://github.com/guendto/jomiel-examples/blob/master/nodejs)    |             |
 |  [Perl](https://github.com/guendto/jomiel-examples/blob/master/perl5)     | version 5   |
