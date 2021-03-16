@@ -42,12 +42,16 @@ class Jomiel(private val opts: Options) {
     }
 
     fun run() {
-        if (opts.uri.isNullOrEmpty()) {
-            error("error: input URI not given")
-            exitProcess(1)
+        when {
+            !opts.uri.isNullOrEmpty() -> {
+                connect()
+                opts.uri.forEach { inquire(it) }
+            }
+            else -> {
+                error("error: input URI not given")
+                exitProcess(1)
+            }
         }
-        connect()
-        opts.uri.forEach { inquire(it) }
     }
 
     private fun connect() {
