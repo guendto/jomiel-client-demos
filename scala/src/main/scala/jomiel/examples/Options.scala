@@ -14,7 +14,6 @@ package jomiel.examples
 
 import org.tinylog.scala.Logger.info
 import org.zeromq.ZMQ.{getFullVersion, getVersionString}
-import picocli.CommandLine
 import picocli.CommandLine.{Command, Option, Parameters, usage}
 
 import java.lang.System.out
