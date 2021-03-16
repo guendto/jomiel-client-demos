@@ -20,7 +20,6 @@ import java.lang.System.out
 import java.util.concurrent.Callable
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
-import kotlin.system.exitProcess
 
 @Command(name = "demo", usageHelpAutoWidth = true)
 
@@ -95,11 +94,9 @@ class Options : Callable<Int> {
             it.isAccessible = true
             info("${it.name} = ${it.get(this)}")
         }
-        exitProcess(0)
     }
 
     private fun printZmqVersion() {
         info("ZeroMQ version ${getVersionString()} (${getFullVersion()})")
-        exitProcess(0)
     }
 }
