@@ -14,12 +14,12 @@ package jomiel.examples
 
 import org.tinylog.scala.Logger.info
 import org.zeromq.ZMQ.{getFullVersion, getVersionString}
-import picocli.CommandLine
 import picocli.CommandLine.{Command, Option, Parameters, usage}
 
 import java.lang.System.out
 import java.util.concurrent.Callable
 
+//noinspection VarCouldBeVal
 @Command(name = "demo", usageHelpAutoWidth = true)
 class Options extends Callable[Int] {
 
@@ -72,21 +72,18 @@ class Options extends Callable[Int] {
   var uri = new java.util.ArrayList[String]
 
   def call(): Int = {
-    if (help) {
-      usage(this, out)
-    } else if (printConfig)
-      dumpConfig()
-    else if (zmqVersion) {
-      printZmqVersion()
-    } else {
-      new Jomiel(this).run()
-    }
+    if (help) usage(this, out)
+    else if (printConfig) dumpConfig()
+    else if (zmqVersion) printZmqVersion()
+    else new Jomiel(this).run()
     0
   }
 
   private def dumpConfig(): Unit = {
     info("---")
-    for (field <- this.getClass.getDeclaredFields) yield {
+    for {
+      field <- this.getClass.getDeclaredFields
+    } yield {
       field.setAccessible(true)
       info(s"${field.getName}: ${field.get(this)}")
     }
