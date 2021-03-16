@@ -40,10 +40,16 @@ RUN set -eux \
 # - https://github.com/adoptopenjdk/openjdk-docker
 FROM adoptopenjdk/openjdk11-openj9:alpine-slim as runtime-image
 
-ENV JARFILE demo-0.1.0-SNAPSHOT-all.jar
+WORKDIR /app
 
-COPY --from=compile-image /app/build/libs/${JARFILE} /
+ENV TARFILE demo.tar
 
-ENTRYPOINT ["/bin/sh", "-c", "java -jar $JARFILE $0 $@"]
+COPY --from=compile-image /app/build/distributions/${TARFILE} /app
+
+RUN set eux \
+    ; tar xf $TARFILE \
+    && rm -f $TARFILE
+
+ENTRYPOINT ["/app/demo/bin/demo"]
 
 CMD ["-h"]
