@@ -81,14 +81,9 @@ class Jomiel(opts: Options) {
   private def dumpResponse(msg: Response): Unit = {
     val status = "<recv>"
     if (msg.status.get.code == STATUS_CODE_OK) {
-      if (opts.beTerse) {
-        dumpTerseResponse(msg.getMedia)
-      } else {
-        printMessage(status, msg.getMedia)
-      }
-    } else {
-      printMessage(status, msg)
-    }
+      if (opts.beTerse) dumpTerseResponse(msg.getMedia)
+      else printMessage(status, msg.getMedia)
+    } else printMessage(status, msg)
   }
 
   private def dumpTerseResponse(msg: MediaResponse): Unit = {
