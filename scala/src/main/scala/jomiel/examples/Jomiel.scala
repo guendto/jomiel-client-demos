@@ -23,6 +23,8 @@ import org.zeromq.ZMQ.Poller.POLLIN
 import scalapb.GeneratedMessage
 import scalapb.json4s.JsonFormat.toJsonString
 
+import java.lang.System.exit
+
 class Jomiel(opts: Options) {
   private val ctx = new ZContext()
   private val sck = ctx.createSocket(REQ)
@@ -37,7 +39,7 @@ class Jomiel(opts: Options) {
       opts.uri.forEach(inquire)
     } else {
       error("error: input URI not given")
-      System.exit(1)
+      exit(1)
     }
   }
 
@@ -71,7 +73,7 @@ class Jomiel(opts: Options) {
       dumpResponse(msg)
     } else {
       error("error: connection timed out")
-      System.exit(1)
+      exit(1)
     }
   }
 
