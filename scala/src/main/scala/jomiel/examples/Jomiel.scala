@@ -75,9 +75,7 @@ class Jomiel(opts: Options) {
   }
 
   private def printStatus(status: String): Unit = {
-    if (!opts.beTerse) {
-      error(s"status: $status")
-    }
+    if (!opts.beTerse) error(s"status: $status")
   }
 
   private def dumpResponse(msg: Response): Unit = {
