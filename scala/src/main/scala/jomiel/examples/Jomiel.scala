@@ -97,8 +97,9 @@ class Jomiel(opts: Options) {
   }
 
   private def printMessage(status: String, msg: GeneratedMessage): Unit = {
-    val result = if (opts.outputJson) JsonFormat.toJsonString(msg)
-                 else msg.toString
+    val result =
+      if (opts.outputJson) JsonFormat.toJsonString(msg)
+      else msg.toString
     printStatus(status)
     info(result)
   }
