@@ -72,9 +72,7 @@ class Jomiel(private val opts: Options) {
                 media = MediaInquiry(inputUri = uri)
             )
         )
-        if (!opts.beTerse) {
-            printMessage("<send>", msg)
-        }
+        if (!opts.beTerse) printMessage("<send>", msg)
         val bytes = msg.encodeToByteArray()
         sck.send(bytes)
     }
