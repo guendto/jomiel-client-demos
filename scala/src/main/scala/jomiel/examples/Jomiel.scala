@@ -31,12 +31,13 @@ class Jomiel(opts: Options) {
   poller.register(sck, POLLIN)
 
   def run(): Unit = {
-    if (opts.uri.isEmpty) {
+    if (!opts.uri.isEmpty) {
+      connect()
+      opts.uri.forEach(inquire)
+    } else {
       error("error: input URI not given")
       System.exit(1)
     }
-    connect()
-    opts.uri.forEach(inquire)
   }
 
   private def connect(): Unit = {
