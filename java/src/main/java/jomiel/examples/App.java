@@ -12,13 +12,12 @@
 
 package jomiel.examples;
 
-import static java.lang.System.exit;
-
 import picocli.CommandLine;
 
-@SuppressWarnings("PMD.DoNotCallSystemExit")
+import static java.lang.System.exit;
+
 public final class App {
-  public static void main(final String[] args) {
-    exit(new CommandLine(new Options()).execute(args));
-  }
+    public static void main(final String[] args) {
+        exit(new CommandLine(new Options()).execute(args));
+    }
 }
