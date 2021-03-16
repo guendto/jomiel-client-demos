@@ -101,9 +101,7 @@ class Jomiel(private val opts: Options) {
         if (msg.status?.code == StatusCode.OK) {
             if (opts.beTerse) dumpTerseResponse(msg.media)
             else printMessage(status, msg.media as Message)
-        } else {
-            printMessage(status, msg)
-        }
+        } else printMessage(status, msg)
     }
 
     private fun dumpTerseResponse(msg: MediaResponse?) {
