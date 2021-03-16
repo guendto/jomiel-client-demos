@@ -106,10 +106,10 @@ class Jomiel(private val opts: Options) {
 
     private fun dumpTerseResponse(msg: MediaResponse?) {
         info("---\ntitle: ${msg?.title}\nquality:")
-        msg?.stream?.forEach { stream ->
-            info("  profile: ${stream.quality?.profile}"
-                    + "    width: ${stream.quality?.width}"
-                    + "    height: ${stream.quality?.height}"
+        msg?.stream?.forEach {
+            info("  profile: ${it.quality?.profile}"
+                    + "    width: ${it.quality?.width}"
+                    + "    height: ${it.quality?.height}"
             )
         }
     }
