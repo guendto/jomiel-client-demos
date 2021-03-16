@@ -13,6 +13,7 @@
 package jomiel.examples
 
 import jomiel.protobuf.v1beta1.media.{MediaInquiry, MediaResponse}
+import jomiel.protobuf.v1beta1.message.Inquiry.Inquiry.Media
 import jomiel.protobuf.v1beta1.message.{Inquiry, Response}
 import jomiel.protobuf.v1beta1.status.StatusCode.STATUS_CODE_OK
 import org.tinylog.scala.Logger.{error, info}
@@ -54,7 +55,7 @@ class Jomiel(opts: Options) {
 
   private def sendInquiry(uri: String): Unit = {
     val msg = Inquiry(
-      inquiry = Inquiry.Inquiry.Media(
+      inquiry = Media(
         MediaInquiry(inputUri = uri)
       )
     )
