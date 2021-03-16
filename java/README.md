@@ -11,8 +11,9 @@ gradle run --args="[args...]"
 Or:
 
 ```shell
-gradle shadowJar
-java -jar build/libs/<jarfile> [args...]
+gradle build
+tar xf build/distributions/demo.tar
+./demo/bin/demo [args...]
 ```
 
 ### Maven
