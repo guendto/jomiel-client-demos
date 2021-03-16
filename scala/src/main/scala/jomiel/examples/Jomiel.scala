@@ -97,8 +97,8 @@ class Jomiel(opts: Options) {
   private def dumpTerseResponse(msg: MediaResponse): Unit = {
     info(s"---\ntitle: ${msg.title}\nquality:")
     msg.stream.foreach(stream =>
-      info(s"  profile: ${stream.quality.get.profile}"
-        + s"  width: ${stream.quality.get.width}"
+      info(s"  profile: ${stream.quality.get.profile}\n"
+        + s"  width: ${stream.quality.get.width}\n"
         + s"  height: ${stream.quality.get.height}"
       )
     )
