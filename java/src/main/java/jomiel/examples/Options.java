@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import static java.lang.String.format;
-import static java.lang.System.exit;
 import static org.tinylog.Logger.info;
 import static org.zeromq.ZMQ.getFullVersion;
 import static org.zeromq.ZMQ.getVersionString;
@@ -92,13 +91,11 @@ final class Options implements Callable<Integer> {
                     field.getName(),
                     field.get(this)));
         }
-        exit(0);
     }
 
     private void printZmqVersion() {
         info(format("ZeroMQ version %s (%s)",
                 getVersionString(),
                 getFullVersion()));
-        exit(0);
     }
 }
