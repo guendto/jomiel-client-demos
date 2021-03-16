@@ -21,7 +21,7 @@ import org.zeromq.SocketType.REQ
 import org.zeromq.ZContext
 import org.zeromq.ZMQ.Poller.POLLIN
 import scalapb.GeneratedMessage
-import scalapb.json4s.JsonFormat
+import scalapb.json4s.JsonFormat.toJsonString
 
 class Jomiel(opts: Options) {
   private val ctx = new ZContext()
@@ -99,7 +99,7 @@ class Jomiel(opts: Options) {
 
   private def printMessage(status: String, msg: GeneratedMessage): Unit = {
     val result =
-      if (opts.outputJson) JsonFormat.toJsonString(msg)
+      if (opts.outputJson) toJsonString(msg)
       else msg.toString
     printStatus(status)
     info(result)
