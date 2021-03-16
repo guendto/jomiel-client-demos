@@ -93,9 +93,7 @@ class Jomiel(private val opts: Options) {
     }
 
     private fun printStatus(status: String) {
-        if (!opts.beTerse) {
-            error("status: $status")
-        }
+        if (!opts.beTerse) error("status: $status")
     }
 
     private fun dumpResponse(msg: Response) {
