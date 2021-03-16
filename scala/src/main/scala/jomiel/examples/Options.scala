@@ -72,15 +72,10 @@ class Options extends Callable[Int] {
   var uri = new java.util.ArrayList[String]
 
   def call(): Int = {
-    if (help) {
-      usage(this, out)
-    } else if (printConfig)
-      dumpConfig()
-    else if (zmqVersion) {
-      printZmqVersion()
-    } else {
-      new Jomiel(this).run()
-    }
+    if (help) usage(this, out)
+    else if (printConfig) dumpConfig()
+    else if (zmqVersion) printZmqVersion()
+    else new Jomiel(this).run()
     0
   }
 
