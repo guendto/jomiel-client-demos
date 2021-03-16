@@ -81,7 +81,9 @@ class Options extends Callable[Int] {
 
   private def dumpConfig(): Unit = {
     info("---")
-    for (field <- this.getClass.getDeclaredFields) yield {
+    for {
+      field <- this.getClass.getDeclaredFields
+    } yield {
       field.setAccessible(true)
       info(s"${field.getName}: ${field.get(this)}")
     }
