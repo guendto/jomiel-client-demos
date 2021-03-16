@@ -14,14 +14,11 @@ rootProject.name = "jomiel.examples"
 
 startParameter.setExcludedTaskNames(listOf(
     // ":verifyGoogleJavaFormat",
-    // ":shadowJar",
-    // ":shadowDistTar",
-    ":shadowDistZip",
     // ":pmdMain",
     // ":pmdTest",
-    ":distTar",
+    // ":distTar",
     ":distZip",
-    ":jar",
+    // ":jar",
     ":extractIncludeTestProto",
     ":processTestResources",
     ":extractTestProto",
