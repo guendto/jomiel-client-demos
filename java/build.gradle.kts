@@ -10,7 +10,6 @@
 
 plugins {
     id("com.github.sherter.google-java-format") version "0.9"
-    id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.google.protobuf") version "0.8.15"
     id("application")
     id("java")
@@ -20,9 +19,6 @@ plugins {
 application {
     mainClass.set("jomiel.examples.App")
     applicationName = "demo"
-    // <https://github.com/johnrengelman/shadow/issues/609>
-    // <https://github.com/johnrengelman/shadow/issues/645>
-    mainClassName = application.mainClass.get()
 }
 
 java {
