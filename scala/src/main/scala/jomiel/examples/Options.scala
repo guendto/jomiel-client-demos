@@ -19,6 +19,7 @@ import picocli.CommandLine.{Command, Option, Parameters, usage}
 import java.lang.System.out
 import java.util.concurrent.Callable
 
+//noinspection VarCouldBeVal
 @Command(name = "demo", usageHelpAutoWidth = true)
 class Options extends Callable[Int] {
 
