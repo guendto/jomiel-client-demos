@@ -42,12 +42,16 @@ class Jomiel(private val opts: Options) {
     }
 
     fun run() {
-        if (opts.uri.isNullOrEmpty()) {
-            error("error: input URI not given")
-            exitProcess(1)
+        when {
+            !opts.uri.isNullOrEmpty() -> {
+                connect()
+                opts.uri.forEach { inquire(it) }
+            }
+            else -> {
+                error("error: input URI not given")
+                exitProcess(1)
+            }
         }
-        connect()
-        opts.uri.forEach { inquire(it) }
     }
 
     private fun connect() {
@@ -68,15 +72,13 @@ class Jomiel(private val opts: Options) {
                 media = MediaInquiry(inputUri = uri)
             )
         )
-        if (!opts.beTerse) {
-            printMessage("<send>", msg)
-        }
+        if (!opts.beTerse) printMessage("<send>", msg)
         val bytes = msg.encodeToByteArray()
         sck.send(bytes)
     }
 
     private fun receiveResponse() {
-        poller.poll(opts.connectTimeout * 1000)
+        poller.poll(opts.connectTimeout * 1_000)
         when {
             poller.pollin(0) -> {
                 val bytes = sck.recv()
@@ -91,30 +93,23 @@ class Jomiel(private val opts: Options) {
     }
 
     private fun printStatus(status: String) {
-        if (!opts.beTerse) {
-            error("status: $status")
-        }
+        if (!opts.beTerse) error("status: $status")
     }
 
     private fun dumpResponse(msg: Response) {
         val status = "<recv>"
         if (msg.status?.code == StatusCode.OK) {
-            if (opts.beTerse) {
-                dumpTerseResponse(msg.media)
-            } else {
-                printMessage(status, msg.media as Message)
-            }
-        } else {
-            printMessage(status, msg)
-        }
+            if (opts.beTerse) dumpTerseResponse(msg.media)
+            else printMessage(status, msg.media as Message)
+        } else printMessage(status, msg)
     }
 
     private fun dumpTerseResponse(msg: MediaResponse?) {
         info("---\ntitle: ${msg?.title}\nquality:")
-        msg?.stream?.forEach { stream ->
-            info("  profile: ${stream.quality?.profile}"
-                    + "    width: ${stream.quality?.width}"
-                    + "    height: ${stream.quality?.height}"
+        msg?.stream?.forEach {
+            info("  profile: ${it.quality?.profile}"
+                    + "    width: ${it.quality?.width}"
+                    + "    height: ${it.quality?.height}"
             )
         }
     }
