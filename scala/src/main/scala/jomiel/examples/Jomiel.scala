@@ -58,9 +58,7 @@ class Jomiel(opts: Options) {
         MediaInquiry(inputUri = uri)
       )
     )
-    if (!opts.beTerse) {
-      printMessage("<send>", msg)
-    }
+    if (!opts.beTerse) printMessage("<send>", msg)
     sck.send(msg.toByteArray)
   }
 
