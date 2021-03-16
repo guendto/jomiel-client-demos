@@ -12,106 +12,93 @@
 
 package jomiel.examples;
 
-import static picocli.CommandLine.Command;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@SuppressWarnings({
-  "PMD.AvoidFieldNameMatchingMethodName",
-  "PMD.BeanMembersShouldSerialize",
-  "PMD.EmptyCatchBlock"
-})
-@Command(name = "demo")
-public class Options {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
-  @Option(
-      names = {"-D", "--print-config"},
-      description = "Print configuration values and exit")
-  private boolean printConfig;
+import static java.lang.String.format;
+import static java.lang.System.exit;
+import static org.tinylog.Logger.info;
+import static org.zeromq.ZMQ.getFullVersion;
+import static org.zeromq.ZMQ.getVersionString;
+import static picocli.CommandLine.usage;
 
-  @Option(
-      names = {"-h", "--help"},
-      usageHelp = true,
-      description = "Display this help message and exit")
-  private boolean showHelp;
+@SuppressWarnings({"CanBeFinal", "FieldMayBeFinal"})
+@Command(name = "demo", usageHelpAutoWidth = true)
+final class Options implements Callable<Integer> {
 
-  @Option(
-      names = {"-r", "--router-endpoint"},
-      paramLabel = "<addr>",
-      description = "Specify the router endpoint address (default: ${DEFAULT-VALUE})")
-  private String routerEndpoint = "tcp://localhost:5514";
+    @Option(names = {"-h", "--help"},
+            usageHelp = true,
+            description = "Display this help message and exit")
+    private boolean help = false;
 
-  @Option(
-      names = {"-t", "--connect-timeout"},
-      paramLabel = "<timeout>",
-      description =
-          "Specify maximum time in seconds for the connection allowed to take (default: ${DEFAULT-VALUE})")
-  private int connectTimeout = 30;
+    @Option(names = {"-D", "--print-config"},
+            description = "Print configuration values and exit")
+    private boolean printConfig = false;
 
-  @Option(
-      names = {"-V", "--version-zmq"},
-      description = "Display ZeroMQ version and exit")
-  private boolean showZmqVersion;
+    @Option(names = {"-r", "--router-endpoint"},
+            paramLabel = "<addr>",
+            description = "Specify the router endpoint address "
+                    + "(${DEFAULT-VALUE})")
+    String routerEndpoint = "tcp://localhost:5514";
 
-  @Option(
-      names = {"-j", "--output-json"},
-      description = "Print dumped messages in JSON")
-  private boolean outputJson;
+    @Option(names = {"-t", "--connect-timeout"},
+            paramLabel = "<timeout>",
+            description = "Specify maximum time in seconds for the "
+                    + "connection allowed to take "
+                    + "(${DEFAULT-VALUE})")
+    long connectTimeout = 30;
 
-  @Option(
-      names = {"-q", "--be-terse"},
-      description = "Be brief and to the point; dump interesting details only")
-  private boolean beTerse;
+    @Option(names = {"-V", "--version-zmq"},
+            description = "Display ZeroMQ version and exit")
+    private boolean zmqVersion = false;
 
-  @Parameters(arity = "0..*", paramLabel = "<uri>", description = "the URIs to parse")
-  private List<String> uri = new ArrayList<String>();
+    @Option(names = {"-j", "--output-json"},
+            description = "Print dumped messages in JSON")
+    boolean outputJson = false;
 
-  public final boolean printConfig() {
-    return printConfig;
-  }
+    @Option(names = {"-c", "--compact-json"},
+            description = "Use more compact representation of JSON")
+    boolean compactJson = false;
 
-  public final boolean showHelp() {
-    return showHelp;
-  }
+    @Option(names = {"-q", "--be-terse"},
+            description = "Be brief and to the point; dump interesting "
+                    + "details only")
+    boolean beTerse = false;
 
-  public final String getRouterEndpoint() {
-    return routerEndpoint;
-  }
+    @Parameters(arity = "0..*",
+            paramLabel = "<uri>",
+            description = "the URIs to parse")
+    List<String> uri = new ArrayList<>();
 
-  public final int getConnectTimeout() {
-    return connectTimeout * 1000;
-  }
-
-  public final boolean showZmqVersion() {
-    return showZmqVersion;
-  }
-
-  public final boolean outputAsJson() {
-    return outputJson;
-  }
-
-  public final boolean beTerse() {
-    return beTerse;
-  }
-
-  public final List<String> getUri() {
-    return uri;
-  }
-
-  public final void dump() {
-    System.out.println("---");
-    for (final Field f : getClass().getDeclaredFields()) {
-      try {
-        System.out.println(f.getName() + ": " + f.get(this));
-      } catch (final IllegalAccessException exc) {
-        // Pass.
-      }
+    @Override
+    public final Integer call() throws Exception {
+        if (help) usage(this, System.out);
+        else if (printConfig) dumpConfig();
+        else if (zmqVersion) printZmqVersion();
+        else new Jomiel(this).run();
+        return 0;
     }
-  }
-}
 
-// vim: set ts=2 sw=2 tw=72 expandtab:
+    private void dumpConfig() throws IllegalAccessException {
+        info("---");
+        for (final var field : getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            info(format("%s: %s",
+                    field.getName(),
+                    field.get(this)));
+        }
+        exit(0);
+    }
+
+    private void printZmqVersion() {
+        info(format("ZeroMQ version %s (%s)",
+                getVersionString(),
+                getFullVersion()));
+        exit(0);
+    }
+}

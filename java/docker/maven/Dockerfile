@@ -42,7 +42,8 @@ RUN set -eux \
 #
 # See also:
 # - https://github.com/adoptopenjdk/openjdk-docker
-FROM openjdk:8-alpine AS runtime-image
+FROM adoptopenjdk/openjdk11-openj9:alpine-slim as runtime-image
+# FROM openjdk:8-alpine AS runtime-image
 # FROM adoptopenjdk/openjdk8-openj9:alpine-slim as runtime-image
 # FROM openjdk:8-jre-slim AS runtime-image
 # FROM adoptopenjdk/openjdk15-openj9:alpine-slim as runtime-image

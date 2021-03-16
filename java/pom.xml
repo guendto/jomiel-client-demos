@@ -14,6 +14,17 @@
   </properties>
 
   <dependencies>
+    <!-- https://github.com/pmwmedia/tinylog -->
+    <dependency>
+      <groupId>org.tinylog</groupId>
+      <artifactId>tinylog-api</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.tinylog</groupId>
+      <artifactId>tinylog-impl</artifactId>
+      <version>2.2.1</version>
+    </dependency>
     <!-- https://picocli.info/ -->
     <dependency>
       <groupId>info.picocli</groupId>
@@ -150,8 +161,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <!-- https://maven.apache.org/plugins/maven-site-plugin/ -->
