@@ -78,7 +78,7 @@ class Jomiel(private val opts: Options) {
     }
 
     private fun receiveResponse() {
-        poller.poll(opts.connectTimeout * 1000)
+        poller.poll(opts.connectTimeout * 1_000)
         when {
             poller.pollin(0) -> {
                 val bytes = sck.recv()
