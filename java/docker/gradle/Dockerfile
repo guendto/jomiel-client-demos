@@ -18,14 +18,14 @@ WORKDIR /app
 COPY java/src/ ./src/
 COPY proto/ ./proto/
 
-COPY java/settings.gradle .
-COPY java/build.gradle .
+COPY java/settings.gradle.kts .
+COPY java/build.gradle.kts .
 
 RUN set -eux \
     ; apt-get -qq update \
     && apt-get install -qq --no-install-recommends \
         protobuf-compiler \
-    && sed -i 's/\.\.\/proto/\.\/proto/' ./build.gradle
+    && sed -i 's/\.\.\/proto/\.\/proto/' ./build.gradle.kts
 
 # stage: compile-image
 #
