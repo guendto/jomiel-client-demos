@@ -36,7 +36,7 @@ class Jomiel(opts: Options) {
       System.exit(1)
     }
     connect()
-    opts.uri.forEach { inquire }
+    opts.uri.forEach(inquire)
   }
 
   private def connect(): Unit = {
