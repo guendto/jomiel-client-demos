@@ -59,6 +59,12 @@ func newOptions() *options {
 		"Print dumped messages in JSON")
 
 	pflag.BoolVarP(
+		&opts.CompactJSON,
+		"compact-json", "c",
+		false,
+		"Use more compact representation of JSON")
+
+	pflag.BoolVarP(
 		&opts.BeTerse,
 		"be-terse", "q",
 		false,
