@@ -23,7 +23,7 @@ import kotlin.reflect.jvm.isAccessible
 
 @Command(name = "demo", usageHelpAutoWidth = true)
 
-class Options : Callable<Int> {
+class Runner : Callable<Int> {
 
     @Option(names = ["-h", "--help"],
         description = ["Display this help message and exit"],
@@ -83,14 +83,14 @@ class Options : Callable<Int> {
             help -> usage(this, out)
             printConfig -> dumpConfig()
             zmqVersion -> printZmqVersion()
-            else -> Jomiel(this).run()
+            else -> Jomiel(this).inquire()
         }
         return 0
     }
 
     private fun dumpConfig() {
         info("---")
-        Options::class.memberProperties.forEach {
+        Runner::class.memberProperties.forEach {
             it.isAccessible = true
             info("${it.name} = ${it.get(this)}")
         }

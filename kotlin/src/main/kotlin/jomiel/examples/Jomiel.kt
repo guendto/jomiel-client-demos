@@ -27,7 +27,7 @@ import pbandk.json.JsonConfig.Companion.DEFAULT
 import pbandk.json.encodeToJsonString
 import kotlin.system.exitProcess
 
-class Jomiel(private val opts: Options) {
+class Jomiel(private val opts: Runner) {
     private val ctx = ZContext()
     private val sck = ctx.createSocket(REQ)
     private val poller = ctx.createPoller(1)
@@ -41,16 +41,17 @@ class Jomiel(private val opts: Options) {
         poller.register(sck, POLLIN)
     }
 
-    fun run() {
-        when {
-            !opts.uri.isNullOrEmpty() -> {
-                connect()
-                opts.uri.forEach { inquire(it) }
+    fun inquire() = when {
+        !opts.uri.isNullOrEmpty() -> {
+            connect()
+            opts.uri.forEach {
+                sendInquiry(it)
+                receiveResponse()
             }
-            else -> {
-                error("error: input URI not given")
-                exitProcess(1)
-            }
+        }
+        else -> {
+            error("error: input URI not given")
+            exitProcess(1)
         }
     }
 
@@ -59,11 +60,6 @@ class Jomiel(private val opts: Options) {
         val to = opts.connectTimeout
         printStatus("<connect> $re (timeout=$to)")
         sck.connect(re)
-    }
-
-    private fun inquire(uri: String) {
-        sendInquiry(uri)
-        receiveResponse()
     }
 
     private fun sendInquiry(uri: String) {
