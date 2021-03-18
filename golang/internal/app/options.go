@@ -17,10 +17,10 @@ import flag "github.com/spf13/pflag"
 type options struct {
 	RouterEndpoint string `json:"router-endpoint"`
 	ConnectTimeout int    `json:"connect-timeout"`
-	PrintConfig    bool
-	ZmqVersion     bool `json:"zmq-version"`
-	OutputJson     bool `json:"output-json"`
-	BeTerse        bool `json:"be-terse"`
+	PrintConfig    bool   `json:"print-config"`
+	ZmqVersion     bool   `json:"zmq-version"`
+	OutputJson     bool   `json:"output-json"`
+	BeTerse        bool   `json:"be-terse"`
 }
 
 func newOptions() *options {
