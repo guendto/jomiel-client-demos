@@ -116,6 +116,20 @@ func (j *jomiel) toJson(response *msgs.Response) string {
 	return string(json)
 }
 
+func (j jomiel) dumpResponse(msg *msgs.Response) {
+	status := "<recv>"
+	if msg.GetStatus().GetCode() == msgs.StatusCode_STATUS_CODE_OK {
+		media := msg.GetMedia()
+		if j.opts.BeTerse {
+			j.dumpTerseResponse(media)
+		} else {
+			j.printMessage(status, media)
+		}
+	} else {
+		j.printMessage(status, msg)
+	}
+}
+
 func (j *jomiel) printMessage(status string, message *msgs.Response) {
 	var result string
 	if j.opts.OutputJson {
@@ -125,21 +139,6 @@ func (j *jomiel) printMessage(status string, message *msgs.Response) {
 	}
 	j.printStatus(status)
 	fmt.Printf(result)
-}
-
-func (j *jomiel) dumpResponse(response *msgs.Response) {
-	responseStatus := response.GetStatus()
-	mediaResponse := response.GetMedia()
-
-	if responseStatus.GetCode() == msgs.StatusCode_STATUS_CODE_OK {
-		if j.opts.BeTerse {
-			j.dumpTerseResponse(mediaResponse)
-		} else {
-			j.printMessage("<recv>", response)
-		}
-	} else {
-		j.printMessage("<recv>", response)
-	}
 }
 
 func (j *jomiel) dumpTerseResponse(response *msgs.MediaResponse) {
