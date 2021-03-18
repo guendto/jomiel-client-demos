@@ -19,7 +19,7 @@ type options struct {
 	ConnectTimeout int    `json:"connect-timeout"`
 	PrintConfig    bool   `json:"print-config"`
 	ZmqVersion     bool   `json:"zmq-version"`
-	OutputJson     bool   `json:"output-json"`
+	OutputJSON     bool   `json:"output-json"`
 	CompactJSON    bool   `json:"compact-json"`
 	BeTerse        bool   `json:"be-terse"`
 }
@@ -53,7 +53,7 @@ func newOptions() *options {
 		"Display ZeroMQ version and exit")
 
 	flag.BoolVarP(
-		&opts.OutputJson,
+		&opts.OutputJSON,
 		"output-json", "j",
 		false,
 		"Print dumped messages in JSON")
