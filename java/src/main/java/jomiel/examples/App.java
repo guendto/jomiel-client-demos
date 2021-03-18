@@ -18,6 +18,6 @@ import static java.lang.System.exit;
 
 public final class App {
     public static void main(final String[] args) {
-        exit(new CommandLine(new Options()).execute(args));
+        exit(new CommandLine(new Runner()).execute(args));
     }
 }
