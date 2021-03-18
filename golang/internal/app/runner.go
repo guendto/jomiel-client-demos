@@ -39,11 +39,6 @@ func Main() {
 		fmt.Printf("ZeroMQ version %d.%d.%d\n", major, minor, patch)
 		os.Exit(0)
 	}
-
-	jomiel := newJomiel(opts)
-	defer jomiel.Destroy()
-
-	jomiel.connect()
 }
 
 func prettyPrintYaml(iface interface{}) {
