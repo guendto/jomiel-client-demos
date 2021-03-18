@@ -17,7 +17,7 @@ import (
 	"log"
 	"os"
 
-	yaml "github.com/ghodss/yaml"
+	"github.com/ghodss/yaml"
 	zmq4 "github.com/pebbe/zmq4"
 )
 
