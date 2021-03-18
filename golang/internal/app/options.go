@@ -70,5 +70,7 @@ func newOptions() *options {
 		false,
 		"Be brief and to the point; dump interesting details only")
 
+	pflag.Parse()
+
 	return opts
 }
