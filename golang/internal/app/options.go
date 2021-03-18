@@ -12,7 +12,7 @@
 
 package app
 
-import flag "github.com/spf13/pflag"
+import "github.com/spf13/pflag"
 
 type options struct {
 	RouterEndpoint string `json:"router-endpoint"`
@@ -27,38 +27,38 @@ type options struct {
 func newOptions() *options {
 	opts := &options{}
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
 		&opts.PrintConfig,
 		"print-config", "D",
 		false,
 		"Print configuration values and exit")
 
-	flag.StringVarP(
+	pflag.StringVarP(
 		&opts.RouterEndpoint,
 		"router-endpoint", "r",
 		"tcp://localhost:5514",
 		"Specify the router endpoint address")
 
-	flag.IntVarP(
+	pflag.IntVarP(
 		&opts.ConnectTimeout,
 		"connect-timeout", "t",
 		30,
 		"Specify maximum time in seconds for the connection allowed to take")
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
 		&opts.ZmqVersion,
 		"version-zmq",
 		"V",
 		false,
 		"Display ZeroMQ version and exit")
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
 		&opts.OutputJSON,
 		"output-json", "j",
 		false,
 		"Print dumped messages in JSON")
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
 		&opts.BeTerse,
 		"be-terse", "q",
 		false,
