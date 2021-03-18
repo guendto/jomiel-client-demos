@@ -75,7 +75,7 @@ class Runner extends Callable[Int] {
     if (help) usage(this, out)
     else if (printConfig) dumpConfig()
     else if (zmqVersion) printZmqVersion()
-    else new Jomiel(this).run()
+    else new Jomiel(this).inquire()
     0
   }
 
