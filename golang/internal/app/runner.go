@@ -18,7 +18,7 @@ import (
 	"os"
 
 	"github.com/ghodss/yaml"
-	zmq4 "github.com/pebbe/zmq4"
+	"github.com/pebbe/zmq4"
 )
 
 var opts options
