@@ -69,11 +69,11 @@ func (j *jomiel) connect() {
 }
 
 func (j *jomiel) inquire(uri string) {
-	j.send(uri)
+	j.sendInquiry(uri)
 	j.recv()
 }
 
-func (j *jomiel) send(uri string) {
+func (j *jomiel) sendInquiry(uri string) {
 	inquiry := &msgs.Inquiry{
 		Inquiry: &msgs.Inquiry_Media{
 			Media: &msgs.MediaInquiry{
