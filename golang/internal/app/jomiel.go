@@ -21,7 +21,7 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	zmq4 "github.com/pebbe/zmq4"
 
-	msgs "internal/gen/messages"
+	msgs "internal/messages"
 )
 
 type jomiel struct {
