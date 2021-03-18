@@ -50,8 +50,10 @@ final class Jomiel {
     void run() throws InvalidProtocolBufferException {
         if (!opts.uri.isEmpty()) {
             connect();
-            for (final var uri : unmodifiableList(opts.uri))
-                inquire(uri);
+            for (final var uri : unmodifiableList(opts.uri)) {
+                sendInquiry(uri);
+                receiveResponse();
+            }
         } else {
             error("error: input URI not given");
             exit(1);
@@ -63,11 +65,6 @@ final class Jomiel {
                 opts.routerEndpoint,
                 opts.connectTimeout));
         sck.connect(opts.routerEndpoint);
-    }
-
-    private void inquire(final String uri) throws InvalidProtocolBufferException {
-        sendInquiry(uri);
-        receiveResponse();
     }
 
     private void sendInquiry(final String uri) throws InvalidProtocolBufferException {
