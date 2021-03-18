@@ -33,13 +33,13 @@ import static org.tinylog.Logger.error;
 import static org.tinylog.Logger.info;
 
 final class Jomiel {
-    private final Options opts;
+    private final Runner opts;
     private final ZContext ctx = new ZContext();
     private final Socket sck = ctx.createSocket(SocketType.REQ);
     private final Poller poller = ctx.createPoller(1);
     private Printer jsonFormatter = printer();
 
-    Jomiel(final Options options) {
+    Jomiel(final Runner options) {
         opts = options;
         sck.setLinger(0);
         poller.register(sck, Poller.POLLIN);
