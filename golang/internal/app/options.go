@@ -20,6 +20,7 @@ type options struct {
 	PrintConfig    bool   `json:"print-config"`
 	ZmqVersion     bool   `json:"zmq-version"`
 	OutputJson     bool   `json:"output-json"`
+	CompactJSON    bool   `json:"compact-json"`
 	BeTerse        bool   `json:"be-terse"`
 }
 
