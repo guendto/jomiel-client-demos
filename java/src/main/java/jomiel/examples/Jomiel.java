@@ -47,7 +47,7 @@ final class Jomiel {
             jsonFormatter = printer().omittingInsignificantWhitespace();
     }
 
-    void run() throws InvalidProtocolBufferException {
+    void inquire() throws InvalidProtocolBufferException {
         if (!opts.uri.isEmpty()) {
             connect();
             for (final var uri : unmodifiableList(opts.uri)) {
