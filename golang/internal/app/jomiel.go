@@ -67,14 +67,14 @@ func (j jomiel) inquire() {
 	}
 }
 
-func (j *jomiel) connect() {
+func (j jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
 	j.printStatus(fmt.Sprintf("<connect> %s (timeout=%d)", re, to))
 	j.sock.Connect(re)
 }
 
-func (j *jomiel) sendInquiry(uri string) {
+func (j jomiel) sendInquiry(uri string) {
 	msg := newInquiry(uri)
 	if !opts.BeTerse {
 		j.printMessage("<send>", msg)
@@ -83,7 +83,7 @@ func (j *jomiel) sendInquiry(uri string) {
 	j.sock.SendMessage(bytes)
 }
 
-func (j *jomiel) receiveResponse() {
+func (j jomiel) receiveResponse() {
 	polled, err := j.poller.Poll(j.timeout)
 	if err != nil {
 		log.Fatalln("error: failed to pollin an event: ", err)
@@ -102,7 +102,7 @@ func (j *jomiel) receiveResponse() {
 	j.dumpResponse(&msg)
 }
 
-func (j *jomiel) printStatus(status string) {
+func (j jomiel) printStatus(status string) {
 	if !j.opts.BeTerse {
 		log.Println("status: " + status)
 	}
