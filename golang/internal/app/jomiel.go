@@ -43,9 +43,13 @@ func newJomiel(opts options) jomiel {
 	poller := zmq4.NewPoller()
 	poller.Add(sck, zmq4.POLLIN)
 
+	timeout := time.Duration(opts.ConnectTimeout)
+	timeout *= time.Second
+
 	return &jomiel{
-		opts: opts,
-		sock: sck,
+		timeout: timeout,
+		opts:    opts,
+		sock:    sck,
 	}
 }
 
@@ -87,8 +91,7 @@ func (j *jomiel) send(uri string) {
 }
 
 func (j *jomiel) recv() {
-	timeout := time.Duration(j.opts.ConnectTimeout)
-	sck, err := poller.Poll(timeout * time.Second)
+	sck, err := poller.Poll(j.timeout)
 	if err != nil {
 		log.Fatalln("error: failed to pollin an event: ", err)
 	} else {
