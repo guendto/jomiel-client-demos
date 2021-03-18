@@ -84,27 +84,22 @@ func (j *jomiel) sendInquiry(uri string) {
 }
 
 func (j *jomiel) receiveResponse() {
-	sck, err := poller.Poll(j.timeout)
+	polled, err := j.poller.Poll(j.timeout)
 	if err != nil {
 		log.Fatalln("error: failed to pollin an event: ", err)
-	} else {
-		if len(sck) == 0 {
-			log.Fatalln("error: connection timed out")
-		}
 	}
 
-	data, err := j.sock.Recv(0)
+	if len(polled) == 0 {
+		log.Fatalln("error: connection timed out")
+	}
+
+	bytes, err := j.sock.RecvBytes(0)
 	if err != nil {
 		log.Fatalln("error: failed to receive message: ", err)
 	}
 
-	response := &msgs.Response{}
-	err = proto.Unmarshal([]byte(data), response)
-	if err != nil {
-		log.Fatalln("error: failed to decode response: ", err)
-	}
-
-	j.dumpResponse(response)
+	msg := unmarshalResponse(bytes)
+	j.dumpResponse(&msg)
 }
 
 func (j *jomiel) printStatus(status string) {
