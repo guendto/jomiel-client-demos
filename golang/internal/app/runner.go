@@ -34,6 +34,8 @@ func Main() {
 		dumpValues(opts)
 	} else if opts.VersionZmq {
 		printZmqVersion()
+	} else {
+		newJomiel(opts).inquire()
 	}
 }
 
