@@ -16,6 +16,6 @@ import picocli.CommandLine
 
 object App {
   def main(args: Array[String]): Unit = {
-    System.exit(new CommandLine(new Options).execute(args: _*))
+    System.exit(new CommandLine(new Runner).execute(args: _*))
   }
 }

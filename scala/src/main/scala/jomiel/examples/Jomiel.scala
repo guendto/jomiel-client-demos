@@ -25,7 +25,7 @@ import scalapb.json4s.JsonFormat.toJsonString
 
 import java.lang.System.exit
 
-class Jomiel(opts: Options) {
+class Jomiel(opts: Runner) {
   private val ctx = new ZContext()
   private val sck = ctx.createSocket(REQ)
   private val poller = ctx.createPoller(1)
@@ -33,10 +33,13 @@ class Jomiel(opts: Options) {
   sck.setLinger(0)
   poller.register(sck, POLLIN)
 
-  def run(): Unit = {
+  def inquire(): Unit = {
     if (!opts.uri.isEmpty) {
       connect()
-      opts.uri.forEach(inquire)
+      opts.uri.forEach { uri =>
+        sendInquiry(uri)
+        receiveResponse()
+      }
     } else {
       error("error: input URI not given")
       exit(1)
@@ -48,11 +51,6 @@ class Jomiel(opts: Options) {
     val to = opts.connectTimeout
     printStatus(s"<connect> $re (timeout=$to)")
     sck.connect(re)
-  }
-
-  private def inquire(uri: String): Unit = {
-    sendInquiry(uri)
-    receiveResponse()
   }
 
   private def sendInquiry(uri: String): Unit = {

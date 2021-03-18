@@ -21,7 +21,7 @@ import java.util.concurrent.Callable
 
 //noinspection VarCouldBeVal
 @Command(name = "demo", usageHelpAutoWidth = true)
-class Options extends Callable[Int] {
+class Runner extends Callable[Int] {
 
   @Option(names = Array("-h", "--help"),
     description = Array("Display this help message and exit"),
@@ -75,7 +75,7 @@ class Options extends Callable[Int] {
     if (help) usage(this, out)
     else if (printConfig) dumpConfig()
     else if (zmqVersion) printZmqVersion()
-    else new Jomiel(this).run()
+    else new Jomiel(this).inquire()
     0
   }
 
