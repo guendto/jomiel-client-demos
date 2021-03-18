@@ -86,7 +86,7 @@ func (j jomiel) sendInquiry(uri string) {
 func (j jomiel) receiveResponse() {
 	polled, err := j.poller.Poll(j.timeout)
 	if err != nil {
-		log.Fatalln("error: failed to pollin an event: ", err)
+		log.Fatalln("error: failed to poll-in an event: ", err)
 	}
 
 	if len(polled) == 0 {
