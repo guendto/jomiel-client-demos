@@ -21,7 +21,7 @@ import java.util.concurrent.Callable
 
 //noinspection VarCouldBeVal
 @Command(name = "demo", usageHelpAutoWidth = true)
-class Options extends Callable[Int] {
+class Runner extends Callable[Int] {
 
   @Option(names = Array("-h", "--help"),
     description = Array("Display this help message and exit"),
