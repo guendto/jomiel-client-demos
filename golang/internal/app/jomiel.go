@@ -18,6 +18,7 @@ import (
 	"time"
 
 	zmq4 "github.com/pebbe/zmq4"
+	"github.com/spf13/pflag"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/encoding/prototext"
 	"google.golang.org/protobuf/proto"
