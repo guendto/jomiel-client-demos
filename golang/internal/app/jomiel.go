@@ -39,6 +39,10 @@ func newJomiel(opts options) jomiel {
 		log.Fatalln("error: failed to create a socket: ", err)
 	}
 	sck.SetLinger(0)
+
+	poller := zmq4.NewPoller()
+	poller.Add(sck, zmq4.POLLIN)
+
 	return &jomiel{
 		opts: opts,
 		sock: sck,
@@ -83,9 +87,6 @@ func (j *jomiel) send(uri string) {
 }
 
 func (j *jomiel) recv() {
-	poller := zmq4.NewPoller()
-	poller.Add(j.sock, zmq4.POLLIN)
-
 	timeout := time.Duration(j.opts.ConnectTimeout)
 	sck, err := poller.Poll(timeout * time.Second)
 	if err != nil {
