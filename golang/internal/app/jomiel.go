@@ -27,8 +27,8 @@ import (
 )
 
 type jomiel struct {
+	opts options
 	sock *zmq4.Socket
-	opts *options
 }
 
 func newJomiel(opts *options) *jomiel {
