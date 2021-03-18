@@ -32,7 +32,7 @@ func init() {
 func Main() {
 	if opts.PrintConfig {
 		dumpValues(opts)
-	} else if opts.VersionZmq {
+	} else if opts.ZmqVersion {
 		printZmqVersion()
 	} else {
 		newJomiel(opts).inquire()
