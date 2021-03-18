@@ -24,7 +24,7 @@ type options struct {
 	BeTerse        bool   `json:"be-terse"`
 }
 
-func newOptions() options {
+func parseOptions() options {
 	opts := options{}
 
 	pflag.BoolVarP(
