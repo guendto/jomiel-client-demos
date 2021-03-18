@@ -27,7 +27,7 @@ import pbandk.json.JsonConfig.Companion.DEFAULT
 import pbandk.json.encodeToJsonString
 import kotlin.system.exitProcess
 
-class Jomiel(private val opts: Options) {
+class Jomiel(private val opts: Runner) {
     private val ctx = ZContext()
     private val sck = ctx.createSocket(REQ)
     private val poller = ctx.createPoller(1)
