@@ -24,7 +24,7 @@ import (
 var opts *options
 
 func init() {
-	opts = newOptions()
+	opts = parseOptions()
 	log.SetOutput(os.Stderr)
 	log.SetFlags(0)
 }
