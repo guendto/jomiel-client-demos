@@ -36,7 +36,10 @@ class Jomiel(opts: Runner) {
   def run(): Unit = {
     if (!opts.uri.isEmpty) {
       connect()
-      opts.uri.forEach(inquire)
+      opts.uri.forEach { uri =>
+        sendInquiry(uri)
+        receiveResponse()
+      }
     } else {
       error("error: input URI not given")
       exit(1)
@@ -48,11 +51,6 @@ class Jomiel(opts: Runner) {
     val to = opts.connectTimeout
     printStatus(s"<connect> $re (timeout=$to)")
     sck.connect(re)
-  }
-
-  private def inquire(uri: String): Unit = {
-    sendInquiry(uri)
-    receiveResponse()
   }
 
   private def sendInquiry(uri: String): Unit = {
