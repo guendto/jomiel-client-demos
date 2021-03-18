@@ -33,9 +33,7 @@ func Main() {
 	if opts.PrintConfig {
 		dumpValues(opts)
 	} else if opts.VersionZmq {
-		major, minor, patch := zmq4.Version()
-		fmt.Printf("ZeroMQ version %d.%d.%d\n", major, minor, patch)
-		os.Exit(0)
+		printZmqVersion()
 	}
 }
 
@@ -46,4 +44,9 @@ func dumpValues(opts options) {
 	}
 	str := string(yaml)
 	fmt.Printf(str)
+}
+
+func printZmqVersion() {
+	major, minor, patch := zmq4.Version()
+	fmt.Printf("ZeroMQ version %d.%d.%d\n", major, minor, patch)
 }
