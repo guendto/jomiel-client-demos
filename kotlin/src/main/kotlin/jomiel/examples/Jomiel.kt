@@ -41,19 +41,17 @@ class Jomiel(private val opts: Runner) {
         poller.register(sck, POLLIN)
     }
 
-    fun inquire() {
-        when {
-            !opts.uri.isNullOrEmpty() -> {
-                connect()
-                opts.uri.forEach {
-                    sendInquiry(it)
-                    receiveResponse()
-                }
+    fun inquire() = when {
+        !opts.uri.isNullOrEmpty() -> {
+            connect()
+            opts.uri.forEach {
+                sendInquiry(it)
+                receiveResponse()
             }
-            else -> {
-                error("error: input URI not given")
-                exitProcess(1)
-            }
+        }
+        else -> {
+            error("error: input URI not given")
+            exitProcess(1)
         }
     }
 
