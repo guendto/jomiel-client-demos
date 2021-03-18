@@ -21,7 +21,7 @@ import (
 	zmq4 "github.com/pebbe/zmq4"
 )
 
-var opts *options
+var opts options
 
 func init() {
 	opts = parseOptions()
