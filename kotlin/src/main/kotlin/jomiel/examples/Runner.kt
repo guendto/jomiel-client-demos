@@ -83,7 +83,7 @@ class Runner : Callable<Int> {
             help -> usage(this, out)
             printConfig -> dumpConfig()
             zmqVersion -> printZmqVersion()
-            else -> Jomiel(this).run()
+            else -> Jomiel(this).inquire()
         }
         return 0
     }
