@@ -28,7 +28,7 @@ import static picocli.CommandLine.usage;
 
 @SuppressWarnings({"CanBeFinal", "FieldMayBeFinal"})
 @Command(name = "demo", usageHelpAutoWidth = true)
-final class Options implements Callable<Integer> {
+final class Runner implements Callable<Integer> {
 
     @Option(names = {"-h", "--help"},
             usageHelp = true,
