@@ -108,14 +108,6 @@ func (j *jomiel) printStatus(status string) {
 	}
 }
 
-func (j *jomiel) toJson(response *msgs.Response) string {
-	json, err := json.MarshalIndent(response, "", "  ")
-	if err != nil {
-		log.Fatalln("error: ", err)
-	}
-	return string(json)
-}
-
 func (j jomiel) dumpResponse(msg *msgs.Response) {
 	status := "<recv>"
 	if msg.GetStatus().GetCode() == msgs.StatusCode_STATUS_CODE_OK {
@@ -148,6 +140,17 @@ func (j jomiel) printMessage(status string, msg proto.Message) {
 	}
 	j.printStatus(status)
 	fmt.Printf(result)
+}
+
+func (j jomiel) toJSON(msg proto.Message) string {
+	if !j.opts.CompactJSON {
+		return protojson.Format(msg)
+	}
+	json, err := protojson.Marshal(msg)
+	if err != nil {
+		log.Fatalln("error: ", err)
+	}
+	return string(json)
 }
 
 func newInquiry(uri string) *msgs.Inquiry {
