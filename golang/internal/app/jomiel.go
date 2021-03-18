@@ -178,3 +178,11 @@ func newInquiry(uri string) *msgs.Inquiry {
 		},
 	}
 }
+
+func marshalInquiry(msg proto.Message) []byte {
+	bytes, err := proto.Marshal(msg)
+	if err != nil {
+		log.Fatalln("error: failed to encode inquiry: ", err)
+	}
+	return bytes
+}
