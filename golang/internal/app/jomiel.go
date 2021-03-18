@@ -48,6 +48,7 @@ func newJomiel(opts options) jomiel {
 
 	return &jomiel{
 		timeout: timeout,
+		poller:  poller,
 		opts:    opts,
 		sock:    sck,
 	}
