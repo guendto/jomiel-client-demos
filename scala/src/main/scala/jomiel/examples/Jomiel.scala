@@ -25,7 +25,7 @@ import scalapb.json4s.JsonFormat.toJsonString
 
 import java.lang.System.exit
 
-class Jomiel(opts: Options) {
+class Jomiel(opts: Runner) {
   private val ctx = new ZContext()
   private val sck = ctx.createSocket(REQ)
   private val poller = ctx.createPoller(1)
