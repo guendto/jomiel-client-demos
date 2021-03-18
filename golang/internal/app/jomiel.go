@@ -75,21 +75,12 @@ func (j *jomiel) connect() {
 }
 
 func (j *jomiel) sendInquiry(uri string) {
-	inquiry := &msgs.Inquiry{
-		Inquiry: &msgs.Inquiry_Media{
-			Media: &msgs.MediaInquiry{
-				InputUri: uri,
-			},
-		},
+	msg := newInquiry(uri)
+	if !opts.BeTerse {
+		j.printMessage("<send>", msg)
 	}
-
-	out, err := proto.Marshal(inquiry)
-	if err != nil {
-		log.Fatalln("error: failed to encode inquiry: ", err)
-	}
-
-	j.printStatus("<send>")
-	j.sock.SendMessage([][]byte{out})
+	bytes := marshalInquiry(msg)
+	j.sock.SendMessage(bytes)
 }
 
 func (j *jomiel) receiveResponse() {
