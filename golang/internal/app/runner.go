@@ -31,9 +31,7 @@ func init() {
 
 func Main() {
 	if opts.PrintConfig {
-		fmt.Printf("---\n")
-		prettyPrintYaml(opts)
-		os.Exit(0)
+		dumpValues(opts)
 	} else if opts.VersionZmq {
 		major, minor, patch := zmq4.Version()
 		fmt.Printf("ZeroMQ version %d.%d.%d\n", major, minor, patch)
@@ -41,10 +39,11 @@ func Main() {
 	}
 }
 
-func prettyPrintYaml(iface interface{}) {
-	yaml, err := yaml.Marshal(iface)
+func dumpValues(opts options) {
+	yaml, err := yaml.Marshal(opts)
 	if err != nil {
 		log.Fatalln("error: ", err)
 	}
-	fmt.Printf(string(yaml))
+	str := string(yaml)
+	fmt.Printf(str)
 }
