@@ -36,7 +36,7 @@ type jomiel struct {
 func newJomiel(opts options) jomiel {
 	sck, err := zmq4.NewSocket(zmq4.REQ)
 	if err != nil {
-		log.Fatalln("failed to create a socket: ", err)
+		log.Fatalln("error: failed to create a socket: ", err)
 	}
 	sck.SetLinger(0)
 	return &jomiel{
@@ -75,7 +75,7 @@ func (j *jomiel) send(uri string) {
 
 	out, err := proto.Marshal(inquiry)
 	if err != nil {
-		log.Fatalln("failed to encode inquiry: ", err)
+		log.Fatalln("error: failed to encode inquiry: ", err)
 	}
 
 	j.printStatus("<send>")
@@ -89,7 +89,7 @@ func (j *jomiel) recv() {
 	timeout := time.Duration(j.opts.ConnectTimeout)
 	sck, err := poller.Poll(timeout * time.Second)
 	if err != nil {
-		log.Fatalln("failed to pollin an event: ", err)
+		log.Fatalln("error: failed to pollin an event: ", err)
 	} else {
 		if len(sck) == 0 {
 			log.Fatalln("error: connection timed out")
@@ -98,13 +98,13 @@ func (j *jomiel) recv() {
 
 	data, err := j.sock.Recv(0)
 	if err != nil {
-		log.Fatalln("failed to receive message: ", err)
+		log.Fatalln("error: failed to receive message: ", err)
 	}
 
 	response := &msgs.Response{}
 	err = proto.Unmarshal([]byte(data), response)
 	if err != nil {
-		log.Fatalln("failed to decode response: ", err)
+		log.Fatalln("error: failed to decode response: ", err)
 	}
 
 	j.dumpResponse(response)
