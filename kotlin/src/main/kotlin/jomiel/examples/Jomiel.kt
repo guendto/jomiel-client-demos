@@ -41,7 +41,7 @@ class Jomiel(private val opts: Runner) {
         poller.register(sck, POLLIN)
     }
 
-    fun run() {
+    fun inquire() {
         when {
             !opts.uri.isNullOrEmpty() -> {
                 connect()
