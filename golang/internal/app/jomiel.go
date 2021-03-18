@@ -33,7 +33,7 @@ type jomiel struct {
 	timeout time.Duration
 }
 
-func newJomiel(opts *options) *jomiel {
+func newJomiel(opts options) *jomiel {
 	sck, err := zmq4.NewSocket(zmq4.REQ)
 	if err != nil {
 		log.Fatalln("failed to create a socket: ", err)
