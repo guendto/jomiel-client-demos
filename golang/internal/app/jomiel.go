@@ -70,7 +70,7 @@ func (j *jomiel) connect() {
 
 func (j *jomiel) inquire(uri string) {
 	j.sendInquiry(uri)
-	j.recv()
+	j.receiveResponse()
 }
 
 func (j *jomiel) sendInquiry(uri string) {
@@ -91,7 +91,7 @@ func (j *jomiel) sendInquiry(uri string) {
 	j.sock.SendMessage([][]byte{out})
 }
 
-func (j *jomiel) recv() {
+func (j *jomiel) receiveResponse() {
 	sck, err := poller.Poll(j.timeout)
 	if err != nil {
 		log.Fatalln("error: failed to pollin an event: ", err)
