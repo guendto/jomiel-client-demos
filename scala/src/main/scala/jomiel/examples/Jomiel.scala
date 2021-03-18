@@ -33,7 +33,7 @@ class Jomiel(opts: Runner) {
   sck.setLinger(0)
   poller.register(sck, POLLIN)
 
-  def run(): Unit = {
+  def inquire(): Unit = {
     if (!opts.uri.isEmpty) {
       connect()
       opts.uri.forEach { uri =>
