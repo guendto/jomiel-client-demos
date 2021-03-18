@@ -46,7 +46,7 @@ func newJomiel(opts options) jomiel {
 	timeout := time.Duration(opts.ConnectTimeout)
 	timeout *= time.Second
 
-	return &jomiel{
+	return jomiel{
 		timeout: timeout,
 		poller:  poller,
 		opts:    opts,
