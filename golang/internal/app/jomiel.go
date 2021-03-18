@@ -186,3 +186,11 @@ func marshalInquiry(msg proto.Message) []byte {
 	}
 	return bytes
 }
+
+func unmarshalResponse(bytes []byte) msgs.Response {
+	msg := msgs.Response{}
+	if err := proto.Unmarshal(bytes, &msg); err != nil {
+		log.Fatalln("error: failed to decode response: ", err)
+	}
+	return msg
+}
