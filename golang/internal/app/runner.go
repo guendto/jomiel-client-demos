@@ -25,9 +25,9 @@ import (
 var opts *options
 
 func init() {
+	opts = newOptions()
 	log.SetOutput(os.Stderr)
 	log.SetFlags(0)
-	opts = newOptions()
 }
 
 func Main() {
