@@ -28,7 +28,7 @@ import static picocli.CommandLine.usage;
 
 @SuppressWarnings({"CanBeFinal", "FieldMayBeFinal"})
 @Command(name = "demo", usageHelpAutoWidth = true)
-final class Options implements Callable<Integer> {
+final class Runner implements Callable<Integer> {
 
     @Option(names = {"-h", "--help"},
             usageHelp = true,
@@ -79,7 +79,7 @@ final class Options implements Callable<Integer> {
         if (help) usage(this, System.out);
         else if (printConfig) dumpConfig();
         else if (zmqVersion) printZmqVersion();
-        else new Jomiel(this).run();
+        else new Jomiel(this).inquire();
         return 0;
     }
 

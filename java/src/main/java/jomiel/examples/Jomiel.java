@@ -33,13 +33,13 @@ import static org.tinylog.Logger.error;
 import static org.tinylog.Logger.info;
 
 final class Jomiel {
-    private final Options opts;
+    private final Runner opts;
     private final ZContext ctx = new ZContext();
     private final Socket sck = ctx.createSocket(SocketType.REQ);
     private final Poller poller = ctx.createPoller(1);
     private Printer jsonFormatter = printer();
 
-    Jomiel(final Options options) {
+    Jomiel(final Runner options) {
         opts = options;
         sck.setLinger(0);
         poller.register(sck, Poller.POLLIN);
@@ -47,11 +47,13 @@ final class Jomiel {
             jsonFormatter = printer().omittingInsignificantWhitespace();
     }
 
-    void run() throws InvalidProtocolBufferException {
+    void inquire() throws InvalidProtocolBufferException {
         if (!opts.uri.isEmpty()) {
             connect();
-            for (final var uri : unmodifiableList(opts.uri))
-                inquire(uri);
+            for (final var uri : unmodifiableList(opts.uri)) {
+                sendInquiry(uri);
+                receiveResponse();
+            }
         } else {
             error("error: input URI not given");
             exit(1);
@@ -63,11 +65,6 @@ final class Jomiel {
                 opts.routerEndpoint,
                 opts.connectTimeout));
         sck.connect(opts.routerEndpoint);
-    }
-
-    private void inquire(final String uri) throws InvalidProtocolBufferException {
-        sendInquiry(uri);
-        receiveResponse();
     }
 
     private void sendInquiry(final String uri) throws InvalidProtocolBufferException {
