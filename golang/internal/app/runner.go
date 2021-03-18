@@ -19,7 +19,6 @@ import (
 
 	yaml "github.com/ghodss/yaml"
 	zmq4 "github.com/pebbe/zmq4"
-	flag "github.com/spf13/pflag"
 )
 
 var opts *options
@@ -31,9 +30,6 @@ func init() {
 }
 
 func Main() {
-
-	flag.Parse()
-
 	if opts.PrintConfig {
 		fmt.Printf("---\n")
 		prettyPrintYaml(opts)
@@ -44,18 +40,10 @@ func Main() {
 		os.Exit(0)
 	}
 
-	if flag.NArg() < 1 {
-		log.Fatalln("error: no input URI given")
-	}
-
 	jomiel := newJomiel(opts)
 	defer jomiel.Destroy()
 
 	jomiel.connect()
-
-	for i := 0; i < flag.NArg(); i++ {
-		jomiel.inquire(flag.Arg(i))
-	}
 }
 
 func prettyPrintYaml(iface interface{}) {
