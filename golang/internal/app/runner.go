@@ -29,6 +29,7 @@ func init() {
 	log.SetFlags(0)
 }
 
+// Main ...
 func Main() {
 	if opts.PrintConfig {
 		dumpValues(opts)
