@@ -18,7 +18,7 @@ type options struct {
 	RouterEndpoint string `json:"router-endpoint"`
 	ConnectTimeout int    `json:"connect-timeout"`
 	PrintConfig    bool
-	VersionZmq     bool
+	ZmqVersion     bool `json:"zmq-version"`
 	OutputJson     bool `json:"output-json"`
 	BeTerse        bool `json:"be-terse"`
 }
@@ -45,7 +45,7 @@ func newOptions() *options {
 		"Specify maximum time in seconds for the connection allowed to take")
 
 	flag.BoolVarP(
-		&opts.VersionZmq,
+		&opts.ZmqVersion,
 		"version-zmq",
 		"V",
 		false,
