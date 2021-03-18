@@ -79,7 +79,7 @@ final class Runner implements Callable<Integer> {
         if (help) usage(this, System.out);
         else if (printConfig) dumpConfig();
         else if (zmqVersion) printZmqVersion();
-        else new Jomiel(this).run();
+        else new Jomiel(this).inquire();
         return 0;
     }
 
