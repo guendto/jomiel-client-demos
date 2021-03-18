@@ -141,14 +141,10 @@ func (j *jomiel) printMessage(status string, message *msgs.Response) {
 	fmt.Printf(result)
 }
 
-func (j *jomiel) dumpTerseResponse(response *msgs.MediaResponse) {
-	fmt.Println("---\ntitle: " + response.GetTitle())
-	fmt.Println("quality:")
-
-	stream := response.GetStream()
-
-	for i := 0; i < len(stream); i++ {
-		quality := stream[i].GetQuality()
+func (j jomiel) dumpTerseResponse(msg *msgs.MediaResponse) {
+	fmt.Printf("---\ntitle: %s\nquality:", msg.GetTitle())
+	for _, stream := range msg.GetStream() {
+		quality := stream.GetQuality()
 		fmt.Printf("  profile: %s\n    width: %d\n    height: %d\n",
 			quality.GetProfile(), quality.GetWidth(), quality.GetHeight())
 	}
