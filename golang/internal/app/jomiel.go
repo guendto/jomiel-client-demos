@@ -130,17 +130,6 @@ func (j jomiel) dumpResponse(msg *msgs.Response) {
 	}
 }
 
-func (j *jomiel) printMessage(status string, message *msgs.Response) {
-	var result string
-	if j.opts.OutputJson {
-		result = j.toJson(message)
-	} else {
-		result = proto.MarshalTextString(message)
-	}
-	j.printStatus(status)
-	fmt.Printf(result)
-}
-
 func (j jomiel) dumpTerseResponse(msg *msgs.MediaResponse) {
 	fmt.Printf("---\ntitle: %s\nquality:", msg.GetTitle())
 	for _, stream := range msg.GetStream() {
@@ -148,6 +137,17 @@ func (j jomiel) dumpTerseResponse(msg *msgs.MediaResponse) {
 		fmt.Printf("  profile: %s\n    width: %d\n    height: %d\n",
 			quality.GetProfile(), quality.GetWidth(), quality.GetHeight())
 	}
+}
+
+func (j jomiel) printMessage(status string, msg proto.Message) {
+	var result string
+	if j.opts.OutputJSON {
+		result = j.toJSON(msg) + "\n"
+	} else {
+		result = prototext.Format(msg)
+	}
+	j.printStatus(status)
+	fmt.Printf(result)
 }
 
 func newInquiry(uri string) *msgs.Inquiry {
