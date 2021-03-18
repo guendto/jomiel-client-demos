@@ -168,3 +168,13 @@ func (j *jomiel) dumpTerseResponse(response *msgs.MediaResponse) {
 			quality.GetProfile(), quality.GetWidth(), quality.GetHeight())
 	}
 }
+
+func newInquiry(uri string) *msgs.Inquiry {
+	return &msgs.Inquiry{
+		Inquiry: &msgs.Inquiry_Media{
+			Media: &msgs.MediaInquiry{
+				InputUri: uri,
+			},
+		},
+	}
+}
