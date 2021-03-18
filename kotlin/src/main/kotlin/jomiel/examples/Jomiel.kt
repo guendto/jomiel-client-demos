@@ -45,7 +45,10 @@ class Jomiel(private val opts: Runner) {
         when {
             !opts.uri.isNullOrEmpty() -> {
                 connect()
-                opts.uri.forEach { inquire(it) }
+                opts.uri.forEach {
+                    sendInquiry(it)
+                    receiveResponse()
+                }
             }
             else -> {
                 error("error: input URI not given")
@@ -59,11 +62,6 @@ class Jomiel(private val opts: Runner) {
         val to = opts.connectTimeout
         printStatus("<connect> $re (timeout=$to)")
         sck.connect(re)
-    }
-
-    private fun inquire(uri: String) {
-        sendInquiry(uri)
-        receiveResponse()
     }
 
     private fun sendInquiry(uri: String) {
