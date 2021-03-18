@@ -19,6 +19,7 @@ import (
 
 	proto "github.com/golang/protobuf/proto"
 	zmq4 "github.com/pebbe/zmq4"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	msgs "internal/messages"
 )
