@@ -70,11 +70,8 @@ func (j jomiel) inquire() {
 func (j *jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
-
-	status := fmt.Sprintf("<connect> %s (timeout=%d)", re, to)
-
-	j.printStatus(status)
-	j.sock.Connect(j.opts.RouterEndpoint)
+	j.printStatus(fmt.Sprintf("<connect> %s (timeout=%d)", re, to))
+	j.sock.Connect(re)
 }
 
 func (j *jomiel) sendInquiry(uri string) {
