@@ -27,9 +27,10 @@ import (
 )
 
 type jomiel struct {
-	opts   options
-	poller *zmq4.Poller
-	sock   *zmq4.Socket
+	opts    options
+	poller  *zmq4.Poller
+	sock    *zmq4.Socket
+	timeout time.Duration
 }
 
 func newJomiel(opts *options) *jomiel {
