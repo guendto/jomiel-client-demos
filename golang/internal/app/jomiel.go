@@ -54,10 +54,6 @@ func newJomiel(opts options) jomiel {
 	}
 }
 
-func (j *jomiel) Destroy() {
-	j.sock.Close()
-}
-
 func (j *jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
