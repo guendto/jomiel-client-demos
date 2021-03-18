@@ -54,6 +54,19 @@ func newJomiel(opts options) jomiel {
 	}
 }
 
+func (j jomiel) inquire() {
+	if pflag.NArg() > 0 {
+		j.connect()
+		for i := 0; i < pflag.NArg(); i++ {
+			uri := pflag.Arg(i)
+			j.sendInquiry(uri)
+			j.receiveResponse()
+		}
+	} else {
+		log.Fatalln("error: no input URI given")
+	}
+}
+
 func (j *jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
@@ -62,11 +75,6 @@ func (j *jomiel) connect() {
 
 	j.printStatus(status)
 	j.sock.Connect(j.opts.RouterEndpoint)
-}
-
-func (j *jomiel) inquire(uri string) {
-	j.sendInquiry(uri)
-	j.receiveResponse()
 }
 
 func (j *jomiel) sendInquiry(uri string) {
