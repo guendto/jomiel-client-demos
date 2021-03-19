@@ -12,56 +12,65 @@
 
 package app
 
-import flag "github.com/spf13/pflag"
+import "github.com/spf13/pflag"
 
 type options struct {
 	RouterEndpoint string `json:"router-endpoint"`
 	ConnectTimeout int    `json:"connect-timeout"`
-	PrintConfig    bool
-	VersionZmq     bool
-	OutputJson     bool `json:"output-json"`
-	BeTerse        bool `json:"be-terse"`
+	PrintConfig    bool   `json:"print-config"`
+	ZmqVersion     bool   `json:"zmq-version"`
+	OutputJSON     bool   `json:"output-json"`
+	CompactJSON    bool   `json:"compact-json"`
+	BeTerse        bool   `json:"be-terse"`
 }
 
-func newOptions() *options {
-	opts := &options{}
+func parseOptions() options {
+	opts := options{}
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
 		&opts.PrintConfig,
 		"print-config", "D",
 		false,
 		"Print configuration values and exit")
 
-	flag.StringVarP(
+	pflag.StringVarP(
 		&opts.RouterEndpoint,
 		"router-endpoint", "r",
 		"tcp://localhost:5514",
 		"Specify the router endpoint address")
 
-	flag.IntVarP(
+	pflag.IntVarP(
 		&opts.ConnectTimeout,
 		"connect-timeout", "t",
 		30,
 		"Specify maximum time in seconds for the connection allowed to take")
 
-	flag.BoolVarP(
-		&opts.VersionZmq,
+	pflag.BoolVarP(
+		&opts.ZmqVersion,
 		"version-zmq",
 		"V",
 		false,
 		"Display ZeroMQ version and exit")
 
-	flag.BoolVarP(
-		&opts.OutputJson,
+	pflag.BoolVarP(
+		&opts.OutputJSON,
 		"output-json", "j",
 		false,
 		"Print dumped messages in JSON")
 
-	flag.BoolVarP(
+	pflag.BoolVarP(
+		&opts.CompactJSON,
+		"compact-json", "c",
+		false,
+		"Use more compact representation of JSON")
+
+	pflag.BoolVarP(
 		&opts.BeTerse,
 		"be-terse", "q",
 		false,
 		"Be brief and to the point; dump interesting details only")
+
+	pflag.Parse()
 
 	return opts
 }

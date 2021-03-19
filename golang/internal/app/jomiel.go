@@ -13,148 +13,168 @@
 package app
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 
-	proto "github.com/golang/protobuf/proto"
-	zmq4 "github.com/pebbe/zmq4"
+	"github.com/pebbe/zmq4"
+	"github.com/spf13/pflag"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/encoding/prototext"
+	"google.golang.org/protobuf/proto"
 
-	msgs "internal/gen/messages"
+	msgs "internal/messages"
 )
 
 type jomiel struct {
-	sock *zmq4.Socket
-	opts *options
+	opts    options
+	poller  *zmq4.Poller
+	sock    *zmq4.Socket
+	timeout time.Duration
 }
 
-func newJomiel(opts *options) *jomiel {
+func newJomiel(opts options) jomiel {
 	sck, err := zmq4.NewSocket(zmq4.REQ)
 	if err != nil {
-		log.Fatalln("failed to create a socket: ", err)
+		log.Fatalln("error: failed to create a socket: ", err)
 	}
 	sck.SetLinger(0)
-	return &jomiel{
-		opts: opts,
-		sock: sck,
+
+	poller := zmq4.NewPoller()
+	poller.Add(sck, zmq4.POLLIN)
+
+	timeout := time.Duration(opts.ConnectTimeout)
+	timeout *= time.Second
+
+	return jomiel{
+		timeout: timeout,
+		poller:  poller,
+		opts:    opts,
+		sock:    sck,
 	}
 }
 
-func (j *jomiel) Destroy() {
-	j.sock.Close()
+func (j jomiel) inquire() {
+	if pflag.NArg() > 0 {
+		j.connect()
+		for i := 0; i < pflag.NArg(); i++ {
+			uri := pflag.Arg(i)
+			j.sendInquiry(uri)
+			j.receiveResponse()
+		}
+	} else {
+		log.Fatalln("error: no input URI given")
+	}
 }
 
-func (j *jomiel) connect() {
+func (j jomiel) connect() {
 	re := j.opts.RouterEndpoint
 	to := j.opts.ConnectTimeout
-
-	status := fmt.Sprintf("<connect> %s (timeout=%d)", re, to)
-
-	j.printStatus(status)
-	j.sock.Connect(j.opts.RouterEndpoint)
+	j.printStatus(fmt.Sprintf("<connect> %s (timeout=%d)", re, to))
+	j.sock.Connect(re)
 }
 
-func (j *jomiel) inquire(uri string) {
-	j.send(uri)
-	j.recv()
+func (j jomiel) sendInquiry(uri string) {
+	msg := newInquiry(uri)
+	if !opts.BeTerse {
+		j.printMessage("<send>", msg)
+	}
+	bytes := marshalInquiry(msg)
+	j.sock.SendMessage(bytes)
 }
 
-func (j *jomiel) send(uri string) {
-	inquiry := &msgs.Inquiry{
-		Inquiry: &msgs.Inquiry_Media{
-			Media: &msgs.MediaInquiry{
-				InputUri: uri,
-			},
-		},
-	}
-
-	out, err := proto.Marshal(inquiry)
+func (j jomiel) receiveResponse() {
+	polled, err := j.poller.Poll(j.timeout)
 	if err != nil {
-		log.Fatalln("failed to encode inquiry: ", err)
+		log.Fatalln("error: failed to poll-in an event: ", err)
 	}
 
-	j.printStatus("<send>")
-	j.sock.SendMessage([][]byte{out})
+	if len(polled) == 0 {
+		log.Fatalln("error: connection timed out")
+	}
+
+	bytes, err := j.sock.RecvBytes(0)
+	if err != nil {
+		log.Fatalln("error: failed to receive message: ", err)
+	}
+
+	msg := unmarshalResponse(bytes)
+	j.dumpResponse(&msg)
 }
 
-func (j *jomiel) recv() {
-	poller := zmq4.NewPoller()
-	poller.Add(j.sock, zmq4.POLLIN)
-
-	timeout := time.Duration(j.opts.ConnectTimeout)
-	sck, err := poller.Poll(timeout * time.Second)
-	if err != nil {
-		log.Fatalln("failed to pollin an event: ", err)
-	} else {
-		if len(sck) == 0 {
-			log.Fatalln("error: connection timed out")
-		}
-	}
-
-	data, err := j.sock.Recv(0)
-	if err != nil {
-		log.Fatalln("failed to receive message: ", err)
-	}
-
-	response := &msgs.Response{}
-	err = proto.Unmarshal([]byte(data), response)
-	if err != nil {
-		log.Fatalln("failed to decode response: ", err)
-	}
-
-	j.dumpResponse(response)
-}
-
-func (j *jomiel) printStatus(status string) {
+func (j jomiel) printStatus(status string) {
 	if !j.opts.BeTerse {
 		log.Println("status: " + status)
 	}
 }
 
-func (j *jomiel) toJson(response *msgs.Response) string {
-	json, err := json.MarshalIndent(response, "", "  ")
+func (j jomiel) dumpResponse(msg *msgs.Response) {
+	status := "<recv>"
+	if msg.GetStatus().GetCode() == msgs.StatusCode_STATUS_CODE_OK {
+		media := msg.GetMedia()
+		if j.opts.BeTerse {
+			j.dumpTerseResponse(media)
+		} else {
+			j.printMessage(status, media)
+		}
+	} else {
+		j.printMessage(status, msg)
+	}
+}
+
+func (j jomiel) dumpTerseResponse(msg *msgs.MediaResponse) {
+	fmt.Printf("---\ntitle: %s\nquality:", msg.GetTitle())
+	for _, stream := range msg.GetStream() {
+		quality := stream.GetQuality()
+		fmt.Printf("  profile: %s\n    width: %d\n    height: %d\n",
+			quality.GetProfile(), quality.GetWidth(), quality.GetHeight())
+	}
+}
+
+func (j jomiel) printMessage(status string, msg proto.Message) {
+	var result string
+	if j.opts.OutputJSON {
+		result = j.toJSON(msg) + "\n"
+	} else {
+		result = prototext.Format(msg)
+	}
+	j.printStatus(status)
+	fmt.Printf(result)
+}
+
+func (j jomiel) toJSON(msg proto.Message) string {
+	if !j.opts.CompactJSON {
+		return protojson.Format(msg)
+	}
+	json, err := protojson.Marshal(msg)
 	if err != nil {
 		log.Fatalln("error: ", err)
 	}
 	return string(json)
 }
 
-func (j *jomiel) printMessage(status string, message *msgs.Response) {
-	var result string
-	if j.opts.OutputJson {
-		result = j.toJson(message)
-	} else {
-		result = proto.MarshalTextString(message)
-	}
-	j.printStatus(status)
-	fmt.Printf(result)
-}
-
-func (j *jomiel) dumpResponse(response *msgs.Response) {
-	responseStatus := response.GetStatus()
-	mediaResponse := response.GetMedia()
-
-	if responseStatus.GetCode() == msgs.StatusCode_STATUS_CODE_OK {
-		if j.opts.BeTerse {
-			j.dumpTerseResponse(mediaResponse)
-		} else {
-			j.printMessage("<recv>", response)
-		}
-	} else {
-		j.printMessage("<recv>", response)
+func newInquiry(uri string) *msgs.Inquiry {
+	return &msgs.Inquiry{
+		Inquiry: &msgs.Inquiry_Media{
+			Media: &msgs.MediaInquiry{
+				InputUri: uri,
+			},
+		},
 	}
 }
 
-func (j *jomiel) dumpTerseResponse(response *msgs.MediaResponse) {
-	fmt.Println("---\ntitle: " + response.GetTitle())
-	fmt.Println("quality:")
-
-	stream := response.GetStream()
-
-	for i := 0; i < len(stream); i++ {
-		quality := stream[i].GetQuality()
-		fmt.Printf("  profile: %s\n    width: %d\n    height: %d\n",
-			quality.GetProfile(), quality.GetWidth(), quality.GetHeight())
+func marshalInquiry(msg proto.Message) []byte {
+	bytes, err := proto.Marshal(msg)
+	if err != nil {
+		log.Fatalln("error: failed to encode inquiry: ", err)
 	}
+	return bytes
+}
+
+func unmarshalResponse(bytes []byte) msgs.Response {
+	msg := msgs.Response{}
+	if err := proto.Unmarshal(bytes, &msg); err != nil {
+		log.Fatalln("error: failed to decode response: ", err)
+	}
+	return msg
 }
