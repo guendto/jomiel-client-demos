@@ -51,8 +51,6 @@ private:
   using zctx_t = std::unique_ptr<zmq::context_t>;
   using zsck_t = std::unique_ptr<zmq::socket_t>;
   struct {
-    std::string endpoint;
-    int16_t timeout;
     zctx_t ctx;
     zsck_t sck;
   } zmq;
