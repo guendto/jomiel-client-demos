@@ -74,13 +74,14 @@ void jomiel::send_inquiry(std::string const &uri) const {
 }
 
 void jomiel::receive_response() const {
+  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
+
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
   zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
 #else
   zmq::pollitem_t const items[] = {
       {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
 #endif
-  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
 
   zmq::message_t msg;
   if (zmq::poll(&items[0], 1, to)) {
