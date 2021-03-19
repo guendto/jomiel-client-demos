@@ -13,10 +13,8 @@
 #include "demo/jomiel.h"
 
 static void print_config(const jomiel::opts_t &opts) {
-  for (auto const &opt : opts) {
+  for (auto const &opt : opts)
     std::cout << opt.first << ": " << opt.second << "\n";
-  }
-  exit(EXIT_SUCCESS);
 }
 
 static void version_zmq() {
