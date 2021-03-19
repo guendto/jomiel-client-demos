@@ -149,6 +149,18 @@ void jomiel::print_message(std::string const &status,
   std::cout << "\n" << result;
 }
 
+void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
+  auto const &compact = opts.at("--compact-json").asBool();
+
+  gp::util::JsonPrintOptions print_opts;
+  print_opts.add_whitespace = !compact;
+
+  MessageToJsonString(msg, &dst, print_opts);
+
+  if (compact)
+    dst += "\n";
+}
+
 void jomiel::cleanup() const {
   /*
    * "Also notice the call to ShutdownProtobufLibrary() at the end of
