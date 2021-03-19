@@ -43,7 +43,7 @@ private:
   void dump_response(jp::Response const &) const;
 
   void send_inquiry(std::string const &) const;
-  void recv() const;
+  void receive_response() const;
 
   void cleanup() const;
 
