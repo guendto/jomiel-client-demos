@@ -42,7 +42,7 @@ private:
   void dump_terse_response(jp::MediaResponse const &) const;
   void dump_response(jp::Response const &) const;
 
-  void send(std::string const &) const;
+  void send_inquiry(std::string const &) const;
   void recv() const;
 
   void cleanup() const;
