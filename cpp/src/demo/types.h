@@ -16,7 +16,7 @@
 #include <string>
 #include <vector>
 
-#include "docopt/docopt.h"
+#include <docopt/docopt.h>
 
 namespace jomiel {
 
