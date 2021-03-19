@@ -73,7 +73,6 @@ set(DEMO_SRCFILES
     src/demo/jomiel.h
     src/demo/usage.cpp
     src/demo/main.cpp
-    src/demo/types.h
 )
 
 # Include dirs.
