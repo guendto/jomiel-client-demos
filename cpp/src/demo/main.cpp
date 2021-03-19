@@ -22,7 +22,6 @@ static void version_zmq() {
   std::tie(major, minor, patch) = zmq::version();
   std::cout << "ZeroMQ version " << major << "." << minor << "."
             << patch << "\n";
-  exit(EXIT_SUCCESS);
 }
 
 extern const char *usage;
