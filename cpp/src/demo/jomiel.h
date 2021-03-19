@@ -46,6 +46,7 @@ private:
   void send_inquiry(std::string const &) const;
   void receive_response() const;
 
+  void to_json(gp::Message const &, std::string &) const;
   void cleanup() const;
 
 private:
