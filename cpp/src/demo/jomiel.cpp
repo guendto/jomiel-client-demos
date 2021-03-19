@@ -109,6 +109,21 @@ void jomiel::print_status(std::string const &status) const {
     std::clog << "status: " << status;
 }
 
+void jomiel::dump_response(jp::Response const &response) const {
+  auto const &response_status = response.status();
+  auto const &media_response = response.media();
+
+  if (response_status.code() == jp::STATUS_CODE_OK) {
+    if (opts.at("--be-terse").asBool()) {
+      dump_terse_response(media_response);
+    } else {
+      print_message("<recv>", media_response);
+    }
+  } else {
+    print_message("<recv>", response);
+  }
+}
+
 void jomiel::cleanup() const {
   /*
    * "Also notice the call to ShutdownProtobufLibrary() at the end of
@@ -154,21 +169,6 @@ void jomiel::dump_terse_response(
            << "    width: " << quality.width() << "\n"
            << "    height: " << quality.height() << "\n";
     std::cout << format.str();
-  }
-}
-
-void jomiel::dump_response(jp::Response const &response) const {
-  auto const &response_status = response.status();
-  auto const &media_response = response.media();
-
-  if (response_status.code() == jp::STATUS_CODE_OK) {
-    if (opts.at("--be-terse").asBool()) {
-      dump_terse_response(media_response);
-    } else {
-      print_message("<recv>", media_response);
-    }
-  } else {
-    print_message("<recv>", response);
   }
 }
 
