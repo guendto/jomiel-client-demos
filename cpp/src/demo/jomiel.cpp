@@ -51,7 +51,7 @@ void jomiel::connect() const {
   auto const &to = opts.at("--connect-timeout").asLong();
 
   std::ostringstream stream;
-  stream << "<connect> " << re << " (timeout=" << to << ")\n";
+  stream << "<connect> " << re << " (timeout=" << to << ")";
 
   print_status(stream.str());
   zmq.sck->connect(re);
@@ -106,7 +106,7 @@ void jomiel::receive_response() const {
 
 void jomiel::print_status(std::string const &status) const {
   if (!opts.at("--be-terse").asBool())
-    std::clog << "status: " << status;
+    std::clog << "status: " << status << "\n";
 }
 
 void jomiel::dump_response(jp::Response const &response) const {
@@ -142,7 +142,7 @@ void jomiel::print_message(std::string const &status,
   else
     gp::TextFormat::PrintToString(msg, &result);
 
-  std::cout << "\n" << result;
+  std::cout << result;
 }
 
 void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
