@@ -12,7 +12,7 @@
 
 #include "demo/jomiel.h"
 
-static void dump_config(const jomiel::opts_t &opts) {
+static void dump_config(jomiel::opts_t const &opts) {
   std::cout << "---\n";
   for (auto const &opt : opts)
     std::cout << opt.first << ": " << opt.second << "\n";
