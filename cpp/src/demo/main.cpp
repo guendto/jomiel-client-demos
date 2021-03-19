@@ -40,7 +40,7 @@ struct runner {
       version_zmq();
     }
 
-    jomiel::strvect_t const input_uri = opts.at("URI").asStringList();
+    const auto &input_uri = opts.at("URI").asStringList();
 
     if (input_uri.empty())
       throw std::runtime_error("input URI not given");
