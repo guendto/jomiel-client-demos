@@ -130,12 +130,9 @@ void jomiel::dump_terse_response(
             << "\nquality:\n";
 
   for (auto const &stream : media_response.stream()) {
-    auto const &quality = stream.quality();
-    std::ostringstream format;
-    format << "  profile: " << quality.profile() << "\n"
-           << "    width: " << quality.width() << "\n"
-           << "    height: " << quality.height() << "\n";
-    std::cout << format.str();
+    std::cout << "  profile: " << stream.quality().profile() << "\n"
+              << "    width: " << stream.quality().width() << "\n"
+              << "    height: " << stream.quality().height() << "\n";
   }
 }
 
