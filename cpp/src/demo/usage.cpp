@@ -12,7 +12,7 @@
 
 const char *usage =
     R"(Usage:
-    demo [-hDVqj] [-r <addr>] [-t <time>] [URI ...]
+    demo [-hDVqjc] [-r <addr>] [-t <time>] [URI ...]
 
 Options:
     -h --help                       Print this help and exit
@@ -26,6 +26,8 @@ Options:
     -q --be-terse                   Be brief and to the point; dump
                                      interesting details only
     -j --output-json                Print dumped messages in JSON
+    -c --compact-json               Use more compact representation of
+                                     JSON
 
 )";
 
