@@ -34,17 +34,6 @@ jomiel::jomiel(opts_t const &opts) : opts(opts) {
 #endif
 }
 
-void jomiel::connect() const {
-  auto const &re = opts.at("--router-endpoint").asString();
-  auto const &to = opts.at("--connect-timeout").asLong();
-
-  std::ostringstream stream;
-  stream << "<connect> " << re << " (timeout=" << to << ")\n";
-
-  print_status(stream.str());
-  zmq.sck->connect(re);
-}
-
 void jomiel::inquire() const {
   auto const &items = opts.at("URI").asStringList();
 
@@ -57,6 +46,17 @@ void jomiel::inquire() const {
     send_inquiry(uri);
     receive_response();
   }
+}
+
+void jomiel::connect() const {
+  auto const &re = opts.at("--router-endpoint").asString();
+  auto const &to = opts.at("--connect-timeout").asLong();
+
+  std::ostringstream stream;
+  stream << "<connect> " << re << " (timeout=" << to << ")\n";
+
+  print_status(stream.str());
+  zmq.sck->connect(re);
 }
 
 void jomiel::send_inquiry(std::string const &uri) const {
