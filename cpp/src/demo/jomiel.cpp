@@ -135,18 +135,12 @@ void jomiel::dump_terse_response(jp::MediaResponse const &msg) const {
 void jomiel::print_message(std::string const &status,
                            gp::Message const &msg) const {
   std::string result;
-
-  if (opts.at("--output-json").asBool()) {
-    gp::util::JsonPrintOptions opts;
-    opts.add_whitespace = true;
-
-    MessageToJsonString(msg, &result, opts);
-  } else {
+  if (opts.at("--output-json").asBool())
+    to_json(msg, result);
+  else
     gp::TextFormat::PrintToString(msg, &result);
-  }
-
   print_status(status);
-  std::cout << "\n" << result;
+  std::cout << result;
 }
 
 void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
