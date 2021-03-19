@@ -142,7 +142,7 @@ void jomiel::print_message(std::string const &status,
   else
     gp::TextFormat::PrintToString(msg, &result);
 
-  std::cout << result;
+  std::cout << "\n" << result;
 }
 
 void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
