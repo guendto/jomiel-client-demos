@@ -24,9 +24,6 @@
 namespace jomiel {
 
 jomiel::jomiel(opts_t const &opts) : opts(opts) {
-  zmq.endpoint = opts.at("--router-endpoint").asString();
-  zmq.timeout = opts.at("--connect-timeout").asLong();
-
   zmq.ctx = std::make_unique<zmq::context_t>(1);
   zmq.sck = std::make_unique<zmq::socket_t>(*zmq.ctx, ZMQ_REQ);
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
