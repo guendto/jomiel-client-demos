@@ -123,6 +123,22 @@ void jomiel::dump_response(jp::Response const &response) const {
   }
 }
 
+void jomiel::dump_terse_response(
+    jp::MediaResponse const &media_response) const {
+
+  std::cout << "---\ntitle: " << media_response.title()
+            << "\nquality:\n";
+
+  for (auto const &stream : media_response.stream()) {
+    auto const &quality = stream.quality();
+    std::ostringstream format;
+    format << "  profile: " << quality.profile() << "\n"
+           << "    width: " << quality.width() << "\n"
+           << "    height: " << quality.height() << "\n";
+    std::cout << format.str();
+  }
+}
+
 void jomiel::cleanup() const {
   /*
    * "Also notice the call to ShutdownProtobufLibrary() at the end of
@@ -154,21 +170,6 @@ void jomiel::print_message(std::string const &status,
 
   print_status(status);
   std::cout << "\n" << result;
-}
-
-void jomiel::dump_terse_response(
-    jp::MediaResponse const &media_response) const {
-  std::cout << "---\ntitle: " << media_response.title()
-            << "\nquality:\n";
-
-  for (auto const &stream : media_response.stream()) {
-    auto const &quality = stream.quality();
-    std::ostringstream format;
-    format << "  profile: " << quality.profile() << "\n"
-           << "    width: " << quality.width() << "\n"
-           << "    height: " << quality.height() << "\n";
-    std::cout << format.str();
-  }
 }
 
 } // namespace jomiel
