@@ -1,7 +1,7 @@
 [requires]
 cppzmq/4.7.1
 docopt.cpp/0.6.3
-protobuf/3.13.0
+protobuf/3.15.5
 
 [generators]
 cmake
