@@ -110,15 +110,16 @@ void jomiel::print_status(std::string const &status) const {
 }
 
 void jomiel::dump_response(jp::Response const &response) const {
+  const auto &status = "<recv>";
   if (response.status().code() == jp::STATUS_CODE_OK) {
     auto const &media = response.media();
     if (opts.at("--be-terse").asBool()) {
       dump_terse_response(media);
     } else {
-      print_message("<recv>", media);
+      print_message(status, media);
     }
   } else {
-    print_message("<recv>", response);
+    print_message(status, response);
   }
 }
 
