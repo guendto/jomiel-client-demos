@@ -45,9 +45,18 @@ void jomiel::connect() const {
   zmq.sck->connect(re);
 }
 
-void jomiel::inquire(std::string const &uri) const {
-  send_inquiry(uri);
-  receive_response();
+void jomiel::inquire() const {
+  auto const &items = opts.at("URI").asStringList();
+
+  if (items.empty())
+    throw std::runtime_error("input URI not given");
+
+  connect();
+
+  for (auto const &uri : items) {
+    send_inquiry(uri);
+    receive_response();
+  }
 }
 
 void jomiel::send_inquiry(std::string const &uri) const {
