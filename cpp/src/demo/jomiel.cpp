@@ -36,16 +36,14 @@ jomiel::jomiel(opts_t const &opts) : opts(opts) {
 
 void jomiel::inquire() const {
   auto const &items = opts.at("URI").asStringList();
-
-  if (items.empty())
+  if (!items.empty()) {
+    connect();
+    for (auto const &uri : items) {
+      send_inquiry(uri);
+      receive_response();
+    }
+  } else
     throw std::runtime_error("input URI not given");
-
-  connect();
-
-  for (auto const &uri : items) {
-    send_inquiry(uri);
-    receive_response();
-  }
 }
 
 void jomiel::connect() const {
