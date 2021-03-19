@@ -123,13 +123,9 @@ void jomiel::dump_response(jp::Response const &response) const {
   }
 }
 
-void jomiel::dump_terse_response(
-    jp::MediaResponse const &media_response) const {
-
-  std::cout << "---\ntitle: " << media_response.title()
-            << "\nquality:\n";
-
-  for (auto const &stream : media_response.stream()) {
+void jomiel::dump_terse_response(jp::MediaResponse const &msg) const {
+  std::cout << "---\ntitle: " << msg.title() << "\nquality:\n";
+  for (auto const &stream : msg.stream()) {
     std::cout << "  profile: " << stream.quality().profile() << "\n"
               << "    width: " << stream.quality().width() << "\n"
               << "    height: " << stream.quality().height() << "\n";
