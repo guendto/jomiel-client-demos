@@ -104,6 +104,11 @@ void jomiel::receive_response() const {
   dump_response(response);
 }
 
+void jomiel::print_status(std::string const &status) const {
+  if (!opts.at("--be-terse").asBool())
+    std::clog << "status: " << status;
+}
+
 void jomiel::cleanup() const {
   /*
    * "Also notice the call to ShutdownProtobufLibrary() at the end of
@@ -118,12 +123,6 @@ void jomiel::cleanup() const {
    *  -- https://developers.google.com/protocol-buffers/docs/cpptutorial
    */
   gp::ShutdownProtobufLibrary();
-}
-
-void jomiel::print_status(std::string const &status) const {
-  if (!opts.at("--be-terse").asBool()) {
-    std::clog << "status: " << status;
-  }
 }
 
 void jomiel::print_message(std::string const &status,
