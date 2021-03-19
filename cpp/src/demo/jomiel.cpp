@@ -24,67 +24,66 @@
 namespace jomiel {
 
 jomiel::jomiel(opts_t const &opts) : opts(opts) {
-  this->zmq.endpoint = this->opts.at("--router-endpoint").asString();
-  this->zmq.timeout = this->opts.at("--connect-timeout").asLong();
+  zmq.endpoint = opts.at("--router-endpoint").asString();
+  zmq.timeout = opts.at("--connect-timeout").asLong();
 
-  this->zmq.ctx = std::make_unique<zmq::context_t>(1);
-  this->zmq.sck =
-      std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
+  zmq.ctx = std::make_unique<zmq::context_t>(1);
+  zmq.sck = std::make_unique<zmq::socket_t>(*zmq.ctx, ZMQ_REQ);
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
-  this->zmq.sck->set(zmq::sockopt::linger, 0);
+  zmq.sck->set(zmq::sockopt::linger, 0);
 #else
   int n = 0;
-  this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+  zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
 #endif
 }
 
 void jomiel::connect() const {
   std::ostringstream stream;
 
-  stream << "<connect> " << this->zmq.endpoint
-         << " (timeout=" << this->zmq.timeout << ")\n";
+  stream << "<connect> " << zmq.endpoint << " (timeout=" << zmq.timeout
+         << ")\n";
 
-  this->print_status(stream.str());
-  this->zmq.sck->connect(this->zmq.endpoint);
+  print_status(stream.str());
+  zmq.sck->connect(zmq.endpoint);
 }
 
 void jomiel::inquire(std::string const &uri) const {
-  this->send(uri);
-  this->recv();
+  send(uri);
+  recv();
 }
 
 void jomiel::send(std::string const &uri) const {
   jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
-  if (!this->opts.at("--be-terse").asBool()) {
-    this->print_message("<send>", inquiry);
+  if (!opts.at("--be-terse").asBool()) {
+    print_message("<send>", inquiry);
   }
 
   std::string result;
   inquiry.SerializeToString(&result);
 
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
-  this->zmq.sck->send(zmq::buffer(result));
+  zmq.sck->send(zmq::buffer(result));
 #else
-  this->zmq.sck->send(result.c_str(), result.size());
+  zmq.sck->send(result.c_str(), result.size());
 #endif
 }
 
 void jomiel::recv() const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq::pollitem_t items[] = {{*this->zmq.sck, 0, ZMQ_POLLIN, 0}};
+  zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
 #else
   zmq::pollitem_t const items[] = {
-      {static_cast<void *>(*this->zmq.sck), 0, ZMQ_POLLIN}};
+      {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
 #endif
   zmq::message_t msg;
 
-  if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
+  if (zmq::poll(&items[0], 1, zmq.timeout * 1000))
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-    this->zmq.sck->recv(msg);
+    zmq.sck->recv(msg);
 #else
-    this->zmq.sck->recv(&msg);
+    zmq.sck->recv(&msg);
 #endif
   else
     throw std::runtime_error("connection timed out");
@@ -97,7 +96,7 @@ void jomiel::recv() const {
   response.ParseFromString(str);
 #endif
 
-  this->dump_response(response);
+  dump_response(response);
 }
 
 void jomiel::cleanup() const {
@@ -117,7 +116,7 @@ void jomiel::cleanup() const {
 }
 
 void jomiel::print_status(std::string const &status) const {
-  if (!this->opts.at("--be-terse").asBool()) {
+  if (!opts.at("--be-terse").asBool()) {
     std::clog << "status: " << status;
   }
 }
@@ -126,17 +125,16 @@ void jomiel::print_message(std::string const &status,
                            gp::Message const &msg) const {
   std::string result;
 
-  if (this->opts.at("--output-json").asBool()) {
+  if (opts.at("--output-json").asBool()) {
     gp::util::JsonPrintOptions opts;
     opts.add_whitespace = true;
 
     MessageToJsonString(msg, &result, opts);
-
   } else {
     gp::TextFormat::PrintToString(msg, &result);
   }
 
-  this->print_status(status);
+  print_status(status);
   std::cout << "\n" << result;
 }
 
@@ -160,13 +158,13 @@ void jomiel::dump_response(jp::Response const &response) const {
   auto const &media_response = response.media();
 
   if (response_status.code() == jp::STATUS_CODE_OK) {
-    if (this->opts.at("--be-terse").asBool()) {
-      this->dump_terse_response(media_response);
+    if (opts.at("--be-terse").asBool()) {
+      dump_terse_response(media_response);
     } else {
-      this->print_message("<recv>", media_response);
+      print_message("<recv>", media_response);
     }
   } else {
-    this->print_message("<recv>", response);
+    print_message("<recv>", response);
   }
 }
 
