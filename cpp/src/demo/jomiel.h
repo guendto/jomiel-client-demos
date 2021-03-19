@@ -32,7 +32,7 @@ struct jomiel {
   inline virtual ~jomiel() { cleanup(); }
   explicit jomiel(opts_t const &);
 
-  void inquire(std::string const &) const;
+  void inquire() const;
   void connect() const;
 
 private:
