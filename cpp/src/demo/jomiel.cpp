@@ -140,8 +140,8 @@ void jomiel::print_message(std::string const &status,
 
 void jomiel::dump_terse_response(
     jp::MediaResponse const &media_response) const {
-  std::cout << "---\ntitle: " << media_response.title() << "\n";
-  std::cout << "quality:\n";
+  std::cout << "---\ntitle: " << media_response.title()
+            << "\nquality:\n";
 
   for (auto const &stream : media_response.stream()) {
     auto const &quality = stream.quality();
