@@ -22,7 +22,7 @@ static void dump_config(jomiel::opts_t const &opts) {
   }
 }
 
-static void version_zmq() {
+static void print_zmq_version() {
   int major, minor, patch;
   std::tie(major, minor, patch) = zmq::version();
   std::cout << "ZeroMQ version " << major << "." << minor << "."
@@ -39,7 +39,7 @@ struct runner {
     if (opts.at("--print-config").asBool()) {
       dump_config(opts);
     } else if (opts.at("--version-zmq").asBool()) {
-      version_zmq();
+      print_zmq_version();
     } else {
       const auto &uri = opts.at("URI").asStringList();
       if (uri.empty())
