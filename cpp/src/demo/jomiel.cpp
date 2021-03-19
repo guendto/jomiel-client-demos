@@ -75,10 +75,10 @@ void jomiel::recv() const {
   zmq::pollitem_t const items[] = {
       {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
 #endif
-  auto const &timeout = opts.at("--connect-timeout").asLong() * 1000;
+  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
 
   zmq::message_t msg;
-  if (zmq::poll(&items[0], 1, timeout)) {
+  if (zmq::poll(&items[0], 1, to)) {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
     zmq.sck->recv(msg);
 #else
