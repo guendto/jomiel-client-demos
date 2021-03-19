@@ -46,11 +46,11 @@ void jomiel::connect() const {
 }
 
 void jomiel::inquire(std::string const &uri) const {
-  send(uri);
+  send_inquiry(uri);
   recv();
 }
 
-void jomiel::send(std::string const &uri) const {
+void jomiel::send_inquiry(std::string const &uri) const {
   jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
