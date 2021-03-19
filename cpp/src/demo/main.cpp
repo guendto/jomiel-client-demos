@@ -38,19 +38,17 @@ struct runner {
       print_config(opts);
     } else if (opts.at("--version-zmq").asBool()) {
       version_zmq();
+    } else {
+      const auto &uri = opts.at("URI").asStringList();
+      if (uri.empty())
+        throw std::runtime_error("input URI not given");
+
+      jomiel::jomiel const jomiel(opts);
+      jomiel.connect();
+
+      for (auto const &_uri : uri)
+        jomiel.inquire(_uri);
     }
-
-    const auto &uri = opts.at("URI").asStringList();
-
-    if (uri.empty())
-      throw std::runtime_error("input URI not given");
-
-    jomiel::jomiel const jomiel(opts);
-    jomiel.connect();
-
-    for (auto const &_uri : uri)
-      jomiel.inquire(_uri);
-
     return EXIT_SUCCESS;
   }
 };
