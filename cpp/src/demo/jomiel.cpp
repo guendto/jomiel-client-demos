@@ -61,13 +61,11 @@ void jomiel::send_inquiry(std::string const &uri) const {
   jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
-  if (!opts.at("--be-terse").asBool()) {
+  if (!opts.at("--be-terse").asBool())
     print_message("<send>", inquiry);
-  }
 
   std::string result;
   inquiry.SerializeToString(&result);
-
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
   zmq.sck->send(zmq::buffer(result));
 #else
