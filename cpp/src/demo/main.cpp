@@ -12,7 +12,7 @@
 
 #include "demo/jomiel.h"
 
-static void print_config(const jomiel::opts_t &opts) {
+static void dump_config(const jomiel::opts_t &opts) {
   std::cout << "---\n";
   for (auto const &opt : opts)
     std::cout << opt.first << ": " << opt.second << "\n";
@@ -33,7 +33,7 @@ struct runner {
         docopt::docopt(usage, {argv + 1, argv + argc}, true, "demo");
 
     if (opts.at("--print-config").asBool()) {
-      print_config(opts);
+      dump_config(opts);
     } else if (opts.at("--version-zmq").asBool()) {
       version_zmq();
     } else {
