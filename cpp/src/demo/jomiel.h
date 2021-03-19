@@ -33,9 +33,10 @@ struct jomiel {
   explicit jomiel(opts_t const &);
 
   void inquire() const;
-  void connect() const;
 
 private:
+  void connect() const;
+
   void print_message(std::string const &, gp::Message const &) const;
   void print_status(std::string const &) const;
 
