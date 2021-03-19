@@ -14,8 +14,12 @@
 
 static void dump_config(jomiel::opts_t const &opts) {
   std::cout << "---\n";
-  for (auto const &opt : opts)
-    std::cout << opt.first << ": " << opt.second << "\n";
+  for (auto const &opt : opts) {
+    auto const &name = (opt.first.find("--") != std::string::npos)
+                           ? opt.first.substr(2)
+                           : opt.first;
+    std::cout << name << ": " << opt.second << "\n";
+  }
 }
 
 static void version_zmq() {
