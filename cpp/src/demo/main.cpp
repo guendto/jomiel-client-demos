@@ -33,24 +33,17 @@ extern const char *usage;
 
 struct runner {
   inline int run(int const argc, char const **argv) {
+
     auto const &opts =
         docopt::docopt(usage, {argv + 1, argv + argc}, true, "demo");
 
-    if (opts.at("--print-config").asBool()) {
+    if (opts.at("--print-config").asBool())
       dump_config(opts);
-    } else if (opts.at("--version-zmq").asBool()) {
+    else if (opts.at("--version-zmq").asBool())
       print_zmq_version();
-    } else {
-      const auto &uri = opts.at("URI").asStringList();
-      if (uri.empty())
-        throw std::runtime_error("input URI not given");
+    else
+      jomiel::jomiel(opts).inquire();
 
-      jomiel::jomiel const jomiel(opts);
-      jomiel.connect();
-
-      for (auto const &_uri : uri)
-        jomiel.inquire(_uri);
-    }
     return EXIT_SUCCESS;
   }
 };
