@@ -12,19 +12,21 @@
 
 #pragma once
 
+#include <docopt/docopt.h>
 #include <google/protobuf/message.h>
 
 #include <memory>
 #include <string>
 #include <zmq.hpp>
 
-#include "demo/types.h"
 #include "jomiel/protobuf/v1beta1/message.pb.h"
 
 namespace jp = jomiel::protobuf::v1beta1;
 namespace gp = google::protobuf;
 
 namespace jomiel {
+
+using opts_t = std::map<std::string, docopt::value>;
 
 struct jomiel {
   inline virtual ~jomiel() { cleanup(); }
