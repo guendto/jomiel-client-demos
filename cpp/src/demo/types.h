@@ -13,15 +13,11 @@
 #pragma once
 
 #include <map>
-#include <string>
-#include <vector>
-
 #include <docopt/docopt.h>
 
 namespace jomiel {
 
 using opts_t = std::map<std::string, docopt::value>;
-using strvect_t = std::vector<std::string>;
 
 } // namespace jomiel
 
