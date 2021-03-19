@@ -47,7 +47,7 @@ void jomiel::connect() const {
 
 void jomiel::inquire(std::string const &uri) const {
   send_inquiry(uri);
-  recv();
+  receive_response();
 }
 
 void jomiel::send_inquiry(std::string const &uri) const {
@@ -68,7 +68,7 @@ void jomiel::send_inquiry(std::string const &uri) const {
 #endif
 }
 
-void jomiel::recv() const {
+void jomiel::receive_response() const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
   zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
 #else
