@@ -40,16 +40,16 @@ struct runner {
       version_zmq();
     }
 
-    const auto &input_uri = opts.at("URI").asStringList();
+    const auto &uri = opts.at("URI").asStringList();
 
-    if (input_uri.empty())
+    if (uri.empty())
       throw std::runtime_error("input URI not given");
 
     jomiel::jomiel const jomiel(opts);
     jomiel.connect();
 
-    for (auto const &uri : input_uri)
-      jomiel.inquire(uri);
+    for (auto const &_uri : uri)
+      jomiel.inquire(_uri);
 
     return EXIT_SUCCESS;
   }
