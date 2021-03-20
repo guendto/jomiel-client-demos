@@ -173,6 +173,17 @@ void jomiel::cleanup() const {
   gp::ShutdownProtobufLibrary();
 }
 
+// cppzmq compatibility functions.
+//
+
+void jomiel::compat_zmq_set_options() const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
+  zmq.sck->set(zmq::sockopt::linger, 0);
+#else
+  int n = 0;
+  zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+#endif
+}
 } // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
