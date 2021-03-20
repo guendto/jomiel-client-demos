@@ -200,6 +200,17 @@ void jomiel::compat_zmq_read(zmq::message_t &bytes) const {
   zmq.sck->recv(&bytes);
 #endif
 }
+
+void jomiel::compat_zmq_parse(jp::Response &msg,
+                              zmq::message_t const &bytes) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
+  msg.ParseFromString(bytes.to_string());
+#else
+  std::string const str(static_cast<const char *>(bytes.data()),
+                        bytes.size());
+  msg.ParseFromString(str);
+#endif
+}
 } // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
