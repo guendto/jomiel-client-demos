@@ -48,19 +48,13 @@ struct runner {
   }
 };
 
-static void inline print_error(std::exception const &error) {
-  std::clog << "error: " << error.what() << "\n";
-}
-
 int main(const int argc, const char **argv) {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
   int r = EXIT_FAILURE;
   try {
     r = runner().run(argc, argv);
-  } catch (zmq::error_t const &error) {
-    print_error(error);
-  } catch (std::runtime_error const &error) {
-    print_error(error);
+  } catch (std::exception const &error) {
+    std::clog << "error: " << error.what() << "\n";
   }
   return r;
 }
