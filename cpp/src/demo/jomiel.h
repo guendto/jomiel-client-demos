@@ -54,6 +54,7 @@ private:
   void compat_zmq_read(zmq::message_t &) const;
   void compat_zmq_send(std::string const &) const;
   void compat_zmq_parse(jp::Response &, zmq::message_t const &) const;
+  void compat_zmq_poll(jp::Response &) const;
 
 private:
   using zctx_t = std::unique_ptr<zmq::context_t>;
