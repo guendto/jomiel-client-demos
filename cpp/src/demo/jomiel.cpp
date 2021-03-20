@@ -211,6 +211,25 @@ void jomiel::compat_zmq_parse(jp::Response &msg,
   msg.ParseFromString(str);
 #endif
 }
+
+void jomiel::compat_zmq_poll(jp::Response &msg) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+  zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
+#else
+  zmq::pollitem_t const items[] = {
+      {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
+#endif
+  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
+  zmq::message_t bytes;
+
+  if (zmq::poll(&items[0], 1, to))
+    compat_zmq_read(bytes);
+  else
+    throw std::runtime_error("connection timed out");
+
+  compat_zmq_parse(msg, bytes);
+}
+
 } // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
