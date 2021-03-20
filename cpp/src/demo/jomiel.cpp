@@ -184,6 +184,14 @@ void jomiel::compat_zmq_set_options() const {
   zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
 #endif
 }
+
+void jomiel::compat_zmq_send(std::string const &msg) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
+  zmq.sck->send(zmq::buffer(msg));
+#else
+  zmq.sck->send(msg.c_str(), msg.size());
+#endif
+}
 } // namespace jomiel
 
 // vim: set ts=2 sw=2 tw=72 expandtab:
