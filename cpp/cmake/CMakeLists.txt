@@ -63,7 +63,6 @@ set(SRC_DEMO_FILES
     ../src/demo/jomiel.h
     ../src/demo/usage.cpp
     ../src/demo/main.cpp
-    ../src/demo/types.h
 )
 
 # Build local copies of external dependencies.
