@@ -50,6 +50,9 @@ private:
   void cleanup() const;
 
 private:
+  void compat_zmq_set_options() const;
+
+private:
   using zctx_t = std::unique_ptr<zmq::context_t>;
   using zsck_t = std::unique_ptr<zmq::socket_t>;
   struct {
