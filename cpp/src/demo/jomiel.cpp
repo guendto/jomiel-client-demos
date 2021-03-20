@@ -26,12 +26,7 @@ namespace jomiel {
 jomiel::jomiel(opts_t const &opts) : opts(opts) {
   zmq.ctx = std::make_unique<zmq::context_t>(1);
   zmq.sck = std::make_unique<zmq::socket_t>(*zmq.ctx, ZMQ_REQ);
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
-  zmq.sck->set(zmq::sockopt::linger, 0);
-#else
-  int n = 0;
-  zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
-#endif
+  compat_zmq_set_options();
 }
 
 void jomiel::inquire() const {
