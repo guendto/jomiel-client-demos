@@ -65,34 +65,9 @@ void jomiel::send_inquiry(std::string const &uri) const {
 }
 
 void jomiel::receive_response() const {
-  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
-
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
-#else
-  zmq::pollitem_t const items[] = {
-      {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
-#endif
-
-  zmq::message_t msg;
-  if (zmq::poll(&items[0], 1, to)) {
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-    zmq.sck->recv(msg);
-#else
-    zmq.sck->recv(&msg);
-#endif
-  } else
-    throw std::runtime_error("connection timed out");
-
-  jp::Response response;
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
-  response.ParseFromString(msg.to_string());
-#else
-  const std::string str(static_cast<char *>(msg.data()), msg.size());
-  response.ParseFromString(str);
-#endif
-
-  dump_response(response);
+  jp::Response msg;
+  compat_zmq_poll(msg);
+  dump_response(msg);
 }
 
 void jomiel::print_status(std::string const &status) const {
