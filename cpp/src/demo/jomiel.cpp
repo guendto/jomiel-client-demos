@@ -64,12 +64,12 @@ void jomiel::send_inquiry(std::string const &uri) const {
   if (!opts.at("--be-terse").asBool())
     print_message("<send>", inquiry);
 
-  std::string result;
-  inquiry.SerializeToString(&result);
+  std::string msg;
+  inquiry.SerializeToString(&msg);
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
-  zmq.sck->send(zmq::buffer(result));
+  zmq.sck->send(zmq::buffer(msg));
 #else
-  zmq.sck->send(result.c_str(), result.size());
+  zmq.sck->send(msg.c_str(), msg.size());
 #endif
 }
 
