@@ -32,7 +32,7 @@ static void print_zmq_version() {
 extern const char *usage;
 
 struct runner {
-  inline int run(int const argc, char const **argv) {
+  inline int main(int const argc, char const **argv) {
 
     auto const &opts =
         docopt::docopt(usage, {argv + 1, argv + argc}, true, "demo");
@@ -52,7 +52,7 @@ int main(const int argc, const char **argv) {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
   int r = EXIT_FAILURE;
   try {
-    r = runner().run(argc, argv);
+    r = runner().main(argc, argv);
   } catch (std::exception const &error) {
     std::clog << "error: " << error.what() << "\n";
   }
