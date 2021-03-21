@@ -27,6 +27,7 @@ namespace gp = google::protobuf;
 namespace jomiel {
 
 using opts_t = std::map<std::string, docopt::value>;
+using zitems_t = std::vector<zmq::pollitem_t>;
 
 struct jomiel {
   inline virtual ~jomiel() { cleanup(); }
@@ -53,8 +54,8 @@ private:
   void compat_zmq_set_options() const;
   void compat_zmq_read(zmq::message_t &) const;
   void compat_zmq_send(std::string const &) const;
+  void compat_zmq_pollitems(zitems_t &) const;
   void compat_zmq_parse(jp::Response &, zmq::message_t const &) const;
-  void compat_zmq_poll(jp::Response &) const;
 
 private:
   using zctx_t = std::unique_ptr<zmq::context_t>;
