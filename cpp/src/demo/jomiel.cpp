@@ -88,7 +88,7 @@ void jomiel::print_status(std::string const &status) const {
 }
 
 void jomiel::dump_response(jp::Response const &msg) const {
-  const auto &status = "<recv>";
+  auto const &status = "<recv>";
   if (msg.status().code() == jp::STATUS_CODE_OK) {
     auto const &media = msg.media();
     if (opts.at("--be-terse").asBool()) {
