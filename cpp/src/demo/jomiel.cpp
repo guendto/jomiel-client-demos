@@ -15,6 +15,7 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/json_util.h>
 
+#include <chrono>
 #include <cstdio>
 #include <sstream>
 #include <string>
@@ -65,8 +66,19 @@ void jomiel::send_inquiry(std::string const &uri) const {
 }
 
 void jomiel::receive_response() const {
+  zitems_t items;
+  compat_zmq_pollitems(items);
+
+  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
+
+  zmq::message_t bytes;
+  if (zmq::poll(items, std::chrono::milliseconds(to)))
+    compat_zmq_read(bytes);
+  else
+    throw std::runtime_error("connection timed out");
+
   jp::Response msg;
-  compat_zmq_poll(msg);
+  compat_zmq_parse(msg, bytes);
   dump_response(msg);
 }
 
@@ -167,6 +179,16 @@ void jomiel::compat_zmq_read(zmq::message_t &bytes) const {
 #endif
 }
 
+void jomiel::compat_zmq_pollitems(zitems_t &dst) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+  zmq::pollitem_t item = {*zmq.sck, 0, ZMQ_POLLIN, 0};
+#else
+  zmq::pollitem_t const item = {static_cast<void *>(*zmq.sck), 0,
+                                ZMQ_POLLIN};
+#endif
+  dst.push_back(item);
+}
+
 void jomiel::compat_zmq_parse(jp::Response &msg,
                               zmq::message_t const &bytes) const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
@@ -176,24 +198,6 @@ void jomiel::compat_zmq_parse(jp::Response &msg,
                         bytes.size());
   msg.ParseFromString(str);
 #endif
-}
-
-void jomiel::compat_zmq_poll(jp::Response &msg) const {
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq::pollitem_t items[] = {{*zmq.sck, 0, ZMQ_POLLIN, 0}};
-#else
-  zmq::pollitem_t const items[] = {
-      {static_cast<void *>(*zmq.sck), 0, ZMQ_POLLIN}};
-#endif
-  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
-  zmq::message_t bytes;
-
-  if (zmq::poll(&items[0], 1, to))
-    compat_zmq_read(bytes);
-  else
-    throw std::runtime_error("connection timed out");
-
-  compat_zmq_parse(msg, bytes);
 }
 
 } // namespace jomiel
