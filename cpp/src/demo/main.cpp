@@ -23,8 +23,7 @@ static void dump_config(jomiel::opts_t const &opts) {
 }
 
 static void print_zmq_version() {
-  int major, minor, patch;
-  std::tie(major, minor, patch) = zmq::version();
+  auto const &[major, minor, patch] = zmq::version();
   std::cout << "ZeroMQ version " << major << "." << minor << "."
             << patch << "\n";
 }
