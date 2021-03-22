@@ -173,7 +173,8 @@ void jomiel::compat_zmq_send(std::string const &msg) const {
 
 void jomiel::compat_zmq_read(zmq::message_t &bytes) const {
 #if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq.sck->recv(bytes);
+  if (auto const &result = zmq.sck->recv(bytes); !result)
+    throw std::runtime_error("failed to receive data from socket");
 #else
   zmq.sck->recv(&bytes);
 #endif
