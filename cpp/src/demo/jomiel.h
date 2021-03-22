@@ -30,9 +30,7 @@ using opts_t = std::map<std::string, docopt::value>;
 using zitems_t = std::vector<zmq::pollitem_t>;
 
 struct jomiel {
-  inline virtual ~jomiel() { cleanup(); }
   explicit jomiel(opts_t const &);
-
   void inquire() const;
 
 private:
