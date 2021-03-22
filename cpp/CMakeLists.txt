@@ -23,7 +23,7 @@ conan_basic_setup()
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
+set(CMAKE_CXX_STANDARD 17)
 
 add_compile_options(
     # -Wno-error=deprecated-declarations
