@@ -91,11 +91,8 @@ void jomiel::dump_response(jp::Response const &msg) const {
   auto const &status = "<recv>";
   if (msg.status().code() == jp::STATUS_CODE_OK) {
     auto const &media = msg.media();
-    if (opts.at("--be-terse").asBool()) {
-      dump_terse_response(media);
-    } else {
-      print_message(status, media);
-    }
+    opts.at("--be-terse").asBool() ? dump_terse_response(media)
+                                   : print_message(status, media);
   } else {
     print_message(status, msg);
   }
