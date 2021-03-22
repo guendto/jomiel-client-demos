@@ -11,6 +11,7 @@
  */
 
 #include "demo/jomiel.h"
+#include <fmt/core.h>
 
 static void dump_config(jomiel::opts_t const &opts) {
   std::cout << "---\n";
@@ -18,14 +19,17 @@ static void dump_config(jomiel::opts_t const &opts) {
     auto const &name = (opt.first.find("--") != std::string::npos)
                            ? opt.first.substr(2)
                            : opt.first;
+    // `docopt::value` (opt.second) overloads the << operator. For
+    // `doctopt::value` to work with `fmt`, more work would be needed.
+    //   <https://github.com/docopt/docopt.cpp/blob/6f5de7/docopt.cpp#L27>
+    //   <https://fmt.dev/latest/api.html#udt>
     std::cout << name << ": " << opt.second << "\n";
   }
 }
 
 static void print_zmq_version() {
   auto const &[major, minor, patch] = zmq::version();
-  std::cout << "ZeroMQ version " << major << "." << minor << "."
-            << patch << "\n";
+  fmt::print("ZeroMQ version {:d}.{:d}.{:d}\n", major, minor, patch);
 }
 
 extern const char *usage;
@@ -53,7 +57,7 @@ int main(const int argc, const char **argv) {
   try {
     r = runner().main(argc, argv);
   } catch (std::exception const &error) {
-    std::clog << "error: " << error.what() << "\n";
+    fmt::print(stderr, "error: {:s}\n", error.what());
   }
   // "Also notice the call to ShutdownProtobufLibrary() at the end of
   // the program. All this does is delete any global objects that were
