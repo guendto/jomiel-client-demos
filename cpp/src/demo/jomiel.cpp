@@ -130,7 +130,7 @@ void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
     dst += "\n";
 }
 
-// cppzmq compatibility functions.
+// cppzmq API compatibility functions.
 //
 
 void jomiel::compat_zmq_set_options() const {
