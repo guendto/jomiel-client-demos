@@ -93,9 +93,8 @@ void jomiel::dump_response(jp::Response const &msg) const {
     auto const &media = msg.media();
     opts.at("--be-terse").asBool() ? dump_terse_response(media)
                                    : print_message(status, media);
-  } else {
+  } else
     print_message(status, msg);
-  }
 }
 
 void jomiel::dump_terse_response(jp::MediaResponse const &msg) const {
