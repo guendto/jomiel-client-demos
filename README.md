@@ -17,7 +17,7 @@ Some examples have extra features, like additional output options.
 |                                                                           | Notes       |
 | ------------------------------------------------------------------------- | ----------- |
 |  [C](https://github.com/guendto/jomiel-examples/blob/master/c)            |             |
-|  [C++](https://github.com/guendto/jomiel-examples/blob/master/cpp)        | C++14       |
+|  [C++](https://github.com/guendto/jomiel-examples/blob/master/cpp)        | C++17       |
 |  [C#](https://github.com/guendto/jomiel-examples/blob/master/csharp)      |             |
 |  [Go](https://github.com/guendto/jomiel-examples/blob/master/golang)      |             |
 |  [Java](https://github.com/guendto/jomiel-examples/blob/master/java)      |             |
