@@ -140,6 +140,7 @@ target_include_directories(demo PUBLIC
     ${DocOptCpp_INCLUDE_DIRS}
     ${Protobuf_INCLUDE_DIRS}
     ${ZeroMQ_INCLUDE_DIRS}
+    ${Fmt_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
