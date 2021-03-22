@@ -127,6 +127,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
 
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
+pkg_check_modules(Fmt REQUIRED fmt)
 
 # Target.
 #
@@ -139,12 +140,14 @@ target_include_directories(demo PUBLIC
     ${DocOptCpp_INCLUDE_DIRS}
     ${Protobuf_INCLUDE_DIRS}
     ${ZeroMQ_INCLUDE_DIRS}
+    ${Fmt_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
     ${DocOptCpp_LIBRARY_DIRS}
     ${Protobuf_LIBRARY_DIRS}
     ${ZeroMQ_LIBRARY_DIRS}
+    ${Fmt_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo PUBLIC
@@ -152,6 +155,7 @@ target_link_libraries(demo PUBLIC
     ${DocOptCpp_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${ZeroMQ_LIBRARIES}
+    ${Fmt_LIBRARIES}
     libdocopt
 )
 

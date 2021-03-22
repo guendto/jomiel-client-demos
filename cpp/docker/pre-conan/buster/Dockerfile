@@ -22,7 +22,12 @@ COPY tools/ ./tools/
 COPY proto/ ./proto/
 
 RUN set -eux \
-    ; apt-get -qq update \
+    # We want libfmt-dev 6.1 from buster-backports.
+    ; echo 'deb http://deb.debian.org/debian buster-backports main' \
+        >> /etc/apt/sources.list \
+    && apt-get -qq update \
+    && apt-get -t buster-backports -qq --no-install-recommends install \
+        libfmt-dev \
     && apt-get -qq --no-install-recommends install \
         protobuf-compiler \
         ca-certificates \

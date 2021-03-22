@@ -12,6 +12,7 @@
 
 #include "demo/jomiel.h"
 
+#include <fmt/core.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/json_util.h>
 
@@ -44,12 +45,8 @@ void jomiel::inquire() const {
 
 void jomiel::connect() const {
   auto const &re = opts.at("--router-endpoint").asString();
-  auto const &to = opts.at("--connect-timeout").asLong();
-
-  std::ostringstream stream;
-  stream << "<connect> " << re << " (timeout=" << to << ")";
-
-  print_status(stream.str());
+  auto const &to = opts.at("--connect-timeout").asString();
+  print_status(fmt::format("<connect> {:s} (timeout={:s})", re, to));
   zmq.sck->connect(re);
 }
 
@@ -84,7 +81,7 @@ void jomiel::receive_response() const {
 
 void jomiel::print_status(std::string const &status) const {
   if (!opts.at("--be-terse").asBool())
-    std::clog << "status: " << status << "\n";
+    fmt::print(stderr, "{:s}\n", status);
 }
 
 void jomiel::dump_response(jp::Response const &msg) const {
@@ -98,11 +95,13 @@ void jomiel::dump_response(jp::Response const &msg) const {
 }
 
 void jomiel::dump_terse_response(jp::MediaResponse const &msg) const {
-  std::cout << "---\ntitle: " << msg.title() << "\nquality:\n";
+  fmt::print("---\ntitle: {:s}\nquality:\n", msg.title());
   for (auto const &stream : msg.stream()) {
-    std::cout << "  profile: " << stream.quality().profile() << "\n"
-              << "    width: " << stream.quality().width() << "\n"
-              << "    height: " << stream.quality().height() << "\n";
+    auto const &quality = stream.quality();
+    fmt::print("  profile: {:s}\n"
+               "    width: {:d}\n"
+               "   height: {:d}\n",
+               quality.profile(), quality.width(), quality.height());
   }
 }
 
@@ -116,7 +115,7 @@ void jomiel::print_message(std::string const &status,
   else
     gp::TextFormat::PrintToString(msg, &result);
 
-  std::cout << result;
+  fmt::print("{:s}", result);
 }
 
 void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
