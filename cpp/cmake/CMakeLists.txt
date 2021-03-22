@@ -155,6 +155,7 @@ target_link_libraries(demo PUBLIC
     ${DocOptCpp_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${ZeroMQ_LIBRARIES}
+    ${Fmt_LIBRARIES}
     libdocopt
 )
 
