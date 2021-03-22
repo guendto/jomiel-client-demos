@@ -56,6 +56,17 @@ int main(const int argc, const char **argv) {
   } catch (std::exception const &error) {
     std::clog << "error: " << error.what() << "\n";
   }
+  // "Also notice the call to ShutdownProtobufLibrary() at the end of
+  // the program. All this does is delete any global objects that were
+  // allocated by the Protocol Buffer library. This is unnecessary for
+  // most programs, since the process is just going to exit anyway and
+  // the OS will take care of reclaiming all of its memory. However, if
+  // you use a memory leak checker that requires that every last object
+  // be freed, or if you are writing a library which may be loaded and
+  // unloaded multiple times by a single process, then you may want to
+  // force Protocol Buffers to clean up everything."
+  // <https://developers.google.com/protocol-buffers/docs/cpptutorial>
+  gp::ShutdownProtobufLibrary();
   return r;
 }
 
