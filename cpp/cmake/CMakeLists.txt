@@ -147,6 +147,7 @@ target_link_directories(demo PUBLIC
     ${DocOptCpp_LIBRARY_DIRS}
     ${Protobuf_LIBRARY_DIRS}
     ${ZeroMQ_LIBRARY_DIRS}
+    ${Fmt_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo PUBLIC
