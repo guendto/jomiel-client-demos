@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_STANDARD 14) # e.g. std::make_unique is a c++14 feature
+set(CMAKE_CXX_STANDARD 17)
 
 add_compile_options(
     # Disable deprecated declarations in cppzmq.
@@ -63,7 +63,6 @@ set(SRC_DEMO_FILES
     ../src/demo/jomiel.h
     ../src/demo/usage.cpp
     ../src/demo/main.cpp
-    ../src/demo/types.h
 )
 
 # Build local copies of external dependencies.
@@ -128,6 +127,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
 
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
+pkg_check_modules(Fmt REQUIRED fmt)
 
 # Target.
 #
@@ -140,12 +140,14 @@ target_include_directories(demo PUBLIC
     ${DocOptCpp_INCLUDE_DIRS}
     ${Protobuf_INCLUDE_DIRS}
     ${ZeroMQ_INCLUDE_DIRS}
+    ${Fmt_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
     ${DocOptCpp_LIBRARY_DIRS}
     ${Protobuf_LIBRARY_DIRS}
     ${ZeroMQ_LIBRARY_DIRS}
+    ${Fmt_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo PUBLIC
@@ -153,6 +155,7 @@ target_link_libraries(demo PUBLIC
     ${DocOptCpp_LIBRARIES}
     ${Protobuf_LIBRARIES}
     ${ZeroMQ_LIBRARIES}
+    ${Fmt_LIBRARIES}
     libdocopt
 )
 

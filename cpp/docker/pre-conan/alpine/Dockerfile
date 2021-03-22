@@ -32,6 +32,7 @@ RUN set -eux \
         protobuf-dev \
         zeromq-dev \
         musl-dev \
+        fmt-dev \
         pkgconf \
         # cppzmq \
         cmake \
@@ -65,7 +66,8 @@ FROM alpine:3.13 AS runtime-image
 RUN set -eux \
     ; apk --update --no-cache add \
         protobuf \
-        zeromq
+        zeromq \
+        fmt
 
 COPY --from=compile-image /app/cpp/build/demo /
 

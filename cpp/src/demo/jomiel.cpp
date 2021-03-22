@@ -12,9 +12,11 @@
 
 #include "demo/jomiel.h"
 
+#include <fmt/core.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/json_util.h>
 
+#include <chrono>
 #include <cstdio>
 #include <sstream>
 #include <string>
@@ -24,150 +26,158 @@
 namespace jomiel {
 
 jomiel::jomiel(opts_t const &opts) : opts(opts) {
-  this->zmq.endpoint = this->opts.at("--router-endpoint").asString();
-  this->zmq.timeout = this->opts.at("--connect-timeout").asLong();
+  zmq.ctx = std::make_unique<zmq::context_t>(1);
+  zmq.sck = std::make_unique<zmq::socket_t>(*zmq.ctx, ZMQ_REQ);
+  compat_zmq_set_options();
+}
 
-  this->zmq.ctx = std::make_unique<zmq::context_t>(1);
-  this->zmq.sck =
-      std::make_unique<zmq::socket_t>(*this->zmq.ctx, ZMQ_REQ);
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
-  this->zmq.sck->set(zmq::sockopt::linger, 0);
-#else
-  int n = 0;
-  this->zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
-#endif
+void jomiel::inquire() const {
+  auto const &items = opts.at("URI").asStringList();
+  if (!items.empty()) {
+    connect();
+    for (auto const &uri : items) {
+      send_inquiry(uri);
+      receive_response();
+    }
+  } else
+    throw std::runtime_error("input URI not given");
 }
 
 void jomiel::connect() const {
-  std::ostringstream stream;
-
-  stream << "<connect> " << this->zmq.endpoint
-         << " (timeout=" << this->zmq.timeout << ")\n";
-
-  this->print_status(stream.str());
-  this->zmq.sck->connect(this->zmq.endpoint);
+  auto const &re = opts.at("--router-endpoint").asString();
+  auto const &to = opts.at("--connect-timeout").asString();
+  print_status(fmt::format("<connect> {:s} (timeout={:s})", re, to));
+  zmq.sck->connect(re);
 }
 
-void jomiel::inquire(std::string const &uri) const {
-  this->send(uri);
-  this->recv();
-}
-
-void jomiel::send(std::string const &uri) const {
+void jomiel::send_inquiry(std::string const &uri) const {
   jp::Inquiry inquiry;
   inquiry.mutable_media()->set_input_uri(uri);
 
-  if (!this->opts.at("--be-terse").asBool()) {
-    this->print_message("<send>", inquiry);
-  }
+  if (!opts.at("--be-terse").asBool())
+    print_message("<send>", inquiry);
 
-  std::string result;
-  inquiry.SerializeToString(&result);
-
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
-  this->zmq.sck->send(zmq::buffer(result));
-#else
-  this->zmq.sck->send(result.c_str(), result.size());
-#endif
+  std::string msg;
+  inquiry.SerializeToString(&msg);
+  compat_zmq_send(msg);
 }
 
-void jomiel::recv() const {
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-  zmq::pollitem_t items[] = {{*this->zmq.sck, 0, ZMQ_POLLIN, 0}};
-#else
-  zmq::pollitem_t const items[] = {
-      {static_cast<void *>(*this->zmq.sck), 0, ZMQ_POLLIN}};
-#endif
-  zmq::message_t msg;
+void jomiel::receive_response() const {
+  zitems_t items;
+  compat_zmq_pollitems(items);
 
-  if (zmq::poll(&items[0], 1, this->zmq.timeout * 1000))
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
-    this->zmq.sck->recv(msg);
-#else
-    this->zmq.sck->recv(&msg);
-#endif
+  auto const &to = opts.at("--connect-timeout").asLong() * 1000;
+
+  zmq::message_t bytes;
+  if (zmq::poll(items, std::chrono::milliseconds(to)))
+    compat_zmq_read(bytes);
   else
     throw std::runtime_error("connection timed out");
 
-  jp::Response response;
-#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
-  response.ParseFromString(msg.to_string());
-#else
-  const std::string str(static_cast<char *>(msg.data()), msg.size());
-  response.ParseFromString(str);
-#endif
-
-  this->dump_response(response);
-}
-
-void jomiel::cleanup() const {
-  /*
-   * "Also notice the call to ShutdownProtobufLibrary() at the end of
-   * the program. All this does is delete any global objects that were
-   * allocated by the Protocol Buffer library. This is unnecessary for
-   * most programs, since the process is just going to exit anyway and
-   * the OS will take care of reclaiming all of its memory. However,
-   * if you use a memory leak checker that requires that every last
-   * object be freed, or if you are writing a library which may be
-   * loaded and unloaded multiple times by a single process, then you
-   * may want to force Protocol Buffers to clean up everything."
-   *  -- https://developers.google.com/protocol-buffers/docs/cpptutorial
-   */
-  gp::ShutdownProtobufLibrary();
+  jp::Response msg;
+  compat_zmq_parse(msg, bytes);
+  dump_response(msg);
 }
 
 void jomiel::print_status(std::string const &status) const {
-  if (!this->opts.at("--be-terse").asBool()) {
-    std::clog << "status: " << status;
+  if (!opts.at("--be-terse").asBool())
+    fmt::print(stderr, "{:s}\n", status);
+}
+
+void jomiel::dump_response(jp::Response const &msg) const {
+  auto const &status = "<recv>";
+  if (msg.status().code() == jp::STATUS_CODE_OK) {
+    auto const &media = msg.media();
+    opts.at("--be-terse").asBool() ? dump_terse_response(media)
+                                   : print_message(status, media);
+  } else
+    print_message(status, msg);
+}
+
+void jomiel::dump_terse_response(jp::MediaResponse const &msg) const {
+  fmt::print("---\ntitle: {:s}\nquality:\n", msg.title());
+  for (auto const &stream : msg.stream()) {
+    auto const &quality = stream.quality();
+    fmt::print("  profile: {:s}\n"
+               "    width: {:d}\n"
+               "   height: {:d}\n",
+               quality.profile(), quality.width(), quality.height());
   }
 }
 
 void jomiel::print_message(std::string const &status,
                            gp::Message const &msg) const {
+  print_status(status);
+
   std::string result;
-
-  if (this->opts.at("--output-json").asBool()) {
-    gp::util::JsonPrintOptions opts;
-    opts.add_whitespace = true;
-
-    MessageToJsonString(msg, &result, opts);
-
-  } else {
+  if (opts.at("--output-json").asBool())
+    to_json(msg, result);
+  else
     gp::TextFormat::PrintToString(msg, &result);
-  }
 
-  this->print_status(status);
-  std::cout << "\n" << result;
+  fmt::print("{:s}", result);
 }
 
-void jomiel::dump_terse_response(
-    jp::MediaResponse const &media_response) const {
-  std::cout << "---\ntitle: " << media_response.title() << "\n";
-  std::cout << "quality:\n";
+void jomiel::to_json(gp::Message const &msg, std::string &dst) const {
+  auto const &compact = opts.at("--compact-json").asBool();
 
-  for (auto const &stream : media_response.stream()) {
-    auto const &quality = stream.quality();
-    std::ostringstream format;
-    format << "  profile: " << quality.profile() << "\n"
-           << "    width: " << quality.width() << "\n"
-           << "    height: " << quality.height() << "\n";
-    std::cout << format.str();
-  }
+  gp::util::JsonPrintOptions print_opts;
+  print_opts.add_whitespace = !compact;
+
+  MessageToJsonString(msg, &dst, print_opts);
+
+  if (compact)
+    dst += "\n";
 }
 
-void jomiel::dump_response(jp::Response const &response) const {
-  auto const &response_status = response.status();
-  auto const &media_response = response.media();
+// cppzmq API compatibility functions.
+//
 
-  if (response_status.code() == jp::STATUS_CODE_OK) {
-    if (this->opts.at("--be-terse").asBool()) {
-      this->dump_terse_response(media_response);
-    } else {
-      this->print_message("<recv>", media_response);
-    }
-  } else {
-    this->print_message("<recv>", response);
-  }
+void jomiel::compat_zmq_set_options() const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 7, 0)
+  zmq.sck->set(zmq::sockopt::linger, 0);
+#else
+  int n = 0;
+  zmq.sck->setsockopt(ZMQ_LINGER, &n, sizeof(n));
+#endif
+}
+
+void jomiel::compat_zmq_send(std::string const &msg) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 4, 0)
+  zmq.sck->send(zmq::buffer(msg));
+#else
+  zmq.sck->send(msg.c_str(), msg.size());
+#endif
+}
+
+void jomiel::compat_zmq_read(zmq::message_t &bytes) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+  if (auto const &result = zmq.sck->recv(bytes); !result)
+    throw std::runtime_error("failed to receive data from socket");
+#else
+  zmq.sck->recv(&bytes);
+#endif
+}
+
+void jomiel::compat_zmq_pollitems(zitems_t &dst) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 3, 1)
+  zmq::pollitem_t item = {*zmq.sck, 0, ZMQ_POLLIN, 0};
+#else
+  zmq::pollitem_t const item = {static_cast<void *>(*zmq.sck), 0,
+                                ZMQ_POLLIN};
+#endif
+  dst.push_back(item);
+}
+
+void jomiel::compat_zmq_parse(jp::Response &msg,
+                              zmq::message_t const &bytes) const {
+#if CPPZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 6, 0)
+  msg.ParseFromString(bytes.to_string());
+#else
+  std::string const str(static_cast<const char *>(bytes.data()),
+                        bytes.size());
+  msg.ParseFromString(str);
+#endif
 }
 
 } // namespace jomiel
