@@ -127,6 +127,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Protobuf REQUIRED)
 
 pkg_check_modules(ZeroMQ REQUIRED libzmq)
+pkg_check_modules(Fmt REQUIRED fmt)
 
 # Target.
 #
