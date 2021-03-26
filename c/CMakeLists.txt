@@ -62,6 +62,7 @@ set(DEMO_SRCFILES
     src/demo/jomiel_util.c
     src/demo/jomiel_util.h
     src/demo/jomiel.c
+    src/demo/jomiel.h
     src/demo/types.h
     src/demo/main.c
 )
