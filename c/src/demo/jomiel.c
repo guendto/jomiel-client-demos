@@ -13,6 +13,7 @@
 #include "demo/jomiel.h"
 #include "demo/jomiel_util.h"
 
+#include <stdio.h>
 
 
 static inline void print_status(const jomiel_t *self,
