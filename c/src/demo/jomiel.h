@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include <czmq.h>
 #include "demo/options.h"
 
 struct jomiel_s {
