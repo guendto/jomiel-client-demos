@@ -14,10 +14,9 @@
 
 #include "demo/options.h"
 
-struct jomiel_s {
-  options_t *opts;
-  zsock_t *sck;
-};
+// Functions.
+
+int jomiel_run(Options const);
 
 typedef struct jomiel_s jomiel_t;
 
