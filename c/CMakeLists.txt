@@ -84,6 +84,7 @@ find_package(PkgConfig)
 pkg_check_modules(PROTOBUFC REQUIRED libprotobuf-c)
 pkg_check_modules(ZEROMQ REQUIRED libzmq)
 pkg_check_modules(CZMQ REQUIRED libczmq)
+pkg_check_modules(POPT REQUIRED popt)
 
 # Target.
 #
@@ -93,18 +94,21 @@ target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
     ${ZEROMQ_INCLUDE_DIRS}
     ${CZMQ_INCLUDE_DIRS}
+    ${POPT_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
     ${PROTOBUFC_LIBRARY_DIRS}
     ${ZEROMQ_LIBRARY_DIRS}
     ${CZMQ_LIBRARY_DIRS}
+    ${POPT_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo
     ${PROTOBUFC_LIBRARIES}
     ${ZEROMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
+    ${POPT_LIBRARIES}
 )
 
 # vim: set ts=4 sw=4 tw=72 expandtab:
