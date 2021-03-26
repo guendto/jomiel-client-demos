@@ -33,3 +33,7 @@ struct Options {
 };
 
 typedef struct Options Options;
+
+// Functions.
+
+Options parse_options(int const argc, char const **argv);
