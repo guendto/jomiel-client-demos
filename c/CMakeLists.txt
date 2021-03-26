@@ -61,6 +61,7 @@ protoc_gen_bindings(c
 set(DEMO_SRCFILES
     src/demo/jomiel_util.c
     src/demo/jomiel_util.h
+    src/demo/options.c
     src/demo/jomiel.c
     src/demo/jomiel.h
     src/demo/types.h
