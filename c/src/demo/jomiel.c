@@ -11,6 +11,7 @@
  */
 
 #include "demo/jomiel.h"
+#include "demo/jomiel_util.h"
 
 #include <stdarg.h>
 #include <stdint.h>
