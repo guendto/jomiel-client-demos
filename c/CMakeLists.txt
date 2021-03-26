@@ -19,13 +19,20 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_C_STANDARD 11)
 
 add_compile_options(
-    -Wall -Werror -march=native -O1 -ggdb3 -pipe
-    -Wformat -Wformat-security
+    -Wall -Werror -march=native -O2 -ggdb3 -pipe
+    -Wformat=2 -Wformat-security
     --param=ssp-buffer-size=4
     -fstack-protector-strong
     -Werror=format-security
     -D_FORTIFY_SOURCE=2
     -Wpedantic
+    -Wmissing-include-dirs
+    -Wredundant-decls
+    -Wnested-externs
+    -Wwrite-strings
+    -Wshadow
+    -Wextra
+    -Wjump-misses-init -Wlogical-op
 )
 
 # Helpers.
