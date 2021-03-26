@@ -13,11 +13,7 @@
 #include "demo/jomiel.h"
 #include "demo/jomiel_util.h"
 
-#include <stdarg.h>
-#include <stdint.h>
-#include <stdlib.h>
 
-#include "jomiel/protobuf/v1beta1/message.pb-c.h"
 
 static inline void print_status(const jomiel_t *self,
                                 const char *format, ...) {
