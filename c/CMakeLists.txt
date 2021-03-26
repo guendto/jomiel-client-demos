@@ -16,6 +16,7 @@ project(demo C)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_STANDARD 11)
 
 add_compile_options(
     -Wall -Werror -march=native -O1 -ggdb3 -pipe
