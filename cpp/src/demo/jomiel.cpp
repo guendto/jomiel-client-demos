@@ -25,7 +25,7 @@
 
 namespace jomiel {
 
-jomiel::jomiel(opts_t const &opts) : opts(opts) {
+jomiel::jomiel(opts_t const &options) : opts(options) {
   zmq.ctx = std::make_unique<zmq::context_t>(1);
   zmq.sck = std::make_unique<zmq::socket_t>(*zmq.ctx, ZMQ_REQ);
   compat_zmq_set_options();
