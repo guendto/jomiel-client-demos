@@ -27,13 +27,18 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_compile_options(
     # -Wno-error=deprecated-declarations
-    -Wall -Werror -march=native -O1 -ggdb3 -pipe
-    -Wformat -Wformat-security
+    -Wall -Werror -march=native -O2 -ggdb3 -pipe
+    -Wformat=2 -Wformat-security
     --param=ssp-buffer-size=4
     -fstack-protector-strong
     -Werror=format-security
     -D_FORTIFY_SOURCE=2
     -Wpedantic
+    -Wmissing-include-dirs
+    -Wwrite-strings
+    -Wshadow
+    -Wextra
+    -Wlogical-op
 )
 
 # Helpers.
