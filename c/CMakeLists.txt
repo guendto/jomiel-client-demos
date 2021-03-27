@@ -16,15 +16,23 @@ project(demo C)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES OFF)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_STANDARD 11)
 
 add_compile_options(
-    -Wall -Werror -march=native -O1 -ggdb3 -pipe
-    -Wformat -Wformat-security
+    -Wall -Werror -march=native -O2 -ggdb3 -pipe
+    -Wformat=2 -Wformat-security
     --param=ssp-buffer-size=4
     -fstack-protector-strong
     -Werror=format-security
     -D_FORTIFY_SOURCE=2
     -Wpedantic
+    -Wmissing-include-dirs
+    -Wredundant-decls
+    -Wnested-externs
+    -Wwrite-strings
+    -Wshadow
+    -Wextra
+    -Wjump-misses-init -Wlogical-op
 )
 
 # Helpers.
@@ -51,7 +59,13 @@ protoc_gen_bindings(c
 # Source files.
 #
 set(DEMO_SRCFILES
+    src/demo/jomiel_util.c
+    src/demo/jomiel_util.h
+    src/demo/options.c
+    src/demo/options.h
     src/demo/jomiel.c
+    src/demo/jomiel.h
+    src/demo/types.h
     src/demo/main.c
 )
 
@@ -70,6 +84,7 @@ find_package(PkgConfig)
 pkg_check_modules(PROTOBUFC REQUIRED libprotobuf-c)
 pkg_check_modules(ZEROMQ REQUIRED libzmq)
 pkg_check_modules(CZMQ REQUIRED libczmq)
+pkg_check_modules(POPT REQUIRED popt)
 
 # Target.
 #
@@ -79,18 +94,21 @@ target_include_directories(demo PUBLIC
     ${PROTOBUFC_INCLUDE_DIRS}
     ${ZEROMQ_INCLUDE_DIRS}
     ${CZMQ_INCLUDE_DIRS}
+    ${POPT_INCLUDE_DIRS}
 )
 
 target_link_directories(demo PUBLIC
     ${PROTOBUFC_LIBRARY_DIRS}
     ${ZEROMQ_LIBRARY_DIRS}
     ${CZMQ_LIBRARY_DIRS}
+    ${POPT_LIBRARY_DIRS}
 )
 
 target_link_libraries(demo
     ${PROTOBUFC_LIBRARIES}
     ${ZEROMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
+    ${POPT_LIBRARIES}
 )
 
 # vim: set ts=4 sw=4 tw=72 expandtab:

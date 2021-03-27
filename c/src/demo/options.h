@@ -12,16 +12,28 @@
 
 #pragma once
 
-#include <stdbool.h>
+#include <popt.h>
 
-struct options_s {
-  char *router_endpoint;
-  char print_serialized;
-  int connect_timeout;
-  bool print_config;
-  bool be_terse;
+// Structures.
+
+// https://en.wikipedia.org/wiki/X_Macro
+#define X_FIELDS                                                       \
+  X(int, print_config, "%d")                                           \
+  X(int, version_zmq, "%d")                                            \
+  X(char const *, router_endpoint, "%s")                               \
+  X(int, connect_timeout, "%d")                                        \
+  X(int, print_serialized, "%d")                                       \
+  X(int, be_terse, "%d")
+
+struct Options {
+  poptContext ctx;
+#define X(type, name, format) type name;
+  X_FIELDS
+#undef X
 };
 
-typedef struct options_s options_t;
+typedef struct Options Options;
 
-// vim: set ts=2 sw=2 tw=72 expandtab:
+// Functions.
+
+Options parse_options(int const argc, char const **argv);

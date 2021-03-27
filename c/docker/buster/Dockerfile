@@ -30,6 +30,7 @@ RUN set -eux \
         libprotobuf-dev \
         build-essential \
         libczmq-dev \
+        libpopt-dev \
         pkgconf \
         cmake \
     && rm -rf /var/lib/apt/lists/*
@@ -53,6 +54,7 @@ RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
         libprotobuf-c1 \
+        libpopt0 \
         libczmq4 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -60,4 +62,4 @@ COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
-CMD ["-h"]
+CMD ["--help"]

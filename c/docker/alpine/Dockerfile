@@ -28,6 +28,7 @@ RUN set -eux \
         protobuf-c \
         musl-dev \
         czmq-dev \
+        popt-dev \
         pkgconf \
         cmake \
         make \
@@ -52,10 +53,11 @@ RUN set -eux \
     ; apk --update --no-cache add \
         protobuf-c \
         protobuf \
+        popt \
         czmq
 
 COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
-CMD ["-h"]
+CMD ["--help"]
