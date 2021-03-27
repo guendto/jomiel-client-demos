@@ -60,4 +60,4 @@ COPY --from=compile-image /app/c/build/demo /
 
 ENTRYPOINT ["/demo"]
 
-CMD ["-h"]
+CMD ["--help"]
