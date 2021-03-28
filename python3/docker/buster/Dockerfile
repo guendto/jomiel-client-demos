@@ -8,37 +8,55 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM python:3.9-slim
+
+# stage: bootstrap
+#
+FROM python:3.9-slim AS bootstrap-image
 
 WORKDIR /app
 
-COPY python3/requirements.txt .
-COPY python3/demo/ ./demo/
-
-COPY proto/ ./proto/
-
-ENV BUILD_DEPS \
-        protobuf-compiler \
-        libprotobuf-dev \
-        build-essential
+COPY python3/pyproject.toml .
+COPY python3/setup.cfg .
+COPY python3/setup.py .
+COPY python3/src/ ./src/
 
 RUN set -eux \
-    # Install the build deps.
+    # Build the jomiel-examples-demo wheel from the source.
+    ; pip wheel \
+        . \
+        --wheel-dir /app/wheels \
+        --no-deps
+
+# stage: runtime
+#
+# Go with a slim debian image instead of a "python-slim".
+#   - The final image will end up being ~20MB slimmer.
+#
+FROM debian:buster-slim AS runtime-image
+# FROM python:3.9-slim AS runtime-image
+
+WORKDIR /app
+
+COPY --from=bootstrap-image /app/wheels /wheels
+
+ENV BUILD_DEPS \
+    python3-pip
+
+RUN set -eux \
     ; apt-get -qq update \
+    # Install pip and install the wheel we built at bootstrap stage.
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
-    # Install the python runtime modules.
-    && ./proto/bin/bootstrap -p proto/ -l python -d demo/ \
-    && pip install --no-cache-dir -r requirements.txt \
-    # Cleanup (stage #1).
-    && rm -rf proto/ requirements.txt \
+    && pip3 install --no-cache-dir /wheels/*.whl \
+    # Remove pip (and all related packages, it'll be worth it).
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
-    # Install the required runtime.
+    # And install python3 interpreter.
     && apt-get -qq --no-install-recommends install \
-        libzmq5 \
-    # Cleanup (stage #2).
+        python3 \
+    # Every bit counts.
+    && rm -rf /wheels \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["python", "demo"]
+ENTRYPOINT ["jomiel-examples-demo"]
 
 CMD ["-h"]
