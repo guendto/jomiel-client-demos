@@ -3,7 +3,12 @@
 ## Building and running
 
 ```shell
-pip install -r requirements.txt
-../proto/bin/bootstrap -p ../proto -l python -d demo
-python demo [args...]
+PYTHONPATH=src python3 src/demo [args ...]
+```
+
+Or:
+
+```shell
+pip install -e .
+jomiel-examples-demo [args ...]
 ```
