@@ -53,6 +53,15 @@ static void to_hex(Jomiel const self, char const *prefix,
   fprintf(stderr, "\n");
 }
 
+static void print_inquiry(Jomiel const self, char const *status,
+                          JomielInquiry const msg) {
+  print_status(self, status);
+  printf("media <\n"
+         "  input_uri: \"%s\"\n"
+         ">\n",
+         msg.media->input_uri);
+}
+
 static void *inquiry_new(Jomiel const self, char const *uri,
                          size_t *len) {
   JomielMediaInquiry media = jomiel_media_inquiry_init;
@@ -68,6 +77,8 @@ static void *inquiry_new(Jomiel const self, char const *uri,
   jomiel_inquiry_pack(&inquiry, bytes);
 
   to_hex(self, "send", (uint8_t *)bytes, *len);
+  print_inquiry(self, "<send>", inquiry);
+
   return bytes;
 }
 
