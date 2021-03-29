@@ -53,7 +53,17 @@ static void to_hex(Jomiel const self, char const *prefix,
   fprintf(stderr, "\n");
 }
 
-static void *inquiry(char const *uri, size_t *len) {
+static void print_inquiry(Jomiel const self, char const *status,
+                          JomielInquiry const msg) {
+  print_status(self, status);
+  printf("media <\n"
+         "  input_uri: \"%s\"\n"
+         ">\n",
+         msg.media->input_uri);
+}
+
+static void *inquiry_new(Jomiel const self, char const *uri,
+                         size_t *len) {
   JomielMediaInquiry media = jomiel_media_inquiry_init;
   media.input_uri = (char *)uri;
 
@@ -65,6 +75,10 @@ static void *inquiry(char const *uri, size_t *len) {
   void *bytes = calloc(1, *len);
 
   jomiel_inquiry_pack(&inquiry, bytes);
+
+  to_hex(self, "send", (uint8_t *)bytes, *len);
+  print_inquiry(self, "<send>", inquiry);
+
   return bytes;
 }
 
@@ -72,10 +86,7 @@ Jomiel jutil_send_inquiry(Jomiel self) {
   char const *uri = poptGetArg(self.opts.ctx);
 
   size_t len;
-  void *bytes = inquiry(uri, &len);
-
-  to_hex(self, "send", (uint8_t *)bytes, len);
-  print_status(self, "<send>");
+  void *bytes = inquiry_new(self, uri, &len);
 
   zframe_t *frame = zframe_new(bytes, len);
   zmsg_t *msg = zmsg_new();
@@ -83,16 +94,15 @@ Jomiel jutil_send_inquiry(Jomiel self) {
   free(bytes);
 
   int const send_result = zmsg_send(&msg, self.sck);
+  self.result = (send_result == 0);
 
-  zframe_destroy(&frame);
-  zmsg_destroy(&msg);
-
-  if (send_result != 0) {
+  if (self.result == false) {
     fprintf(stderr, "error: zmsg_send(): send_result=%d\n",
             send_result);
   }
+  zframe_destroy(&frame);
+  zmsg_destroy(&msg);
 
-  self.result = (send_result == 0);
   return self;
 }
 
@@ -107,15 +117,35 @@ static void dump_terse_response(JomielResponse const *msg) {
 
 static void foreach_stream(JomielMediaResponse const *msg) {
   for (size_t i = 0; i < msg->n_stream; ++i) {
-    JomielStreamQuality const *qty = msg->stream[i]->quality;
-    printf("stream {\n"
+    JomielStream const *stream = msg->stream[i];
+    JomielStreamQuality const *qty = stream->quality;
+    printf("stream <\n"
            "  uri: \"%s\"\n"
-           "  quality {\n"
-           "    profile: \"%s\"\n    width: %d\n    height: %d\n"
-           "  }\n" // quality
-           "}\n",  // stream
-           msg->stream[i]->uri, qty->profile, qty->width, qty->height);
+           "  quality <\n"
+           "    profile: \"%s\"\n"
+           "    width: %d\n"
+           "    height: %d\n"
+           "    bitrate: %d\n"
+           "  >\n"
+           "  mime_type: \"%s\"\n"
+           "  content_length: %ld\n"
+           ">\n",
+           stream->uri, qty->profile, qty->width, qty->height,
+           qty->bitrate, stream->mime_type, stream->content_length);
   }
+}
+
+static void print_failed(JomielResponse const *msg) {
+  printf("status <\n"
+         "  code: %d\n"
+         "  error: %d\n"
+         "  http <\n"
+         "    code: %d\n"
+         "  >\n"
+         "  message: \"%s\"\n"
+         ">\n",
+         msg->status->code, msg->status->error, msg->status->http->code,
+         msg->status->message);
 }
 
 static void print_message(Jomiel const self, char const *status,
@@ -128,10 +158,7 @@ static void print_message(Jomiel const self, char const *status,
            msg->media->title, msg->media->identifier);
     foreach_stream(msg->media);
   } else {
-    fprintf(stderr,
-            "failed: code: %d, error: %d, http: %d\n    msg: '%s'\n",
-            msg->status->code, msg->status->error,
-            msg->status->http->code, msg->status->message);
+    print_failed(msg);
   }
 }
 
