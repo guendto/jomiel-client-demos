@@ -66,6 +66,8 @@ static void *inquiry_new(Jomiel const self, char const *uri,
   void *bytes = calloc(1, *len);
 
   jomiel_inquiry_pack(&inquiry, bytes);
+
+  to_hex(self, "send", (uint8_t *)bytes, *len);
   return bytes;
 }
 
@@ -74,9 +76,6 @@ Jomiel jutil_send_inquiry(Jomiel self) {
 
   size_t len;
   void *bytes = inquiry_new(self, uri, &len);
-
-  to_hex(self, "send", (uint8_t *)bytes, len);
-  print_status(self, "<send>");
 
   zframe_t *frame = zframe_new(bytes, len);
   zmsg_t *msg = zmsg_new();
