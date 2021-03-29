@@ -46,7 +46,7 @@ class Jomiel:
     def connect(self):
         re = self.opts.router_endpoint
         to = self.opts.connect_timeout
-        self.printStatus(f"<connect> {re} ({to})")
+        self.printStatus(f"<connect> {re} (timeout={to})")
         self.sck.connect(re)
 
     def sendInquiry(self, uri):
