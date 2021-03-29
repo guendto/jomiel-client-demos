@@ -16,14 +16,14 @@
 
 // Structures.
 
-typedef Jomiel__Protobuf__V1beta1__MediaResponse JomielMediaResponse;
-typedef Jomiel__Protobuf__V1beta1__MediaInquiry JomielMediaInquiry;
-typedef Jomiel__Protobuf__V1beta1__Response JomielResponse;
 typedef Jomiel__Protobuf__V1beta1__Inquiry JomielInquiry;
-typedef Jomiel__Protobuf__V1beta1__MediaResponse__Stream__StreamQuality
-  JomielStreamQuality;
-typedef Jomiel__Protobuf__V1beta1__MediaResponse__Stream
-  JomielStream;
+typedef Jomiel__Protobuf__V1beta1__Response JomielResponse;
+
+typedef Jomiel__Protobuf__V1beta1__MediaInquiry JomielMediaInquiry;
+
+typedef Jomiel__Protobuf__V1beta1__MediaResponse JomielMediaResponse;
+typedef Jomiel__Protobuf__V1beta1__MediaResponse__Stream JomielStream;
+typedef Jomiel__Protobuf__V1beta1__MediaResponse__Stream__StreamQuality JomielStreamQuality;
 
 // Macros.
 
