@@ -53,7 +53,8 @@ static void to_hex(Jomiel const self, char const *prefix,
   fprintf(stderr, "\n");
 }
 
-static void *inquiry(char const *uri, size_t *len) {
+static void *inquiry_new(Jomiel const self, char const *uri,
+                         size_t *len) {
   JomielMediaInquiry media = jomiel_media_inquiry_init;
   media.input_uri = (char *)uri;
 
@@ -72,7 +73,7 @@ Jomiel jutil_send_inquiry(Jomiel self) {
   char const *uri = poptGetArg(self.opts.ctx);
 
   size_t len;
-  void *bytes = inquiry(uri, &len);
+  void *bytes = inquiry_new(self, uri, &len);
 
   to_hex(self, "send", (uint8_t *)bytes, len);
   print_status(self, "<send>");
