@@ -94,16 +94,15 @@ Jomiel jutil_send_inquiry(Jomiel self) {
   free(bytes);
 
   int const send_result = zmsg_send(&msg, self.sck);
+  self.result = (send_result == 0);
 
-  zframe_destroy(&frame);
-  zmsg_destroy(&msg);
-
-  if (send_result != 0) {
+  if (self.result == false) {
     fprintf(stderr, "error: zmsg_send(): send_result=%d\n",
             send_result);
   }
+  zframe_destroy(&frame);
+  zmsg_destroy(&msg);
 
-  self.result = (send_result == 0);
   return self;
 }
 
