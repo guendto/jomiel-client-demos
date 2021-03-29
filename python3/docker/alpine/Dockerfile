@@ -8,28 +8,44 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM python:3.9-alpine
+
+# stage: bootstrap-image
+#
+FROM alpine:3 AS bootstrap-image
 
 WORKDIR /app
 
-COPY python3/requirements.txt .
-COPY python3/demo/ ./demo/
-
-COPY proto/ ./proto/
+COPY python3/pyproject.toml .
+COPY python3/setup.cfg .
+COPY python3/setup.py .
+COPY python3/src/ ./src/
 
 RUN set -eux \
     ; apk --update --no-cache --virtual .build_deps add \
-        linux-headers \
-        protobuf \
-        g++ \
-        # for bootstrap script
-        bash \
-    && ./proto/bin/bootstrap -p proto/ -l python -d demo/ \
-    && pip install --no-cache-dir -r requirements.txt \
-    && rm -rf proto/ requirements.txt \
-    && apk del .build_deps \
-    && apk add libzmq
+        py3-pip \
+    && pip wheel \
+        . \
+        --wheel-dir /app/wheels \
+        --no-deps \
+    && apk del .build_deps
 
-ENTRYPOINT ["python", "/app/demo"]
+# runtime-image
+
+# stage: runtime-image
+#
+FROM alpine:3 AS runtime-image
+
+WORKDIR /app
+
+COPY --from=bootstrap-image /app/wheels /wheels
+
+RUN set -eux \
+    ; apk --update --no-cache --virtual .build_deps add \
+        py3-pyzmq \
+        py3-pip \
+    && pip install --no-cache /wheels/*.whl \
+    && apk del py3-pip
+
+ENTRYPOINT ["jomiel-examples-demo"]
 
 CMD ["-h"]

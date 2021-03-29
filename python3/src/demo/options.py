@@ -2,51 +2,40 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-"""TODO."""
 from argparse import ArgumentDefaultsHelpFormatter
 from argparse import ArgumentParser
 
 
-def options_parse():
-    """Parse command line args
-
-    Returns:
-        obj: the populated namespace
-
-    """
-    parser = ArgumentParser(
-        prog="demo",
+def parse_options():
+    p = ArgumentParser(
         formatter_class=ArgumentDefaultsHelpFormatter,
+        prog="demo",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-D",
         "--print-config",
         help="Print configuration and exit",
         action="store_true",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-V",
         "--version-zmq",
         help="Display ZeroMQ version and exit",
         action="store_true",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-r",
         "--router-endpoint",
         metavar="<addr>",
         help="Specify the router endpoint address",
         default="tcp://localhost:5514",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-t",
         "--connect-timeout",
         metavar="<time>",
@@ -54,29 +43,22 @@ def options_parse():
             allowed to take""",
         default=30,
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-j",
         "--output-json",
         help="Print dumped messages in JSON",
         action="store_true",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "-q",
         "--be-terse",
         help="Be brief and to the point; dump interesting details only",
         action="store_true",
     )
-
-    parser.add_argument(
+    p.add_argument(
         "uri",
         metavar="<uri>",
         nargs="*",
         help="the URIs to parse",
     )
-
-    return parser.parse_args()
-
-
-# vim: set ts=4 sw=4 tw=72 expandtab:
+    return p.parse_args()
