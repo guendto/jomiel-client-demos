@@ -128,6 +128,19 @@ static void foreach_stream(JomielMediaResponse const *msg) {
   }
 }
 
+static void print_failed(JomielResponse const *msg) {
+  printf("status <\n"
+         "  code: %d\n"
+         "  error: %d\n"
+         "  http <\n"
+         "    code: %d\n"
+         "  >\n"
+         "  message: \"%s\"\n"
+         ">\n",
+         msg->status->code, msg->status->error, msg->status->http->code,
+         msg->status->message);
+}
+
 static void print_message(Jomiel const self, char const *status,
                           JomielResponse const *msg) {
   print_status(self, status);
@@ -138,10 +151,7 @@ static void print_message(Jomiel const self, char const *status,
            msg->media->title, msg->media->identifier);
     foreach_stream(msg->media);
   } else {
-    fprintf(stderr,
-            "failed: code: %d, error: %d, http: %d\n    msg: '%s'\n",
-            msg->status->code, msg->status->error,
-            msg->status->http->code, msg->status->message);
+    print_failed(msg);
   }
 }
 
