@@ -41,7 +41,7 @@ ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/
 ARG PKT_URI=https://api.github.com/repos/fsprojects/Paket/releases/latest
 
 RUN set -eux \
-    # We want to use protobuf-compiler 3.12 from buster-backports.
+    # We want protobuf-compiler 3.12 from buster-backports.
     #
     ; echo 'deb http://deb.debian.org/debian buster-backports main' \
         >> /etc/apt/sources.list \
