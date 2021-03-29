@@ -117,14 +117,21 @@ static void dump_terse_response(JomielResponse const *msg) {
 
 static void foreach_stream(JomielMediaResponse const *msg) {
   for (size_t i = 0; i < msg->n_stream; ++i) {
-    JomielStreamQuality const *qty = msg->stream[i]->quality;
-    printf("stream {\n"
+    JomielStream const *stream = msg->stream[i];
+    JomielStreamQuality const *qty = stream->quality;
+    printf("stream <\n"
            "  uri: \"%s\"\n"
-           "  quality {\n"
-           "    profile: \"%s\"\n    width: %d\n    height: %d\n"
-           "  }\n" // quality
-           "}\n",  // stream
-           msg->stream[i]->uri, qty->profile, qty->width, qty->height);
+           "  quality <\n"
+           "    profile: \"%s\"\n"
+           "    width: %d\n"
+           "    height: %d\n"
+           "    bitrate: %d\n"
+           "  >\n"
+           "  mime_type: \"%s\"\n"
+           "  content_length: %ld\n"
+           ">\n",
+           stream->uri, qty->profile, qty->width, qty->height,
+           qty->bitrate, stream->mime_type, stream->content_length);
   }
 }
 
