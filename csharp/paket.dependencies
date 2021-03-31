@@ -2,6 +2,6 @@ source https://api.nuget.org/v3/index.json
 
 storage: symlink
 framework: netcore3.1, netstandard2.0, netstandard2.1
+nuget docopt.net 0.6.1.11
 nuget Google.Protobuf
-nuget docopt.net
 nuget ZeroMQ
