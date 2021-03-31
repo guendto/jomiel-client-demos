@@ -4,5 +4,4 @@ storage: symlink
 framework: netcore3.1, netstandard2.0, netstandard2.1
 nuget Google.Protobuf
 nuget docopt.net
-nuget log4net
 nuget ZeroMQ
