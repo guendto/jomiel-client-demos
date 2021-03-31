@@ -29,6 +29,7 @@ project "demo"
         "src/proto/Status.cs",
         "src/proto/Media.cs",
         "src/jomiel.cs",
+        "src/runner.cs",
         "src/demo.cs"
     }
 
