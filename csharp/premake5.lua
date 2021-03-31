@@ -30,6 +30,7 @@ project "demo"
         "src/proto/Media.cs",
         "src/jomiel.cs",
         "src/runner.cs",
+        "src/app.cs"
         "src/demo.cs"
     }
 
