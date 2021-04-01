@@ -1,0 +1,7 @@
+docopt.net
+Google.Protobuf
+Newtonsoft.Json
+ZeroMQ
+System.Buffers
+System.Memory
+System.Runtime.CompilerServices.Unsafe
