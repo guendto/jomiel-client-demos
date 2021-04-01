@@ -1,0 +1,17 @@
+REFERENCES: STRICT
+STORAGE: SYMLINK
+RESTRICTION: == net472
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    docopt.net (0.6.1.11)
+    Google.Protobuf (3.15.6)
+      System.Memory (>= 4.5.3)
+    Newtonsoft.Json (13.0.1)
+    System.Buffers (4.5.1)
+    System.Memory (4.5.4)
+      System.Buffers (>= 4.5.1)
+      System.Numerics.Vectors (>= 4.5)
+      System.Runtime.CompilerServices.Unsafe (>= 4.5.3)
+    System.Numerics.Vectors (4.5)
+    System.Runtime.CompilerServices.Unsafe (5.0)
+    ZeroMQ (4.1.0.31)

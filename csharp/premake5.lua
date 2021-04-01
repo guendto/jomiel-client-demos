@@ -3,7 +3,7 @@
 -- jomiel-examples
 --
 -- Copyright
---  2019-2020 Toni Gündoğdu
+--  2019-2021 Toni Gündoğdu
 --
 --
 -- SPDX-License-Identifier: Apache-2.0
@@ -28,30 +28,9 @@ project "demo"
         "src/proto/Message.cs",
         "src/proto/Status.cs",
         "src/proto/Media.cs",
-        "src/Jomiel.cs",
-        "src/demo.cs"
-    }
-
-    libdirs {
-        "./packages/Google.Protobuf/lib/netstandard2.0/",
-        "./packages/docopt.net/lib/netstandard1.5/",
-        "./packages/log4net/lib/netstandard2.0/",
-        "./packages/ZeroMQ/lib/net40/",
-        "./packages/System.Memory/lib/netstandard2.0",
-        "./packages/System.Runtime.CompilerServices.Unsafe/lib/netstandard2.0",
-        "./packages/System.Buffers/lib/netstandard2.0"
-    }
-
-    links {
-        "Google.Protobuf.dll",
-        "DocoptNet.dll",
-        "log4net.dll",
-        "ZeroMQ.dll",
-        "System.dll",
-        "System.Xml.dll",
-        "System.Memory.dll",
-        "System.Runtime.CompilerServices.Unsafe.dll",
-        "System.Buffers.dll"
+        "src/jomiel.cs",
+        "src/runner.cs",
+        "src/app.cs"
     }
 
     filter "configurations:debug"
