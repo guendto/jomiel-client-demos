@@ -4,25 +4,33 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+use serde::Serialize;
 use structopt::StructOpt;
 
-#[derive(StructOpt, Debug)]
+#[derive(StructOpt, Serialize)]
 #[structopt(name = "demo")]
 pub struct Options {
-    /// Specify maximum time in seconds for the connection allowed to take
-    #[structopt(
-        name = "time",
-        short = "t",
-        long = "connect-timeout",
-        default_value = "30"
-    )]
-    pub connect_timeout: i64,
+    /// Print configuration values and exit
+    #[structopt(short = "D", long = "print-config")]
+    pub print_config: bool,
+
+    /// Display ZeroMQ version and exit
+    #[structopt(short = "V", long = "version-zmq")]
+    pub version_zmq: bool,
+
+    /// Print dumped messages in JSON
+    #[structopt(short = "j", long = "output-json")]
+    pub output_json: bool,
+
+    /// Use more compact representation of JSON
+    #[structopt(short = "c", long = "compact-json")]
+    pub compact_json: bool,
 
     /// Specify the router endpoint address
     #[structopt(
@@ -33,19 +41,15 @@ pub struct Options {
     )]
     pub router_endpoint: String,
 
-    /// Print configuration values and exit
-    #[structopt(short = "D", long = "print-config")]
-    pub print_config: bool,
+    /// Specify maximum time in seconds for the connection allowed to take
+    #[structopt(
+        name = "time",
+        short = "t",
+        long = "connect-timeout",
+        default_value = "30"
+    )]
+    pub connect_timeout: i64,
 
-    /// Display ZeroMQ version and exit
-    #[structopt(short = "V", long = "version-zmq")]
-    pub version_zmq: bool,
-
-    /*
-    /// Print dumped messages in JSON
-    #[structopt(short = "j", long = "output-json")]
-    pub output_json: bool,
-    */
     /// Be brief and to the point; dump interesting details only
     #[structopt(short = "q", long = "be-terse")]
     pub be_terse: bool,
