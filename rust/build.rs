@@ -4,7 +4,7 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2020 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -13,6 +13,7 @@
 extern crate glob;
 extern crate protoc_rust;
 
+use protoc_rust::Customize;
 use std::iter::FromIterator;
 
 fn main() {
@@ -25,6 +26,10 @@ fn main() {
         .out_dir("src/proto")
         .inputs(&input_files)
         .include("../proto")
+        .customize(Customize {
+            serde_derive: Some(true),
+            ..Default::default()
+        })
         .run()
         .expect("protoc");
 }
@@ -44,5 +49,3 @@ pub fn glob_simple(pattern: &str) -> Vec<String> {
     r.sort();
     r
 }
-
-// vim: set ts=4 sw=4 tw=72 expandtab:
