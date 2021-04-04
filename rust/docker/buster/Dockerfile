@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM rust:1.50-slim AS bootstrap-image
+FROM rust:1.51-slim AS bootstrap-image
 
 WORKDIR /app
 
@@ -50,8 +50,8 @@ RUN set -eux \
         libzmq5 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=compile-image /app/target/release/demo /
+COPY --from=compile-image /app/target/release/demo /app/demo
 
-ENTRYPOINT ["/demo"]
+ENTRYPOINT ["/app/demo"]
 
 CMD ["-h"]
