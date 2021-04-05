@@ -4,17 +4,12 @@
  * jomiel-examples
  *
  * Copyright
- *  2019-2021 Toni Gündoğdu
+ *  2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-mod demo;
-mod proto;
-
-use demo::runner;
-
-fn main() {
-    runner::main();
-}
+pub mod media;
+pub mod message;
+pub mod status;
