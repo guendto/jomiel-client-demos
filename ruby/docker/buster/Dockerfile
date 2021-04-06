@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019-2020 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -15,7 +15,7 @@ WORKDIR /app
 COPY ruby/Gemfile.lock .
 COPY ruby/Gemfile .
 
-COPY ruby/lib/ ./lib/
+COPY ruby/src/ ./src/
 COPY ruby/bin/ ./bin/
 
 COPY proto/ ./proto/
@@ -26,21 +26,24 @@ ENV BUILD_DEPS \
         build-essential
 
 RUN set -eux \
+    # We want protobuf-compiler 3.12 from buster-backports.
+    #
+    ; echo 'deb http://deb.debian.org/debian buster-backports main' \
+        >> /etc/apt/sources.list \
     # Install the build deps.
-    ; apt-get -qq update \
-    && apt-get -qq --no-install-recommends install $BUILD_DEPS \
+    && apt-get -qq update \
+    && apt-get -t buster-backports -qq --no-install-recommends install \
+        $BUILD_DEPS \
     # Install the ruby runtime modules.
-    && ./proto/bin/bootstrap -p proto/ -l ruby -d lib/ \
+    && ./proto/bin/bootstrap -p proto/ -l ruby -d src/ \
     && bundler install \
     # Cleanup (stage #1).
     && rm -rf proto/ Gemfile Gemfile.lock \
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
     # Install the required runtime.
-    # Note: 'libzmq5' package is not enough (why? ruby related?)
-    #           ("The lib zmq library (or DLL) could not be loaded")
-    # && apt-get -qq --no-install-recommends install libzmq5 \
-    && apt-get -qq --no-install-recommends install libzmq3-dev \
+    && apt-get -t buster-backports -qq --no-install-recommends install \
+        libzmq3-dev \
     # Cleanup (stage #2).
     && rm -rf /var/lib/apt/lists/*
 

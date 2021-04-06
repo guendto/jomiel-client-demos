@@ -4,6 +4,6 @@
 
 ```shell
 bundler install
-../proto/bin/bootstrap -p ../proto/ -l ruby -d lib/
+../proto/bin/bootstrap -p ../proto/ -l ruby -d src/
 ./bin/demo [args...]
 ```
