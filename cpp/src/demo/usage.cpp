@@ -17,12 +17,12 @@ const char *usage =
 Options:
     -h --help                       Print this help and exit
     -D --print-config               Print configuration values and exit
+    -V --version-zmq                Print ZeroMQ version and exit
     -r --router-endpoint <addr>     Specify the router endpoint address
                                      [default: tcp://localhost:5514]
     -t --connect-timeout <time>     Specify maximum time in seconds for
                                      the connection allowed to take
                                      [default: 30]
-    -V --version-zmq                Print ZeroMQ version and exit
     -j --output-json                Print dumped messages in JSON
     -c --compact-json               Use more compact representation of
                                      JSON
