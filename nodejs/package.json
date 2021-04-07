@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "dependencies": {
     "docopt": "^0.6.2",
     "js-yaml": "^4.0.0",
