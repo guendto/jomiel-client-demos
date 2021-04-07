@@ -11,40 +11,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const parseOptions = () => {
-  const cmdr = require("commander");
+const USAGE = `
+Usage:
+    demo [-h] -p <path> [-w <wrapper>] [-o <path>]
 
-  cmdr
-    .usage("[options]")
-    .requiredOption(
-      "-p, --proto-dir <path>",
-      "Specify path to the .proto files"
-    )
-    .option(
-      "-w, --wrapper <wrapper>",
-      "Use specified wrapper; default (cjs+amd), es6, commonjs, amd, closure",
-      "default"
-    )
-    .option(
-      "-o, --output-file <path>",
-      "Write output to the specified file",
-      "src/messages.js"
-    );
+Options:
+    -h --help                      Print this help and exit
+    -p --proto-dir <path>          Specify path to the .proto files
+    -w --wrapper <wrapper>         Use specified wrapper; default
+                                    (cjs+amd), es6, commonjs, amd,
+                                    closure [default: default]
+    -o --output-file <path>        Write output to the specified file
+                                    [default: src/messages.js]`;
 
-  return cmdr.parse();
-};
-
-const opts = parseOptions();
+const opts = require("docopt").docopt(USAGE);
 
 const { join } = require("path");
 const glob = require("glob");
 
-glob(join(opts.protoDir, "**/*.proto"), (err, files) => {
+glob(join(opts["--proto-dir"], "**/*.proto"), (err, files) => {
   if (err) throw err;
 
   if (files.length == 0) {
     console.log(
-      `error: ${opts.protoDir}: unable to find any .proto files`
+      `error: ${opts["--proto-dir"]}: unable to find any .proto files`
     );
     process.exit(1);
   }
@@ -56,14 +46,14 @@ glob(join(opts.protoDir, "**/*.proto"), (err, files) => {
     "--target",
     "static-module",
     "--wrap",
-    opts.wrapper,
+    opts["--wrapper"],
     "--out",
-    opts.outputFile,
+    opts["--output-file"],
     "--no-verify",
     "--no-convert",
     "--no-delimited",
     "--no-beautify",
-    "--no-comments",
+    "--no-comments"
   ];
 
   // console.log(pbjs_args.concat(files));
