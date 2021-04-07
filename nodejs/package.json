@@ -18,10 +18,10 @@
     "glob": "^7.1.6",
     "jsdoc": "^3.6.6",
     "minimist": "^1.2.5",
-    "prettier-eslint-cli": "^5.0.0",
-    "semver": "^7.3.4",
+    "prettier-eslint-cli": "^5.0.1",
+    "semver": "^7.3.5",
     "tmp": "^0.2.1",
-    "uglify-js": "^3.12.5"
+    "uglify-js": "^3.13.3"
   },
   "scripts": {
     "gen": "./bin/gen-static -p ../proto -w commonjs",
