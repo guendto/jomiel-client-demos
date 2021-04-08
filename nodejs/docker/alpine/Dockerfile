@@ -12,12 +12,9 @@ FROM node:14-alpine
 
 WORKDIR /app
 
+COPY nodejs/package.json .
 COPY nodejs/bin/ ./bin/
 COPY nodejs/src/ ./src/
-
-COPY nodejs/pnpm-lock.yaml .
-COPY nodejs/package.json .
-
 COPY proto/ ./proto/
 
 RUN set -eux \
