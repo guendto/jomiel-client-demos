@@ -4,6 +4,9 @@
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
   "main": "src/main.js",
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "docopt": "^0.6.2",
     "js-yaml": "^4.0.0",
