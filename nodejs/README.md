@@ -1,9 +1,25 @@
-# Node example
+# Nodejs example
 
-## Building and running
+## Building
+
+With npm:
 
 ```shell
-pnpm i    # Install deps.
-pnpm gen  # Compile protobuf declarations for jomiel messages.
+npm i        # Install deps.
+npm run gen  # Compile protobuf declarations for jomiel messages.
+```
+
+With [pnpm]:
+
+```shell
+pnpm i
+pnpm gen
+```
+
+[pnpm]: https://pnpm.io/
+
+## Running
+
+```shell
 node . [args ...]
 ```
