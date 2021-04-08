@@ -23,7 +23,7 @@ Some examples have extra features, like additional output options.
 |  [Java](https://github.com/guendto/jomiel-examples/blob/master/java)      |             |
 |  [Kotlin](https://github.com/guendto/jomiel-examples/blob/master/kotlin)  |             |
 |  [Lua](https://github.com/guendto/jomiel-examples/blob/master/lua5)       | version 5   |
-|  [Node](https://github.com/guendto/jomiel-examples/blob/master/nodejs)    |             |
+|  [Node](https://github.com/guendto/jomiel-examples/blob/master/nodejs)    | Node.js 14  |
 |  [Perl](https://github.com/guendto/jomiel-examples/blob/master/perl5)     | version 5   |
 |  [Php](https://github.com/guendto/jomiel-examples/blob/master/php)        | version 7/8 |
 |  [Python](https://github.com/guendto/jomiel-examples/blob/master/python3) | version 3   |
