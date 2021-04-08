@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
-  "main": "src/index.js",
+  "main": "src/main.js",
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
-    "commander": "^6.2.1",
+    "docopt": "^0.6.2",
+    "js-yaml": "^4.0.0",
     "protobufjs": "^6.10.2",
     "zeromq": "^6.0.0-beta.6"
   },
@@ -17,15 +21,16 @@
     "glob": "^7.1.6",
     "jsdoc": "^3.6.6",
     "minimist": "^1.2.5",
-    "prettier-eslint-cli": "^5.0.0",
-    "semver": "^7.3.4",
+    "prettier-eslint-cli": "^5.0.1",
+    "semver": "^7.3.5",
     "tmp": "^0.2.1",
-    "uglify-js": "^3.12.5"
+    "uglify-js": "^3.13.3"
   },
   "scripts": {
     "gen": "./bin/gen-static -p ../proto -w commonjs",
-    "lint": "prettier-eslint --print-width 72 --write \"lib/*.js\"",
+    "lint": "prettier-eslint --print-width 72 --write bin/gen-static \"src/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "distclean": "rm -rf src/messages.js node_modules/",
     "clean": "rm -f src/messages.js"
   }
 }
