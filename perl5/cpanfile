@@ -7,5 +7,5 @@ requires 'YAML', '1.30';
 requires 'ZMQ::FFI', '1.17';
 
 on 'develop' => sub {
-    recommends 'Perl::Tidy', '20210402';
+    requires 'Perl::Tidy', '20210402';
 };
