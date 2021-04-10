@@ -1,11 +1,22 @@
 # Perl5 example
 
+## Notable differences to other examples
+
+- Output defaults to YAML
+
+Not implemented:
+
+- `--connect-timeout`
+
 ## Building and running
 
 ```shell
 cpanm --notest --quiet Carton
-carton
-carton exec ./bin/demo [args...]
-# Alternatively:
-perl -I local/lib/perl5 bin/demo [args...]
+carton install --without develop
+./bin/demo --static-gen --proto-dir ../proto
+./bin/demo [args ...]
 ```
+
+See [carton].
+
+[carton]: https://metacpan.org/pod/Carton

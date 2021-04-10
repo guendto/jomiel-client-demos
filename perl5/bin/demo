@@ -1,79 +1,21 @@
 #!/usr/bin/env perl
+#
 # -*- coding: utf-8 -*-
 #
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
 use warnings;
 use strict;
 
-use v5.10;
+use lib './local/lib/perl5';
+use lib './src';
 
-use Getopt::Long qw(:config bundling);
-use Pod::Usage qw(pod2usage);
-use YAML qw(Dump);
-use ZMQ::FFI;
+use Demo::Runner;
 
-require "./lib/Jomiel.pm";
-
-my %opts = (
-  'print-config'    => 0,
-  'router-endpoint' => 'tcp://localhost:5514',
-  'version-zmq'     => 0,
-  'be-terse'        => 0,
-);
-
-GetOptions(\%opts, 'print-config|D', 'router-endpoint|r=s',
-  'version-zmq|V', 'be-terse|q', 'help|h')
-  or exit(1);
-
-pod2usage(0)
-  if $opts{help};
-
-# --print-config
-#
-say Dump \%opts and exit(0)
-  if $opts{'print-config'};
-
-my $jomiel = Jomiel->new({
-  opts => \%opts
-});
-
-# --version-zmq
-#
-$jomiel->print_zmq_version()
-  if $opts{'version-zmq'};
-
-say "error: no input URI given" and exit(1)
-  if scalar @ARGV == 0;
-
-$jomiel->connect;
-for (@ARGV) {
-  $jomiel->inquire($_);
-}
-
-__END__
-
-=head1 NAME
-
-demo
-
-=head1 SYNOPSIS
-
-demo [options] <uri> ...
-
- -h, --help                     Print help and exit
- -D, --print-config             Print configuration values and exit
- -r, --router-endpoint=<addr>   Specify the router endpoint address
- -V, --version-zmq              Display ZeroMQ version and exit
- -q, --be-terse
-                                Be brief and to the point; dump
-                                interesting details only
-
-=cut
+Demo::Runner::main();
