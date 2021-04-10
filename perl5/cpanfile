@@ -1,8 +1,8 @@
 requires 'perl', '5.28.1';
 requires 'Getopt::Long::Descriptive', '0.109';
+requires 'Google::ProtocolBuffers::Dynamic', '0.31';
 requires 'ZMQ::FFI', '1.17';
 requires 'YAML', '1.30';
-requires 'Google::ProtocolBuffers::Dynamic', '0.30';
 
 on 'develop' => sub {
     recommends 'Perl::Tidy', '20210111';
