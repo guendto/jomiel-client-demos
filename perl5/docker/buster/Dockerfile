@@ -3,7 +3,7 @@
 # jomiel-examples
 #
 # Copyright
-#  2019 Toni Gündoğdu
+#  2019-2021 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -17,28 +17,29 @@ COPY perl5/bin/demo ./bin/demo
 COPY perl5/cpanfile.snapshot .
 COPY perl5/cpanfile .
 
-COPY perl5/lib/ ./lib/
+COPY perl5/src/ ./src/
 COPY proto/ ./proto/
 
-ENV PERL_CPANM_OPT "--notest --quiet --force"
-
 ENV BUILD_DEPS \
-        libprotobuf-dev \
-        build-essential \
-        ca-certificates \
-        libprotoc-dev \
-        libzmq3-dev \
-        libssl-dev \
-        openssl
+    protobuf-compiler \
+    libprotobuf-dev \
+    build-essential \
+    ca-certificates \
+    libprotoc-dev \
+    libzmq3-dev \
+    libssl-dev \
+    openssl
 
 RUN set -eux \
     # Install the build deps.
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install $BUILD_DEPS \
-    && sed -i 's/\.\.\/proto/\.\/proto/' lib/Jomiel.pm \
-    # Install the perl runtime deps.
+    # Install carton.
     && cpanm --notest --quiet Carton \
-    && carton \
+    # Install the perl runtime deps.
+    && carton install --without develop \
+    # Generate protobuf bindings for the jomiel messages.
+    && carton exec ./bin/demo --static-gen --proto-dir ./proto \
     # Cleanup (stage #1).
     && apt-get -qq purge $BUILD_DEPS \
     && apt-get -qq autoremove \
@@ -50,6 +51,6 @@ RUN set -eux \
     # Cleanup (stage #2).
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["perl", "-Ilocal/lib/perl5", "./bin/demo"]
+ENTRYPOINT ["./bin/demo"]
 
 CMD ["-h"]
