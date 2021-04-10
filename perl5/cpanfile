@@ -1,3 +1,4 @@
+requires 'perl', '5.28.1';
 requires 'IO::Socket::SSL', '2.069';
 requires 'ZMQ::FFI', '1.17';
 requires 'YAML', '1.30';
