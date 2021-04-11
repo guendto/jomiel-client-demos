@@ -3,6 +3,10 @@
 ## Building and running
 
 ```shell
-for i in {lua-protobuf,argparse,serpent,log4l,lzmq}; do luarocks install $i || break; done
+luarocks build --tree ./local --only-deps ./demo-0.1.0-1.rockspec
 ./bin/demo [args...]
 ```
+
+See [luarocks].
+
+[luarocks]: https://luarocks.org
