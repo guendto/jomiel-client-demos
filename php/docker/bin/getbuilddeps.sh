@@ -14,9 +14,11 @@
 # NOTES:
 # - 'bash' is installed for the bootstrap script
 #
+
+# $1 = php7 or php8
 apk --update --no-cache --virtual .build_deps add \
+    $1-dev \
     zeromq-dev \
-    $1\
     libc-dev \
     protobuf \
     make \
