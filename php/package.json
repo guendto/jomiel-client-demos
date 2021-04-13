@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "format": "prettier --print-width 72 --write \"lib/**/*.php\" \"bin/demo\""
+    "prettier": "prettier --print-width 72 -w \"src/demo/*.php\" \"bin/demo\""
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.16.2",
