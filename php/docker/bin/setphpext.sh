@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# -*- coding: utf-8 -*-
+#
+# jomiel-examples
+#
+# Copyright
+#  2021 Toni Gündoğdu
+#
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# See also:
+# - docker/Notes.md
+#
+
+# $1 = php7 or php8
+export PHPINIDIR=`php -i \
+    | grep -i 'conf.* path' \
+    | awk '{print$NF}'` \
+  && export PHPINI=$PHPINIDIR/php.ini \
+  && cp $PHPINI-development $PHPINI \
+  && echo "# jomiel-examples: dynamic extensions" >> $PHPINI \
+  && echo "extension_dir=\"/usr/lib/$1/modules\"" >> $PHPINI \
+  && echo "extension=zmq" >> $PHPINI

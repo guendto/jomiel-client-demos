@@ -1,26 +1,31 @@
 {
-    "name": "jomiel-examples/demo",
-    "description": "jomiel examples php demo",
+    "name": "jomiel-examples/php",
     "license": "Apache-2.0",
     "require": {
-        "google/protobuf": "^3.8.0",
-        "corneltek/getoptionkit": "^2.6",
-        "monolog/monolog": "^1.24",
-        "ext-zmq": "*",
-        "php": ">=7.4 <9.0"
+        "php": ">=7.4 <9.0",
+        "docopt/docopt": "^1.0",
+        "google/protobuf": "^3.15"
     },
     "autoload": {
         "classmap": [
-            "lib/"
+            "src/"
         ],
         "files": [
-            "lib/Options.php",
-            "lib/Logger.php"
+            "src/demo/jomiel.php",
+            "src/demo/options.php",
+            "src/demo/runner.php",
+            "src/demo/util.php"
         ]
     },
     "config": {
         "classmap-authoritative": true,
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "require-dev": {
+        "overtrue/phplint": "^2.3",
+        "phpmd/phpmd": "^2.9",
+        "phpstan/phpstan": "^0.12.83",
+        "vimeo/psalm": "^4.7"
     }
 }

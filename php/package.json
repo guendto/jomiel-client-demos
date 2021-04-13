@@ -1,9 +1,18 @@
 {
-  "devDependencies": {
-    "@prettier/plugin-php": "^0.12.0",
-    "prettier": "^1.19.1"
-  },
   "scripts": {
-    "format": "prettier --print-width 72 --write \"lib/**/*.php\" \"bin/demo\""
+    "prettier": "prettier --print-width 72 -w \"src/demo/*.php\" \"bin/demo\"",
+    "lint": "./vendor/bin/phplint",
+    "lint-stan": "./vendor/bin/phpstan analyze src/demo/ bin/",
+    "lint-md-uc": "./vendor/bin/phpmd src/demo/ text unusedcode",
+    "lint-md-cc": "./vendor/bin/phpmd src/demo/ text cleancode",
+    "lint-md-cs": "./vendor/bin/phpmd src/demo/ text codesize",
+    "lint-md-n": "./vendor/bin/phpmd src/demo/ text naming",
+    "lint-md-d": "./vendor/bin/phpmd src/demo/ text design",
+    "lint-ps-si": "./vendor/bin/psalm --show-info=true",
+    "lint-ps": "./vendor/bin/psalm"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.16.2",
+    "prettier": "^2.2.1"
   }
 }

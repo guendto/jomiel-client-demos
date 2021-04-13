@@ -5,33 +5,19 @@
  * jomiel-examples
  *
  * Copyright
- *  2019 Toni Gündoğdu
+ *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+error_reporting(E_ALL);
+
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use function Demo\opts_init;
-use function Demo\log_init;
-use Demo\JomielClass;
+use function Demo\Runner\main;
 
-$opts = opts_init($argv);
-$args = $opts->getArguments();
-
-if (empty($args)) {
-    echo "error: no input URI given\n";
-    die(1);
-}
-
-$lg = log_init();
-$jomiel = JomielClass::create($lg, $opts);
-$jomiel->connect();
-
-foreach ($args as $arg) {
-    $jomiel->inquire($arg);
-}
+main();
 
 
 ?>

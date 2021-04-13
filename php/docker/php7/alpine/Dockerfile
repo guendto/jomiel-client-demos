@@ -11,32 +11,35 @@
 
 # See also Notes.md in php/docker/
 #
-FROM php:7.4-cli-alpine
+FROM php:7-cli-alpine
 
 WORKDIR /app
 
 COPY php/docker/bin/ ./docker/bin/
+COPY proto/ ./proto/
+
 COPY php/bin/demo ./bin/demo
-COPY php/lib/ ./lib/
+COPY php/src/ ./src/
 
 COPY php/composer.json .
 COPY php/composer.lock .
 
-COPY proto/ ./proto/
-
 RUN set -euxo pipefail \
     # Install build deps.
-    && sh ./docker/bin/getbuilddeps.sh php7-dev\
+    ; sh ./docker/bin/getbuilddeps.sh php7 \
     # Download and install php-zmq from git repo.
-    && sh ./docker/bin/getphpzmq.sh \
+    # - commented out (install from alpine repo).
+    # && sh ./docker/bin/getphpzmq.sh \
+    # Enable extensions in php.ini
+    && sh ./docker/bin/setphpext.sh php7 \
+    # Install runtime deps.
+    && sh ./docker/bin/getrtdeps.sh php7 \
     # Produce protobuf declarations.
-    && ./proto/bin/bootstrap -p proto/ -l php -d lib/proto/ \
+    && ./proto/bin/bootstrap -p proto/ -l php -d src/build/gen/ \
     # Download the latest composer.
     && sh ./docker/bin/getcomposer.sh \
     # Install the php deps.
-    && php ./composer.phar install -q --no-cache \
-    # Install runtime deps.
-    && sh ./docker/bin/getrtdeps.sh \
+    && php ./composer.phar install -q --no-cache --no-dev \
     # Clean up.
     && sh ./docker/bin/cleanup.sh
 
