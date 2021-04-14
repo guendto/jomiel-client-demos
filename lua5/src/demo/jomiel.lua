@@ -17,17 +17,17 @@ local DkJSON = require 'dkjson'
 local Poller = require 'lzmq.poller'
 local Zmq = require 'lzmq'
 
-local pkg_path = 'jomiel.protobuf.v1beta1'
 local Protoc = require 'protoc'
 local Pb = require 'pb'
 
+local PkgPath = 'jomiel.protobuf.v1beta1'
 Jomiel = Class('Jomiel')
 
 local function loadProtoFiles(options)
   local protoc = Protoc.new()
   protoc.include_imports = true
   protoc:addpath(options.proto_dir)
-  protoc:loadfile(pkg_path:gsub('%.', '/') .. '/message.proto')
+  protoc:loadfile(PkgPath:gsub('%.', '/') .. '/message.proto')
   --[[
   assert(Pb.type 'jomiel.protobuf.v1beta1.Inquiry')
   assert(Pb.type 'jomiel.protobuf.v1beta1.MediaInquiry')
@@ -68,7 +68,7 @@ function Jomiel:_sendInquiry(uri)
   if self.opts.be_terse == false then
     self:_printMessage('<send>', msg)
   end
-  local bytes = Pb.encode(pkg_path .. '.Inquiry', msg)
+  local bytes = Pb.encode(PkgPath .. '.Inquiry', msg)
   self.sck:send(bytes)
 end
 
@@ -86,7 +86,7 @@ function Jomiel:_receiveResponse()
   poller:add(self.sck, Zmq.POLLIN, function()
     local bytes = self.sck:recv()
     -- printSerialized(bytes)
-    local msg = Pb.decode(pkg_path .. '.Response', bytes)
+    local msg = Pb.decode(PkgPath .. '.Response', bytes)
     self:_dumpResponse(msg)
   end)
 
@@ -97,7 +97,7 @@ function Jomiel:_receiveResponse()
 end
 
 function Jomiel:_dumpResponse(msg)
-  local lookup_path = pkg_path .. '.StatusCode'
+  local lookup_path = PkgPath .. '.StatusCode'
 
   local status_code = Pb.enum(lookup_path, msg.status.code)
   local status_ok = Pb.enum(lookup_path, 'STATUS_CODE_OK')
