@@ -11,13 +11,13 @@
 --
 
 local function dump_config(opts)
-  local lyaml = require 'lyaml/init'
-  io.write(lyaml.dump({ opts }))
+  local YAML = require 'lyaml/init'
+  io.write(YAML.dump({ opts }))
 end
 
 local function print_zmq_version()
-  local zmq = require 'lzmq'
-  print('ZeroMQ version ' .. table.concat(zmq.version(), '.'))
+  local ZMQ = require 'lzmq'
+  print('ZeroMQ version ' .. table.concat(ZMQ.version(), '.'))
 end
 
 local Runner = {}
