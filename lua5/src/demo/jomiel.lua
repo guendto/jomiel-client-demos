@@ -18,7 +18,7 @@ local Poller = require 'lzmq.poller'
 local ZMQ = require 'lzmq'
 
 local Protoc = require 'protoc'
-local Pb = require 'pb'
+local PB = require 'pb'
 
 local PkgPath = 'jomiel.protobuf.v1beta1'
 Jomiel = Class('Jomiel')
@@ -29,11 +29,11 @@ local function loadProtoFiles(options)
   protoc:addpath(options.proto_dir)
   protoc:loadfile(PkgPath:gsub('%.', '/') .. '/message.proto')
   --[[
-  assert(Pb.type 'jomiel.protobuf.v1beta1.Inquiry')
-  assert(Pb.type 'jomiel.protobuf.v1beta1.MediaInquiry')
-  assert(Pb.type 'jomiel.protobuf.v1beta1.Response')
-  assert(Pb.type 'jomiel.protobuf.v1beta1.MediaResponse')
-  assert(Pb.type 'jomiel.protobuf.v1beta1.StatusCode')
+  assert(PB.type 'jomiel.protobuf.v1beta1.Inquiry')
+  assert(PB.type 'jomiel.protobuf.v1beta1.MediaInquiry')
+  assert(PB.type 'jomiel.protobuf.v1beta1.Response')
+  assert(PB.type 'jomiel.protobuf.v1beta1.MediaResponse')
+  assert(PB.type 'jomiel.protobuf.v1beta1.StatusCode')
   ]]--
 end
 
@@ -68,14 +68,14 @@ function Jomiel:_sendInquiry(uri)
   if self.opts.be_terse == false then
     self:_printMessage('<send>', msg)
   end
-  local bytes = Pb.encode(PkgPath .. '.Inquiry', msg)
+  local bytes = PB.encode(PkgPath .. '.Inquiry', msg)
   self.sck:send(bytes)
 end
 
 --[[
 local function printSerialized(bytes)
   local len = string.len(bytes)
-  local hex = Pb.tohex(bytes)
+  local hex = PB.tohex(bytes)
   io.stderr:write(string.format('<recv>: [%d] %s\n', len, hex))
 end
 ]]--
@@ -86,7 +86,7 @@ function Jomiel:_receiveResponse()
   poller:add(self.sck, ZMQ.POLLIN, function()
     local bytes = self.sck:recv()
     -- printSerialized(bytes)
-    local msg = Pb.decode(PkgPath .. '.Response', bytes)
+    local msg = PB.decode(PkgPath .. '.Response', bytes)
     self:_dumpResponse(msg)
   end)
 
@@ -99,8 +99,8 @@ end
 function Jomiel:_dumpResponse(msg)
   local lookup_path = PkgPath .. '.StatusCode'
 
-  local status_code = Pb.enum(lookup_path, msg.status.code)
-  local status_ok = Pb.enum(lookup_path, 'STATUS_CODE_OK')
+  local status_code = PB.enum(lookup_path, msg.status.code)
+  local status_ok = PB.enum(lookup_path, 'STATUS_CODE_OK')
 
   local status = '<recv>'
 
