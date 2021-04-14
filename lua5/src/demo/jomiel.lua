@@ -15,7 +15,7 @@ local Inspect = require 'inspect'
 local DkJSON = require 'dkjson'
 
 local Poller = require 'lzmq.poller'
-local Zmq = require 'lzmq'
+local ZMQ = require 'lzmq'
 
 local Protoc = require 'protoc'
 local Pb = require 'pb'
@@ -39,7 +39,7 @@ end
 
 function Jomiel:initialize(options)
   loadProtoFiles(options)
-  self.sck = Zmq.context():socket(Zmq.REQ, { linger = 0 })
+  self.sck = ZMQ.context():socket(ZMQ.REQ, { linger = 0 })
   self.opts = options
 end
 
@@ -83,7 +83,7 @@ end
 function Jomiel:_receiveResponse()
   local poller = Poller.new(1)
 
-  poller:add(self.sck, Zmq.POLLIN, function()
+  poller:add(self.sck, ZMQ.POLLIN, function()
     local bytes = self.sck:recv()
     -- printSerialized(bytes)
     local msg = Pb.decode(PkgPath .. '.Response', bytes)
