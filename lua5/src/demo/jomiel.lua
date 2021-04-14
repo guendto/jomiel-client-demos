@@ -21,7 +21,7 @@ local Protoc = require 'protoc'
 local PB = require 'pb'
 
 local PkgPath = 'jomiel.protobuf.v1beta1'
-Jomiel = Class('Jomiel')
+local Jomiel = Class('Jomiel')
 
 local function loadProtoFiles(options)
   local protoc = Protoc.new()
@@ -96,6 +96,19 @@ function Jomiel:_receiveResponse()
   end
 end
 
+local function dumpTerseResponse(msg)
+  local function printf(fmt, ...)
+    io.write(fmt:format(...) .. '\n')
+  end
+  printf('---\ntitle: %s\nquality:', msg.title)
+  for _, stream in pairs(msg.stream) do
+    printf('  profile: %s\n    width: %d\n    height: %d',
+      stream.quality.profile,
+      stream.quality.width,
+      stream.quality.height)
+  end
+end
+
 function Jomiel:_dumpResponse(msg)
   local lookup_path = PkgPath .. '.StatusCode'
 
@@ -106,25 +119,12 @@ function Jomiel:_dumpResponse(msg)
 
   if status_code == status_ok then
     if self.opts.be_terse then
-      self:_dumpTerseResponse(msg.media)
+      dumpTerseResponse(msg.media)
     else
       self:_printMessage(status, msg.media)
     end
   else
     self:_printMessage(status, msg)
-  end
-end
-
-function Jomiel:_dumpTerseResponse(msg)
-  local function printf(fmt, ...)
-    io.write(fmt:format(...) .. '\n')
-  end
-  printf('---\ntitle: %s\nquality:', msg.title)
-  for _, stream in pairs(msg.stream) do
-    printf('  profile: %s\n    width: %d\n    height: %d',
-      stream.quality.profile,
-      stream.quality.width,
-      stream.quality.height)
   end
 end
 
