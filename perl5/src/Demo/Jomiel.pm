@@ -9,11 +9,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-package Demo::Jomiel {
+use strict;
+use warnings;
+use warnings FATAL => 'all';
+use v5.20;
 
-  use warnings;
-  use strict;
-  use v5.20;
+package Demo::Jomiel {
 
   use feature qw(signatures);
   no warnings qw(experimental::signatures);
