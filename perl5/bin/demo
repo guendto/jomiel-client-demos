@@ -10,8 +10,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-use warnings;
 use strict;
+use warnings;
+use warnings FATAL => 'all';
 
 use lib './local/lib/perl5';
 use lib './src';
