@@ -21,7 +21,7 @@ local Protoc = require 'protoc'
 local PB = require 'pb'
 
 local PkgPath = 'jomiel.protobuf.v1beta1'
-Jomiel = Class('Jomiel')
+local Jomiel = Class('Jomiel')
 
 local function loadProtoFiles(options)
   local protoc = Protoc.new()
