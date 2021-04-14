@@ -1,5 +1,9 @@
 # Php example
 
+## Notable differences to other examples
+
+- Output defaults to JSON
+
 ## php-zmq
 
 php-zmq in [PECL] is outdated and has issues with php7/8. See:
