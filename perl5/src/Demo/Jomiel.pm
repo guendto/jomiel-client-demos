@@ -61,11 +61,10 @@ package Demo::Jomiel {
   }
 
   sub _send_inquiry ($self, $uri) {
-    my $media = Messages::MediaInquiry->new;
-    $media->set_input_uri($uri);
-
     my $msg = Messages::Inquiry->new;
-    $msg->set_media($media);
+
+    $msg->set_media(Messages::MediaInquiry->new);
+    $msg->get_media->set_input_uri($uri);
 
     $self->_print_message('<send>', $msg)
       unless $self->{_opts}->be_terse;
