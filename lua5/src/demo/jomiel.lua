@@ -9,37 +9,37 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 --
-local class = require 'middleclass'
+local Class = require 'middleclass'
 
-local inspect = require 'inspect'
-local dkjson = require 'dkjson'
+local Inspect = require 'inspect'
+local DkJSON = require 'dkjson'
 
-local poller = require 'lzmq.poller'
-local zmq = require 'lzmq'
+local Poller = require 'lzmq.poller'
+local ZMQ = require 'lzmq'
 
-local pkg_path = 'jomiel.protobuf.v1beta1'
-local protoc = require 'protoc'
-local pb = require 'pb'
+local Protoc = require 'protoc'
+local PB = require 'pb'
 
-Jomiel = class('Jomiel')
+local PkgPath = 'jomiel.protobuf.v1beta1'
+Jomiel = Class('Jomiel')
 
-local function load_proto_files(options)
-  local protoc = protoc.new()
+local function loadProtoFiles(options)
+  local protoc = Protoc.new()
   protoc.include_imports = true
   protoc:addpath(options.proto_dir)
-  protoc:loadfile(pkg_path:gsub('%.', '/') .. '/message.proto')
+  protoc:loadfile(PkgPath:gsub('%.', '/') .. '/message.proto')
   --[[
-  assert(pb.type 'jomiel.protobuf.v1beta1.Inquiry')
-  assert(pb.type 'jomiel.protobuf.v1beta1.MediaInquiry')
-  assert(pb.type 'jomiel.protobuf.v1beta1.Response')
-  assert(pb.type 'jomiel.protobuf.v1beta1.MediaResponse')
-  assert(pb.type 'jomiel.protobuf.v1beta1.StatusCode')
+  assert(PB.type 'jomiel.protobuf.v1beta1.Inquiry')
+  assert(PB.type 'jomiel.protobuf.v1beta1.MediaInquiry')
+  assert(PB.type 'jomiel.protobuf.v1beta1.Response')
+  assert(PB.type 'jomiel.protobuf.v1beta1.MediaResponse')
+  assert(PB.type 'jomiel.protobuf.v1beta1.StatusCode')
   ]]--
 end
 
 function Jomiel:initialize(options)
-  load_proto_files(options)
-  self.sck = zmq.context():socket(zmq.REQ, { linger = 0 })
+  loadProtoFiles(options)
+  self.sck = ZMQ.context():socket(ZMQ.REQ, { linger = 0 })
   self.opts = options
 end
 
@@ -68,25 +68,25 @@ function Jomiel:_sendInquiry(uri)
   if self.opts.be_terse == false then
     self:_printMessage('<send>', msg)
   end
-  local bytes = pb.encode(pkg_path .. '.Inquiry', msg)
+  local bytes = PB.encode(PkgPath .. '.Inquiry', msg)
   self.sck:send(bytes)
 end
 
 --[[
-local function print_serialized(bytes)
+local function printSerialized(bytes)
   local len = string.len(bytes)
-  local hex = pb.tohex(bytes)
+  local hex = PB.tohex(bytes)
   io.stderr:write(string.format('<recv>: [%d] %s\n', len, hex))
 end
 ]]--
 
 function Jomiel:_receiveResponse()
-  local poller = poller.new(1)
+  local poller = Poller.new(1)
 
-  poller:add(self.sck, zmq.POLLIN, function()
+  poller:add(self.sck, ZMQ.POLLIN, function()
     local bytes = self.sck:recv()
-    -- print_serialized(bytes)
-    local msg = pb.decode(pkg_path .. '.Response', bytes)
+    -- printSerialized(bytes)
+    local msg = PB.decode(PkgPath .. '.Response', bytes)
     self:_dumpResponse(msg)
   end)
 
@@ -97,10 +97,10 @@ function Jomiel:_receiveResponse()
 end
 
 function Jomiel:_dumpResponse(msg)
-  local lookup_path = pkg_path .. '.StatusCode'
+  local lookup_path = PkgPath .. '.StatusCode'
 
-  local status_code = pb.enum(lookup_path, msg.status.code)
-  local status_ok = pb.enum(lookup_path, 'STATUS_CODE_OK')
+  local status_code = PB.enum(lookup_path, msg.status.code)
+  local status_ok = PB.enum(lookup_path, 'STATUS_CODE_OK')
 
   local status = '<recv>'
 
@@ -138,9 +138,9 @@ function Jomiel:_printMessage(status, msg)
   self:_printStatus(status)
   local str
   if self.opts.output_json then
-    str = dkjson.encode(msg, { indent = not self.opts.compact_json })
+    str = DkJSON.encode(msg, { indent = not self.opts.compact_json })
   else
-    str = inspect(msg)
+    str = Inspect(msg)
   end
   print(str)
 end
