@@ -9,10 +9,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-package Demo::Options {
+use strict;
+use warnings;
+use warnings FATAL => 'all';
 
-  use warnings;
-  use strict;
+package Demo::Options {
 
   use feature qw(signatures);
   no warnings qw(experimental::signatures);
