@@ -23,7 +23,7 @@ local Pb = require 'pb'
 
 Jomiel = Class('Jomiel')
 
-local function load_proto_files(options)
+local function loadProtoFiles(options)
   local protoc = Protoc.new()
   protoc.include_imports = true
   protoc:addpath(options.proto_dir)
@@ -38,7 +38,7 @@ local function load_proto_files(options)
 end
 
 function Jomiel:initialize(options)
-  load_proto_files(options)
+  loadProtoFiles(options)
   self.sck = Zmq.context():socket(Zmq.REQ, { linger = 0 })
   self.opts = options
 end
@@ -73,7 +73,7 @@ function Jomiel:_sendInquiry(uri)
 end
 
 --[[
-local function print_serialized(bytes)
+local function printSerialized(bytes)
   local len = string.len(bytes)
   local hex = Pb.tohex(bytes)
   io.stderr:write(string.format('<recv>: [%d] %s\n', len, hex))
@@ -85,7 +85,7 @@ function Jomiel:_receiveResponse()
 
   poller:add(self.sck, Zmq.POLLIN, function()
     local bytes = self.sck:recv()
-    -- print_serialized(bytes)
+    -- printSerialized(bytes)
     local msg = Pb.decode(pkg_path .. '.Response', bytes)
     self:_dumpResponse(msg)
   end)
