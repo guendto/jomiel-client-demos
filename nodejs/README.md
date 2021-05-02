@@ -5,15 +5,15 @@
 With npm:
 
 ```shell
-npm i        # Install deps.
-npm run gen  # Compile protobuf declarations for jomiel messages.
+npm i               # Install deps
+npm run gen:static  # Compile protobuf declarations for jomiel messages
 ```
 
 With [pnpm]:
 
 ```shell
 pnpm i
-pnpm gen
+pnpm gen:static
 ```
 
 [pnpm]: https://pnpm.io/
