@@ -27,7 +27,7 @@
     "uglify-js": "^3.13.3"
   },
   "scripts": {
-    "gen": "./bin/gen-static -p ../proto -w commonjs",
+    "gen:static": "./bin/gen-static -p ../proto -w commonjs",
     "lint": "prettier-eslint --print-width 72 --write bin/gen-static \"src/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "distclean": "rm -rf src/messages.js node_modules/",
