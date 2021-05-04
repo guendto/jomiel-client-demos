@@ -108,13 +108,13 @@ class Jomiel {
   #printMessage(status, msg) {
     this.#printStatus(status);
     if (this.#opts["--output-json"]) {
-      console.log(this.#to_json(msg));
+      console.log(this.#toJSON(msg));
     } else {
       console.log(msg);
     }
   }
 
-  #to_json(msg) {
+  #toJSON(msg) {
     const indentation = this.#opts["--compact-json"] ? 0 : 2;
     return JSON.stringify(msg, null, indentation);
   }
