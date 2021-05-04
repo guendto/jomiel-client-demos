@@ -23,10 +23,7 @@ class Jomiel {
   #sck;
 
   constructor(options) {
-    this.#sck = new Request();
     this.#opts = options;
-
-    this.#sck.receiveTimeout = options["--connect-timeout"] * 1000;
   }
 
   inquire() {
@@ -58,6 +55,7 @@ class Jomiel {
     const re = this.#opts["--router-endpoint"];
     const to = this.#opts["--connect-timeout"];
     this.#printStatus(`<connect> ${re} (timeout=${to})`);
+    this.#sck = new Request({ receiveTimeout: to * 1000, linger: 0 });
     this.#sck.connect(re);
   }
 
