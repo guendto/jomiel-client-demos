@@ -62,9 +62,7 @@ class Jomiel {
   }
 
   async #sendInquiry(uri) {
-    const msg = Inquiry.create({
-      media: { inputUri: uri }
-    });
+    const msg = Inquiry.create({ media: { inputUri: uri } });
 
     if (!this.#opts["--be-terse"]) {
       this.#printMessage("<send>", msg);
