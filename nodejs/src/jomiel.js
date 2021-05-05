@@ -26,23 +26,22 @@ class Jomiel {
     this.#opts = options;
   }
 
-  inquire() {
+  async inquire() {
     if (this.#opts["URI"].length > 0) {
-      this.#connect();
-      this.#opts["URI"].forEach(async uri => {
-        try {
+      try {
+        this.#connect();
+        for (const uri of this.#opts["URI"]) {
           await this.#sendInquiry(uri);
           await this.#receiveResponse();
-        } catch (err) {
-          if (err.errno == 11 && err.code == "EAGAIN") {
-            console.warn("error: connection timed out");
-            process.exit(1);
-          } else {
-            console.log(err.stack || String(err));
-            throw new Error(err);
-          }
         }
-      });
+      } catch (e) {
+        console.error(
+          e.errno == 11 && e.code == "EAGAIN"
+            ? "error: connection timed out"
+            : e.stack || String(err)
+        );
+        process.exit(1);
+      }
     } else {
       console.error("error: input URI not given");
       process.exit(1);
