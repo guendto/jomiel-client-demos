@@ -23,29 +23,25 @@ class Jomiel {
   #sck;
 
   constructor(options) {
-    this.#sck = new Request();
     this.#opts = options;
-
-    this.#sck.receiveTimeout = options["--connect-timeout"] * 1000;
   }
 
-  inquire() {
+  async inquire() {
     if (this.#opts["URI"].length > 0) {
-      this.#connect();
-      this.#opts["URI"].forEach(async uri => {
-        try {
+      try {
+        this.#connect();
+        for (const uri of this.#opts["URI"]) {
           await this.#sendInquiry(uri);
           await this.#receiveResponse();
-        } catch (err) {
-          if (err.errno == 11 && err.code == "EAGAIN") {
-            console.warn("error: connection timed out");
-            process.exit(1);
-          } else {
-            console.log(err.stack || String(err));
-            throw new Error(err);
-          }
         }
-      });
+      } catch (e) {
+        console.error(
+          e.errno == 11 && e.code == "EAGAIN"
+            ? "error: connection timed out"
+            : e.stack || String(err)
+        );
+        process.exit(1);
+      }
     } else {
       console.error("error: input URI not given");
       process.exit(1);
@@ -58,13 +54,12 @@ class Jomiel {
     const re = this.#opts["--router-endpoint"];
     const to = this.#opts["--connect-timeout"];
     this.#printStatus(`<connect> ${re} (timeout=${to})`);
+    this.#sck = new Request({ receiveTimeout: to * 1000, linger: 0 });
     this.#sck.connect(re);
   }
 
   async #sendInquiry(uri) {
-    const msg = Inquiry.create({
-      media: { inputUri: uri }
-    });
+    const msg = Inquiry.create({ media: { inputUri: uri } });
 
     if (!this.#opts["--be-terse"]) {
       this.#printMessage("<send>", msg);
@@ -108,13 +103,13 @@ class Jomiel {
   #printMessage(status, msg) {
     this.#printStatus(status);
     if (this.#opts["--output-json"]) {
-      console.log(this.#to_json(msg));
+      console.log(this.#toJSON(msg));
     } else {
       console.log(msg);
     }
   }
 
-  #to_json(msg) {
+  #toJSON(msg) {
     const indentation = this.#opts["--compact-json"] ? 0 : 2;
     return JSON.stringify(msg, null, indentation);
   }
