@@ -43,9 +43,7 @@ class Jomiel {
     const re = process.env.JOMIEL_ENDPOINT;
     const to = process.env.JOMIEL_TIMEOUT;
     console.log(`<jomiel> connected (${re}, timeout=${to})`);
-    this.#sck = new Request();
-    this.#sck.receiveTimeout = to * 1000; // to msec
-    this.#sck.linger = 0;
+    this.#sck = new Request({ receiveTimeout: to * 1000, linger: 0 });
     this.#sck.connect(re);
   }
 
