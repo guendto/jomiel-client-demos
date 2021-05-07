@@ -16,7 +16,7 @@ const {
   Inquiry,
   Response,
   StatusCode
-} = require("./messages").jomiel.protobuf.v1beta1;
+} = require("jomiel-messages").jomiel.protobuf.v1beta1;
 
 class Jomiel {
   #opts;
