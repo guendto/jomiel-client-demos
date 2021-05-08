@@ -1,51 +1,24 @@
 # REST-API (Express) example
 
-- Make sure you have installed [jomiel] and that it is running at
-  <tcp://localhost:5514>
-
-- Install [httpie] if you haven't, these examples will use it
-  - You can use alternatives (not covered here), e.g. `curl`
-
-- Re-configure by editing the `.env` file
+- Install [jomiel], run it at <tcp://localhost:5514>
+- Install [httpie] or use an alternative, e.g. `curl`
+- Configure via the `.env` file
 
 [jomiel]: https://github.com/guendto/jomiel
 [httpie]: https://httpie.io/
 
-## Building
-
-With npm:
+## Building and running
 
 ```shell
-npm i               # Install deps
-npm run gen:static  # Compile protobuf declarations for jomiel messages
-```
-
-With [pnpm]:
-
-```shell
-pnpm i
-pnpm gen:static
-```
-
-[pnpm]: https://pnpm.io/
-
-## Running
-
-Start the service.
-
-```shell
-node .
+npm install
+npm run start
 ```
 
 ## POST request for an URL
 
 ```shell
 http :3001/inquiry url=URL
-```
-
-For example:
-
-```shell
+# e.g.:
 http :3001/inquiry url=https://youtu.be/PRdcZSuCpNo
 ```
 
@@ -53,10 +26,6 @@ http :3001/inquiry url=https://youtu.be/PRdcZSuCpNo
 
 ```shell
 http :3001/inquiry/tube/:id
-```
-
-For example:
-
-```shell
+# e.g.:
 http :3001/inquiry/tube/PRdcZSuCpNo
 ```

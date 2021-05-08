@@ -9,8 +9,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+"use strict";
 
-const { StatusCode } = require("./messages").jomiel.protobuf.v1beta1;
+const {
+  StatusCode
+} = require("jomiel-messages").jomiel.protobuf.v1beta1;
 const { Jomiel } = require("./jomiel");
 
 class InquiryHandler {
