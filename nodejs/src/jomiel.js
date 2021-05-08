@@ -9,6 +9,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+"use strict";
 
 const { Request } = require("zeromq");
 
@@ -16,7 +17,7 @@ const {
   Inquiry,
   Response,
   StatusCode
-} = require("./messages").jomiel.protobuf.v1beta1;
+} = require("jomiel-messages").jomiel.protobuf.v1beta1;
 
 class Jomiel {
   #opts;
@@ -38,7 +39,7 @@ class Jomiel {
         console.error(
           e.errno == 11 && e.code == "EAGAIN"
             ? "error: connection timed out"
-            : e.stack || String(err)
+            : e.stack || String(e)
         );
         process.exit(1);
       }
