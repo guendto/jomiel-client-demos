@@ -18,8 +18,6 @@
   },
   "scripts": {
     "prettier": "prettier-eslint --print-width 72 --write \"src/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -f src/messages.js",
-    "distclean": "rm -rf src/messages.js node_modules/"
+    "distclean": "rm -rf node_modules/"
   }
 }
