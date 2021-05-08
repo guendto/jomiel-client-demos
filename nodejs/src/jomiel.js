@@ -38,7 +38,7 @@ class Jomiel {
         console.error(
           e.errno == 11 && e.code == "EAGAIN"
             ? "error: connection timed out"
-            : e.stack || String(err)
+            : e.stack || String(e)
         );
         process.exit(1);
       }
