@@ -17,6 +17,7 @@
     "docopt": "^0.6.2",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
+    "jomiel-messages": "^0.1.1",
     "protobufjs": "^6.11.2",
     "zeromq": "6.0.0-beta.6"
   },
