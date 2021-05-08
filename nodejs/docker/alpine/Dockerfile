@@ -13,15 +13,10 @@ FROM node:14-alpine
 WORKDIR /app
 
 COPY nodejs/package.json .
-COPY nodejs/bin/ ./bin/
 COPY nodejs/src/ ./src/
-COPY proto/ ./proto/
 
 RUN set -eux \
-    ; npm i -q \
-    && sed -i 's/\.\.\/proto/\.\/proto/' package.json \
-    && npm run gen \
-    && rm -rf ./bin ./proto
+    ; npm i -q
 
 ENTRYPOINT ["node", "."]
 
