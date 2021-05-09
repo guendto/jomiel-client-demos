@@ -49,10 +49,5 @@ const cleanUp = () => {
   });
 };
 
-process.on("SIGTERM", () => {
-  cleanUp();
-});
-
-process.on("SIGINT", () => {
-  process.kill(process.pid, "SIGTERM");
-});
+process.on("SIGTERM", () => cleanUp());
+process.on("SIGINT", () => process.kill(process.pid, "SIGTERM"));
