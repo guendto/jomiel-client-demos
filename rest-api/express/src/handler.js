@@ -11,12 +11,12 @@
  */
 
 import jomielMessages from "jomiel-messages";
-import { Jomiel } from "./jomiel.js";
+import Jomiel from "./jomiel.js";
 
 const { StatusCode } = jomielMessages.jomiel.protobuf.v1beta1;
 
 export class InquiryHandler {
-  #jomiel = new Jomiel();
+  #jomiel = Jomiel();
 
   async handle(req, res) {
     try {
