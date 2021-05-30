@@ -9,7 +9,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
+
+import { docopt } from "docopt";
 
 const USAGE = `
 Usage:
@@ -30,8 +31,6 @@ Options:
                                      interesting details only
 `;
 
-const parse = () => {
-  return require("docopt").docopt(USAGE);
+export const parse = () => {
+  return docopt(USAGE);
 };
-
-module.exports = { parse };
