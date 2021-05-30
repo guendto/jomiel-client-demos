@@ -9,11 +9,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
 
-const { InquiryHandler } = require("../handler");
+import { Router } from "express";
+import { InquiryHandler } from "../handler.js";
+
 const inquiryHandler = new InquiryHandler();
-const router = require("express").Router();
+const router = Router();
 
 // POST /inquiry.
 router.post("/", async (req, res) => {
@@ -26,4 +27,4 @@ router.get("/tube/:id([0-9A-Za-z_-]{11})", async (req, res) => {
   inquiryHandler.handle(req, res);
 });
 
-module.exports = router;
+export default router;

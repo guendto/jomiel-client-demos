@@ -9,12 +9,13 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
 
-require("dotenv").config();
+import { config as dotenvConfig } from "dotenv";
+import express from "express";
 
-const inquiryRouter = require("./routes/inquiry");
-const express = require("express");
+import inquiryRouter from "./routes/inquiry.js";
+
+dotenvConfig();
 const app = express();
 
 app.use(express.json());
