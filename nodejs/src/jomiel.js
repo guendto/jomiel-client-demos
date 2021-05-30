@@ -121,3 +121,6 @@ export class Jomiel {
     }
   }
 }
+
+// factory function for Jomiel
+export default options => new Jomiel(options);
