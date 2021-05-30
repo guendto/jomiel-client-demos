@@ -9,5 +9,5 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
-require("./runner").main();
+import { main } from "./runner.js";
+main();
