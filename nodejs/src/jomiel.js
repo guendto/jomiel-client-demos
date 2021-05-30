@@ -9,17 +9,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
 
-const { Request } = require("zeromq");
+import jomielMessages from "jomiel-messages";
+import { Request } from "zeromq";
 
 const {
   Inquiry,
   Response,
   StatusCode
-} = require("jomiel-messages").jomiel.protobuf.v1beta1;
+} = jomielMessages.jomiel.protobuf.v1beta1;
 
-class Jomiel {
+export class Jomiel {
   #opts;
   #sck;
 
@@ -121,5 +121,3 @@ class Jomiel {
     }
   }
 }
-
-module.exports = { Jomiel };

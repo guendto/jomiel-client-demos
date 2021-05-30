@@ -9,24 +9,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
 
-const main = () => {
-  const opts = require("./options").parse();
-  if (opts["--print-config"]) {
-    dump_config(opts);
-  } else if (opts["--version-zmq"]) {
-    print_zmq_version();
-  } else {
-    const { Jomiel } = require("./jomiel");
-    new Jomiel(opts).inquire();
-  }
-};
+import { dump as dumpYAML } from "js-yaml";
+import { version } from "zeromq";
 
-const print_zmq_version = () => {
-  const zmq = require("zeromq");
-  console.log("ZeroMQ version %s", zmq.version);
-};
+import { Jomiel } from "./jomiel.js";
+import { parse } from "./options.js";
 
 const dump_config = opts => {
   values = {};
@@ -34,8 +22,16 @@ const dump_config = opts => {
     key = key.replace("--", "");
     values[key] = value;
   });
-  const result = require("js-yaml").dump(values);
-  process.stdout.write(`---\n${result}`);
+  process.stdout.write(`---\n${dumpYAML(values)}`);
 };
 
-module.exports = { main };
+export const main = () => {
+  const opts = parse();
+  if (opts["--print-config"]) {
+    dump_config(opts);
+  } else if (opts["--version-zmq"]) {
+    console.log("ZeroMQ version %s", zmq.version);
+  } else {
+    new Jomiel(opts).inquire();
+  }
+};
