@@ -15,7 +15,7 @@ import { version } from "zeromq";
 import Jomiel from "./jomiel.js";
 import { parse } from "./options.js";
 
-const dump_config = opts => {
+const dumpConfig = opts => {
   let values = {};
   Object.entries(opts).forEach(([key, value]) => {
     key = key.replace("--", "");
@@ -27,7 +27,7 @@ const dump_config = opts => {
 (() => {
   const opts = parse();
   if (opts["--print-config"]) {
-    dump_config(opts);
+    dumpConfig(opts);
   } else if (opts["--version-zmq"]) {
     console.log("ZeroMQ version %s", version);
   } else {
