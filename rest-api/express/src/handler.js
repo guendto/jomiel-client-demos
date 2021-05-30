@@ -9,15 +9,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-"use strict";
 
-const {
-  StatusCode
-} = require("jomiel-messages").jomiel.protobuf.v1beta1;
-const { Jomiel } = require("./jomiel");
+import jomielMessages from "jomiel-messages";
+import Jomiel from "./jomiel.js";
 
-class InquiryHandler {
-  #jomiel = new Jomiel();
+const { StatusCode } = jomielMessages.jomiel.protobuf.v1beta1;
+
+export class InquiryHandler {
+  #jomiel = Jomiel();
 
   async handle(req, res) {
     try {
@@ -49,5 +48,3 @@ class InquiryHandler {
       : failure(jomielResponse, expressResponse);
   }
 }
-
-module.exports = { InquiryHandler };

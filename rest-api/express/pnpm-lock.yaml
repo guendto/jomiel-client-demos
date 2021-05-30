@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   docopt: ^0.6.2
-  dotenv: ^8.6.0
+  dotenv: ^10.0.0
   express: ^4.17.1
   jomiel-messages: ^0.1.1
   prettier-eslint-cli: ^5.0.1
@@ -11,7 +11,7 @@ specifiers:
 
 dependencies:
   docopt: 0.6.2
-  dotenv: 8.6.0
+  dotenv: 10.0.0
   express: 4.17.1
   jomiel-messages: 0.1.1
   protobufjs: 6.11.2
@@ -95,8 +95,8 @@ packages:
     resolution: {integrity: sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==}
     dev: false
 
-  /@types/node/15.0.2:
-    resolution: {integrity: sha512-p68+a+KoxpoB47015IeYZYRrdqMUcpbK8re/zpFB8Ld46LHC1lPEbp3EXgkEhAYEcPvjJF6ZO+869SQ0aH1dcA==}
+  /@types/node/15.6.1:
+    resolution: {integrity: sha512-7EIraBEyRHEe7CH+Fm1XvgqU6uwZN8Q7jppJGcqjROMT29qhAuuOxYB1uEY5UMYQKEmA5D+5tBnhdaPXSsLONA==}
     dev: false
 
   /@typescript-eslint/experimental-utils/1.13.0_eslint@5.16.0:
@@ -445,8 +445,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dotenv/8.6.0:
-    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
+  /dotenv/10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
     dev: false
 
@@ -1263,7 +1263,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.1
-      '@types/node': 15.0.2
+      '@types/node': 15.6.1
       long: 4.0.0
     dev: false
 
