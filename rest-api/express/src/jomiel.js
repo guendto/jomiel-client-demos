@@ -56,3 +56,6 @@ export class Jomiel {
     return Response.decode(bytes);
   }
 }
+
+// factory function for Jomiel
+export default options => new Jomiel();
