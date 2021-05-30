@@ -16,7 +16,7 @@ COPY nodejs/package.json .
 COPY nodejs/src/ ./src/
 
 RUN set -eux \
-    ; npm i -q
+    ; npm i -q --production
 
 ENTRYPOINT ["node", "."]
 
