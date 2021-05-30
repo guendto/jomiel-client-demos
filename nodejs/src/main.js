@@ -12,7 +12,7 @@
 import { dump as dumpYAML } from "js-yaml";
 import { version } from "zeromq";
 
-import { Jomiel } from "./jomiel.js";
+import Jomiel from "./jomiel.js";
 import { parse } from "./options.js";
 
 const dump_config = opts => {
@@ -31,6 +31,6 @@ const dump_config = opts => {
   } else if (opts["--version-zmq"]) {
     console.log("ZeroMQ version %s", version);
   } else {
-    new Jomiel(opts).inquire();
+    Jomiel(opts).inquire();
   }
 })();
