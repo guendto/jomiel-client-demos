@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   docopt: ^0.6.2
-  dotenv: ^8.6.0
+  dotenv: ^10.0.0
   express: ^4.17.1
   jomiel-messages: ^0.1.1
   prettier-eslint-cli: ^5.0.1
@@ -11,7 +11,7 @@ specifiers:
 
 dependencies:
   docopt: 0.6.2
-  dotenv: 8.6.0
+  dotenv: 10.0.0
   express: 4.17.1
   jomiel-messages: 0.1.1
   protobufjs: 6.11.2
@@ -445,8 +445,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dotenv/8.6.0:
-    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
+  /dotenv/10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
     dev: false
 
