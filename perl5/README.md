@@ -1,6 +1,6 @@
-# Perl5 example
+# jomiel client demo written in Perl5
 
-## Notable differences to other examples
+## Notable differences to other client demos
 
 - Output defaults to YAML
 
