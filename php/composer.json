@@ -1,5 +1,5 @@
 {
-    "name": "jomiel-examples/php",
+    "name": "jomiel-client-demos/php",
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.4 <9.0",

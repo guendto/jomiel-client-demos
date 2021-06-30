@@ -2,7 +2,7 @@
 #
 # -*- coding: utf-8 -*-
 #
-# jomiel-examples
+# jomiel-client-demos
 #
 # Copyright
 #  2021 Toni Gündoğdu
@@ -21,6 +21,6 @@ export PHPINIDIR=`php -i \
     | awk '{print$NF}'` \
   && export PHPINI=$PHPINIDIR/php.ini \
   && cp $PHPINI-development $PHPINI \
-  && echo "# jomiel-examples: dynamic extensions" >> $PHPINI \
+  && echo "# jomiel-client-demos: dynamic extensions" >> $PHPINI \
   && echo "extension_dir=\"/usr/lib/$1/modules\"" >> $PHPINI \
   && echo "extension=zmq" >> $PHPINI
