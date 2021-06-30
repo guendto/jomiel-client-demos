@@ -1,4 +1,4 @@
-# Ruby example
+# jomiel client demo written in Ruby
 
 ## Building and running
 
