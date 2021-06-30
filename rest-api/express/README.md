@@ -1,4 +1,4 @@
-# REST-API (Express) example
+# jomiel REST-API demo written in Javascript for Express
 
 - Install [jomiel], run it at <tcp://localhost:5514>
 - Install [httpie] or use an alternative, e.g. `curl`
