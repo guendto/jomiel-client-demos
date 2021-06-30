@@ -1,4 +1,4 @@
-# Nodejs example
+# jomiel client demo written in Javascript (node)
 
 ## Building
 
