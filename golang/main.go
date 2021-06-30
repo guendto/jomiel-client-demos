@@ -1,7 +1,7 @@
 /*
  * -*- coding: utf-8 -*-
  *
- * jomiel-examples
+ * jomiel-client-demos
  *
  * Copyright
  *  2021 Toni Gündoğdu
@@ -12,7 +12,7 @@
 
 package main
 
-import "github.com/guendto/jomiel-examples/golang/internal/app"
+import "github.com/guendto/jomiel-client-demos/golang/internal/app"
 
 func main() {
 	app.Main()
