@@ -1,7 +1,7 @@
 /*
  * -*- coding: utf-8 -*-
  *
- * jomiel-examples
+ * jomiel-client-demos
  *
  * Copyright
  *  2021 Toni Gündoğdu
@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package jomiel.examples
+package jomiel.client.demos
 
 import org.tinylog.scala.Logger.info
 import org.zeromq.ZMQ.{getFullVersion, getVersionString}

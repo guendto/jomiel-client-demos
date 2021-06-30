@@ -1,4 +1,4 @@
-# README.md
+# jomiel client demo written in Scala
 
 ## Building and running
 

@@ -1,7 +1,7 @@
 /*
  * -*- coding: utf-8 -*-
  *
- * jomiel-examples
+ * jomiel-client-demos
  *
  * Copyright
  *  2021 Toni Gündoğdu
@@ -23,7 +23,7 @@ repositories {
 }
 
 application {
-    mainClass.set("jomiel.examples.App")
+    mainClass.set("jomiel.client.demos.App")
     applicationName = "demo"
 }
 
