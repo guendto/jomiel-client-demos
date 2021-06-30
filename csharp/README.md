@@ -1,4 +1,4 @@
-# C# example
+# jomiel client demo written in C#
 
 ## Building and running
 
