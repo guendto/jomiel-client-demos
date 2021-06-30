@@ -1,4 +1,4 @@
-# C++14 -example
+# jomiel client demo written in C++17
 
 ## Building and running
 
