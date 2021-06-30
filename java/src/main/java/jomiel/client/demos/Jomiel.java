@@ -1,16 +1,17 @@
 /*
  * -*- coding: utf-8 -*-
  *
- * jomiel-examples
+ * jomiel-client-demos
  *
  * Copyright
  *  2019-2021 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
+ *
  */
 
-package jomiel.examples;
+package jomiel.client.demos;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
