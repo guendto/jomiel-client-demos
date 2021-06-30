@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# jomiel-examples
+# jomiel-client-demos
 #
 # Copyright
 #  2019-2021 Toni Gündoğdu
@@ -46,6 +46,6 @@ RUN set -eux \
     && pip install --no-cache /wheels/*.whl \
     && apk del py3-pip
 
-ENTRYPOINT ["jomiel-examples-demo"]
+ENTRYPOINT ["jomiel-client-demo"]
 
 CMD ["-h"]

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# jomiel-examples
+# jomiel-client-demos
 #
 # Copyright
 #  2019-2021 Toni Gündoğdu
@@ -21,7 +21,7 @@ COPY python3/setup.py .
 COPY python3/src/ ./src/
 
 RUN set -eux \
-    # Build the jomiel-examples-demo wheel from the source.
+    # Build the jomiel-client-demo wheel from the source.
     ; pip wheel \
         . \
         --wheel-dir /app/wheels \
@@ -57,6 +57,6 @@ RUN set -eux \
     && rm -rf /wheels \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["jomiel-examples-demo"]
+ENTRYPOINT ["jomiel-client-demo"]
 
 CMD ["-h"]

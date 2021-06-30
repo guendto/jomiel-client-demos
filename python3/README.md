@@ -1,4 +1,4 @@
-# Python example
+# jomiel client demo written in Python (3)
 
 ## Building and running
 
@@ -10,5 +10,5 @@ Or:
 
 ```shell
 pip install -e .
-jomiel-examples-demo [args ...]
+jomiel-client-demo [args ...]
 ```
