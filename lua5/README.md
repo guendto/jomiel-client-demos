@@ -1,4 +1,4 @@
-# Lua example
+# jomiel client demo written in Lua
 
 ## Building and running
 
