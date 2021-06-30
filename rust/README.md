@@ -1,4 +1,4 @@
-# Rust example
+# jomiel client demo written in Rust
 
 ## Building and running
 
