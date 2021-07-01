@@ -1,4 +1,4 @@
-module github.com/guendto/jomiel-examples/golang
+module github.com/guendto/jomiel-client-demos/golang
 
 go 1.14
 

@@ -1,4 +1,4 @@
-# README.md
+# jomiel client demo written in Kotlin
 
 ## Building and running
 

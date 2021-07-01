@@ -1,4 +1,4 @@
-# Qt example
+# jomiel client demo written in C++ for Qt
 
 ## Prerequisites
 

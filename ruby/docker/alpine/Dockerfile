@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# jomiel-examples
+# jomiel-client-demos
 #
 # Copyright
 #  2019-2020 Toni Gündoğdu

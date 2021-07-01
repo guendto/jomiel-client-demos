@@ -1,5 +1,5 @@
 #
-# jomiel-examples
+# jomiel-client-demos
 #
 # Copyright
 #  2021 Toni Gündoğdu

@@ -1,6 +1,8 @@
 /*
  * -*- coding: utf-8 -*-
  *
+ * jomiel-client-demos
+ *
  * Copyright
  *  2021 Toni Gündoğdu
  *
@@ -17,7 +19,7 @@ plugins {
 }
 
 application {
-    mainClass.set("jomiel.examples.App")
+    mainClass.set("jomiel.client.demos.App")
     applicationName = "demo"
 }
 

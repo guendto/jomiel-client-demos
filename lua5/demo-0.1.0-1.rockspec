@@ -1,7 +1,7 @@
 package = "demo"
 version = "0.1.0-1"
 source = {
-  url = "https://github.com/guendto/jomiel-examples"
+  url = "https://github.com/guendto/jomiel-client-demos"
 }
 description = {
   license = "Apache-2.0"

@@ -1,11 +1,11 @@
-# Java example
+# jomiel client demo written in Java
 
 ## Building and running
 
 ### Gradle
 
 ```shell
-gradle run --args="[args...]"
+gradle run -q --args="[args...]"
 ```
 
 Or:

@@ -1,7 +1,7 @@
 /*
  * -*- coding: utf-8 -*-
  *
- * jomiel-examples
+ * jomiel-client-demos
  *
  * Copyright
  *  2020-2021 Toni Gündoğdu
@@ -89,7 +89,7 @@ public:
     DemoMainWindowOptions opts;
 
     opts.properties.orgDomain = "jomiel.github.io";
-    opts.properties.orgName = "jomiel-examples";
+    opts.properties.orgName = "jomiel-client-demos";
     opts.properties.appVersion = "0.1.0";
     opts.properties.appName = "demo";
 

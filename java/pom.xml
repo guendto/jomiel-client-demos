@@ -5,7 +5,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>jomiel.examples</groupId>
+  <groupId>jomiel.client.demos</groupId>
   <artifactId>demo</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -129,7 +129,7 @@
               <transformers>
                 <transformer
                   implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>jomiel.examples.App</mainClass>
+                  <mainClass>jomiel.client.demos.App</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -153,7 +153,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>jomiel.examples.App</mainClass>
+          <mainClass>jomiel.client.demos.App</mainClass>
         </configuration>
       </plugin>
       <!-- https://maven.apache.org/plugins/maven-compiler-plugin/ -->

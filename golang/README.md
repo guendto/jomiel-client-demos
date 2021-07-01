@@ -1,4 +1,4 @@
-# Go example
+# jomiel client demo written in Go
 
 ## Building and running
 

@@ -1,4 +1,4 @@
-# Php example
+# jomiel client demo written in Php
 
 ## Notable differences to other examples
 
