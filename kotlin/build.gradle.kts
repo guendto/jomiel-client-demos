@@ -14,7 +14,7 @@ import com.google.protobuf.gradle.*
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val pbandkVersion by extra("0.9.1")
+val pbandkVersion by extra("0.10.0")
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.31"
@@ -24,7 +24,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 application {
