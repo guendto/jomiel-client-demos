@@ -1,0 +1,13 @@
+---
+repos:
+    # NOTE: See also .mdlrc and .mdlstyle.rb files
+    - repo: https://github.com/markdownlint/markdownlint
+      rev: v0.11.0
+      hooks:
+          - id: markdownlint
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+          - id: fix-byte-order-marker
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
