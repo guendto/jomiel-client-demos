@@ -15,7 +15,7 @@ import { version } from "zeromq";
 import Jomiel from "./jomiel.js";
 import { parse } from "./options.js";
 
-const dumpConfig = opts => {
+const dumpConfig = (opts) => {
   let values = {};
   Object.entries(opts).forEach(([key, value]) => {
     key = key.replace("--", "");
