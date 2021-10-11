@@ -29,10 +29,9 @@ export class Jomiel {
       return expressResult.status(500).send({
         status: "jomiel: connection timed out",
       });
-    } else {
-      console.log(error.stack || String(error));
-      throw error;
     }
+    console.log(error.stack || String(error));
+    throw error;
   }
 
   // private
