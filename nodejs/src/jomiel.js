@@ -35,7 +35,7 @@ class Jomiel {
         }
       } catch (e) {
         console.error(
-          e.errno == 11 && e.code == "EAGAIN"
+          e.errno === 11 && e.code === "EAGAIN"
             ? "error: connection timed out"
             : e.stack || String(e)
         );
@@ -76,7 +76,7 @@ class Jomiel {
 
   #dumpResponse(msg) {
     const status = "<recv>";
-    if (msg.status.code == StatusCode.STATUS_CODE_OK) {
+    if (msg.status.code === StatusCode.STATUS_CODE_OK) {
       if (this.#opts["--be-terse"]) {
         this.#dumpTerseResponse(msg.media);
       } else {
