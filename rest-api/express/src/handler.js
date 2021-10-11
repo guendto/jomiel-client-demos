@@ -31,7 +31,7 @@ export class InquiryHandler {
     const send = (msg, res, statusCode, statusMessage) => {
       res.status(statusCode).send({
         status: statusMessage,
-        data: msg
+        data: msg,
       });
     };
 
