@@ -17,7 +17,7 @@ import Jomiel from "./jomiel.js";
 
 const { StatusCode } = jomielMessages.jomiel.protobuf.v1beta1;
 
-export class InquiryHandler {
+class InquiryHandler {
   #jomiel = Jomiel();
 
   async handle(req, res) {
@@ -50,3 +50,5 @@ export class InquiryHandler {
       : failure(jomielResponse, expressResponse);
   }
 }
+
+export default InquiryHandler;
