@@ -16,7 +16,7 @@ import { Request } from "zeromq";
 const { Inquiry, Response, StatusCode } =
   jomielMessages.jomiel.protobuf.v1beta1;
 
-export class Jomiel {
+class Jomiel {
   #opts;
   #sck;
 
