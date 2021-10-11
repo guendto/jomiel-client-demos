@@ -11,6 +11,8 @@
  */
 
 import jomielMessages from "jomiel-messages";
+
+// eslint-disable-next-line import/extensions
 import Jomiel from "./jomiel.js";
 
 const { StatusCode } = jomielMessages.jomiel.protobuf.v1beta1;
