@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node .",
+    "dev": "nodemon src/index.js",
     "distclean": "rm -rf node_modules/"
   },
   "author": "Toni Gündoğdu",
