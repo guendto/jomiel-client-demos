@@ -12,6 +12,7 @@
 import { dump as dumpYAML } from "js-yaml";
 import { version } from "zeromq";
 
+/* eslint-disable import/extensions */
 import Jomiel from "./jomiel.js";
 import parse from "./options.js";
 
