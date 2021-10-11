@@ -13,7 +13,7 @@
 import { config as dotenvConfig } from "dotenv";
 import express from "express";
 
-import inquiryRouter from "./routes/inquiry.js";
+import inquiryRouter from "./controllers/inquiry.js";
 
 dotenvConfig();
 const app = express();
