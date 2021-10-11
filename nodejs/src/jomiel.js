@@ -10,17 +10,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable no-console */
+
 import jomielMessages from "jomiel-messages";
 import { Request } from "zeromq";
 
-const {
-  Inquiry,
-  Response,
-  StatusCode
-} = jomielMessages.jomiel.protobuf.v1beta1;
+const { Inquiry, Response, StatusCode } =
+  jomielMessages.jomiel.protobuf.v1beta1;
 
-export class Jomiel {
+class Jomiel {
   #opts;
+
   #sck;
 
   constructor(options) {
@@ -28,16 +28,25 @@ export class Jomiel {
   }
 
   async inquire() {
-    if (this.#opts["URI"].length > 0) {
+    if (this.#opts.URI.length > 0) {
       try {
         this.#connect();
-        for (const uri of this.#opts["URI"]) {
+        // Note:
+        // "The airbnb style guide recommends not using for...of for _web apps_
+        // because it requires a large polyfill. (...)"
+        // -- <https://gist.github.com/prowlee/e8833a8a02687d614d40c09bc5bdb807>
+        //
+        // Blacklisting "ForOfStatement" seems impossible(?), disable
+        // the no-restricted-syntax per line, for now.
+        //
+        // eslint-disable-next-line no-restricted-syntax
+        for await (const uri of this.#opts.URI) {
           await this.#sendInquiry(uri);
           await this.#receiveResponse();
         }
       } catch (e) {
         console.error(
-          e.errno == 11 && e.code == "EAGAIN"
+          e.errno === 11 && e.code === "EAGAIN"
             ? "error: connection timed out"
             : e.stack || String(e)
         );
@@ -78,7 +87,7 @@ export class Jomiel {
 
   #dumpResponse(msg) {
     const status = "<recv>";
-    if (msg.status.code == StatusCode.STATUS_CODE_OK) {
+    if (msg.status.code === StatusCode.STATUS_CODE_OK) {
       if (this.#opts["--be-terse"]) {
         this.#dumpTerseResponse(msg.media);
       } else {
@@ -89,9 +98,10 @@ export class Jomiel {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   #dumpTerseResponse(msg) {
     console.log(`---\ntitle: ${msg.title}`);
-    msg.stream.forEach(stream => {
+    msg.stream.forEach((stream) => {
       const qty = stream.quality;
       console.log(
         `  profile: ${qty.profile}\n` +
@@ -123,4 +133,4 @@ export class Jomiel {
 }
 
 // factory function for Jomiel
-export default options => new Jomiel(options);
+export default (options) => new Jomiel(options);

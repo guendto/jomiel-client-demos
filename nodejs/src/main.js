@@ -12,12 +12,14 @@
 import { dump as dumpYAML } from "js-yaml";
 import { version } from "zeromq";
 
+/* eslint-disable import/extensions */
 import Jomiel from "./jomiel.js";
-import { parse } from "./options.js";
+import parse from "./options.js";
 
-const dumpConfig = opts => {
-  let values = {};
+const dumpConfig = (opts) => {
+  const values = {};
   Object.entries(opts).forEach(([key, value]) => {
+    // eslint-disable-next-line no-param-reassign
     key = key.replace("--", "");
     values[key] = value;
   });
@@ -29,6 +31,7 @@ const dumpConfig = opts => {
   if (opts["--print-config"]) {
     dumpConfig(opts);
   } else if (opts["--version-zmq"]) {
+    // eslint-disable-next-line no-console
     console.log("ZeroMQ version %s", version);
   } else {
     Jomiel(opts).inquire();
