@@ -19,6 +19,7 @@ import parse from "./options.js";
 const dumpConfig = (opts) => {
   const values = {};
   Object.entries(opts).forEach(([key, value]) => {
+    // eslint-disable-next-line no-param-reassign
     key = key.replace("--", "");
     values[key] = value;
   });
