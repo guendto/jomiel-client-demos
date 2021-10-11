@@ -31,6 +31,4 @@ Options:
                                      interesting details only
 `;
 
-export const parse = () => {
-  return docopt(USAGE);
-};
+export default () => docopt(USAGE);
