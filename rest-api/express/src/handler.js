@@ -23,13 +23,15 @@ class InquiryHandler {
   async handle(req, res) {
     try {
       const msg = await this.#jomiel.inquire(req.body.url);
-      this.#sendResponse(msg, res);
+      this.sendResponse(msg, res);
     } catch (error) {
       this.#jomiel.handleError(error, res);
     }
   }
 
-  #sendResponse(jomielResponse, expressResponse) {
+  // static
+
+  static sendResponse(jomielResponse, expressResponse) {
     const send = (msg, res, statusCode, statusMessage) => {
       res.status(statusCode).send({
         status: statusMessage,
