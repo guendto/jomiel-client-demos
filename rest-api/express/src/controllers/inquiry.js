@@ -11,6 +11,8 @@
  */
 
 import { Router } from "express";
+
+// eslint-disable-next-line import/extensions
 import { InquiryHandler } from "../handler.js";
 
 const inquiryHandler = new InquiryHandler();
