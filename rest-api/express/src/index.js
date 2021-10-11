@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
 
 const server = app.listen(process.env.PORT || 3001, () => {
   console.log(`<listen> at http://localhost:${process.env.PORT}`);
-  inquiryRouter.stack.forEach(layer => {
+  inquiryRouter.stack.forEach((layer) => {
     const route = layer.route;
     const method = route.stack[0].method;
     console.log(`<endpoint> ${method} /inquiry${route.path}`);
