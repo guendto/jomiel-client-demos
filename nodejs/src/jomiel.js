@@ -26,10 +26,10 @@ class Jomiel {
   }
 
   async inquire() {
-    if (this.#opts["URI"].length > 0) {
+    if (this.#opts.URI.length > 0) {
       try {
         this.#connect();
-        for (const uri of this.#opts["URI"]) {
+        for (const uri of this.#opts.URI) {
           await this.#sendInquiry(uri);
           await this.#receiveResponse();
         }
