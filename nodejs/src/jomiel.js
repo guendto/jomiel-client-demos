@@ -31,7 +31,16 @@ class Jomiel {
     if (this.#opts.URI.length > 0) {
       try {
         this.#connect();
-        for (const uri of this.#opts.URI) {
+        // Note:
+        // "The airbnb style guide recommends not using for...of for _web apps_
+        // because it requires a large polyfill. (...)"
+        // -- <https://gist.github.com/prowlee/e8833a8a02687d614d40c09bc5bdb807>
+        //
+        // Blacklisting "ForOfStatement" seems impossible(?), disable
+        // the no-restricted-syntax per line, for now.
+        //
+        // eslint-disable-next-line no-restricted-syntax
+        for await (const uri of this.#opts.URI) {
           await this.#sendInquiry(uri);
           await this.#receiveResponse();
         }
