@@ -18,7 +18,6 @@
   "devDependencies": {
   },
   "scripts": {
-    "prettier": "prettier-eslint --print-width 72 --write \"src/*.js\"",
     "distclean": "rm -rf node_modules/"
   }
 }
