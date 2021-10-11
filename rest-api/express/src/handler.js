@@ -45,7 +45,7 @@ class InquiryHandler {
       send(msg, res, msg.status.code, "failed");
     };
 
-    jomielResponse.status.code == StatusCode.STATUS_CODE_OK
+    jomielResponse.status.code === StatusCode.STATUS_CODE_OK
       ? success(jomielResponse.media, expressResponse)
       : failure(jomielResponse, expressResponse);
   }
