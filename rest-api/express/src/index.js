@@ -10,6 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable no-console */
+
 import { config as dotenvConfig } from "dotenv";
 import express from "express";
 
