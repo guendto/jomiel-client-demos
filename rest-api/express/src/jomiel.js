@@ -26,16 +26,6 @@ export class Jomiel {
     return this.#receiveResponse();
   }
 
-  handleError(error, expressResult) {
-    if (error.errno === 11 && error.code === "EAGAIN") {
-      return expressResult.status(500).send({
-        status: "jomiel: connection timed out",
-      });
-    }
-    console.log(error.stack || String(error));
-    throw error;
-  }
-
   // private
 
   #connect() {
@@ -55,6 +45,18 @@ export class Jomiel {
   async #receiveResponse() {
     const [bytes] = await this.#sck.receive();
     return Response.decode(bytes);
+  }
+
+  // static
+
+  static handleError(error, res) {
+    if (error.errno === 11 && error.code === "EAGAIN") {
+      return res.status(500).send({
+        status: "jomiel: connection timed out",
+      });
+    }
+    console.log(error.stack || String(error));
+    throw error;
   }
 }
 
