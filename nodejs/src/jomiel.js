@@ -87,6 +87,7 @@ class Jomiel {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   #dumpTerseResponse(msg) {
     console.log(`---\ntitle: ${msg.title}`);
     msg.stream.forEach((stream) => {
