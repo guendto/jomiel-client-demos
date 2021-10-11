@@ -17,7 +17,7 @@ import { Request } from "zeromq";
 
 const { Inquiry, Response } = jomielMessages.jomiel.protobuf.v1beta1;
 
-export class Jomiel {
+class Jomiel {
   #sck;
 
   inquire(uri) {
