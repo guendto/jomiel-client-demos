@@ -12,13 +12,13 @@
 
 /* eslint-disable no-console */
 
-import { config as dotenvConfig } from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 
 // eslint-disable-next-line import/extensions
 import inquiryRouter from "./controllers/inquiry.js";
 
-dotenvConfig();
+config();
 const app = express();
 
 app.use(express.json());
