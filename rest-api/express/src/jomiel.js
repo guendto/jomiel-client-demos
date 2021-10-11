@@ -10,6 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable no-console */
+
 import jomielMessages from "jomiel-messages";
 import { Request } from "zeromq";
 
