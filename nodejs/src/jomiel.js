@@ -18,6 +18,7 @@ const { Inquiry, Response, StatusCode } =
 
 class Jomiel {
   #opts;
+
   #sck;
 
   constructor(options) {
