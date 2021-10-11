@@ -32,9 +32,9 @@ app.get("*", (req, res, next) => {
   next(error);
 });
 
-app.use((error, req, res, next) => {
-  return res.status(500).json({ status: error.toString() });
-});
+app.use((error, req, res, next) =>
+  res.status(500).json({ status: error.toString() })
+);
 
 const server = app.listen(process.env.PORT || 3001, () => {
   console.log(`<listen> at http://localhost:${process.env.PORT}`);
