@@ -27,7 +27,7 @@ export class Jomiel {
   handleError(error, expressResult) {
     if (error.errno == 11 && error.code == "EAGAIN") {
       return expressResult.status(500).send({
-        status: "jomiel: connection timed out"
+        status: "jomiel: connection timed out",
       });
     } else {
       console.log(error.stack || String(error));
@@ -58,4 +58,4 @@ export class Jomiel {
 }
 
 // factory function for Jomiel
-export default options => new Jomiel();
+export default (options) => new Jomiel();
