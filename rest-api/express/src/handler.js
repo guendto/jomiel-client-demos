@@ -31,25 +31,27 @@ class InquiryHandler {
 
   // static
 
+  // eslint-disable-next-line consistent-return
   static sendResponse(jomielResponse, expressResponse) {
-    const send = (msg, res, statusCode, statusMessage) => {
+    const send = (msg, res, statusCode, statusMessage) =>
       res.status(statusCode).send({
         status: statusMessage,
         data: msg,
       });
-    };
 
-    const success = (msg, res) => {
-      send(msg, res, 200, "ok");
-    };
+    const success = (msg, res) => send(msg, res, 200, "ok");
 
-    const failure = (msg, res) => {
-      send(msg, res, msg.status.code, "failed");
-    };
+    const failed = (msg, res) =>
+      send(msg, res, msg.status.code, "error");
 
-    jomielResponse.status.code === StatusCode.STATUS_CODE_OK
-      ? success(jomielResponse.media, expressResponse)
-      : failure(jomielResponse, expressResponse);
+    const { code } = jomielResponse.status;
+    const { STATUS_CODE_OK } = StatusCode;
+
+    if (code === STATUS_CODE_OK) {
+      return success(jomielResponse.media, expressResponse);
+    }
+
+    failed(jomielResponse, expressResponse);
   }
 }
 
