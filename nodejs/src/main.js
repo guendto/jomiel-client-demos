@@ -13,7 +13,7 @@ import { dump as dumpYAML } from "js-yaml";
 import { version } from "zeromq";
 
 import Jomiel from "./jomiel.js";
-import { parse } from "./options.js";
+import parse from "./options.js";
 
 const dumpConfig = (opts) => {
   let values = {};
