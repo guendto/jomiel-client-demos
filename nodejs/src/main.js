@@ -31,6 +31,7 @@ const dumpConfig = (opts) => {
   if (opts["--print-config"]) {
     dumpConfig(opts);
   } else if (opts["--version-zmq"]) {
+    // eslint-disable-next-line no-console
     console.log("ZeroMQ version %s", version);
   } else {
     Jomiel(opts).inquire();
