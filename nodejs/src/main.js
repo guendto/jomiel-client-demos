@@ -17,7 +17,7 @@ import Jomiel from "./jomiel.js";
 import parse from "./options.js";
 
 const dumpConfig = (opts) => {
-  let values = {};
+  const values = {};
   Object.entries(opts).forEach(([key, value]) => {
     key = key.replace("--", "");
     values[key] = value;
