@@ -13,11 +13,8 @@
 import jomielMessages from "jomiel-messages";
 import { Request } from "zeromq";
 
-const {
-  Inquiry,
-  Response,
-  StatusCode
-} = jomielMessages.jomiel.protobuf.v1beta1;
+const { Inquiry, Response, StatusCode } =
+  jomielMessages.jomiel.protobuf.v1beta1;
 
 export class Jomiel {
   #opts;
@@ -91,7 +88,7 @@ export class Jomiel {
 
   #dumpTerseResponse(msg) {
     console.log(`---\ntitle: ${msg.title}`);
-    msg.stream.forEach(stream => {
+    msg.stream.forEach((stream) => {
       const qty = stream.quality;
       console.log(
         `  profile: ${qty.profile}\n` +
@@ -123,4 +120,4 @@ export class Jomiel {
 }
 
 // factory function for Jomiel
-export default options => new Jomiel(options);
+export default (options) => new Jomiel(options);
