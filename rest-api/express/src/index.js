@@ -10,12 +10,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { config as dotenvConfig } from "dotenv";
+/* eslint-disable no-console */
+
+import { config } from "dotenv";
 import express from "express";
 
-import inquiryRouter from "./routes/inquiry.js";
+// eslint-disable-next-line import/extensions
+import inquiryRouter from "./controllers/inquiry.js";
 
-dotenvConfig();
+config();
 const app = express();
 
 app.use(express.json());
@@ -29,15 +32,15 @@ app.get("*", (req, res, next) => {
   next(error);
 });
 
-app.use((error, req, res, next) => {
-  return res.status(500).json({ status: error.toString() });
-});
+app.use((error, req, res, next) =>
+  res.status(500).json({ status: error.toString() })
+);
 
 const server = app.listen(process.env.PORT || 3001, () => {
   console.log(`<listen> at http://localhost:${process.env.PORT}`);
-  inquiryRouter.stack.forEach(layer => {
-    const route = layer.route;
-    const method = route.stack[0].method;
+  inquiryRouter.stack.forEach((layer) => {
+    const { route } = layer;
+    const { method } = route.stack[0];
     console.log(`<endpoint> ${method} /inquiry${route.path}`);
   });
 });

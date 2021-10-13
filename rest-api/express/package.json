@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node .",
-    "prettier": "prettier-eslint --print-width 72 --write \"src/*.js\"",
+    "dev": "nodemon src/index.js",
     "distclean": "rm -rf node_modules/"
   },
   "author": "Toni Gündoğdu",
@@ -18,11 +18,19 @@
     "docopt": "^0.6.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jomiel-messages": "^0.1.1",
+    "jomiel-messages": "^0.2.0",
     "protobufjs": "^6.11.2",
     "zeromq": "6.0.0-beta.6"
   },
   "devDependencies": {
-    "prettier-eslint-cli": "^5.0.1"
+    "@babel/core": "^7.15.8",
+    "@babel/eslint-parser": "^7.15.8",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1"
   }
 }

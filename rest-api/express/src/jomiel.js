@@ -10,29 +10,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable no-console */
+
 import jomielMessages from "jomiel-messages";
 import { Request } from "zeromq";
 
 const { Inquiry, Response } = jomielMessages.jomiel.protobuf.v1beta1;
 
-export class Jomiel {
+class Jomiel {
   #sck;
 
   inquire(uri) {
     this.#connect();
     this.#sendInquiry(uri);
     return this.#receiveResponse();
-  }
-
-  handleError(error, expressResult) {
-    if (error.errno == 11 && error.code == "EAGAIN") {
-      return expressResult.status(500).send({
-        status: "jomiel: connection timed out"
-      });
-    } else {
-      console.log(error.stack || String(error));
-      throw error;
-    }
   }
 
   // private
@@ -55,7 +46,19 @@ export class Jomiel {
     const [bytes] = await this.#sck.receive();
     return Response.decode(bytes);
   }
+
+  // static
+
+  static handleError(error, res) {
+    if (error.errno === 11 && error.code === "EAGAIN") {
+      return res.status(500).send({
+        status: "jomiel: connection timed out",
+      });
+    }
+    console.log(error.stack || String(error));
+    throw error;
+  }
 }
 
 // factory function for Jomiel
-export default options => new Jomiel();
+export default () => new Jomiel();
