@@ -11,31 +11,14 @@
  */
 
 /* eslint-disable no-console */
-
-import express from "express";
-
 /* eslint-disable import/extensions */
 
-import inquiryRouter from "./controllers/inquiry.js";
-import errorHandler from "./middlewares/error.js";
-import http404 from "./middlewares/http404.js";
-import config from "./config.js";
+import config from "./helpers/config.js";
+import app from "./app.js";
 
 (() => {
-  const app = express();
-
-  app.use(express.json());
-  app.use("/inquiry", inquiryRouter);
-  app.use(errorHandler);
-  app.use(http404);
-
   const server = app.listen(config.PORT, () => {
     console.log(`<listen> at http://localhost:${config.PORT}`);
-    inquiryRouter.stack.forEach((layer) => {
-      const { route } = layer;
-      const { method } = route.stack[0];
-      console.log(`<endpoint> ${method} /inquiry${route.path}`);
-    });
   });
 
   const cleanUp = () => {
