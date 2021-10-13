@@ -11,6 +11,9 @@
  */
 
 export default (req, res) =>
-  res.status(404).send({
-    message: `move along now, ${req.ip}. nothing to see here (${req.originalUrl}).`,
+  res.status(404).json({
+    status: "error",
+    data: {
+      message: `not found (${req.originalUrl})`,
+    },
   });
