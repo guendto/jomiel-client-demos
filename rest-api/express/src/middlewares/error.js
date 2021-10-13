@@ -13,6 +13,8 @@
 // eslint-disable-next-line no-unused-vars
 export default (error, req, res, next) => {
   const { status, message } = error;
-  res.status(status || 500).json({ status: "error", message });
-  // return next(error);
+  res
+    .status(status || 500)
+    .json({ status: "error", data: { message } });
+  next(error);
 };
