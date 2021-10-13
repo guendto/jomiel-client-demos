@@ -15,10 +15,14 @@
   "author": "Toni Gündoğdu",
   "license": "Apache-2.0",
   "dependencies": {
+    "compression": "^1.7.4",
     "docopt": "^0.6.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.6.0",
     "jomiel-messages": "^0.2.0",
+    "morgan": "^1.10.0",
     "protobufjs": "^6.11.2",
     "zeromq": "6.0.0-beta.6"
   },
