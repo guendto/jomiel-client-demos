@@ -1,0 +1,15 @@
+# vscode extension: rest client
+
+###
+# POST an URL.
+POST http://localhost:3001/api/by-url
+Content-Type: application/json
+
+{
+  "inputUri": "https://youtu.be/PRdcZSuCpNo"
+}
+
+###
+# GET /api/yt/by-id.
+# - Specific to YouTube.
+GET http://localhost:3001/api/yt/by-id/PRdcZSuCpNo

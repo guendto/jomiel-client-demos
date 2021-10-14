@@ -11,47 +11,22 @@
  */
 
 /* eslint-disable no-console */
+/* eslint-disable import/extensions */
 
-import { config } from "dotenv";
-import express from "express";
+import config from "./helpers/config.js";
+import app from "./app.js";
 
-// eslint-disable-next-line import/extensions
-import inquiryRouter from "./controllers/inquiry.js";
-
-config();
-const app = express();
-
-app.use(express.json());
-app.use("/inquiry", inquiryRouter);
-
-app.get("*", (req, res, next) => {
-  const error = new Error(
-    `${req.ip} tried to access ${req.originalUrl}`
-  );
-  error.StatusCode = 301;
-  next(error);
-});
-
-app.use((error, req, res, next) =>
-  res.status(500).json({ status: error.toString() })
-);
-
-const server = app.listen(process.env.PORT || 3001, () => {
-  console.log(`<listen> at http://localhost:${process.env.PORT}`);
-  inquiryRouter.stack.forEach((layer) => {
-    const { route } = layer;
-    const { method } = route.stack[0];
-    console.log(`<endpoint> ${method} /inquiry${route.path}`);
+(() => {
+  const server = app.listen(config.PORT, () => {
+    console.log(`<listen> at http://localhost:${config.PORT}`);
   });
-});
 
-// Exit gracefully.
+  const cleanUp = () => {
+    server.close(() => {
+      console.log("<exit> process gracefully");
+    });
+  };
 
-const cleanUp = () => {
-  server.close(() => {
-    console.log("<exit> process gracefully");
-  });
-};
-
-process.on("SIGTERM", () => cleanUp());
-process.on("SIGINT", () => process.kill(process.pid, "SIGTERM"));
+  process.on("SIGINT", () => process.kill(process.pid, "SIGTERM"));
+  process.on("SIGTERM", () => cleanUp());
+})();

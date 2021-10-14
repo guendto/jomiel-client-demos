@@ -1,8 +1,8 @@
-# jomiel REST-API demo written in Javascript for Express
+# Express demo
 
 - Install [jomiel], run it at <tcp://localhost:5514>
 - Install [httpie] or use an alternative, e.g. `curl`
-- Configure via the `.env` file
+- Edit `.env` file to configure
 
 [jomiel]: https://github.com/guendto/jomiel
 [httpie]: https://httpie.io/
@@ -11,21 +11,21 @@
 
 ```shell
 npm install
-npm run start
+npm run dev
 ```
 
-## POST request for an URL
+## POST /api/by-url
 
 ```shell
-http :3001/inquiry url=URL
+http :3001/api/by-url inputUri=URL
 # e.g.:
-http :3001/inquiry url=https://youtu.be/PRdcZSuCpNo
+http :3001/api/by-url inputUri=https://youtu.be/PRdcZSuCpNo
 ```
 
-## GET request for a Youtube video
+## GET /api/yt/by-id specifically for YouTube videos
 
 ```shell
-http :3001/inquiry/tube/:id
+http :3001/api/yt/by-id/:id
 # e.g.:
-http :3001/inquiry/tube/PRdcZSuCpNo
+http :3001/api/yt/by-id/PRdcZSuCpNo
 ```
