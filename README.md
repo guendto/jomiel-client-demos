@@ -23,18 +23,17 @@
 |  [Rust](https://github.com/guendto/jomiel-client-demos/blob/master/rust)      |             |
 |  [Scala](https://github.com/guendto/jomiel-client-demos/blob/master/scala)    |             |
 
-| Framework                                                                               | Notes     |
-| --------------------------------------------------------------------------------------- | --------- |
-|  [Express](https://github.com/guendto/jomiel-client-demos/blob/master/rest-api/express) | rest-api  |
-|  [Qt](https://github.com/guendto/jomiel-client-demos/blob/master/qt)                    | version 5 |
+| Framework                                                                              | Notes     |
+| -------------------------------------------------------------------------------------- | --------- |
+|  [Express](https://github.com/guendto/jomiel-client-demos/blob/master/restful/express) | version 4 |
+|  [Qt](https://github.com/guendto/jomiel-client-demos/blob/master/qt)                   | version 5 |
 
 ## Docker
 
 Most demos have a `docker` subdir, e.g. [kotlin]. To help you get
 started, see also:
 
-- [HOWTO: Build and run jomiel in a container](
-  https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container)
+- [HOWTO: Build and run jomiel in a container](https://github.com/guendto/jomiel/blob/master/docs/HOWTO.md#build-and-run-jomiel-in-a-container)
 - [docker-compose.yaml](https://github.com/guendto/jomiel-client-demos/blob/master/docker-compose.yaml)
 
 [kotlin]: https://github.com/guendto/jomiel-client-demos/blob/master/kotlin/docker/buster
