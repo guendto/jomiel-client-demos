@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 
 gem 'docopt', '~> 0.6'
 gem 'ffi-rzmq', '~> 2.0'
-gem 'google-protobuf', '~> 3.0'
+gem 'google-protobuf', '~> 3.19'
 
 # "bundler install --with development"
 group :development, optional: true do
