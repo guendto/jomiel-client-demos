@@ -82,10 +82,10 @@ services:
     build:
       dockerfile: nodejs/docker/alpine/Dockerfile
       context: .
-  perl5_buster:
+  perl5_debian:
     image: jomiel-ex-perl5
     build:
-      dockerfile: perl5/docker/buster/Dockerfile
+      dockerfile: perl5/docker/debian/Dockerfile
       context: .
   php7_alpine:
     image: jomiel-ex-alpine-php7
