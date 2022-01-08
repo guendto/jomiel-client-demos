@@ -1,4 +1,4 @@
-requires 'perl', '5.28.1';
+requires 'perl', '5.32.1';
 requires 'Getopt::Long::Descriptive', '0.109';
 requires 'Google::ProtocolBuffers::Dynamic', '0.31';
 requires 'File::Find::Rule', '0.34';
