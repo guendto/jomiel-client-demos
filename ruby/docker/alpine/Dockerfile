@@ -18,7 +18,7 @@ WORKDIR /app
 COPY ruby/Gemfile.lock .
 COPY ruby/Gemfile .
 
-COPY ruby/lib/ ./lib/
+COPY ruby/src/ ./src/
 COPY ruby/bin/ ./bin/
 
 COPY proto/ ./proto/
@@ -34,7 +34,7 @@ RUN set -eux \
         # for bootstrap script
         bash \
     # Install the ruby runtime modules.
-    && ./proto/bin/bootstrap -p proto/ -l ruby -d lib/ \
+    && ./proto/bin/bootstrap -p proto/ -l ruby -d src/ \
     && bundle install \
     # Workaround (build the module):
     #   https://github.com/protocolbuffers/protobuf/issues/4460
