@@ -102,10 +102,10 @@ services:
     build:
       dockerfile: python3/docker/alpine/Dockerfile
       context: .
-  python3_buster:
-    image: jomiel-ex-buster-python3
+  python3_debian:
+    image: jomiel-ex-debian-python3
     build:
-      dockerfile: python3/docker/buster/Dockerfile
+      dockerfile: python3/docker/debian/Dockerfile
       context: .
   qt_buster:
     image: jomiel-ex-buster-qt
