@@ -3,12 +3,12 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM perl:5-slim-buster
+FROM perl:5-slim-bullseye
 
 WORKDIR /app
 
@@ -28,7 +28,8 @@ ENV BUILD_DEPS \
     libprotoc-dev \
     libzmq3-dev \
     libssl-dev \
-    openssl
+    openssl \
+    cmake
 
 RUN set -eux \
     # Install the build deps.
@@ -45,8 +46,8 @@ RUN set -eux \
     && apt-get -qq autoremove \
     # Install the runtime deps.
     && apt-get -qq --no-install-recommends install \
-        libprotobuf-lite17 \
-        libprotobuf17 \
+        libprotobuf-lite23 \
+        libprotobuf23 \
         libzmq5 \
     # Cleanup (stage #2).
     && rm -rf /var/lib/apt/lists/*
