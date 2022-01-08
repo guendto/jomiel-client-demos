@@ -27,9 +27,6 @@ module Jomiel
 
       @sck.setsockopt(ZMQ::LINGER, 0)
       @poller.register_readable(@sck)
-
-      # Add finalizer for ffi-rzmq (reason: <https://git.io/JYFf0>).
-      ObjectSpace.define_finalizer(self, proc { @sck.close })
     end
 
     def inquire
