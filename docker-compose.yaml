@@ -22,10 +22,10 @@ services:
     build:
       dockerfile: c/docker/buster/Dockerfile
       context: .
-  cpp_buster:
-    image: jomiel-ex-buster-cpp
+  cpp_debian:
+    image: jomiel-ex-debian-cpp
     build:
-      dockerfile: cpp/docker/buster/Dockerfile
+      dockerfile: cpp/docker/debian/Dockerfile
       context: .
   cpp_pre_conan_alpine:
     image: jomiel-ex-alpine-pre-conan-cpp
