@@ -62,10 +62,10 @@ services:
     build:
       dockerfile: java/docker/maven/Dockerfile
       context: .
-  lua5_buster:
-    image: jomiel-ex-buster-lua
+  lua5_debian:
+    image: jomiel-ex-debian-lua
     build:
-      dockerfile: lua5/docker/buster/Dockerfile
+      dockerfile: lua5/docker/debian/Dockerfile
       context: .
   lua5_alpine:
     image: jomiel-ex-alpine-lua
