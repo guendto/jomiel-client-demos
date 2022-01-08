@@ -11,7 +11,7 @@
 
 # stage: bootstrap
 #
-FROM python:3.9-slim AS bootstrap-image
+FROM python:3-slim-bullseye AS bootstrap-image
 
 WORKDIR /app
 
@@ -29,11 +29,11 @@ RUN set -eux \
 
 # stage: runtime
 #
-# Go with a slim debian image instead of a "python-slim".
-#   - The final image will end up being ~20MB slimmer.
+# Use the "debian:slim" instead of "python:3-slim". The resulting image
+# will be ~40MB smaller (for bullseye).
 #
-FROM debian:buster-slim AS runtime-image
-# FROM python:3.9-slim AS runtime-image
+FROM debian:bullseye-slim AS runtime-image
+# FROM python:3-slim-bullseye AS runtime-image
 
 WORKDIR /app
 
