@@ -3,7 +3,7 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM golang:1.16-buster AS bootstrap-image
+FROM golang:1-bullseye AS bootstrap-image
 
 WORKDIR /app
 
@@ -43,13 +43,13 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM debian:buster-slim AS runtime-image
+FROM debian:bullseye-slim AS runtime-image
 
 RUN set -eux \
     ; apt-get -qq update \
     && apt-get -qq --no-install-recommends install \
-        libprotobuf-lite17 \
-        libprotobuf17 \
+        libprotobuf-lite23 \
+        libprotobuf23 \
         libczmq4 \
     && rm -rf /var/lib/apt/lists/*
 

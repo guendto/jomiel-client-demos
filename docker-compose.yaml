@@ -47,10 +47,10 @@ services:
     build:
       dockerfile: golang/docker/alpine/Dockerfile
       context: .
-  golang_buster:
-    image: jomiel-ex-buster-go
+  golang_debian:
+    image: jomiel-ex-debian-go
     build:
-      dockerfile: golang/docker/buster/Dockerfile
+      dockerfile: golang/docker/debian/Dockerfile
       context: .
   java_gradle:
     image: jomiel-ex-gradle-java
