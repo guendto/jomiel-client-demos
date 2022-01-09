@@ -55,7 +55,7 @@ sourceSets {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.15.5"
+        artifact = "com.google.protobuf:protoc:3.16.0"
     }
     plugins {
         id("kotlin") {
