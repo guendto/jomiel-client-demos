@@ -17,7 +17,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val pbandkVersion by extra("0.13.0")
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.31"
+    // <https://plugins.gradle.org/plugin/org.jetbrains.kotlin.jvm>
+    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     id("com.google.protobuf") version "0.8.15"
     application
 }
