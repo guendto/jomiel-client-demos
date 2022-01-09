@@ -1,17 +1,17 @@
 REFERENCES: STRICT
 STORAGE: SYMLINK
-RESTRICTION: == net472
+RESTRICTION: || (== net40) (== net472)
 NUGET
   remote: https://api.nuget.org/v3/index.json
     docopt.net (0.6.1.11)
-    Google.Protobuf (3.15.6)
-      System.Memory (>= 4.5.3)
+    Google.Protobuf (3.19.2)
+      System.Memory (>= 4.5.3) - restriction: || (&& (== net40) (>= net45)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (== net472)
     Newtonsoft.Json (13.0.1)
-    System.Buffers (4.5.1)
-    System.Memory (4.5.4)
-      System.Buffers (>= 4.5.1)
-      System.Numerics.Vectors (>= 4.5)
-      System.Runtime.CompilerServices.Unsafe (>= 4.5.3)
-    System.Numerics.Vectors (4.5)
-    System.Runtime.CompilerServices.Unsafe (5.0)
+    System.Buffers (4.5.1) - restriction: || (&& (== net40) (>= monotouch)) (&& (== net40) (>= net45)) (&& (== net40) (>= net461)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (&& (== net40) (>= wpa81)) (&& (== net40) (>= xamarinios)) (&& (== net40) (>= xamarinmac)) (&& (== net40) (>= xamarintvos)) (&& (== net40) (>= xamarinwatchos)) (== net472)
+    System.Memory (4.5.4) - restriction: || (&& (== net40) (>= net45)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (== net472)
+      System.Buffers (>= 4.5.1) - restriction: || (&& (== net40) (>= monoandroid)) (&& (== net40) (>= monotouch)) (&& (== net40) (>= net45)) (&& (== net40) (>= net461)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (&& (== net40) (>= portable-net45+win8+wpa81)) (&& (== net40) (>= win8)) (&& (== net40) (>= wpa81)) (&& (== net40) (>= xamarinios)) (&& (== net40) (>= xamarinmac)) (&& (== net40) (>= xamarintvos)) (&& (== net40) (>= xamarinwatchos)) (== net472)
+      System.Numerics.Vectors (>= 4.5) - restriction: || (&& (== net40) (>= net461)) (== net472)
+      System.Runtime.CompilerServices.Unsafe (>= 4.5.3) - restriction: || (&& (== net40) (>= monoandroid)) (&& (== net40) (>= monotouch)) (&& (== net40) (>= net45)) (&& (== net40) (>= net461)) (&& (== net40) (>= netcoreapp2.0)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (&& (== net40) (>= portable-net45+win8+wpa81)) (&& (== net40) (>= uap10.1)) (&& (== net40) (>= win8)) (&& (== net40) (>= wpa81)) (&& (== net40) (>= xamarinios)) (&& (== net40) (>= xamarinmac)) (&& (== net40) (>= xamarintvos)) (&& (== net40) (>= xamarinwatchos)) (== net472)
+    System.Numerics.Vectors (4.5) - restriction: || (&& (== net40) (>= net461)) (== net472)
+    System.Runtime.CompilerServices.Unsafe (6.0) - restriction: || (&& (== net40) (>= monotouch)) (&& (== net40) (>= net45)) (&& (== net40) (>= net461)) (&& (== net40) (>= netcoreapp2.0)) (&& (== net40) (>= netstandard1.1)) (&& (== net40) (>= netstandard2.0)) (&& (== net40) (>= uap10.1)) (&& (== net40) (>= wpa81)) (&& (== net40) (>= xamarinios)) (&& (== net40) (>= xamarinmac)) (&& (== net40) (>= xamarintvos)) (&& (== net40) (>= xamarinwatchos)) (== net472)
     ZeroMQ (4.1.0.31)

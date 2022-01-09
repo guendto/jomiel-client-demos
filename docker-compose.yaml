@@ -37,10 +37,10 @@ services:
     build:
       dockerfile: cpp/docker/pre-conan/buster/Dockerfile
       context: .
-  csharp_buster:
+  csharp_debian:
     image: jomiel-ex-csharp
     build:
-      dockerfile: csharp/docker/buster/Dockerfile
+      dockerfile: csharp/docker/debian/Dockerfile
       context: .
   golang_alpine:
     image: jomiel-ex-alpine-go
