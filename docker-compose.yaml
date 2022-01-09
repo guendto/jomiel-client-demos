@@ -72,10 +72,10 @@ services:
     build:
       dockerfile: lua5/docker/alpine/Dockerfile
       context: .
-  kotlin_buster:
-    image: jomiel-ex-buster-kotlin
+  kotlin_debian:
+    image: jomiel-ex-debian-kotlin
     build:
-      dockerfile: kotlin/docker/buster/Dockerfile
+      dockerfile: kotlin/docker/debian/Dockerfile
       context: .
   nodejs_alpine:
     image: jomiel-ex-nodejs
