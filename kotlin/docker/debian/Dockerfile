@@ -3,7 +3,7 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2021 Toni Gündoğdu
+#  2021-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM gradle:6.8-jdk11-openj9 as bootstrap-image
+FROM gradle:7-jdk11 AS bootstrap-image
 
 WORKDIR /app
 
@@ -36,10 +36,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-# See also:
-# - https://github.com/adoptopenjdk/openjdk-docker
-#
-FROM adoptopenjdk/openjdk11-openj9:alpine-slim as runtime-image
+FROM eclipse-temurin:11-alpine AS runtime_image
 
 WORKDIR /app
 
