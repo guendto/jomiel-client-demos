@@ -36,7 +36,7 @@ application {
 dependencies {
     implementation("pro.streem.pbandk:pbandk-runtime-jvm:$pbandkVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
-    implementation("org.tinylog:tinylog-api-kotlin:2.2.1")
+    implementation("org.tinylog:tinylog-api-kotlin:2.4.1")
     implementation("org.tinylog:tinylog-impl:2.2.1")
     implementation("info.picocli:picocli:4.6.1")
     implementation("org.zeromq:jeromq:0.5.2")
