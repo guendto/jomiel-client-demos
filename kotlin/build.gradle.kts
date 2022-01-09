@@ -25,7 +25,7 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral()  // <https://search.maven.org>
 }
 
 application {
