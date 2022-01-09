@@ -3,7 +3,7 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -40,7 +40,7 @@ ARG PKT_URI=https://api.github.com/repos/fsprojects/Paket/releases/latest
 # github-api-release-v3 returns nothing for 'premake/premake-core'
 # - Hardcoded URL will be used instead
 #
-ENV PM_VER 5.0.0-alpha15
+ENV PM_VER 5.0.0-beta1
 ENV PM_FILE premake-${PM_VER}-src.zip
 ARG PM_URI=https://github.com/premake/premake-core/releases/download/v${PM_VER}/${PM_FILE}
 
@@ -71,17 +71,17 @@ RUN set -eux \
 #
 FROM boostrap-image AS compile-ext-image
 
-ENV PATH "${WRKDIR}/ext/premake-${PM_VER}/bin/release:${PATH}"
+ENV PATH "${WRKDIR}/ext/premake-${PM_VER}-src/bin/release:${PATH}"
 
 RUN set -eux \
     # Build premake5.
     && cd ext \
-        && unzip ${PM_FILE} \
-        && cd premake-${PM_VER}/build/gmake2.unix \
+        && unzip -q ${PM_FILE} \
+        && cd premake-${PM_VER}-src/build/gmake2.unix \
         && make config=release Premake5 \
         && cd ${WRKDIR} \
     # Produce the .snl file.
-    && premake5 --dotnet=mono vs2019 \
+    && premake5 --os=linux --dotnet=mono vs2019 \
     # Install the .net deps.
     && mono ext/paket.exe --silent install
 
