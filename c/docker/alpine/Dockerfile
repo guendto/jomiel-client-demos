@@ -3,7 +3,7 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM alpine:3.13 AS bootstrap-image
+FROM alpine:3 AS bootstrap-image
 
 WORKDIR /app
 
@@ -47,7 +47,7 @@ RUN set -eux \
 
 # stage: runtime-image
 #
-FROM alpine:3.13 AS runtime-image
+FROM alpine:3 AS runtime-image
 
 RUN set -eux \
     ; apk --update --no-cache add \

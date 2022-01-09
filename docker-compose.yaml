@@ -17,10 +17,10 @@ services:
     build:
       dockerfile: c/docker/alpine/Dockerfile
       context: .
-  c_buster:
-    image: jomiel-ex-buster-c
+  c_debian:
+    image: jomiel-ex-debian-c
     build:
-      dockerfile: c/docker/buster/Dockerfile
+      dockerfile: c/docker/debian/Dockerfile
       context: .
   cpp_debian:
     image: jomiel-ex-debian-cpp
