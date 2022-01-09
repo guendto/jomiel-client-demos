@@ -122,10 +122,10 @@ services:
     build:
       dockerfile: ruby/docker/debian/Dockerfile
       context: .
-  rust_buster:
-    image: jomiel-ex-buster-rust
+  rust_debian:
+    image: jomiel-ex-debian-rust
     build:
-      dockerfile: rust/docker/buster/Dockerfile
+      dockerfile: rust/docker/debian/Dockerfile
       context: .
   scala_debian:
     image: jomiel-ex-debian-scala
