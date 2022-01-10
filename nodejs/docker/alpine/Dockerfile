@@ -3,12 +3,12 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-FROM node:14-alpine
+FROM node:current-alpine
 
 WORKDIR /app
 
