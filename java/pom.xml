@@ -86,6 +86,7 @@
               <goal>run</goal>
             </goals>
             <configuration>
+              <protocCommand>protoc</protocCommand>
               <outputDirectory>src/main/java</outputDirectory>
               <includeDirectories>
                 <include>../proto</include>
