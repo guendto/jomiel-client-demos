@@ -20,7 +20,10 @@
     "config": {
         "classmap-authoritative": true,
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "require-dev": {
         "overtrue/phplint": "^2.3",
