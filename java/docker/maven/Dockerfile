@@ -30,7 +30,7 @@ RUN set -eux \
 FROM bootstrap-image AS compile-image
 
 RUN set -eux \
-    ; mvn -B package
+    ; mvn -q -B package
 
 # stage: runtime-image
 #
