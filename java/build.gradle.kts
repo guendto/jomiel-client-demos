@@ -40,7 +40,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java:$pbVersion")
     implementation("org.tinylog:tinylog-impl:2.4.1")
     implementation("org.tinylog:tinylog-api:2.4.1")
-    implementation("info.picocli:picocli:4.6.1")
+    implementation("info.picocli:picocli:4.6.2")
     implementation("org.zeromq:jeromq:0.5.2")
 }
 
