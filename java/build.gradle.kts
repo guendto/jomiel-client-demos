@@ -4,17 +4,18 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2021 Toni Gündoğdu
+ *  2021-2022 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 plugins {
-    // id("com.github.sherter.google-java-format") version "0.9"
-    id("com.google.protobuf") version "0.8.15"
+    // <https://plugins.gradle.org/plugin/com.google.protobuf>
+    id("com.google.protobuf") version "0.8.18"
     id("application")
     id("java")
+    // id("com.github.sherter.google-java-format") version "0.9"
     // id("pmd")
 }
 
