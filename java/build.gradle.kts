@@ -4,17 +4,20 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2021 Toni Gündoğdu
+ *  2021-2022 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+val pbVersion by extra("3.19.2")
+
 plugins {
-    // id("com.github.sherter.google-java-format") version "0.9"
-    id("com.google.protobuf") version "0.8.15"
+    // <https://plugins.gradle.org/plugin/com.google.protobuf>
+    id("com.google.protobuf") version "0.8.18"
     id("application")
     id("java")
+    // id("com.github.sherter.google-java-format") version "0.9"
     // id("pmd")
 }
 
@@ -33,11 +36,11 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-java-util:3.15.2")
-    implementation("com.google.protobuf:protobuf-java:3.15.2")
-    implementation("org.tinylog:tinylog-impl:2.2.1")
-    implementation("org.tinylog:tinylog-api:2.2.1")
-    implementation("info.picocli:picocli:4.6.1")
+    implementation("com.google.protobuf:protobuf-java-util:$pbVersion")
+    implementation("com.google.protobuf:protobuf-java:$pbVersion")
+    implementation("org.tinylog:tinylog-impl:2.4.1")
+    implementation("org.tinylog:tinylog-api:2.4.1")
+    implementation("info.picocli:picocli:4.6.2")
     implementation("org.zeromq:jeromq:0.5.2")
 }
 
