@@ -10,6 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+val pbVersion by extra("3.19.2")
+
 plugins {
     // <https://plugins.gradle.org/plugin/com.google.protobuf>
     id("com.google.protobuf") version "0.8.18"
@@ -34,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-java-util:3.15.2")
+    implementation("com.google.protobuf:protobuf-java-util:$pbVersion")
     implementation("com.google.protobuf:protobuf-java:3.15.2")
     implementation("org.tinylog:tinylog-impl:2.2.1")
     implementation("org.tinylog:tinylog-api:2.2.1")
