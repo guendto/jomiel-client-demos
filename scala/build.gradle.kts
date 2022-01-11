@@ -51,8 +51,15 @@ sourceSets {
 }
 
 protobuf {
+    // Configure the protoc executable
     protoc {
-        artifact = "com.google.protobuf:protoc:3.15.6"
+        // Download from repositories (pre-compl. protoc, MavenCentral):
+        // - <https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation>
+        // artifact = "com.google.protobuf:protoc:3.15.6"
+        //
+        // Or, specify a local path:
+        // - e.g. ideal for building on alpine/linux
+        path = "/usr/bin/protoc"
     }
     plugins {
         id("scalapb") {
