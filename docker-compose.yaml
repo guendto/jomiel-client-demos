@@ -127,10 +127,10 @@ services:
     build:
       dockerfile: rust/docker/debian/Dockerfile
       context: .
-  scala_debian:
-    image: jomiel-ex-debian-scala
+  scala_alpine:
+    image: jomiel-ex-debian-alpine
     build:
-      dockerfile: scala/docker/debian/Dockerfile
+      dockerfile: scala/docker/alpine/Dockerfile
       context: .
 
 networks:
