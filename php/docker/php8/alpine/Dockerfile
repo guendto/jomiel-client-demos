@@ -11,7 +11,7 @@
 
 # See also Notes.md in php/docker/
 #
-FROM php:8-cli-alpine
+FROM php:8.0-cli-alpine
 
 WORKDIR /app
 
