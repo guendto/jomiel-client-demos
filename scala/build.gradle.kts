@@ -56,7 +56,7 @@ protobuf {
     }
     plugins {
         id("scalapb") {
-            artifact = "com.thesamet.scalapb:protoc-gen-scala:0.10.10:unix@sh"
+            artifact = "com.thesamet.scalapb:protoc-gen-scala:0.11.8:unix@sh"
         }
     }
     generateProtoTasks {
