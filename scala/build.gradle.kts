@@ -32,7 +32,7 @@ dependencies {
     implementation("com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0")
     implementation("org.tinylog:tinylog-api-scala_2.12:2.4.1")
     implementation("org.tinylog:tinylog-impl:2.4.1")
-    implementation("info.picocli:picocli:4.6.1")
+    implementation("info.picocli:picocli:4.6.2")
     implementation("org.zeromq:jeromq:0.5.2")
 }
 
