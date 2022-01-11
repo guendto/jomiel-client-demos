@@ -5,14 +5,10 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2021 Toni Gündoğdu
+#  2021-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
-#
-
-# See also:
-# - docker/Notes.md
 #
 
 # $1 = php7 or php8
