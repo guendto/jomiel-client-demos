@@ -29,7 +29,7 @@ application {
 
 dependencies {
     implementation("com.thesamet.scalapb:scalapb-runtime_2.12:0.11.8")
-    implementation("com.thesamet.scalapb:scalapb-json4s_2.12:0.10.3")
+    implementation("com.thesamet.scalapb:scalapb-json4s_2.12:0.12.0")
     implementation("org.tinylog:tinylog-api-scala_2.12:2.2.1")
     implementation("org.tinylog:tinylog-impl:2.2.1")
     implementation("info.picocli:picocli:4.6.1")
