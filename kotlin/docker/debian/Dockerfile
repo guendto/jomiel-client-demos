@@ -11,7 +11,7 @@
 
 # stage: bootstrap-image
 #
-FROM gradle:7-jdk11 AS bootstrap-image
+FROM gradle:7-jdk11-alpine as bootstrap-image
 
 WORKDIR /app
 
@@ -22,9 +22,8 @@ COPY kotlin/settings.gradle.kts .
 COPY kotlin/build.gradle.kts .
 
 RUN set -eux \
-    ; apt-get -qq update \
-    && apt-get install -qq --no-install-recommends \
-        protobuf-compiler \
+    ; apk --update --no-cache add  \
+        protoc \
     && sed -i 's/\.\.\/proto/\.\/proto/' ./build.gradle.kts
 
 # stage: compile-image
