@@ -10,11 +10,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable import/extensions */
+
 import { Router } from "express";
 import "express-async-errors";
 
-import jomiel from "../helpers/jomiel";
-import { throwErrorWithStatus } from "../helpers/error";
+import { throwErrorWithStatus } from "../helpers/error.js";
+import jomiel from "../helpers/jomiel.js";
 
 const router = Router();
 
