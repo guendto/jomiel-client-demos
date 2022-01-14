@@ -18,7 +18,7 @@ import app from "./app.js";
 
 (() => {
   const server = app.listen(config.PORT, () => {
-    console.log(`<listen> at http://localhost:${config.PORT}`);
+    console.log(`<listen> on http://localhost:${config.PORT}`);
   });
 
   const cleanUp = () => {
