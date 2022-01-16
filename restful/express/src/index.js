@@ -13,7 +13,7 @@
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
 
-import config from "./helpers/config.js";
+import config from "./config.js";
 import jomiel from "./jomiel.js";
 import app from "./app.js";
 
