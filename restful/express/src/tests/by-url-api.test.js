@@ -4,7 +4,7 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2021 Toni Gündoğdu
+ *  2021-2022 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -14,10 +14,14 @@ import supertest from "supertest";
 
 import app from "../app";
 import helper from "./test-helper";
+import jomiel from "../helpers/jomiel";
 
 const api = supertest(app);
 
 describe("POST /api/by-url", () => {
+  beforeAll(() => jomiel.connect());
+  afterAll(() => jomiel.disconnect());
+
   it("should fail when input uri is missing", async () => {
     await helper.testHttpPost({
       api,
