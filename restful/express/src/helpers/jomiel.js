@@ -4,7 +4,7 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2021 Toni Gündoğdu
+ *  2021-2022 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -20,42 +20,50 @@ import config from "./config.js";
 const { STATUS_CODE_OK } = messages.jomiel.protobuf.v1beta1.StatusCode;
 const { Inquiry, Response } = messages.jomiel.protobuf.v1beta1;
 
-const connect = () => {
-  const socket = new Request({
-    receiveTimeout: config.JOMIEL_TIMEOUT * 1000,
-    linger: 0,
-  });
+class Jomiel {
+  #socket;
 
-  socket.connect(config.JOMIEL_ENDPOINT);
-
-  if (config.NODE_ENV !== "test") {
-    const configuration = `${config.JOMIEL_ENDPOINT}, timeout=${config.JOMIEL_TIMEOUT}`;
-    // eslint-disable-next-line no-console
-    console.log(`<jomiel> connect a socket (${configuration})`);
+  constructor() {
+    this.#socket = new Request({
+      receiveTimeout: config.JOMIEL_TIMEOUT * 1000,
+      linger: 0,
+    });
   }
 
-  return socket;
-};
+  connect() {
+    this.#socket.connect(config.JOMIEL_ENDPOINT);
 
-const socket = connect();
-
-const receiveResponse = async () => {
-  const [bytes] = await socket.receive();
-  return Response.decode(bytes);
-};
-
-// eslint-disable-next-line consistent-return
-const sendInquiry = async (res, { inputUri }) => {
-  const message = Inquiry.create({ media: { inputUri } });
-  const bytes = Inquiry.encode(message).finish();
-
-  socket.send(bytes);
-  const response = await receiveResponse();
-
-  if (response.status.code === STATUS_CODE_OK) {
-    return res.json({ status: "ok", data: response.media });
+    if (config.NODE_ENV !== "test") {
+      const info = `${config.JOMIEL_ENDPOINT}, timeout=${config.JOMIEL_TIMEOUT}`;
+      console.log(`<jomiel> connected (${info})`);
+    }
   }
-  throwErrorWithStatus(500, response.status.message);
-};
 
-export default { sendInquiry };
+  disconnect() {
+    if (config.NODE_ENV !== "test") {
+      console.log("<jomiel> disconnected");
+    }
+    this.#socket.close();
+  }
+
+  async sendInquiry(res, { inputUri }) {
+    const message = Inquiry.create({ media: { inputUri } });
+    const encoded = Inquiry.encode(message).finish();
+    await this.#socket.send(encoded);
+    await this.#receiveResponse(res);
+  }
+
+  async #receiveResponse(res) {
+    const [bytes] = await this.#socket.receive();
+    const message = Response.decode(bytes);
+
+    const { status, media: data } = message;
+    if (status.code === STATUS_CODE_OK) {
+      return res.json({ status: "ok", data });
+    }
+
+    throwErrorWithStatus(500, status.message);
+  }
+}
+
+export default new Jomiel();
