@@ -14,7 +14,7 @@
 /* eslint-disable import/extensions */
 
 import config from "./helpers/config.js";
-import jomiel from "./helpers/jomiel.js";
+import jomiel from "./jomiel.js";
 import app from "./app.js";
 
 (() => {

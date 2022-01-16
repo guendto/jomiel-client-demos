@@ -16,7 +16,7 @@ import { Router } from "express";
 import "express-async-errors";
 
 import { throwErrorWithStatus } from "../helpers/error.js";
-import jomiel from "../helpers/jomiel.js";
+import jomiel from "../jomiel.js";
 
 const router = Router();
 

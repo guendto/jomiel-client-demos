@@ -14,8 +14,8 @@ import messages from "jomiel-messages";
 import { Request } from "zeromq";
 
 /* eslint-disable import/extensions */
-import { throwErrorWithStatus } from "./error.js";
-import config from "./config.js";
+import { throwErrorWithStatus } from "./helpers/error.js";
+import config from "./helpers/config.js";
 
 const { STATUS_CODE_OK } = messages.jomiel.protobuf.v1beta1.StatusCode;
 const { Inquiry, Response } = messages.jomiel.protobuf.v1beta1;

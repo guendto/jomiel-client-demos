@@ -14,7 +14,7 @@ import supertest from "supertest";
 
 import app from "../app";
 import helper from "./test-helper";
-import jomiel from "../helpers/jomiel";
+import jomiel from "../jomiel";
 
 const api = supertest(app);
 
