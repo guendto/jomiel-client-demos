@@ -21,7 +21,7 @@ import byUrlRouter from "./controllers/by-url.js";
 import ytRouter from "./controllers/yt.js";
 import errorHandler from "./middlewares/error.js";
 import http404 from "./middlewares/http404.js";
-import config from "./helpers/config.js";
+import config from "./config.js";
 
 const app = express();
 

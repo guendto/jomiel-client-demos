@@ -14,7 +14,7 @@ import { Router } from "express";
 import "express-async-errors";
 
 /* eslint-disable import/extensions */
-import jomiel from "../helpers/jomiel.js";
+import jomiel from "../jomiel.js";
 
 const router = Router();
 
