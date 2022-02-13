@@ -4,54 +4,64 @@
 # jomiel-proto
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2022 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-set -e
 
 # bootstrap
-#
-# Make protobuf declaration compilation (a bit) easier.
-#
-# Notes:
-#   - This is a bash script (namely the globstar dependency)
-#
-#   - Make sure you have installed the protobuf-compiler (protoc) and it
-#   can be found the path.
-#
-#   - When the langid is set to:
-#       - 'c', the script will call proto-c(1) instead of protoc(1)
-#       - 'go', the script will append "~/go/bin" to the PATH
-#
-#   - The langid value will not be validated, the value passed as such
-#   to the protobuf compiler
-#
-# Examples:
-#   bootstrap -p jomiel-proto/ -l python -d bindings/
-#       # Compile the Python bindings for 'jomiel'.
-#
-#   bootstrap -p jomiel-proto/ -l c -d bindings/
-#       # Same as above, but for C language.
-#
+# - Simple protobuf declaration compilation
 
-# Enable bash globstar for recursive search ("**/*.proto").
-#
-shopt -s globstar
+set -e  # exit immediate if a command exists with a non-zero status
+shopt -s globstar  # enable bash globstar for recursive search
+
+__help()
+{
+    [ -n "$1" ] && >&2 echo "error: $1"
+    cat <<EOF
+
+Usage: ${0##*/} [-p <protodir>] [-l <langid>] [-d <destdir>]
+
+Where
+
+  <protodir> the location of the .proto files to be compiled. This is
+  the **root** dir.
+
+  <langid> language binding identifier (e.g. "go" or "python").
+
+    - The identifier value must be supported by protoc(1). ${0##*/}
+      does **not** validate the language ID value.
+
+    - If the value is "c", the script will use protoc-c(1) instead
+      of protoc(1). Make sure it is installed and found in PATH.
+
+    - If the value is "go", ${0##*/} appends ~/go/bin to PATH.
+
+  <destdir> write the compiled protobuf messages to this directory.
+
+Example
+
+  $ bootstrap -p protofiles/ -l python -d proto/gen
+    # Compile protobuf declarations for Python to ./proto/gen
+EOF
+    return 1
+}
+
+__find_command()
+{
+    result="$(command -v $1)"
+    [ -z "$result" ] && {
+        >&2 echo "error: $1: not found"
+        return 1
+    }
+    echo $result
+}
 
 # Protobuffer compiler
 #
 [ -z "$PROTOC" ] && {
-    PROTOC=`which protoc`
-    [ -z "$PROTOC" ] && {
-        echo "protoc: command not found"
-        exit 1
-    }
-}
-[ -x "$PROTOC" ] || {
-    echo "$PROTOC: file does not exist or execute permission is not granted"
-    exit 1
+    PROTOC="$(__find_command protoc)"
 }
 
 # Save generated files to this directory.
@@ -66,36 +76,17 @@ PROTODIR=
 #
 LANGID=
 
-help()
+__is_protoc_executable()
 {
-    cat <<EOF
-Usage: ${0##*/} [-p <protodir>] [-l <langid>] [-d <destdir>]
-
-Notes
-    - Make sure you have installed protobuf-compiler (protoc) and/or
-      protobuf-c-compiler (protoc-c) if you intend to produce c
-      bindings
-
-    - Make sure the compilers can be found in your path
-
-Where
-    <protodir> path to the _root_ dir containing the .proto files to
-        compile
-
-    <langid> language binding identifier (e.g. "go" or "python"). The
-        identifier must be understood by protoc(1); note that if the
-        identifier is "c", the script will use protoc-c(1), instead of
-        protoc(1).
-
-    <destdir> is the destination dir for the compiled protobuf messages
-
-EOF
-    [ -n "$1" ] && echo "error: $1"
-    exit 1
+    [ -x "$PROTOC" ] || {
+        >&2 echo "$PROTOC: file does not exist or execute permission is not granted"
+        exit 1
+    }
 }
 
-compile_files()
+__compile_files()
 {
+    __is_protoc_executable
     echo -n "Compiling the protobuf declarations for jomiel messages"
     for f in $PROTODIR/**/*.proto; do
         $PROTOC -I$PROTODIR --"$LANGID"_out=$DESTDIR $f || exit $?
@@ -105,26 +96,27 @@ compile_files()
     exit 0
 }
 
-while getopts "?hd:p:l:" o; do
+while getopts "hd:p:l:" o; do
 case "$o" in
     p) PROTODIR=$OPTARG ;;
     d) DESTDIR=$OPTARG ;;
     l) LANGID=$OPTARG ;;
-    h|?) help ;;
+    h) __help ;;
 esac
 done
 
 shift $((OPTIND-1)) # Shift off the options and optional --
 
-[ -z "$PROTODIR" ] && help "-p <protodir> not specified"
-[ -z "$DESTDIR" ] && help "-d <destdir> not specified"
-[ -z "$LANGID" ] && help "-l <langid> not specified"
+[ -z "$PROTODIR" ] && __help "-p <protodir> not specified"
+[ -z "$DESTDIR" ] && __help "-d <destdir> not specified"
+[ -z "$LANGID" ] && __help "-l <langid> not specified"
 
 [ "$LANGID" = "c" ] && {
-    PROTOC=`which protoc-c`
+    [ -n "$PROTOC_C" ] && {
+       PROTOC=$PROTOC_C
+    }
     [ -z "$PROTOC" ] && {
-        echo "protoc-c: command not found"
-        exit 1
+        PROTOC="$(__find_command protoc-c)"
     }
 }
 
@@ -133,7 +125,7 @@ shift $((OPTIND-1)) # Shift off the options and optional --
 }
 
 [ -d "$DESTDIR" ] || mkdir -p "$DESTDIR"
-compile_files
+__compile_files
 
 exit $?
 
