@@ -5,7 +5,7 @@
 Generate the protobuf bindings for golang:
 
 ```shell
-go get -v google.golang.org/protobuf/cmd/protoc-gen-go
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go generate
 ```
 

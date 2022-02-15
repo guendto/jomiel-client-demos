@@ -31,7 +31,7 @@ RUN set -eux \
         pkgconf \
         git \
     && sed -i 's/\.\.\/proto/\.\/proto/g' main.go \
-    && go get -v google.golang.org/protobuf/cmd/protoc-gen-go \
+    && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
     && go generate
 
 # stage: compile-image
