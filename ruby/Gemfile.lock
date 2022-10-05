@@ -8,7 +8,7 @@ GEM
       ffi-rzmq-core (>= 1.0.7)
     ffi-rzmq-core (1.0.7)
       ffi
-    google-protobuf (3.19.2)
+    google-protobuf (3.19.6)
     kwalify (0.7.2)
     parallel (1.20.1)
     parser (3.0.1.0)
