@@ -24,7 +24,7 @@
     "helmet": "^5.0.1",
     "jomiel-messages": "^0.2.0",
     "morgan": "^1.10.0",
-    "protobufjs": "^6.11.2",
+    "protobufjs": "^7.2.4",
     "zeromq": "6.0.0-beta.6"
   },
   "devDependencies": {
