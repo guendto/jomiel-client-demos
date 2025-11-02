@@ -3,38 +3,24 @@
 # jomiel-client-demos
 #
 # Copyright
-#  2019-2021 Toni Gündoğdu
+#  2019-2021,2025 Toni Gündoğdu
 #
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-
 [package]
 name = "demo"
 version = "0.1.0"
-edition = "2018"
-
-# Specifying the deps:
-#   https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
-#
-# Crates:
-#   https://crates.io/
+edition = "2024"
 
 [dependencies]
-# protobuf = { git = "https://github.com/stepancheg/rust-protobuf.git", branch = "master" }
-protobuf = "^2.22"
-serde = { version = "^1.0", features = ["derive"] }
-serde_derive = { version = "^1.0" }
-serde_yaml = "^0.8"
-serde_json = "^1.0"
-structopt = "^0.3"
-zmq = "^0.9"
+clap = { version = "4.5", features = ["derive"] }
+prost = "0.14"
+prost-types = "0.14"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+zmq = "0.10"
 
 [build-dependencies]
-# protoc-rust = { git = "https://github.com/stepancheg/rust-protobuf.git", branch = "master" }
-protoc-rust = "^2.22"
-glob = "^0.3"
-
-[features]
-default = ["with-serde"]
-with-serde = ["protobuf/with-serde"]
+prost-build = "0.14"
+glob = "0.3"
