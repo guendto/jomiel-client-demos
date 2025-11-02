@@ -4,18 +4,18 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2021 Toni Gündoğdu
+ *  2021,2025 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
 use super::jomiel::Jomiel;
 use super::options::Options;
-use structopt::StructOpt;
+use clap::Parser;
 
 pub fn main() {
-    let opts = Options::from_args();
+    let opts: Options = Options::parse();
+
     if opts.print_config {
         dump_config(&opts);
     } else if opts.version_zmq {
@@ -26,8 +26,7 @@ pub fn main() {
 }
 
 fn dump_config(opts: &Options) {
-    let s = serde_yaml::to_string(opts).unwrap();
-    print!("{}", s);
+    print!("{}", serde_json::to_string_pretty(opts).unwrap());
 }
 
 fn print_zmq_version() {

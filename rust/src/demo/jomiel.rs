@@ -4,21 +4,20 @@
  * jomiel-client-demos
  *
  * Copyright
- *  2019-2021 Toni Gündoğdu
+ *  2019-2021,2025 Toni Gündoğdu
  *
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
-use std::fmt::Debug;
-
-use protobuf::Message;
-use zmq::{Context, Socket, REQ};
+use prost::Message;
+use std::convert::TryFrom;
+use zmq::{Context, REQ, Socket};
 
 use super::options::Options;
-use crate::proto::media::MediaResponse;
-use crate::proto::message::{Inquiry, Response};
-use crate::proto::status::StatusCode;
+use crate::proto::jomiel::protobuf::v1beta1::{
+    Inquiry, MediaInquiry, MediaResponse, Response, StatusCode,
+    inquiry, response,
+};
 
 pub struct Jomiel {
     opts: Options,
@@ -27,7 +26,7 @@ pub struct Jomiel {
 
 impl Jomiel {
     pub fn new(options: Options) -> Self {
-        let r = Jomiel {
+        let r: Jomiel = Jomiel {
             sck: Context::new().socket(REQ).unwrap(),
             opts: options,
         };
@@ -39,7 +38,7 @@ impl Jomiel {
         if !self.opts.uri.is_empty() {
             self.connect();
             for uri in &self.opts.uri {
-                self.send_inquiry(&uri);
+                self.send_inquiry(uri);
                 self.receive_response();
             }
         } else {
@@ -49,38 +48,40 @@ impl Jomiel {
     }
 
     fn connect(&self) {
-        let re = &self.opts.router_endpoint;
-        let to = &self.opts.connect_timeout;
+        let re: &String = &self.opts.router_endpoint;
+        let to: &i64 = &self.opts.connect_timeout;
         self.print_status(&format!(
             "<connect> {} (timeout={})",
             re, to
         ));
-        self.sck.connect(&re).unwrap();
+        self.sck.connect(re).unwrap();
     }
 
     fn send_inquiry(&self, uri: &str) {
-        let mut msg = Inquiry::new();
-        msg.mut_media().input_uri = uri.into();
+        let mut msg: Inquiry = Inquiry::default();
 
-        let bytes = msg.write_to_bytes().unwrap();
-        // println!("{:X?}", bytes);
+        msg.inquiry = Some(inquiry::Inquiry::Media(MediaInquiry {
+            input_uri: uri.to_string(),
+        }));
+
+        let mut buf: Vec<u8> = Vec::new();
+        msg.encode(&mut buf).unwrap();
 
         if !self.opts.be_terse {
-            self.print_message::<&Inquiry>("<send>", &msg);
+            self.print_message("<send>", &msg);
         }
-        self.sck.send(&bytes, 0).unwrap();
+        self.sck.send(&buf, 0).unwrap();
     }
 
     fn receive_response(&self) {
         let mut poll_items = [self.sck.as_poll_item(zmq::POLLIN)];
-        let timeout = self.opts.connect_timeout * 1000; // to msec
+        let timeout: i64 = self.opts.connect_timeout * 1000;
 
         zmq::poll(&mut poll_items, timeout).unwrap();
 
         if poll_items[0].is_readable() {
-            let bytes = self.sck.recv_bytes(0).unwrap();
-            let msg = Response::parse_from_bytes(&bytes).unwrap();
-            // println!("{:X?}", bytes);
+            let bytes: Vec<u8> = self.sck.recv_bytes(0).unwrap();
+            let msg: Response = Response::decode(&*bytes).unwrap();
             self.dump_response(&msg);
         } else {
             eprintln!("error: connection timed out");
@@ -95,50 +96,53 @@ impl Jomiel {
     }
 
     fn dump_response(&self, msg: &Response) {
-        let status = "<recv>";
-        if msg.get_status().get_code() == StatusCode::STATUS_CODE_OK {
-            let media = msg.get_media();
-            if self.opts.be_terse {
-                self.dump_terse_response(media);
+        let status: &str = "<recv>";
+
+        if let Some(st) = &msg.status {
+            if let Ok(code) = StatusCode::try_from(st.code) {
+                if code == StatusCode::Ok {
+                    if let Some(response::Response::Media(media)) =
+                        &msg.response
+                    {
+                        if self.opts.be_terse {
+                            self.dump_terse_response(media);
+                        } else {
+                            self.print_message(status, msg);
+                        }
+                    }
+                } else {
+                    self.print_message(status, msg);
+                }
             } else {
-                self.print_message::<&MediaResponse>(status, media);
+                eprintln!("Unknown status code: {}", st.code);
             }
         } else {
-            self.print_message::<&Response>(status, msg);
+            eprintln!("Response missing status");
         }
     }
 
     fn dump_terse_response(&self, msg: &MediaResponse) {
-        println!("---\ntitle: {}\nquality:", msg.get_title());
-        for stream in msg.get_stream() {
-            let qty = stream.get_quality();
-            println!(
-                "  profile: {}\n    width: {}\n    height: {}",
-                qty.get_profile(),
-                qty.get_width(),
-                qty.get_height()
-            );
+        println!("---\ntitle: {}\nquality:", msg.title);
+        for stream in &msg.stream {
+            if let Some(qty) = &stream.quality {
+                println!(
+                    "  profile: {}\n    width: {}\n    height: {}",
+                    qty.profile, qty.width, qty.height
+                );
+            }
         }
     }
 
-    fn print_message<T: serde::Serialize + Debug>(
+    fn print_message<T: serde::Serialize + std::fmt::Debug>(
         &self,
-        status: &str,
-        msg: T,
+        label: &str,
+        msg: &T,
     ) {
-        self.print_status(status);
+        self.print_status(label);
         if self.opts.output_json {
-            println!("{}", self.to_json(msg));
+            println!("{}", serde_json::to_string_pretty(msg).unwrap());
         } else {
-            print!("{:#?}", msg);
+            println!("{:#?}", msg);
         }
-    }
-
-    fn to_json<T: serde::Serialize>(&self, msg: T) -> String {
-        return if self.opts.compact_json {
-            serde_json::to_string(&msg).unwrap()
-        } else {
-            serde_json::to_string_pretty(&msg).unwrap()
-        };
     }
 }
