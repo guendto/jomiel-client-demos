@@ -10,20 +10,10 @@
   },
   "dependencies": {
     "docopt": "^0.6.2",
-    "jomiel-messages": "^0.2.0",
+    "jomiel-messages": "^0.2.1",
     "js-yaml": "^4.1.0",
-    "protobufjs": "^7.2.4",
-    "zeromq": "^6.0.0-beta.6"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/eslint-parser": "^7.16.5",
-    "eslint": "^8.6.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1"
+    "protobufjs": "^7.5.4",
+    "zeromq": "^6.5.0"
   },
   "scripts": {
     "distclean": "rm -rf node_modules/"
